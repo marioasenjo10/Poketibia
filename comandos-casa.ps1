@@ -136,3 +136,68 @@ foreach ($f in 'items.otb', 'items.xml') {
     Copy-Item "$srv\$f" "$rme\$f" -Force
 }
 Get-ChildItem $rme -File | Select-Object Name, Length
+
+# ---------------------------------------------------------------------
+# [5] Diagnóstico del calentamiento
+#     ANTES: servidor y cliente abiertos, dentro del juego, con tu
+#            Pokémon fuera y cerca de Pokémon salvajes.
+#     Mide CPU y GPU durante 15 segundos (no toques nada mientras).
+#     Genera diag-calor.txt. Después: commit + push.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+$o   = 'diag-calor.txt'
+$cli = 'bases\pokedashpota1.0_client'
+$seg = 15
+$cores = [Environment]::ProcessorCount
+
+"=== EQUIPO ===" | Out-File $o -Encoding utf8
+(Get-CimInstance Win32_Processor).Name | Out-File $o -Append -Encoding utf8
+"Nucleos logicos: $cores" | Out-File $o -Append -Encoding utf8
+Get-CimInstance Win32_VideoController | ForEach-Object { "GPU: $($_.Name) | $($_.CurrentHorizontalResolution)x$($_.CurrentVerticalResolution) @ $($_.CurrentRefreshRate) Hz" } | Out-File $o -Append -Encoding utf8
+
+Write-Host "Midiendo $seg segundos, no toques nada..."
+$antes = @{}; Get-Process | ForEach-Object { $antes[$_.Id] = $_.CPU }
+$gpuMuestras = @()
+for ($s = 0; $s -lt $seg; $s++) {
+    $gpuMuestras += Get-CimInstance Win32_PerfFormattedData_GPUPerformanceCounters_GPUEngine -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -match 'engtype_3D' -and $_.UtilizationPercentage -gt 0 }
+    Start-Sleep -Seconds 1
+}
+
+"=== CPU (% del total del procesador, media $seg s) ===" | Out-File $o -Append -Encoding utf8
+Get-Process | Where-Object { $antes.ContainsKey($_.Id) -and $_.CPU } | ForEach-Object {
+    [pscustomobject]@{
+        Proceso = $_.ProcessName
+        CPU     = [math]::Round((($_.CPU - $antes[$_.Id]) / $seg / $cores) * 100, 1)
+        RAM_MB  = [math]::Round($_.WorkingSet64 / 1MB)
+        Prioridad = $_.PriorityClass
+    }
+} | Sort-Object CPU -Descending | Select-Object -First 12 | Format-Table -AutoSize | Out-File $o -Append -Encoding utf8 -Width 200
+
+"=== GPU 3D (% medio por proceso) ===" | Out-File $o -Append -Encoding utf8
+$gpuMuestras | ForEach-Object {
+    $procId = if ($_.Name -match 'pid_(\d+)_') { [int]$Matches[1] } else { 0 }
+    [pscustomobject]@{ Proceso = (Get-Process -Id $procId -ErrorAction SilentlyContinue).ProcessName; GPU = $_.UtilizationPercentage }
+} | Group-Object Proceso | ForEach-Object {
+    [pscustomobject]@{ Proceso = $_.Name; GPU = [math]::Round((($_.Group | Measure-Object GPU -Sum).Sum) / $seg, 1) }
+} | Sort-Object GPU -Descending | Select-Object -First 8 | Format-Table -AutoSize | Out-File $o -Append -Encoding utf8 -Width 200
+
+"=== SERVIDOR: prioridad ===" | Out-File $o -Append -Encoding utf8
+Select-String -Path 'bases\pokedashpota1.0\config.lua' -Pattern 'defaultPriority' | ForEach-Object { $_.Line } | Out-File $o -Append -Encoding utf8
+
+"=== CLIENTE: archivos de configuracion (config.otml) ===" | Out-File $o -Append -Encoding utf8
+@(Get-ChildItem $cli -Recurse -Filter config.otml -ErrorAction SilentlyContinue) +
+@(Get-ChildItem $env:APPDATA -Recurse -Depth 2 -Filter config.otml -ErrorAction SilentlyContinue) | ForEach-Object {
+    "--- $($_.FullName) ($($_.LastWriteTime))" | Out-File $o -Append -Encoding utf8
+    Get-Content $_.FullName | Out-File $o -Append -Encoding utf8
+}
+
+"=== CLIENTE: codigo de FPS / vsync ===" | Out-File $o -Append -Encoding utf8
+Get-ChildItem "$cli\modules", "$cli\init.lua", "$cli\otclientrc.lua" -Recurse -Include *.lua, *.otui -ErrorAction SilentlyContinue |
+    Select-String -Pattern 'vsync|VerticalSync|FrameRate|MaxFps|setFps|frameRate|fpsLimit' |
+    ForEach-Object { "$($_.Path -replace '^.*?bases\\',''):$($_.LineNumber): $($_.Line.Trim())" } |
+    Out-File $o -Append -Encoding utf8 -Width 400
+
+git add $o
+git commit -m "Diagnostico calentamiento"
+git push
