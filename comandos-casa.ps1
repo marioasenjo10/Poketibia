@@ -121,3 +121,18 @@ while (($i = [Array]::IndexOf($bytes, [byte]0xFE, $i)) -ge 0 -and $i -lt $bytes.
 git add $o
 git commit -m "Paso 3: comandos y NPCs PokeDash"
 git push
+
+# ---------------------------------------------------------------------
+# [4] Preparar el editor de mapas (RME) con los items de PokeDash
+#     Copia items.otb e items.xml del servidor a RME (guarda copia
+#     de los originales en data\1098\original\).
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project\bases'
+$rme = 'pack_mapper\rme-3.5\data\1098'
+$srv = 'pokedashpota1.0\data\items'
+New-Item -ItemType Directory -Force "$rme\original" | Out-Null
+foreach ($f in 'items.otb', 'items.xml') {
+    if ((Test-Path "$rme\$f") -and -not (Test-Path "$rme\original\$f")) { Copy-Item "$rme\$f" "$rme\original\$f" }
+    Copy-Item "$srv\$f" "$rme\$f" -Force
+}
+Get-ChildItem $rme -File | Select-Object Name, Length
