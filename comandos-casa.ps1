@@ -201,3 +201,32 @@ Get-ChildItem "$cli\modules", "$cli\init.lua", "$cli\otclientrc.lua" -Recurse -I
 git add $o
 git commit -m "Diagnostico calentamiento"
 git push
+
+# ---------------------------------------------------------------------
+# [6] Ver cómo funciona /cb (crear pokeball) y cómo se guarda un poke
+#     Genera paso6.txt con el script de /cb, el de usar la pokeball
+#     y las funciones de la librería que guardan el Pokémon en la ball.
+#     Después: commit + push.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+$d = 'bases\pokedashpota1.0\data'
+$o = 'paso6.txt'
+
+"=== talkactions\scripts\create_pokeball.lua ===" | Out-File $o -Encoding utf8
+Get-Content "$d\talkactions\scripts\create_pokeball.lua" | Out-File $o -Append -Encoding utf8
+
+"=== actions\scripts\poke\summon.lua ===" | Out-File $o -Append -Encoding utf8
+Get-Content "$d\actions\scripts\poke\summon.lua" | Out-File $o -Append -Encoding utf8
+
+"=== actions.xml: lineas de poke/summon.lua (ids de las balls) ===" | Out-File $o -Append -Encoding utf8
+Select-String -Path "$d\actions\actions.xml" -Pattern 'poke/summon.lua' | ForEach-Object { $_.Line.Trim() } | Out-File $o -Append -Encoding utf8
+
+"=== Funciones relacionadas en data\lib ===" | Out-File $o -Append -Encoding utf8
+Get-ChildItem "$d\lib" -Recurse -Include *.lua |
+    Select-String -Pattern 'filled|pokeName|setSpecialAttribute|getSpecialAttribute|addPokeball|createPokeball|ballKey|pokeballs\s*=' |
+    ForEach-Object { "$($_.Path -replace '^.*?data\\',''):$($_.LineNumber): $($_.Line.Trim())" } |
+    Out-File $o -Append -Encoding utf8 -Width 400
+
+git add $o
+git commit -m "Paso 6: scripts de pokeball"
+git push
