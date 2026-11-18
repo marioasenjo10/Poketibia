@@ -230,3 +230,61 @@ Get-ChildItem "$d\lib" -Recurse -Include *.lua |
 git add $o
 git commit -m "Paso 6: scripts de pokeball"
 git push
+
+# ---------------------------------------------------------------------
+# [7] Arreglar /cb para que use la misma función que el juego
+#     (doAddPokeball) y sacar más info por si no basta.
+#     - Guarda el original como create_pokeball.lua.bak
+#     - Genera paso7.txt. Después: commit + push.
+#     DESPUÉS: reinicia el servidor y prueba /cb groudon
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+$d  = 'bases\pokedashpota1.0\data'
+$cb = "$d\talkactions\scripts\create_pokeball.lua"
+$o  = 'paso7.txt'
+
+if (-not (Test-Path "$cb.bak")) { Copy-Item $cb "$cb.bak" }
+@'
+function onSay(player, words, param)
+	if not player:getGroup():getAccess() then
+		return true
+	end
+
+	if player:getAccountType() < ACCOUNT_TYPE_GOD then
+		return false
+	end
+
+	local split = param:split(",")
+	local name = (split[1] or ""):match("^%s*(.-)%s*$")
+	if name == "" or not MonsterType(name) then
+		player:sendCancelMessage("Pokemon not found.")
+		return false
+	end
+
+	name = firstToUpper(name)
+	local level = tonumber(split[2]) or 1
+	local boost = tonumber(split[3]) or 0
+
+	doAddPokeball(player:getId(), name, level, boost, getBallKey(balls.ultraball.usedOn), false, 0)
+	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+	return true
+end
+'@ | Set-Content $cb -Encoding ASCII
+
+$nf = Get-Content "$d\lib\core\newfunctions.lua"
+"=== newfunctions.lua 2600-2690 (doAddPokeball) ===" | Out-File $o -Encoding utf8
+$nf[2599..2689] | Out-File $o -Append -Encoding utf8
+"=== newfunctions.lua: canReleaseSummon / balls = ===" | Out-File $o -Append -Encoding utf8
+$i = ($nf | Select-String -Pattern 'function Player:canReleaseSummon|function Player.canReleaseSummon' | Select-Object -First 1).LineNumber
+if ($i) { $nf[($i-1)..($i+40)] | Out-File $o -Append -Encoding utf8 }
+Get-ChildItem "$d\lib" -Recurse -Include *.lua | Select-String -Pattern '^\s*balls\s*=' | ForEach-Object {
+    $l = Get-Content $_.Path; $l[($_.LineNumber-1)..($_.LineNumber+20)]
+} | Out-File $o -Append -Encoding utf8
+"=== item_attributes.lua ===" | Out-File $o -Append -Encoding utf8
+Get-Content "$d\lib\core\item_attributes.lua" | Out-File $o -Append -Encoding utf8
+"=== events\scripts\player.lua (onLook) ===" | Out-File $o -Append -Encoding utf8
+Get-Content "$d\events\scripts\player.lua" -TotalCount 120 | Out-File $o -Append -Encoding utf8
+
+git add $o
+git commit -m "Paso 7: arreglo /cb + info"
+git push
