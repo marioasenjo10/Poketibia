@@ -1,0 +1,1319 @@
+﻿=== TALKACTIONS.XML (comandos) ===
+<?xml version="1.0" encoding="UTF-8"?>
+<talkactions>
+	<!-- commands -->
+	<talkaction words="/ban" separator=" " script="ban.lua" />
+	<talkaction words="/ipban" separator=" " script="ipban.lua" />
+	<talkaction words="/unban" separator=" " script="unban.lua" />
+	<talkaction words="/up" script="up.lua" />
+	<talkaction words="/down" script="down.lua" />
+	<talkaction words="/c" separator=" " script="teleport_creature_here.lua" />
+	<talkaction words="/goto" separator=" " script="teleport_to_creature.lua" />
+	<talkaction words="/gotopos" separator=" " script="teleport_to_position.lua" />
+	<talkaction words="/owner" separator=" " script="owner.lua" />
+	<talkaction words="/t" script="teleport_home.lua" />
+	<talkaction words="/town" separator=" " script="teleport_to_town.lua" />
+	<talkaction words="/a" separator=" " script="teleport_ntiles.lua" />
+	<talkaction words="/pos" separator=" " script="position.lua" />
+	<talkaction words="/info" separator=" " script="info.lua" />
+	<talkaction words="/r" separator=" " script="removething.lua" />
+	<talkaction words="/kick" separator=" " script="kick.lua" />
+	<talkaction words="/openserver" script="openserver.lua" />
+	<talkaction words="/closeserver" separator=" " script="closeserver.lua" />
+	<talkaction words="/B" separator=" " script="broadcast.lua" />
+	<talkaction words="/m" separator=" " script="place_monster.lua" />
+	<talkaction words="/i" separator=" " script="create_item.lua" />
+	<talkaction words="/cb" separator=" " script="create_pokeball.lua" />
+	<talkaction words="/s" separator=" " script="place_npc.lua" />
+	<talkaction words="/addtutor" separator=" " script="add_tutor.lua" />
+	<talkaction words="/removetutor" separator=" " script="remove_tutor.lua" />
+	<talkaction words="/looktype" separator=" " script="looktype.lua" />
+	<talkaction words="/summon" separator=" " script="place_summon.lua" />
+	<talkaction words="/chameleon" separator=" " script="chameleon.lua" />
+	<talkaction words="/addskill" separator=" " script="add_skill.lua" />
+	<talkaction words="/mccheck" script="mccheck.lua" />
+	<talkaction words="/ghost" script="ghost.lua" />
+	<talkaction words="/save" script="save.lua" />
+	<talkaction words="/clean" script="clean.lua" />
+	<talkaction words="/hide" script="hide.lua" />
+	<talkaction words="/setactionid" separator=" " script="set_actionid.lua" />
+	<talkaction words="/removeoutfit" separator=" " script="remove_outfit.lua" />
+	<talkaction words="/addpremium" separator=" " script="add_premium.lua" />
+
+	<!-- player talkactions -->
+	<talkaction words="!buypremium" script="buyprem.lua" />
+	<talkaction words="!buyvip" script="buyprem.lua" />
+	<talkaction words="!buyhouse" script="buyhouse.lua" />
+	<talkaction words="!leavehouse" script="leavehouse.lua" />
+	<talkaction words="!changesex" script="changesex.lua" />
+	<talkaction words="!uptime" script="uptime.lua" />
+	<talkaction words="!deathlist" script="deathlist.lua" />
+	<talkaction words="!kills" script="kills.lua" />
+	<talkaction words="!online" script="online.lua" />
+	<talkaction words="!serverinfo" script="serverinfo.lua" />
+	<talkaction words="!up" script="fly.lua" />
+	<talkaction words="!down" script="fly.lua" />
+	<talkaction words="!desbugar" script="desbugar.lua" />
+	<talkaction words="!tutorial" script="tutorial.lua" />
+	<talkaction words="!teleport" separator=" " script="summon_teleport.lua" />
+	<talkaction words="!comandos" script="commands.lua" />
+	<talkaction words="!commands" script="commands.lua" />
+	<talkaction words="!autoloot" script="autoloot.lua" />
+	<talkaction words="!catch" script="verify_catch.lua" />
+
+	<!-- test talkactions -->
+	<talkaction words="!z" separator=" " script="magiceffect.lua" />
+	<talkaction words="!x" separator=" " script="animationeffect.lua" />
+	<talkaction words="m1" script="summonspells.lua" />
+	<talkaction words="m2" script="summonspells.lua" />
+	<talkaction words="m3" script="summonspells.lua" />
+	<talkaction words="m4" script="summonspells.lua" />
+	<talkaction words="m5" script="summonspells.lua" />
+	<talkaction words="m6" script="summonspells.lua" />
+	<talkaction words="m7" script="summonspells.lua" />
+	<talkaction words="m8" script="summonspells.lua" />
+	<talkaction words="m9" script="summonspells.lua" />
+	<talkaction words="m10" script="summonspells.lua" />
+	<talkaction words="m11" script="summonspells.lua" />
+	<talkaction words="m12" script="summonspells.lua" />
+	<talkaction words="!p" separator=" " script="usesummon.lua" />
+</talkactions>
+=== NPCS ===
+A Bearded Woman
+A Beautiful Girl
+A Beggar
+A Confused Frog
+A Dark Priestess
+A Dead Bureaucrat1
+A Dead Bureaucrat2
+A Dead Bureaucrat3
+A Dead Bureaucrat4
+A Dwarven Ghost
+A Fading Memory
+A Fluffy Squirrel
+A Frog
+A Ghostly Guardian
+A Ghostly Knight
+A Ghostly Sage
+A Ghostly Woman Ghostland
+A Ghostly Woman
+A Grumpy Cyclops
+A Lost Soul
+A Majestic Warwolf
+A Prisoner
+A Restless Soul
+A Sleeping Dragon
+A Starving Dog
+A Strange Fellow
+A Sweaty Cyclops
+A Tainted Soul
+A Tortured Soul
+A Wrinkled Bonelord
+Abran Ironeye
+Admiral Wyrmslicer
+Adrenius
+Agatha
+Ahmet
+Ajax
+Al Dee
+Alaistar
+Albert
+Aldo
+Alesar
+Alexander
+Alia
+Alissa
+Allen
+Alternative Rock
+Alwin
+Amanda
+Amarie
+Amber
+An Ancient Priest
+An Apparition
+An Old Dragonlord
+An Orc Guard
+Anderson
+Anerui
+Aneus
+Angelina
+Angus
+Appaloosa
+Architect
+Ariella
+Arito
+Arkarra
+Arkhothep
+Arkulius
+ArmeniusNPC
+Arnold
+Aruda
+Ashari
+Ashtamor
+Asima
+Asnarus
+Asrak
+Asralius
+Atrad
+Auron
+Avar Tar
+Awarness Of The Emperor
+Azalea
+Azil
+Baa'leal
+Baltim
+Bambi Bonecrusher
+Barazbaz
+Barbara
+Barnabas Dee
+Barney
+Barry
+Bashira
+Basilisk
+Baxter
+Beatrice
+Benevola
+Benjamin
+Berenice
+Bertha
+Bertram
+Bezil
+Bigfoot Soldier
+Bill The Worker
+Billy
+Black Bert
+Blaine
+Blind Orc
+Blossom Bonecrusher
+Blue
+Bo'Ques
+Bob The Worker
+Bolfona
+Bonifacius
+Boozer
+Borkas
+Boveas
+Bozo
+Braden
+Bradford
+Brasith
+Brengus
+Brewster
+Briasol
+Brock
+Brodrosch
+Broken Servant Sentry
+Bron
+Bruce
+Bruno
+Buddel Helheim
+Buddel Okolnir
+Buddel Raider Camp
+Buddel Tyrsung
+Buddel
+Budrik
+Bunny Bonecrusher
+Busty Bonecrusher
+Cael
+Cameron
+Captain Bluebear
+Captain Breezelda
+Captain Chelop
+Captain Cookie
+Captain Dreadnought
+Captain Fearless
+Captain Greyhound
+Captain Gulliver
+Captain Haba
+Captain HabaOpenSea
+Captain Jack
+Captain Kurt
+Captain Max Calassa
+Captain Max
+Captain Seagull
+Captain Seahorse
+Captain Sinbeard
+Captain Tiberius
+Captain Waverider
+Captain WaveriderIsland
+Caramellia
+Carina
+Carlos
+Carlson
+Cedrik
+Ceiron
+Cerdras
+Cerinorr
+Chantalle
+Charles
+Charlotta
+Charos
+Chartan
+Chatterbone
+Chavis
+Chemar
+Chephan
+Chester Kahs
+Chief Grarkharok
+Chondur
+Chrak
+Christine
+Christoph
+Chrystal
+Chuck The Worker
+Chuckles
+Cillia
+Cipfried
+Clark
+Clyde
+CobraNPC
+Collector
+Coltrayne
+Commander Stone
+Cornelia
+Costello
+Cranky Lizard Crone
+Cruleo
+Curos
+Dabui
+Dagomir
+Dalbrect
+Dallheim
+Dane
+Daniel Steelsoul
+Dankwart
+Danlon
+Dario
+Demon SkeletonNPC
+Demonguard
+Dermot
+Diamond Collector
+Digger
+Dixi
+Djema
+Doctor Gnomedix
+Donald McRonald
+Dorbin
+Dorian
+Doubleday
+Doug
+Dove
+Dr Merlay
+Dreadeye
+Dream Butterfly
+Dregor
+Drog
+Dronk
+Druid Yandur
+Drystan Wildweed
+Dukosch
+Duncan
+Duria
+Dustrunner
+Eathar
+Ebenizer
+Eclesius
+Edala
+Eddy
+Edmund
+Edoch
+Edowir
+Edron Guardsman
+Edvard
+Eighty
+Eirik
+Elane
+Elathriel
+Elder Man
+Eleonore
+Elf Guard
+Elgar
+Eliza
+Elliott
+Elvith
+Elyen Ravenlock
+Emily
+Emma
+Emperor Kruzak
+Emperor Rehal
+Eranth
+Erayo
+Eremo
+Erika
+Erin
+Eroth
+Eruaran
+Esrik
+Essential
+Ethan
+Etzel
+Eva
+Evan
+Ezean
+Ezebeth
+Fa'Hradin
+Falk
+Falonzo
+Faluae
+Fayla
+Feizuhl
+Fenbala
+Fenech
+Fergus
+Ferks
+Ferryman Kamil Meluna
+Ferryman Kamil
+Ferus
+Fillias
+Finarfin
+Fiona
+Flint
+Flora
+Florentine
+Frafnar
+Frank The Plank
+Frans
+Frederik
+Freezhild
+Frodo
+Frok, The Guard
+Fynn
+Fyodor
+Gabel
+Gail
+Galuna
+Gamel
+Gamon
+Garamond
+Gate Guardian
+Gederas
+Gelagos
+George The Boyscout
+Gewen
+Ghost Of A Priest
+Giovanni
+Gnomad
+Gnomailion
+Gnomally
+Gnomargery
+Gnomaticus
+Gnombold
+Gnome
+Gnomegica
+Gnomejam
+Gnomelvis
+Gnomenursey
+Gnomeral
+Gnomercy
+Gnomerik
+Gnomerrow
+Gnomespector
+Gnomette
+Gnomewart
+Gnomillion
+Gnomilly
+Gnomincia
+Gnominus
+Gnomission
+Gnommander
+Gnomole
+Gnomux
+Golem Guardian
+Gordon
+Gorn
+Graham
+Graubart
+Gree Dee
+Gregor
+Grizzly Adams
+Grodrik
+Grof, The Guard
+Grombur
+Guardian of the Deep Seas
+Guide Alexena
+Guide Behil
+Guide Davina
+Guide Edna
+Guide Elena
+Guide Jonathan
+Guide Kunibert
+Guide Luke
+Guide Rahlkora
+Guide Thelandil
+Guide Tiko
+Gundralph
+Gurbasch
+H.L.
+Habdel
+Hagor
+Hairycles
+Hal
+Halif
+Halvar
+Hamilton
+Hamish
+Hanna
+Hardek
+Harkath Bloodblade
+Harlow Vengoth
+Harlow
+HarlowTrade
+Harog
+Haroun
+Harsky
+Hawkyr
+Healer
+Helor
+Hemor, The Guard
+Henricus
+Henry
+Herbert
+Hexel
+Hjaern
+Hofech
+Hoggle
+Hugo
+Humgolf
+Humnog, The Guard
+Humphrey
+Huntsman
+Hyacinth
+Imalas
+Imbul
+Inigo
+Irea
+Iriana
+Irmana
+Irvin
+Ishebad
+Ishina
+Isimov
+Iskan
+Isolde
+Iwan
+Iwar
+Iyad
+Izsh
+Jack Fate Goroma
+Jack Fate
+Jack The Worker
+Jack
+Jacob
+Jagran
+Jakahr
+James
+Janz
+Jason
+Jean Claude
+Jean Pierre
+Jefrey
+Jerom
+Jessica
+Jezzara
+Jimbin
+Jimmy
+Job Manager
+John
+Jondrin
+Jorge
+Jossel
+Julian
+Julie
+Julius
+Junkar Mines
+Junkar Robsons
+Junkar Thais
+Kalvin
+Karith
+Karl
+Kasmir
+Kawill
+Kazzan
+Kepar
+Kevin
+Kihil, The Guard
+King Tibianus
+Kjesse
+Klaus
+Klesar
+Knight Hykrion
+Koga
+Kromrek
+Kroox
+Kulag, The Guard
+Lailene
+Lance
+Larfion the Shaman
+Lavirias
+Lazaran
+Lea
+League Doorman
+Lector
+Lee'Delle
+Leeland
+Legola
+Liane
+Lightfoot
+Lily
+Lisander
+Livielle
+Lizard Tunnel Guard
+Llathriel
+Lokur
+Lorbas
+Lorek
+Lorelei
+Loria
+Lorietta
+Lothar
+Lou Toose
+Loui
+Lt. Surge
+Lubo
+Lucius
+Lugri
+Lukosch
+Luna
+Lunch
+Lungelen
+Lurik
+Lynda
+Lyonel
+Maealil
+Malor
+Malunga
+Manager
+Marcus
+Maria
+Marina
+Maris
+MarisFenrock
+MarisMistrock
+Maritima
+mark
+Markwin
+Marlene
+Maro
+Marvik
+Marvin
+Maryza
+Maun
+Mehkesh
+Melchior
+Melfar
+Melian
+Memech
+Menacing Mummy
+Menesto
+Meraya
+Miles, The Guard
+Milos
+Mirabell
+Miraia
+Misty
+Morax
+Mordecai
+Morgan
+Morpel
+Mortimer
+Mortis
+Morun
+Mother Of Jack
+Mr Brandon
+Mr Morris
+Mr. West
+Mugluf
+Muhad
+Muriel
+Murim
+Muzir
+Myra
+Mysterious Ornate Chest
+Nah'bob
+Naji
+Nate
+Navigator
+Neill
+Nelliem
+Nelly
+Nemal
+Nezil
+Nicholas
+Nielson
+Nienna
+Nilsor
+Nina
+Nokmir
+Noodles
+Nor
+Norbert
+Norf
+Norma
+Norman The Foreman
+Normod
+Norris
+Nurik
+Nurse Chansey
+Nurse
+Nydala
+Obi
+Oblivion
+Ocelus
+Odemara
+Oiriz
+Old Adall
+Old Rock Boy
+Oldrak
+Oliver
+Olrik
+Omrabas
+Omur
+One-Eyed Joe
+Ongulf
+Orc BerserkerNPC
+Oressa
+Ormuhn
+Orockle
+Ortheus
+Oswald
+Ottokar
+Padreia
+Paladin Narai
+Palimuth
+Palomino
+Paolo
+Parlan
+Partos
+Pat The Worker
+Paulie
+Peggy
+Pemaret
+Penny
+Perac
+Percy Silverhand
+Percybald
+Peremin
+Perod
+Peter
+Petros
+Phillip
+PigNPC
+Pino
+Plunderpurse
+Pokemon Collector
+Polly
+Pompan
+Prezil
+Priest
+Prisoner
+Professor Oak
+Puffels
+Pugwah
+Pukosch
+Pydar
+Pyro Peter
+Pyromental
+Pythius The RottenNPC
+Quandons Ghost
+Queen Eloise
+Quentin
+Quero
+Rabaz
+Rachel
+Raffael
+Rafzan
+Rahkem
+Rapanaio
+Rapanaioboat
+Rapanaioisleofevil
+Rashid
+Rata'Mari
+Ray
+Raymond Striker
+Razan
+Rebel
+Red Lilly
+Red
+Redward
+Reed
+Rehon
+Repenter
+Richard
+Riddler
+Robert
+Robin
+Robson
+Rock In A Hard Place
+Rock Steady
+Rock With A Soft Spot
+Roderick
+Rodney
+Roger The Worker
+Rokyn
+Romella
+Romir
+Rose
+Rosemarie
+Ross
+Roswitha
+Rotem Valos
+Rowenna
+Rudolph
+Ruprecht
+Sabrina
+Salbra
+Sam
+Samir
+Sandomo
+Sandra
+Sane Mage
+Santa Claus
+Santiago
+Sarina
+Satsu
+Scott The Scout
+Scott
+Scrutinon
+Scutty
+Sebastian Nargor
+Sebastian
+Ser Tybald
+Serafin
+Servant Sentry
+Seymour
+Shalmar
+Shanar
+Shanoya
+Sharon
+Shauna
+Sherry McRonald
+Shiantis
+Shiriel
+Shirith
+Shoddy Beggar
+Sholley
+Shortsighted Dwarf
+Siestaar
+Siflind
+Sigurd
+Silas
+Simon The Beggar
+Simon The Guard
+Sinatuki
+Sinclair
+Sirik
+Sister Of Jack
+Skeleton Guard
+Skip
+Skjaar
+Smiley
+Snake Eye
+Soilance
+Sorcerer Estrella
+Spectulus
+Stan
+Storkus
+Strange Pipe
+Stutch
+Suzy
+Sven
+Svenson
+Swolt
+Sylvester
+Talesia
+Talphion
+Tamara
+Tamerin
+Tamoril
+Tanaro
+Tandros
+TarakInner
+TarakSunken
+Tehlim
+Telas Golem
+Telas
+Tereban
+Terrence
+Tesha
+Testserver Assistant
+Tezila
+Thanita
+The Beggar King
+The Blind Prophet
+The Bone Master
+The Crone
+The Destiny Seer
+The Dream Master
+The Gate Keeper
+The Oracle
+The Orc King
+The Queen Of The Banshees
+The Witch
+The Wizard
+Theodore Loveless
+Thomas
+Thorgrin
+Thorwulf
+Tibra
+Tim, The Guard
+Timothy
+Timur
+Todd
+Tokel
+Token Collector
+Tom
+Tomruk The Ruddy
+Tony
+Toothless Tim
+Topsy
+Torence
+Tothdral
+Towncryer
+Trimegis
+Trisha
+Tristan
+Tulf
+Turvy
+Tylius
+Tyrias
+Ubaid
+Ukea
+Ula
+Ulala
+Ulrik
+Umar
+Uncle
+Urkalio
+Ursula
+Uso
+Ustan
+Uzgod
+Uzon
+UzonE
+Vad Inchi
+Valentina
+Vascalir
+Velvet
+Vera
+Vescu
+Vincent
+Virgil
+Vladruc
+Vulturenose
+Wally
+Walter, The Guard
+Warbert
+Weaponmaster
+Wentworth
+Willard
+Willem
+William
+Willie
+Willow
+Woblin
+Wyat
+Wyda
+Wyrdin
+Xed
+Xelvar
+Xodet
+Xorlosh
+YalahariNPC
+Yaman
+Yanni
+Yasir
+Yawno
+Yberius
+Yoem
+Yulas
+Zaidal
+Zalamon
+Zarak
+Zarifan
+Zebron
+Zedrulon The Fallen
+Zerbrus
+Zeronex
+Zethra
+Zirella
+Zirkon
+Zizzle
+Zlak
+Znozel
+Zoltan
+Zora
+Ztiss
+Zumtah
+Zurak
+Zurakarena
+=== ACTIONS.XML ===
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+	<!-- Quests -->
+	<action itemid="1740" script="quests/quests.lua" />
+	<action fromid="1747" toid="1749" script="quests/quests.lua" />
+	<action fromid="1353" toid="1355" script="quests/quests.lua" />
+	<action itemid="1407" script="quests/quests.lua" />
+	<action itemid="12664" script="quests/quests.lua" />
+	<action uniqueid="30015" script="quests/annihilator.lua" />
+	<action uniqueid="30000" script="quests/moltres.lua" />
+
+	<!-- Tools -->
+	<action itemid="2420" script="tools/machete.lua" />
+	<action itemid="2550" script="tools/scythe.lua" />
+	<action itemid="2580" script="tools/fishing.lua" allowfaruse="1" />
+	<action itemid="26820" script="tools/fishing.lua" allowfaruse="1" />
+	<action itemid="2554" script="tools/shovel.lua" />
+	<action itemid="2120" script="tools/rope.lua" />
+	<action itemid="38682" script="tools/rope.lua" />
+	<action itemid="27640" script="tools/new_rope.lua" />
+	<action itemid="2553" script="tools/pick.lua" />
+
+	<action itemid="7575" script="poke/dive.lua" />
+
+	<!-- Pokemon -->
+	<action itemid="2272" script="poke/catch.lua" allowfaruse="1" />
+	<action fromid="38779" toid="38787" script="poke/vitamin.lua" allowfaruse="1" />
+	<action itemid="38681" script="poke/coincounter.lua" />
+	<!-- Balls catch-->
+	<action itemid="26662" script="poke/catch.lua" allowfaruse="1" />
+	<action itemid="26660" script="poke/catch.lua" allowfaruse="1" />
+	<action itemid="26659" script="poke/catch.lua" allowfaruse="1" />
+	<action itemid="26688" script="poke/catch.lua" allowfaruse="1" />
+	<action itemid="26683" script="poke/catch.lua" allowfaruse="1" />
+	<action itemid="26685" script="poke/catch.lua" allowfaruse="1" />
+
+	<action itemid="2267" script="poke/revive.lua" allowfaruse="1" />
+	<action itemid="27645" script="poke/revive.lua" allowfaruse="1" />
+	<action itemid="2273" script="poke/healrune.lua" allowfaruse="1" />
+	<action itemid="27646" script="poke/healrune.lua" allowfaruse="1" />
+	<action itemid="2325" script="poke/summon.lua" />
+	<action itemid="26661" script="poke/summon.lua" />
+	<action itemid="26672" script="poke/summon.lua" />
+	<action itemid="26663" script="poke/summon.lua" />
+	<action itemid="26675" script="poke/summon.lua" />
+	<action itemid="26669" script="poke/summon.lua" />
+	<action itemid="26674" script="poke/summon.lua" />
+	<action itemid="26670" script="poke/summon.lua" />
+	<action itemid="26681" script="poke/summon.lua" />
+	<action itemid="26666" script="poke/summon.lua" />
+	<action itemid="26678" script="poke/summon.lua" />
+	<action itemid="26667" script="poke/summon.lua" />
+	<action itemid="26679" script="poke/summon.lua" />
+
+
+	<action itemid="2263" script="poke/pokedex.lua" allowfaruse="1" />
+	<action itemid="2270" script="poke/order.lua" allowfaruse="1" />
+	<action itemid="2291" script="poke/evolution.lua" allowfaruse="1" />
+	<action fromid="26723" toid="26736" script="poke/evolution.lua" allowfaruse="1" />
+	<action fromid="26742" toid="26748" script="poke/evolution.lua" allowfaruse="1" />
+	<action itemid="26749" script="poke/evolution.lua" allowfaruse="1" />
+
+	<action itemid="26693" script="poke/boost.lua" />
+	<action itemid="27634" script="poke/bike.lua" />
+	<action fromid="26772" toid="26773" script="poke/train.lua" />
+
+	<action itemid="26764" script="poke/box.lua" />
+	<action fromid="26812" toid="26819" script="poke/box.lua" />
+
+
+	<!-- Increase/Decrease ItemId -->
+	<action itemid="1873" function="increaseItemId" />
+	<action itemid="1874" function="decreaseItemId" />
+	<action itemid="1875" function="increaseItemId" />
+	<action itemid="1876" function="decreaseItemId" />
+	<action itemid="2162" function="increaseItemId" />
+	<action itemid="2163" function="decreaseItemId" />
+	<action itemid="3947" function="increaseItemId" />
+	<action itemid="3948" function="decreaseItemId" />
+	<action itemid="1479" function="increaseItemId" />
+	<action itemid="1480" function="decreaseItemId" />
+	<action itemid="1945" function="increaseItemId" />
+	<action itemid="1946" function="decreaseItemId" />
+	<action itemid="2037" function="increaseItemId" />
+	<action itemid="2038" function="decreaseItemId" />
+	<action itemid="2039" function="increaseItemId" />
+	<action itemid="2040" function="decreaseItemId" />
+	<action itemid="2058" function="increaseItemId" />
+	<action itemid="2059" function="decreaseItemId" />
+	<action itemid="2060" function="increaseItemId" />
+	<action itemid="2061" function="decreaseItemId" />
+	<action itemid="2066" function="increaseItemId" />
+	<action itemid="2067" function="decreaseItemId" />
+	<action itemid="2068" function="increaseItemId" />
+	<action itemid="2069" function="decreaseItemId" />
+	<action itemid="2064" function="increaseItemId" />
+	<action itemid="2065" function="decreaseItemId" />
+	<action itemid="2578" function="increaseItemId" />
+	<action itemid="2096" function="increaseItemId" />
+	<action itemid="2097" function="decreaseItemId" />
+	<action itemid="1786" function="increaseItemId" />
+	<action itemid="1787" function="decreaseItemId" />
+	<action itemid="1788" function="increaseItemId" />
+	<action itemid="1789" function="decreaseItemId" />
+	<action itemid="1790" function="increaseItemId" />
+	<action itemid="1791" function="decreaseItemId" />
+	<action itemid="1792" function="increaseItemId" />
+	<action itemid="1793" function="decreaseItemId" />
+	<action itemid="1634" function="increaseItemId" />
+	<action itemid="1635" function="decreaseItemId" />
+	<action itemid="1636" function="increaseItemId" />
+	<action itemid="1637" function="decreaseItemId" />
+	<action itemid="1638" function="increaseItemId" />
+	<action itemid="1639" function="decreaseItemId" />
+	<action itemid="1640" function="increaseItemId" />
+	<action itemid="1641" function="decreaseItemId" />
+	<action itemid="5812" function="increaseItemId" />
+	<action itemid="5813" function="decreaseItemId" />
+	<action itemid="6489" function="increaseItemId" />
+	<action itemid="6490" function="decreaseItemId" />
+	<action itemid="7058" function="increaseItemId" />
+	<action itemid="7059" function="decreaseItemId" />
+	<action itemid="8684" function="increaseItemId" />
+	<action itemid="8685" function="decreaseItemId" />
+	<action itemid="8686" function="increaseItemId" />
+	<action itemid="8687" function="decreaseItemId" />
+	<action itemid="8688" function="increaseItemId" />
+	<action itemid="8689" function="decreaseItemId" />
+	<action itemid="8690" function="increaseItemId" />
+	<action itemid="8691" function="decreaseItemId" />
+	<action itemid="9575" function="increaseItemId" />
+	<action itemid="9576" function="decreaseItemId" />
+	<action itemid="9577" function="increaseItemId" />
+	<action itemid="9578" function="decreaseItemId" />
+	<action itemid="9579" function="increaseItemId" />
+	<action itemid="9580" function="decreaseItemId" />
+	<action itemid="9581" function="increaseItemId" />
+	<action itemid="9582" function="decreaseItemId" />
+	<action itemid="9747" function="increaseItemId" />
+	<action itemid="9748" function="decreaseItemId" />
+	<action itemid="9749" function="increaseItemId" />
+	<action itemid="9750" function="decreaseItemId" />
+	<action itemid="19691" function="increaseItemId" />
+	<action itemid="19692" function="decreaseItemId" />
+
+	<!-- Food -->
+	<action itemid="2362" script="other/food.lua" />
+	<action fromid="2666" toid="2691" script="other/food.lua" />
+	<action fromid="2695" toid="2696" script="other/food.lua" />
+	<action fromid="2787" toid="2796" script="other/food.lua" />
+	<action itemid="5097" script="other/food.lua" />
+	<action itemid="6125" script="other/food.lua" />
+	<action fromid="6278" toid="6279" script="other/food.lua" />
+	<action fromid="6393" toid="6394" script="other/food.lua" />
+	<action itemid="6501" script="other/food.lua" />
+	<action fromid="6541" toid="6545" script="other/food.lua" />
+	<action itemid="6569" script="other/food.lua" />
+	<action itemid="6574" script="other/food.lua" />
+	<action fromid="7158" toid="7159" script="other/food.lua" />
+	<action fromid="7372" toid="7377" script="other/food.lua" />
+	<action fromid="7909" toid="7910" script="other/food.lua" />
+	<action itemid="7963" script="other/food.lua" />
+	<action itemid="8112" script="other/food.lua" />
+	<action fromid="8838" toid="8845" script="other/food.lua" />
+	<action itemid="8847" script="other/food.lua" />
+	<action itemid="9005" script="other/food.lua" />
+	<action itemid="9114" script="other/food.lua" />
+	<action itemid="9996" script="other/food.lua" />
+	<action itemid="10454" script="other/food.lua" />
+	<action itemid="11246" script="other/food.lua" />
+	<action itemid="11370" script="other/food.lua" />
+	<action itemid="11429" script="other/food.lua" />
+	<action fromid="12415" toid="12418" script="other/food.lua" />
+	<action fromid="12637" toid="12639" script="other/food.lua" />
+	<action itemid="13297" script="other/food.lua" />
+	<action itemid="15405" script="other/food.lua" />
+	<action fromid="15487" toid="15488" script="other/food.lua" />
+	<action itemid="16014" script="other/food.lua" />
+	<action itemid="18397" script="other/food.lua" />
+	<action itemid="19737" script="other/food.lua" />
+	<action fromid="20100" toid="20101" script="other/food.lua" />
+
+	<!-- Spellbooks -->
+	<action itemid="2175" script="other/spellbook.lua" />
+	<action itemid="6120" script="other/spellbook.lua" />
+	<action fromid="8900" toid="8904" script="other/spellbook.lua" />
+	<action itemid="8918" script="other/spellbook.lua" />
+
+	<!-- Other -->
+	<action itemid="6578" script="other/partyhat.lua" />
+	<action itemid="2114" script="other/piggybank.lua" />
+	<action fromid="6570" toid="6571" script="other/surprisebag.lua" />
+	<action itemid="6576" script="other/fireworksrocket.lua" />
+	<action itemid="2036" script="other/watch.lua" />
+	<action fromid="1728" toid="1731" script="other/watch.lua" />
+	<action itemid="2785" script="other/blueberrybush.lua" />
+	<action itemid="2579" script="other/trap.lua" />
+	<action itemid="2148" script="other/changegold.lua" />
+	<action itemid="2152" script="other/changegold.lua" />
+	<action itemid="2160" script="other/changegold.lua" />
+	<action fromid="3901" toid="3938" script="other/constructionkits.lua" />
+	<action fromid="5086" toid="5088" script="other/constructionkits.lua" />
+	<action itemid="6114" script="other/constructionkits.lua" />
+	<action itemid="6115" script="other/constructionkits.lua" />
+	<action itemid="6372" script="other/constructionkits.lua" />
+	<action itemid="6373" script="other/constructionkits.lua" />
+	<action itemid="8692" script="other/constructionkits.lua" />
+	<action itemid="9974" script="other/constructionkits.lua" />
+	<action itemid="11124" script="other/constructionkits.lua" />
+	<action itemid="11126" script="other/constructionkits.lua" />
+	<action itemid="11133" script="other/constructionkits.lua" />
+	<action itemid="11205" script="other/constructionkits.lua" />
+	<action itemid="14328" script="other/constructionkits.lua" />
+	<action itemid="14329" script="other/constructionkits.lua" />
+	<action itemid="16075" script="other/constructionkits.lua" />
+	<action itemid="16099" script="other/constructionkits.lua" />
+	<action itemid="20254" script="other/constructionkits.lua" />
+	<action itemid="20255" script="other/constructionkits.lua" />
+	<action itemid="20257" script="other/constructionkits.lua" />
+	<action fromid="7904" toid="7907" script="other/bed_modification_kits.lua" />
+	<action itemid="20252" script="other/bed_modification_kits.lua" />
+	<action fromid="2070" toid="2085" script="other/music.lua" />
+	<action itemid="2332" script="other/music.lua" />
+	<action itemid="2364" script="other/music.lua" />
+	<action fromid="2367" toid="2373" script="other/music.lua" />
+	<action fromid="3951" toid="3953" script="other/music.lua" />
+	<action itemid="3957" script="other/music.lua" />
+	<action itemid="5786" script="other/music.lua" />
+	<action fromid="6572" toid="6573" script="other/music.lua" />
+	<action itemid="13759" script="other/music.lua" />
+	<action fromid="2041" toid="2042" script="other/decayto.lua" />
+	<action fromid="2044" toid="2045" script="other/decayto.lua" />
+	<action fromid="2047" toid="2048" script="other/decayto.lua" />
+	<action fromid="2050" toid="2055" script="other/decayto.lua" />
+	<action itemid="430" script="other/teleport.lua" />
+	<action itemid="1369" script="other/teleport.lua" />
+	<action itemid="1386" script="other/teleport.lua" />
+	<action itemid="3678" script="other/teleport.lua" />
+	<action itemid="5543" script="other/teleport.lua" />
+	<action fromid="2376" toid="2404" script="other/destroy.lua" />
+	<action fromid="2406" toid="2419" script="other/destroy.lua" />
+	<action fromid="2421" toid="2453" script="other/destroy.lua" />
+	<action fromid="2005" toid="2009" script="other/fluids.lua" />
+	<action fromid="2011" toid="2015" script="other/fluids.lua" />
+	<action itemid="2023" script="other/fluids.lua" />
+	<action itemid="1775" script="other/fluids.lua" />
+	<action fromid="2031" toid="2034" script="other/fluids.lua" />
+	<action fromid="2574" toid="2577" script="other/fluids.lua" />
+	<action itemid="23582" script="other/die.lua" />
+	<action itemid="7588" script="other/potions.lua" />
+	<action itemid="7589" script="other/potions.lua" />
+	<action itemid="7590" script="other/potions.lua" />
+	<action itemid="7591" script="other/potions.lua" />
+	<action itemid="7618" script="other/potions.lua" />
+	<action itemid="7620" script="other/potions.lua" />
+	<action itemid="8472" script="other/potions.lua" />
+	<action itemid="8473" script="other/potions.lua" />
+	<action itemid="8474" script="other/potions.lua" />
+	<action itemid="8704" script="other/potions.lua" />
+	<action itemid="2692" script="other/createbread.lua" />
+	<action itemid="2694" script="other/createbread.lua" />
+	<action fromid="6436" toid="6447" script="other/windows.lua" />
+	<action fromid="6450" toid="6473" script="other/windows.lua" />
+	<action fromid="6788" toid="6791" script="other/windows.lua" />
+	<action fromid="7025" toid="7032" script="other/windows.lua" />
+	<action fromid="10264" toid="10267" script="other/windows.lua" />
+	<action fromid="10488" toid="10491" script="other/windows.lua" />
+	<action fromid="5303" toid="5304" script="other/windows.lua" />
+	<action fromid="6448" toid="6449" script="other/windows.lua" />
+	<action fromid="19427" toid="19428" script="other/windows.lua" />
+	<action fromid="19440" toid="19441" script="other/windows.lua" />
+	<action fromid="19443" toid="19450" script="other/windows.lua" />
+	<action fromid="19974" toid="19975" script="other/windows.lua" />
+	<action fromid="20180" toid="20185" script="other/windows.lua" />
+	<action fromid="1209" toid="1214" script="other/doors.lua" />
+	<action fromid="1219" toid="1262" script="other/doors.lua" />
+	<action fromid="1539" toid="1542" script="other/doors.lua" />
+	<action fromid="2086" toid="2092" script="other/doors.lua" />
+	<action fromid="3535" toid="3552" script="other/doors.lua" />
+	<action fromid="4913" toid="4918" script="other/doors.lua" />
+	<action fromid="5082" toid="5085" script="other/doors.lua" />
+	<action fromid="5098" toid="5145" script="other/doors.lua" />
+	<action fromid="5278" toid="5295" script="other/doors.lua" />
+	<action fromid="5515" toid="5518" script="other/doors.lua" />
+	<action fromid="5732" toid="5737" script="other/doors.lua" />
+	<action fromid="5745" toid="5749" script="other/doors.lua" />
+	<action fromid="6192" toid="6209" script="other/doors.lua" />
+	<action fromid="6249" toid="6266" script="other/doors.lua" />
+	<action fromid="6795" toid="6802" script="other/doors.lua" />
+	<action fromid="6891" toid="6908" script="other/doors.lua" />
+	<action fromid="7033" toid="7050" script="other/doors.lua" />
+	<action fromid="7054" toid="7057" script="other/doors.lua" />
+	<action fromid="8541" toid="8558" script="other/doors.lua" />
+	<action fromid="9165" toid="9184" script="other/doors.lua" />
+	<action fromid="9267" toid="9284" script="other/doors.lua" />
+	<action itemid="10032" script="other/doors.lua" />
+	<action fromid="10268" toid="10285" script="other/doors.lua" />
+	<action fromid="10468" toid="10486" script="other/doors.lua" />
+	<action fromid="10775" toid="10777" script="other/doors.lua" />
+	<action fromid="10780" toid="10786" script="other/doors.lua" />
+	<action fromid="10789" toid="10792" script="other/doors.lua" />
+	<action fromid="12092" toid="12105" script="other/doors.lua" />
+	<action fromid="12188" toid="12190" script="other/doors.lua" />
+	<action fromid="12193" toid="12199" script="other/doors.lua" />
+	<action fromid="12202" toid="12205" script="other/doors.lua" />
+	<action fromid="19840" toid="19857" script="other/doors.lua" />
+	<action fromid="19980" toid="19997" script="other/doors.lua" />
+	<action fromid="20273" toid="20290" script="other/doors.lua" />
+	<action fromid="17235" toid="17238" script="other/doors.lua" />
+	<action fromid="18208" toid="18209" script="other/doors.lua" />
+	<action fromid="13020" toid="13023" script="other/doors.lua" />
+	<action fromid="35089" toid="35092" script="other/doors.lua" />
+	<action itemid="14405" function="market" />
+	<action fromid="18488" toid="18492" script="other/skilltrainer.lua" />
+	<action itemid="3743" script="other/transforms.lua" />
+	<action itemid="4404" script="other/transforms.lua" />
+</actions>
+=== CREATURESCRIPTS.XML ===
+<?xml version="1.0" encoding="UTF-8"?>
+<creaturescripts>
+	<event type="login" name="PlayerLogin" script="login.lua" />
+	<event type="logout" name="PlayerLogout" script="logout.lua" />
+  	<event type="login" name="FirstItems" script="firstitems.lua" />
+	<event type="login" name="OfflineTraining" script="offlinetraining.lua" />
+	<event type="login" name="RegenerateStamina" script="regeneratestamina.lua" />
+	<event type="death" name="PlayerDeath" script="playerdeath.lua" />
+	<event type="preparedeath" name="PrepareDeathArena" script="playerdeath_arena.lua" />
+	<event type="preparedeath" name="PrepareDeathArenaPvp" script="playerdeath_arenapvp.lua" />
+	<event type="death" name="CorpseLevel" script="corpselevel.lua" />
+	<event type="postdeath" name="CorpseLoot" script="corpseloot.lua" />
+<!--  	<event type="death" name="DropLoot" script="droploot.lua" /> -->
+	<event type="death" name="MonsterDeath" script="monsterdeath.lua" />
+	<event type="preparedeath" name="LegendariesDeath" script="legendariesdeath.lua" />-->
+	<event type="extendedopcode" name="ExtendedOpcode" script="extendedopcode.lua" />
+	<event type="healthchange" name="MonsterHealthChange" script="monsterhealthchange.lua" />
+	<event type="move" name="FlyEvent" script="flyevent.lua" />
+	<event type="move" name="RemoveSummon" script="removesummon.lua" />
+	<event type="modalwindow" name="ModalWindowHelper" script="modalwindowhelper.lua" />
+
+</creaturescripts>
+=== CIUDADES (del mapa) ===
+town 15 : Eirian
+town 17 : Arcania
+town 18 : Eternia
+town 19 : Lunna
+town 34 : Saffron
+town 35 : Cerulean
+town 36 : Lavender
+town 37 : Fuchsia
+town 38 : Celadon
+town 39 : Viridian
+town 40 : Vermilion
+town 41 : Pewter
+town 42 : Pallet
+town 43 : Cinnabar
+town 44 : Snow
+town 45 : Nostrus
+town 47 : Natturu
+town 48 : Trade Center
+town 49 : Outland
+town 50 : New Bark
+town 51 : Cherrygrove
+town 52 : Violet
+town 53 : Azalea
+town 54 : Goldenrod
+town 55 : Ecruteak
+town 56 : Cianwood
+town 57 : Olivine
+town 58 : Mahogany
+town 59 : Blackthorn
