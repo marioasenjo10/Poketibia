@@ -1,0 +1,443 @@
+﻿=== newfunctions.lua 2600-2690 (doAddPokeball) ===
+			v:sendTextMessage(message_type, text, self, value, color)
+		end
+	end
+end
+
+
+--function Item.isPokeball(self)
+--	if self:getId() == filledPokeball then
+--		return true
+--	end
+--	return false
+--end
+
+
+function Item.isPokeball(self)
+	for key, value in pairs(balls) do
+		if value.usedOn == self:getId() or value.usedOff == self:getId() then
+			return true			
+		end
+	end
+	return false
+end
+
+function doAddPokeball(cid, name, level, boost, ballKey, dp, msg)
+	local player = Player(cid)
+	if player then
+		name = firstToUpper(name)
+		local monsterType = MonsterType(name)
+		if not monsterType then 
+			print("WARNING: Monster " .. name .. " impossible to catch.") 
+			player:sendCancelMessage("Sorry, not possible. This problem was reported.")
+			return false 
+		end
+		local addBall
+		if dp == false then
+			addBall = player:addItem(balls[ballKey].usedOn, 1, false)
+		else
+			local depot = player:getInbox()
+			addBall = depot:addItem(balls[ballKey].usedOn, 1, INDEX_WHEREEVER, FLAG_NOLIMIT)
+		end
+		if not addBall then
+			if dp == false then -- try send to CP because BP is full
+				local depot = player:getInbox()
+				addBall = depot:addItem(balls[ballKey].usedOn, 1, INDEX_WHEREEVER, FLAG_NOLIMIT)
+				addEvent(doPlayerSendTextMessage, msg, cid, MESSAGE_EVENT_ADVANCE, "Since you are at maximum capacity, your ball was sent to CP.")
+--				print("WARNING! Player " .. player:getName() .. " sending pokemon " .. name .. " to CP after first try.")
+				dp = true
+			else
+				addBall = player:addItem(balls[ballKey].usedOn, 1)
+				addEvent(doPlayerSendTextMessage, msg, cid, MESSAGE_STATUS_WARNING, "Pokemon lost. Your CP is full!")
+				print("WARNING! Player " .. player:getName() .. " lost pokemon " .. name .. " because CP is full.")
+			end
+		end
+		if addBall then
+			local baseHealth = monsterType:getMaxHealth()
+			local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), level, boost, 0))
+			addBall:setSpecialAttribute("pokeName", name)
+			addBall:setSpecialAttribute("pokeLevel", level)
+			addBall:setSpecialAttribute("pokeBoost", boost)
+			addBall:setSpecialAttribute("pokeExperience", getNeededExp(level))
+			addBall:setSpecialAttribute("pokeMaxHealth", maxHealth)
+			addBall:setSpecialAttribute("pokeHealth", maxHealth)
+			addBall:setSpecialAttribute("pokeLove", 0)
+			if dp == false then
+				player:refreshPokemonBar({}, {})
+			end
+			return true
+		else
+			print("ERROR! Player " .. player:getName() .. " lost pokemon " .. name .. " for unknown reason.")
+		end
+	end
+	print("WARNING! Player not found to add pokeball.")
+	return false	
+end
+
+function Player.getPokeballCount(self)
+	local nBalls = 0
+	for key, value in pairs(balls) do
+		nBalls = nBalls + self:getItemCount(value.usedOn) + self:getItemCount(value.usedOff)
+	end	
+	return nBalls
+end
+
+function searchInContainer(container, itemId)
+	local count = 0
+	if container:isContainer() then
+		local items = container:getItem()
+		for i = 0, container:getSize() do
+			local item = container:getItem(i)
+			if item then
+				if item:isContainer() then
+=== newfunctions.lua: canReleaseSummon / balls = ===
+function Player:canReleaseSummon(pokeLevel, pokeBoost, ownerName)
+
+	-- to fix ball bug
+	if not pokeLevel then return false end
+
+	local playerLevel = self:getLevel()
+	local minimumLevel = math.floor((pokeLevel + pokeBoost)/1.5)
+
+	if playerLevel < minimumLevel then
+		self:sendCancelMessage("Sorry, not possible. You need level " .. minimumLevel .. " to use this pokemon.")
+		return false
+	end
+
+	if ownerName then
+		if self:getStorageValue(quests.cathemAll.prizes[1].uid) < 2 then
+			print("WARNING! Player " .. self:getName() .. " using unique Pokemon without finish the quest!")
+		end
+	end
+
+	if ownerName and ownerName ~= self:getName() then
+		self:sendCancelMessage("Sorry, it belongs to " .. ownerName .. ".")
+		return false
+	end
+
+	return true
+end
+
+function Item:getSummonLevel()
+	return self:getSpecialAttribute("pokeLevel")
+end
+
+function Item:getSummonName()
+	return self:getSpecialAttribute("pokeName")
+end
+
+function Item:getSummonBoost()
+	return self:getSpecialAttribute("pokeBoost")
+end
+
+function Item:getSummonOwner()
+	return self:getSpecialAttribute("owner")
+end
+balls = {
+pokeball = {emptyId = 26662, usedOn = 26661, usedOff = 26672, effectFail = 734, effectSucceed = 735, missile = 55, effectRelease = 308, chanceMultiplier = 1.0},
+greatball = {emptyId = 26660, usedOn = 26663, usedOff = 26675, effectFail = 738, effectSucceed = 739, missile = 57, effectRelease = 309, chanceMultiplier = 1.2},
+superball = {emptyId = 26659, usedOn = 26669, usedOff = 26674, effectFail = 736, effectSucceed = 737, missile = 56, effectRelease = 879, chanceMultiplier = 1.3},
+ultraball = {emptyId = 26688, usedOn = 26670, usedOff = 26681, effectFail = 740, effectSucceed = 741, missile = 58, effectRelease = 311, chanceMultiplier = 1.4},
+premierball = {emptyId = 26683, usedOn = 26666, usedOff = 26678, effectFail = 321, effectSucceed = 322, missile = 129, effectRelease = 310, chanceMultiplier = 1.5},
+safariball = {emptyId = 26685, usedOn = 26667, usedOff = 26679, effectFail = 323, effectSucceed = 324, missile = 128, effectRelease = 315, chanceMultiplier = 1.0},
+lamp = {emptyId = 2272, usedOn = 2325, usedOff = 23255, effectFail = 734, effectSucceed = 735, missile = 55, effectRelease = 308, chanceMultiplier = 1.0}
+}
+
+quests = 
+{
+
+catches = {
+		prizes = {
+			[1] = {
+				uid = storageCatchQuest,
+				items = {
+				},
+				pokes = {					
+				},
+				badges = {
+=== item_attributes.lua ===
+function insertIndex(i, buffer)
+    table.insert(buffer, "[")
+    if type(i) == "string" then
+        table.insert(buffer, '"')
+        table.insert(buffer, i)
+        table.insert(buffer, '"')
+    elseif type(i) == "number" then
+        table.insert(buffer, tostring(i))
+    end
+    table.insert(buffer, "] = ")
+end
+ 
+function indexToStr(i, v, buffer)
+    local tp = type(v)
+    local itp = type(i)
+    if itp ~= "number" and itp ~= "string" then
+        print("Invalid index to serialize: " .. type(i))
+    else
+        if tp == "table" then
+            insertIndex(i, buffer)
+            serializeTable(v, buffer)
+            table.insert(buffer, ",")
+        elseif tp == "number" then
+            insertIndex(i, buffer)
+            table.insert(buffer, tostring(v))
+            table.insert(buffer, ",")
+        elseif tp == "string" then
+            insertIndex(i, buffer)
+            table.insert(buffer, '"')
+            table.insert(buffer, v)
+            table.insert(buffer, '",')
+        elseif tp == "boolean" then
+            insertIndex(i, buffer)
+            table.insert(buffer, v == true and "true" or "false")
+            table.insert(buffer, ",")
+        else
+            print("Invalid type to serialize: " .. tp .. ", index: " .. i)
+        end
+    end
+end
+ 
+function serializeTable(t, buffer)
+    local buffer = buffer or {}
+    table.insert(buffer, "{")
+    for i, x in pairs(t) do
+        indexToStr(i, x, buffer)
+    end
+    table.insert(buffer, "}")
+    return table.concat(buffer)
+end
+ 
+function table.copy(t, out)
+    out = out or {}
+    if type(t) ~= "table" then
+        return false
+    end
+ 
+    for i, x in pairs(t) do
+        if type(x) == "table" then
+            out[i] = {}
+            table.copy(t[i], out[i])
+        else
+            out[i] = x
+        end
+    end
+    return out
+end
+ 
+function unserializeTable(str, out)
+    local tmp = loadstring("return " .. str)
+    if tmp then
+        tmp = tmp()
+    else
+        print("Unserialization error: " .. str)
+        return false
+    end
+    return table.copy(tmp, out)
+end
+ 
+local function setTableIndexes(t, i, v, ...)
+    if i and v then
+        t[i] = v
+        return setTableIndexes(t, ...)
+    end
+end
+ 
+local function getTableIndexes(t, i, ...)
+    if i then
+        return t[i], getTableIndexes(t, ...)
+    end
+end
+ 
+function Item:setSpecialAttribute(...)
+    local tmp
+    if self:hasAttribute(ITEM_ATTRIBUTE_SPECIAL) then
+        tmp = self:getAttribute(ITEM_ATTRIBUTE_SPECIAL)
+    else
+        tmp = "{}"
+    end
+ 
+    local tab = unserializeTable(tmp)
+    if tab then
+        setTableIndexes(tab, ...)
+        tmp = serializeTable(tab)
+        self:setAttribute(ITEM_ATTRIBUTE_SPECIAL, tmp)
+        return true
+    end
+end
+ 
+function Item:getSpecialAttribute(...)
+    local tmp
+    if self:hasAttribute(ITEM_ATTRIBUTE_SPECIAL) then
+        tmp = self:getAttribute(ITEM_ATTRIBUTE_SPECIAL)
+    else
+        tmp = "{}"
+    end
+ 
+    local tab = unserializeTable(tmp)
+    if tab then
+        return getTableIndexes(tab, ...)
+    end
+end
+
+if not PLAYER_STORAGE then
+    PLAYER_STORAGE = {}
+end
+ 
+function Player:setSpecialStorage(storage, value)
+    if not PLAYER_STORAGE[self:getGuid()] then
+        self:loadSpecialStorage()
+    end
+ 
+    PLAYER_STORAGE[self:getGuid()][storage] = value
+end
+ 
+function Player:getSpecialStorage(storage)
+    if not PLAYER_STORAGE[self:getGuid()] then
+        self:loadSpecialStorage()
+    end
+ 
+    return PLAYER_STORAGE[self:getGuid()][storage]
+end
+
+function Player:loadSpecialStorage()
+    if not PLAYER_STORAGE then
+        PLAYER_STORAGE = {}
+    end
+ 
+    PLAYER_STORAGE[self:getGuid()] = {}
+--    local resultId = db.storeQuery("SELECT * FROM `player_misc` WHERE `player_id` = " .. self:getGuid())
+--    if resultId then
+--        local info = result.getStream(resultId , "info") or "{}"
+--        unserializeTable(info, PLAYER_STORAGE[self:getGuid()])
+--    end
+end
+ 
+--function Player:saveSpecialStorage()
+--    if PLAYER_STORAGE and PLAYER_STORAGE[self:getGuid()] then
+--        local tmp = serializeTable(PLAYER_STORAGE[self:getGuid()])
+--        db.query("DELETE FROM `player_misc` WHERE `player_id` = " .. self:getGuid())
+--        db.query(string.format("INSERT INTO `player_misc` (`player_id`, `info`) VALUES (%d, %s)", self:getGuid(), db.escapeBlob(tmp, #tmp)))
+--    end
+--end
+
+=== events\scripts\player.lua (onLook) ===
+function Player:onBrowseField(position)
+	return true
+end
+
+function Player:onLook(thing, position, distance)
+	local description = "You see " .. thing:getDescription(distance)
+	if not thing:isItem() and isSummon(thing) then
+		local master = thing:getMaster()
+		if master:isPlayer() then
+			local item = master:getUsingBall()
+			local pokeName = item:getSpecialAttribute("pokeName")
+			local pokeLevel = item:getSpecialAttribute("pokeLevel")
+			local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
+			local pokeLove = item:getSpecialAttribute("pokeLove") or 0
+			if pokeName ~= nil and pokeLevel ~= nil then			
+				description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
+			end
+		end
+	end
+	if thing:isItem() and thing:isPokeball() then
+		local pokeName = thing:getSpecialAttribute("pokeName")
+		local pokeLevel = thing:getSpecialAttribute("pokeLevel")
+		local pokeBoost = thing:getSpecialAttribute("pokeBoost") or 0
+		local pokeLove = thing:getSpecialAttribute("pokeLove") or 0
+		local ownerName = thing:getSpecialAttribute("owner")
+		local pokeHealth = tonumber(thing:getSpecialAttribute("pokeHealth")) or 0
+		local healthStr = ""
+		if ownerName then
+			healthStr = "It belongs to " .. ownerName .. "."
+		end
+		if pokeHealth <= 0 then
+			healthStr = "It is fainted."
+		end
+		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
+			description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
+		end
+	end
+	if thing:isPlayer() and thing ~= self then
+		if thing:getAccountType() == ACCOUNT_TYPE_TUTOR then
+			if thing:getSex() == PLAYERSEX_MALE then
+				description = string.format("%s He is a Tutor.", description)
+			else
+				description = string.format("%s She is a Tutor.", description)
+			end
+		end
+	end
+	if thing:isPlayer() and thing == self then
+		if thing:getAccountType() == ACCOUNT_TYPE_TUTOR then
+			description = string.format("%s You are a Tutor.", description)
+		end
+	end
+	if self:getGroup():getAccess() then
+		if thing:isItem() then
+			description = string.format("%s\nItem ID: %d", description, thing:getId())
+
+			local actionId = thing:getActionId()
+			if actionId ~= 0 then
+				description = string.format("%s, Action ID: %d", description, actionId)
+			end
+
+			local uniqueId = thing:getAttribute(ITEM_ATTRIBUTE_UNIQUEID)
+			if uniqueId > 0 and uniqueId < 65536 then
+				description = string.format("%s, Unique ID: %d", description, uniqueId)
+			end
+
+			local itemType = thing:getType()
+			local transformEquipId = itemType:getTransformEquipId()
+			local transformDeEquipId = itemType:getTransformDeEquipId()
+			if transformEquipId ~= 0 then
+				description = string.format("%s\nTransforms to: %d (onEquip)", description, transformEquipId)
+			elseif transformDeEquipId ~= 0 then
+				description = string.format("%s\nTransforms to: %d (onDeEquip)", description, transformDeEquipId)
+			end
+
+			local decayId = itemType:getDecayId()
+			if decayId ~= -1 then
+				description = string.format("%s\nDecays to: %d", description, decayId)
+			end
+		elseif thing:isCreature() then
+			local str = "%s\nHealth: %d / %d"
+			if thing:getMaxMana() > 0 then
+				str = string.format("%s, Mana: %d / %d", str, thing:getMana(), thing:getMaxMana())
+			end
+			description = string.format(str, description, thing:getHealth(), thing:getMaxHealth()) .. "."
+		end
+
+		if thing:isCreature() then
+			if thing:isPlayer() then
+				description = string.format("%s\nIP: %s.", description, Game.convertIpToString(thing:getIp()))
+			end
+		end
+	end
+	if self:getAccountType() >= ACCOUNT_TYPE_TUTOR then
+		local position = thing:getPosition()
+		description = string.format(
+			"%s\nPosition: %d, %d, %d",
+			description, position.x, position.y, position.z
+		)
+	end
+	self:sendTextMessage(MESSAGE_INFO_DESCR, description)
+end
+
+function Player:onLookInBattleList(creature, distance)
+	local description = "You see " .. creature:getDescription(distance)
+	if isSummon(creature) then
+		local master = creature:getMaster()
+--		local item = master:getSlotItem(CONST_SLOT_AMMO)
+--		local pokeName = item:getSpecialAttribute("pokeName")
+--		local pokeLevel = item:getSpecialAttribute("pokeLevel")
+		local pokeName = master:getName()
+		local pokeLevel = creature:getLevel()
+		if pokeName ~= nil and pokeLevel ~= nil then			
+			description = string.format("%s\nIt belongs to %s. Level: %s.", description, master:getName(), pokeLevel)
+		end
+	end
+	if self:getGroup():getAccess() then
+		local str = "%s\nHealth: %d / %d"
+		if creature:getMaxMana() > 0 then
+			str = string.format("%s, Mana: %d / %d", str, creature:getMana(), creature:getMaxMana())
+		end
