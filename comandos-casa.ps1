@@ -76,15 +76,48 @@ git add $o
 git commit -m "Paso 2: BD PokeDash"
 git push
 
+# (SQL usado en phpMyAdmin para pasar GOD Pota a la cuenta admin - NO pegar en PowerShell)
+# INSERT INTO accounts (name, password, email, type, creation)
+# VALUES ('admin', SHA1('admin'), 'admin@local', 5, UNIX_TIMESTAMP());
+# UPDATE players
+# SET account_id = (SELECT id FROM accounts WHERE name = 'admin'), group_id = 3
+# WHERE name = 'GOD Pota';
 
+# ---------------------------------------------------------------------
+# [3] Listar los comandos de GM, NPCs y scripts de la base
+#     Genera paso3.txt. Después: commit + push.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+$b = 'bases\pokedashpota1.0\data'
+$o = 'paso3.txt'
 
+"=== TALKACTIONS.XML (comandos) ===" | Out-File $o -Encoding utf8
+Get-Content "$b\talkactions\talkactions.xml" | Out-File $o -Append -Encoding utf8
 
-INSERT INTO accounts (name, password, email, type, creation)
-VALUES ('admin', SHA1('admin'), 'admin@local', 5, UNIX_TIMESTAMP());
+"=== NPCS ===" | Out-File $o -Append -Encoding utf8
+Get-ChildItem "$b\npc" -File -Filter *.xml | Select-Object -ExpandProperty BaseName | Out-File $o -Append -Encoding utf8
 
-UPDATE players
-SET account_id = (SELECT id FROM accounts WHERE name = 'admin'), group_id = 3
-WHERE name = 'GOD Pota';
+"=== ACTIONS.XML ===" | Out-File $o -Append -Encoding utf8
+Get-Content "$b\actions\actions.xml" | Out-File $o -Append -Encoding utf8
 
-SELECT a.id, a.name, a.type, p.name AS personaje, p.group_id
-FROM accounts a LEFT JOIN players p ON p.account_id = a.id;
+"=== CREATURESCRIPTS.XML ===" | Out-File $o -Append -Encoding utf8
+Get-Content "$b\creaturescripts\creaturescripts.xml" | Out-File $o -Append -Encoding utf8
+
+"=== CIUDADES (del mapa) ===" | Out-File $o -Append -Encoding utf8
+$bytes = [IO.File]::ReadAllBytes((Resolve-Path "$b\world\global_dash.otbm").Path)
+$i = [Math]::Max(0, $bytes.Length - 5MB)
+while (($i = [Array]::IndexOf($bytes, [byte]0xFE, $i)) -ge 0 -and $i -lt $bytes.Length - 8) {
+    if ($bytes[$i+1] -eq 0x0D) {
+        $id  = [BitConverter]::ToUInt32($bytes, $i+2)
+        $len = [BitConverter]::ToUInt16($bytes, $i+6)
+        if ($len -gt 0 -and $len -lt 40) {
+            $name = [Text.Encoding]::ASCII.GetString($bytes, $i+8, $len)
+            if ($name -match '^[\w \.\-]+$') { "town $id : $name" | Out-File $o -Append -Encoding utf8 }
+        }
+    }
+    $i++
+}
+
+git add $o
+git commit -m "Paso 3: comandos y NPCs PokeDash"
+git push
