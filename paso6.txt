@@ -1,0 +1,165 @@
+﻿=== talkactions\scripts\create_pokeball.lua ===
+function onSay(player, words, param)
+	if not player:getGroup():getAccess() then
+		return true
+	end
+
+	if player:getAccountType() < ACCOUNT_TYPE_GOD then
+		return false
+	end
+
+	local split = param:split(",")
+	local name = split[1]
+	local monsterType = MonsterType(name)
+	if not monsterType then
+		player:sendCancelMessage("Pokemon not found.")
+		return false		
+	end
+
+	name = firstToUpper(name)
+
+	local level = tonumber(split[2])
+	if level == nil then
+		level = 1
+	end
+
+	local boost = tonumber(split[3])
+	if boost == nil then
+		boost = 0
+	end
+
+	local result = player:addItem(26670, 1, false, 1, CONST_SLOT_BACKPACK)
+	if result ~= nil then
+		local baseHealth = monsterType:getMaxHealth()
+		local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), level, boost))
+		result:setSpecialAttribute("pokeName", name)
+		result:setSpecialAttribute("pokeLevel", level)
+		result:setSpecialAttribute("pokeBoost", boost)
+		result:setSpecialAttribute("pokeExperience", getNeededExp(level))
+		result:setSpecialAttribute("pokeMaxHealth", maxHealth)
+		result:setSpecialAttribute("pokeHealth", maxHealth)
+		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+		return true
+	else
+		player:sendCancelMessage("Backpack full.")
+	end
+	return false
+end
+=== actions\scripts\poke\summon.lua ===
+function onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	if player:isSummonBlocked() then return true end
+
+	local ballKey = getBallKey(item:getId())
+
+	if hasSummons(player) then
+		local usingBall = player:getUsingBall()
+		if usingBall ~= item then return true end
+		doRemoveSummon(player:getId(), balls[ballKey].effectRelease, false, true, balls[ballKey].missile)
+		item:transform(balls[ballKey].usedOn)
+	else
+		if item:getTopParent() == player then
+			if player:canReleaseSummon(item:getSummonLevel(), item:getSummonBoost(), item:getSummonOwner()) then
+				item:transform(balls[ballKey].usedOff)
+				item:setSpecialAttribute("isBeingUsed", 1)
+				doReleaseSummon(player:getId(), player:getPosition(), balls[ballKey].effectRelease, true, balls[ballKey].missile)
+			end
+		else
+			if item:getSpecialAttribute("isBeingUsed") == 1 then --corrects the bug of players using balls that were not holding
+				item:transform(balls[ballKey].usedOn)
+				item:setSpecialAttribute("isBeingUsed", 0)
+			end
+		end
+	end
+	return true
+end
+=== actions.xml: lineas de poke/summon.lua (ids de las balls) ===
+<action itemid="2325" script="poke/summon.lua" />
+<action itemid="26661" script="poke/summon.lua" />
+<action itemid="26672" script="poke/summon.lua" />
+<action itemid="26663" script="poke/summon.lua" />
+<action itemid="26675" script="poke/summon.lua" />
+<action itemid="26669" script="poke/summon.lua" />
+<action itemid="26674" script="poke/summon.lua" />
+<action itemid="26670" script="poke/summon.lua" />
+<action itemid="26681" script="poke/summon.lua" />
+<action itemid="26666" script="poke/summon.lua" />
+<action itemid="26678" script="poke/summon.lua" />
+<action itemid="26667" script="poke/summon.lua" />
+<action itemid="26679" script="poke/summon.lua" />
+=== Funciones relacionadas en data\lib ===
+lib\core\item_attributes.lua:93: function Item:setSpecialAttribute(...)
+lib\core\item_attributes.lua:110: function Item:getSpecialAttribute(...)
+lib\core\newfunctions.lua:1: filledPokeball = 2325 -- lixo
+lib\core\newfunctions.lua:2: maxFilledBalls = 6 -- lixo
+lib\core\newfunctions.lua:1474: function getBallKey(uid)
+lib\core\newfunctions.lua:2010: local moveCooldown = item:getSpecialAttribute(move) or 0
+lib\core\newfunctions.lua:2012: item:setSpecialAttribute(move, os.time() + delay)
+lib\core\newfunctions.lua:2014: self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You must wait " .. math.floor(item:getSpecialAttribute(move) + 1 - os.time()) .. " seconds to use this move again")
+lib\core\newfunctions.lua:2026: local pokeName = item:getSpecialAttribute("pokeName")
+lib\core\newfunctions.lua:2027: if pokeName ~= nil then
+lib\core\newfunctions.lua:2028: return pokeName
+lib\core\newfunctions.lua:2038: local pokeLevel = item:getSpecialAttribute("pokeLevel")
+lib\core\newfunctions.lua:2050: local pokeBoost = item:getSpecialAttribute("pokeBoost")
+lib\core\newfunctions.lua:2059: local pokeballs = self:getPokeballs()
+lib\core\newfunctions.lua:2060: --	local pokeballs = self:getSpecialStorage("pokes") --stability problems
+lib\core\newfunctions.lua:2069: local isBallBeingUsed = ball:getSpecialAttribute("isBeingUsed")
+lib\core\newfunctions.lua:2238: local pokeLevel = item:getSpecialAttribute("pokeLevel")
+lib\core\newfunctions.lua:2253: local pokeBoost = item:getSpecialAttribute("pokeBoost")
+lib\core\newfunctions.lua:2266: local pokeLove = item:getSpecialAttribute("pokeLove")
+lib\core\newfunctions.lua:2289: local pokeName = item:getSpecialAttribute("pokeName")
+lib\core\newfunctions.lua:2290: if pokeName ~= nil then
+lib\core\newfunctions.lua:2291: return pokeName
+lib\core\newfunctions.lua:2344: local name = ball:getSpecialAttribute("pokeName")
+lib\core\newfunctions.lua:2351: local dittoTime = ball:getSpecialAttribute("dittoTime")
+lib\core\newfunctions.lua:2353: name = ball:getSpecialAttribute("dittoTransform")
+lib\core\newfunctions.lua:2360: ball:setSpecialAttribute("isBeingUsed", 0)
+lib\core\newfunctions.lua:2366: ball:setSpecialAttribute("isBeingUsed", 0)
+lib\core\newfunctions.lua:2372: ball:setSpecialAttribute("isBeingUsed", 0)
+lib\core\newfunctions.lua:2376: local health = ball:getSpecialAttribute("pokeHealth") or 0
+lib\core\newfunctions.lua:2379: ball:setSpecialAttribute("isBeingUsed", 0)
+lib\core\newfunctions.lua:2383: local summonLevel = ball:getSpecialAttribute("pokeLevel")
+lib\core\newfunctions.lua:2384: local summonBoost = ball:getSpecialAttribute("pokeBoost") or 0
+lib\core\newfunctions.lua:2397: monster:setDirection(ball:getSpecialAttribute("pokeLookDir") or DIRECTION_SOUTH)
+lib\core\newfunctions.lua:2453: local moveCooldown = ball:getSpecialAttribute(move) or 0
+lib\core\newfunctions.lua:2457: table.insert(movesTable, "," .. 1000 * math.floor(ball:getSpecialAttribute(move) - os.time()))
+lib\core\newfunctions.lua:2511: ball:setSpecialAttribute("pokeHealth", summon:getHealth())
+lib\core\newfunctions.lua:2512: ball:setSpecialAttribute("pokeLookDir", summon:getDirection())
+lib\core\newfunctions.lua:2516: ball:setSpecialAttribute("isBeingUsed", 0)
+lib\core\newfunctions.lua:2544: item:setSpecialAttribute("pokeName", evolutionName)
+lib\core\newfunctions.lua:2546: item:setSpecialAttribute("owner", master:getName())
+lib\core\newfunctions.lua:2563: local newMaxHealth = math.floor(baseHealth * statusGainFormula(master:getLevel(), item:getSpecialAttribute("pokeLevel"), item:getSpecialAttribute("pokeBoost"), item:getSpecialAttribute("pokeLove") or 0))
+lib\core\newfunctions.lua:2607: --	if self:getId() == filledPokeball then
+lib\core\newfunctions.lua:2623: function doAddPokeball(cid, name, level, boost, ballKey, dp, msg)
+lib\core\newfunctions.lua:2635: addBall = player:addItem(balls[ballKey].usedOn, 1, false)
+lib\core\newfunctions.lua:2638: addBall = depot:addItem(balls[ballKey].usedOn, 1, INDEX_WHEREEVER, FLAG_NOLIMIT)
+lib\core\newfunctions.lua:2643: addBall = depot:addItem(balls[ballKey].usedOn, 1, INDEX_WHEREEVER, FLAG_NOLIMIT)
+lib\core\newfunctions.lua:2648: addBall = player:addItem(balls[ballKey].usedOn, 1)
+lib\core\newfunctions.lua:2656: addBall:setSpecialAttribute("pokeName", name)
+lib\core\newfunctions.lua:2657: addBall:setSpecialAttribute("pokeLevel", level)
+lib\core\newfunctions.lua:2658: addBall:setSpecialAttribute("pokeBoost", boost)
+lib\core\newfunctions.lua:2659: addBall:setSpecialAttribute("pokeExperience", getNeededExp(level))
+lib\core\newfunctions.lua:2660: addBall:setSpecialAttribute("pokeMaxHealth", maxHealth)
+lib\core\newfunctions.lua:2661: addBall:setSpecialAttribute("pokeHealth", maxHealth)
+lib\core\newfunctions.lua:2662: addBall:setSpecialAttribute("pokeLove", 0)
+lib\core\newfunctions.lua:2741: local pokeballs = {}
+lib\core\newfunctions.lua:2745: pokeballs = backpack:getPokeballs()
+lib\core\newfunctions.lua:3057: doAddPokeball(self:getId(), value.prizes[j].pokes[i].name, value.prizes[j].pokes[i].level, value.prizes[j].pokes[i].boost, getBallKey(balls.ultraball.usedOn), dp, 0)
+lib\core\newfunctions.lua:3153: local pokeballs = self:getPokeballs()
+lib\core\newfunctions.lua:3157: local pokeName = ball:getSpecialAttribute("pokeName")
+lib\core\newfunctions.lua:3158: if not pokeName then -- fix ball bug
+lib\core\newfunctions.lua:3162: if not isInArray(remove, pokeName) then
+lib\core\newfunctions.lua:3163: table.insert(pokemonsTable, "," .. pokeName)
+lib\core\newfunctions.lua:3252: return self:getSpecialAttribute("pokeLevel")
+lib\core\newfunctions.lua:3256: return self:getSpecialAttribute("pokeName")
+lib\core\newfunctions.lua:3260: return self:getSpecialAttribute("pokeBoost")
+lib\core\newfunctions.lua:3264: return self:getSpecialAttribute("owner")
+lib\core\newfunctions.lua:3268: local isBallBeingUsed = self:getSpecialAttribute("isBeingUsed")
+lib\core\newfunctions.lua:3276: self:setSpecialAttribute("isBeingUsed", 1)
+lib\core\newfunctions.lua:3281: self:setSpecialAttribute("isBeingUsed", 0)
+lib\core\newfunctions.lua:3307: total = item:getSpecialAttribute(status)
+lib\core\newfunctions.lua:3318: local total = item:getSpecialAttribute("vitTotal")
+lib\core\newfunctions.lua:3321: item:setSpecialAttribute("vitTotal", total + 1)
+lib\core\newfunctions.lua:3334: local total = item:getSpecialAttribute(statusName)
+lib\core\newfunctions.lua:3336: item:setSpecialAttribute(statusName, total + 1)
+lib\core\newfunctions.lua:3338: item:setSpecialAttribute("pokeExperience", getNeededExp(total + 1))
+lib\core\newfunctions.lua:3340: item:setSpecialAttribute("isBeingUsed", 1)
