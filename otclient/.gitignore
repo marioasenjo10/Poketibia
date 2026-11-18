@@ -51,7 +51,6 @@ vc18/
 *.tlh
 *.tmp
 *.tmp_proj
-*.log
 *.vspscc
 *.vssscc
 .builds
@@ -293,7 +292,6 @@ build/
 local.properties
 
 # Log/OS Files
-*.log
 
 # Android Studio generated files and folders
 captures/
