@@ -1,27 +1,7 @@
-[2026-11-18 14:37:13.011] [info] Operating system: Windows
-[2026-11-18 14:37:13.011] [info] OTClient - Redemption 4.x rev 0.000 (desenv) built on Nov  2 2026 for arch x64
-[2026-11-18 14:37:14.668] [info] Startup done :]
-[2026-11-18 14:37:21.065] [warning] Failed to load '/data/sounds/1310/' (Sounds): unable to open file '/data/sounds/1310/catalog-sound.json': not found
-[2026-11-18 14:39:02.586] [warning] HTTPS error: SSL connection failed
-[2026-11-18 14:39:38.743] [warning] HTTPS error: Could not establish connection
-[2026-11-18 14:39:40.749] [warning] HTTP error: Could not establish connection
-[2026-11-18 14:39:46.211] [warning] HTTPS error: SSL connection failed
-[2026-11-18 14:41:54.052] [warning] HTTPS error: SSL connection failed
-[2026-11-18 14:42:12.644] [error] failed to decompress message - too many length or distance symbols
-at:
-	[C++]: ??$traceError@AEAPEAD@Logger@@QEAAXU?$fstring@AEAPEAD@v12@fmt@@AEAPEAD@Z
-[2026-11-18 14:42:56.687] [error] failed to decompress message - invalid code lengths set
-at:
-	[C++]: ??$traceError@AEAPEAD@Logger@@QEAAXU?$fstring@AEAPEAD@v12@fmt@@AEAPEAD@Z
-[2026-11-18 14:43:40.400] [error] failed to decompress message - invalid stored block lengths
-at:
-	[C++]: ??$traceError@AEAPEAD@Logger@@QEAAXU?$fstring@AEAPEAD@v12@fmt@@AEAPEAD@Z
-[2026-11-18 14:44:25.124] [error] failed to decompress message - invalid code lengths set
-at:
-	[C++]: ??$traceError@AEAPEAD@Logger@@QEAAXU?$fstring@AEAPEAD@v12@fmt@@AEAPEAD@Z
-[2026-11-18 14:44:56.769] [error] failed to decompress message - invalid distance too far back
-at:
-	[C++]: ??$traceError@AEAPEAD@Logger@@QEAAXU?$fstring@AEAPEAD@v12@fmt@@AEAPEAD@Z
-[2026-11-18 14:46:55.280] [error] failed to decompress message - invalid code lengths set
-at:
-	[C++]: ??$traceError@AEAPEAD@Logger@@QEAAXU?$fstring@AEAPEAD@v12@fmt@@AEAPEAD@Z
+[2026-11-18 14:54:49.475] [info] Operating system: Windows
+[2026-11-18 14:54:49.475] [info] OTClient - Redemption 4.x rev 0.000 (desenv) built on Nov  2 2026 for arch x64
+[2026-11-18 14:54:51.115] [info] Startup done :]
+[2026-11-18 14:54:54.688] [warning] Failed to load '/data/sounds/1310/' (Sounds): unable to open file '/data/sounds/1310/catalog-sound.json': not found
+[2026-11-18 14:54:54.693] [warning] HTTPS error: SSL connection failed
+[2026-11-18 14:54:55.903] [error] Unable to send extended opcode 1, extended opcodes are not enabled
+[2026-11-18 14:54:55.924] [error] Unable to send extended opcode 201, extended opcodes are not enabled
