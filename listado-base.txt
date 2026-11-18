@@ -1,0 +1,8 @@
+Este fichero se rellena en casa con el contenido de la base descargada.
+
+1. Descomprime la base en: Poketibia\bases\pokedash\
+2. Abre PowerShell en la carpeta Poketibia y ejecuta:
+
+   Get-ChildItem bases\pokedash -Recurse -Depth 3 | Select-Object FullName, Length | Format-Table -AutoSize -Wrap | Out-File -Width 300 listado-base.txt
+
+3. Haz commit y push de este fichero.
