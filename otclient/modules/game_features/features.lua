@@ -223,8 +223,7 @@ controller:registerEvents(g_game, {
         end
 
         if version >= 1290 then
-            -- TFS 1.6 usa checksum Adler con OTClient (solo activa secuencia para el cliente oficial)
-            g_game.disableFeature(GameSequencedPackets)
+            g_game.enableFeature(GameSequencedPackets)
             g_game.enableFeature(GameBosstiary)
             g_game.enableFeature(GameThingClock)
             g_game.enableFeature(GameThingCounter)

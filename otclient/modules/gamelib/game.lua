@@ -39,6 +39,12 @@ function g_game.chooseRsa(host)
     if g_game.getClientVersion() <= 760 then
         g_game.setCustomOs(2)
     end
+
+    -- TFS 1.6 (13.x): el cliente siempre usa paquetes con secuencia a partir de 12.00,
+    -- pero TFS solo los activa para el cliente oficial (QT). Nos identificamos como QT Windows (5).
+    if g_game.getClientVersion() >= 1200 and not g_game.isOfficialTibia() then
+        g_game.setCustomOs(5)
+    end
 end
 
 function g_game.setRsa(rsa, e)
