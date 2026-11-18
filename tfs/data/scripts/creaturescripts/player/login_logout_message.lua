@@ -1,7 +1,8 @@
 local loginMessage = CreatureEvent("loginMessage")
 
 function loginMessage.onLogin(player)
-	print(player:getName() .. " has logged in.")
+	local client = player:getClient()
+	print(player:getName() .. " has logged in. (client " .. client.version .. ", os " .. client.os .. ")")
 	return true
 end
 
