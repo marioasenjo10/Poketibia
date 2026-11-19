@@ -59,7 +59,7 @@
 	<action fromid="26723" toid="26736" script="poke/evolution.lua" allowfaruse="1" />
 	<action fromid="26742" toid="26748" script="poke/evolution.lua" allowfaruse="1" />
 	<action itemid="26749" script="poke/evolution.lua" allowfaruse="1" />
-	<action fromaid="46001" toaid="46999" script="poke/shinyevolution.lua" allowfaruse="1" />
+	<action fromid="46001" toid="46224" script="poke/shinyevolution.lua" allowfaruse="1" />
 
 	<action itemid="26693" script="poke/boost.lua" />
 	<action itemid="27634" script="poke/bike.lua" />

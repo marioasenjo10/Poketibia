@@ -1,7 +1,8 @@
 -- Evolucion de shinies estilo PKA: los shiny no evolucionan con piedras.
 -- Cada shiny salvaje que es una evolucion (p. ej. Shiny Charmeleon) suelta a veces un objeto
 -- que se usa para evolucionar su fase anterior (Shiny Charmander -> Shiny Charmeleon).
--- El objeto es un item normal (cola, ala...) marcado con un action id unico (46001+).
+-- Cada objeto es un item propio (id 46001+, nombre propio en items.xml, entrada propia en items.otb).
+-- Su dibujo es una copia brillante del item base ("item"), generada con tools/pokeassets.
 
 -- Probabilidad (en %) de soltar el objeto segun el tier del shiny que muere
 --   tier 3: fase intermedia (Charmeleon, Ivysaur...)
@@ -13,7 +14,7 @@ shinyEvoTierChance = {
 	[3] = 7,
 }
 
--- [action id] = { target = shiny que suelta el objeto (y en el que se evoluciona), item = id del item base, tier }
+-- [id del objeto] = { target = shiny que suelta el objeto (y en el que se evoluciona), item = id del item base (dibujo), tier }
 shinyEvoItems = {
 	[46001] = {target = "Shiny Abomasnow", item = 27670, tier = 2}, -- seed
 	[46002] = {target = "Shiny Aggron", item = 27651, tier = 2}, -- piece of steel
@@ -242,16 +243,9 @@ shinyEvoItems = {
 }
 
 shinyEvoByTarget = {}
-for aid, entry in pairs(shinyEvoItems) do
-	entry.aid = aid
+for id, entry in pairs(shinyEvoItems) do
+	entry.id = id
 	shinyEvoByTarget[entry.target] = entry
-end
-
-function getShinyEvoPartName(entry)
-	if entry.target == "Shiny Charizard" then
-		return "black wing"
-	end
-	return ItemType(entry.item):getName()
 end
 
 -- Crea el objeto de evolucion dentro del cadaver si sale la probabilidad. Devuelve el item o nil.
@@ -264,14 +258,5 @@ function doShinyEvoDrop(creature, corpse)
 	if math.random(1, 100000) > chance * 1000 then
 		return nil
 	end
-	local item = Game.createItem(entry.item, 1)
-	if not item then
-		return nil
-	end
-	item:setActionId(entry.aid)
-	item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, string.format("%s %s (shiny evolution item, tier %d). Use it on your pokemon to evolve it into %s.", entry.target, getShinyEvoPartName(entry), entry.tier, entry.target))
-	if corpse:addItemEx(item) ~= RETURNVALUE_NOERROR then
-		return nil
-	end
-	return item
+	return corpse:addItem(entry.id, 1)
 end

@@ -42,14 +42,7 @@ function onPostDeath(creature, corpse, killer, mostDamage, unjustified, mostDama
 		local nItems = 0
 		for i = corpse:getSize() - 1, 0, -1 do
 			local item = corpse:getItem(i)				
-			if item and shinyEvoItems[item:getActionId()] then
-				-- objetos especiales (evolucion shiny): se mueven tal cual para no perder el action id
-				if player:addItemEx(item:clone()) == RETURNVALUE_NOERROR then
-					msg = msg .. "1 " .. item:getName() .. " (shiny evolution), "
-					item:remove()
-					nItems = nItems + 1
-				end
-			elseif item then
+			if item then
 				local itemId = item:getId()
 				local itemName = item:getName()
 				local itemCount = item:getCount()

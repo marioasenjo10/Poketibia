@@ -40559,4 +40559,677 @@
 	<item id="30028" name="swamp" />
 	<item id="30035" name="tea" />
 	<item id="30043" name="mead" />
+	<!-- Objetos de evolucion shiny (ver data/lib/core/shinyevolution.lua) -->
+	<item id="46001" article="a" name="shiny abomasnow seed">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Abomasnow. Use it on your Shiny Snover to evolve it into Shiny Abomasnow." />
+	</item>
+	<item id="46002" article="a" name="shiny aggron piece of steel">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Aggron. Use it on your Shiny Lairon to evolve it into Shiny Aggron." />
+	</item>
+	<item id="46003" article="a" name="shiny altaria feather">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Altaria. Use it on your Shiny Swablu to evolve it into Shiny Altaria." />
+	</item>
+	<item id="46004" article="a" name="shiny ambipom comb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Ambipom. Use it on your Shiny Aipom to evolve it into Shiny Ambipom." />
+	</item>
+	<item id="46005" article="a" name="shiny ampharos magnetic tail">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Ampharos. Use it on your Shiny Flaaffy to evolve it into Shiny Ampharos." />
+	</item>
+	<item id="46006" article="a" name="shiny arbok giant snake tail">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Arbok. Use it on your Shiny Ekans to evolve it into Shiny Arbok." />
+	</item>
+	<item id="46007" article="a" name="shiny arcanine giant piece of fur">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Arcanine. Use it on your Shiny Growlithe to evolve it into Shiny Arcanine." />
+	</item>
+	<item id="46008" article="a" name="shiny ariados spider legs">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Ariados. Use it on your Shiny Spinarak to evolve it into Shiny Ariados." />
+	</item>
+	<item id="46009" article="a" name="shiny armaldo pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Armaldo. Use it on your Shiny Anorith to evolve it into Shiny Armaldo." />
+	</item>
+	<item id="46010" article="a" name="shiny azumarill blue rat ear">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Azumarill. Use it on your Shiny Marill to evolve it into Shiny Azumarill." />
+	</item>
+	<item id="46011" article="a" name="shiny banette traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Banette. Use it on your Shiny Shuppet to evolve it into Shiny Banette." />
+	</item>
+	<item id="46012" article="a" name="shiny bastiodon piece of steel">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Bastiodon. Use it on your Shiny Shieldon to evolve it into Shiny Bastiodon." />
+	</item>
+	<item id="46013" article="a" name="shiny bayleef leaves">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Bayleef. Use it on your Shiny Chikorita to evolve it into Shiny Bayleef." />
+	</item>
+	<item id="46014" article="a" name="shiny beautifly straw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Beautifly. Use it on your Shiny Silcoon to evolve it into Shiny Beautifly." />
+	</item>
+	<item id="46015" article="a" name="shiny beedrill bee sting">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Beedrill. Use it on your Shiny Kakuna to evolve it into Shiny Beedrill." />
+	</item>
+	<item id="46016" article="a" name="shiny bellossom yellow flower">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Bellossom. Use it on your Shiny Gloom to evolve it into Shiny Bellossom." />
+	</item>
+	<item id="46017" article="a" name="shiny bibarel water gem">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Bibarel. Use it on your Shiny Bidoof to evolve it into Shiny Bibarel." />
+	</item>
+	<item id="46018" article="a" name="shiny blastoise squirtle hull">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Blastoise. Use it on your Shiny Wartortle to evolve it into Shiny Blastoise." />
+	</item>
+	<item id="46019" article="a" name="shiny blaziken future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Blaziken. Use it on your Shiny Combusken to evolve it into Shiny Blaziken." />
+	</item>
+	<item id="46020" article="a" name="shiny breloom seed">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Breloom. Use it on your Shiny Shroomish to evolve it into Shiny Breloom." />
+	</item>
+	<item id="46021" article="a" name="shiny bronzong piece of steel">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Bronzong. Use it on your Shiny Bronzor to evolve it into Shiny Bronzong." />
+	</item>
+	<item id="46022" article="a" name="shiny butterfree butterfly wing">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Butterfree. Use it on your Shiny Metapod to evolve it into Shiny Butterfree." />
+	</item>
+	<item id="46023" article="a" name="shiny cacturne dark gem">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Cacturne. Use it on your Shiny Cacnea to evolve it into Shiny Cacturne." />
+	</item>
+	<item id="46024" article="a" name="shiny camerupt sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Camerupt. Use it on your Shiny Numel to evolve it into Shiny Camerupt." />
+	</item>
+	<item id="46025" article="a" name="shiny cascoon pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Cascoon. Use it on your Shiny Wurmple to evolve it into Shiny Cascoon." />
+	</item>
+	<item id="46026" article="a" name="shiny chansey future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Chansey. Use it on your Shiny Happiny to evolve it into Shiny Chansey." />
+	</item>
+	<item id="46027" article="a" name="shiny charizard black wing">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Charizard. Use it on your Shiny Charmeleon to evolve it into Shiny Charizard." />
+	</item>
+	<item id="46028" article="a" name="shiny charmeleon fire tail">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Charmeleon. Use it on your Shiny Charmander to evolve it into Shiny Charmeleon." />
+	</item>
+	<item id="46029" article="a" name="shiny cherrim leaves">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Cherrim. Use it on your Shiny Cherubi to evolve it into Shiny Cherrim." />
+	</item>
+	<item id="46030" article="a" name="shiny chimecho future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Chimecho. Use it on your Shiny Chingling to evolve it into Shiny Chimecho." />
+	</item>
+	<item id="46031" article="a" name="shiny claydol future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Claydol. Use it on your Shiny Baltoy to evolve it into Shiny Claydol." />
+	</item>
+	<item id="46032" article="a" name="shiny clefable microphone">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Clefable. Use it on your Shiny Clefairy to evolve it into Shiny Clefable." />
+	</item>
+	<item id="46033" article="a" name="shiny clefairy microphone">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Clefairy. Use it on your Shiny Cleffa to evolve it into Shiny Clefairy." />
+	</item>
+	<item id="46034" article="a" name="shiny cloyster strange spike">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Cloyster. Use it on your Shiny Shellder to evolve it into Shiny Cloyster." />
+	</item>
+	<item id="46035" article="a" name="shiny combusken future orb">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Combusken. Use it on your Shiny Torchic to evolve it into Shiny Combusken." />
+	</item>
+	<item id="46036" article="a" name="shiny cradily seed">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Cradily. Use it on your Shiny Lileep to evolve it into Shiny Cradily." />
+	</item>
+	<item id="46037" article="a" name="shiny crawdaunt crab claw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Crawdaunt. Use it on your Shiny Corphish to evolve it into Shiny Crawdaunt." />
+	</item>
+	<item id="46038" article="a" name="shiny crobat big bat wing">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Crobat. Use it on your Shiny Golbat to evolve it into Shiny Crobat." />
+	</item>
+	<item id="46039" article="a" name="shiny croconaw red scale">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Croconaw. Use it on your Shiny Totodile to evolve it into Shiny Croconaw." />
+	</item>
+	<item id="46040" article="a" name="shiny delcatty wool ball">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Delcatty. Use it on your Shiny Skitty to evolve it into Shiny Delcatty." />
+	</item>
+	<item id="46041" article="a" name="shiny dewgong long seal tail">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Dewgong. Use it on your Shiny Seel to evolve it into Shiny Dewgong." />
+	</item>
+	<item id="46042" article="a" name="shiny dodrio dodrio feather">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Dodrio. Use it on your Shiny Doduo to evolve it into Shiny Dodrio." />
+	</item>
+	<item id="46043" article="a" name="shiny donphan rock trunk">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Donphan. Use it on your Shiny Phanpy to evolve it into Shiny Donphan." />
+	</item>
+	<item id="46044" article="a" name="shiny dragonair dragon tooth">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Dragonair. Use it on your Shiny Dratini to evolve it into Shiny Dragonair." />
+	</item>
+	<item id="46045" article="a" name="shiny dragonite dragon tooth">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Dragonite. Use it on your Shiny Dragonair to evolve it into Shiny Dragonite." />
+	</item>
+	<item id="46046" article="a" name="shiny drapion dark gem">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Drapion. Use it on your Shiny Skorupi to evolve it into Shiny Drapion." />
+	</item>
+	<item id="46047" article="a" name="shiny drifblim traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Drifblim. Use it on your Shiny Drifloon to evolve it into Shiny Drifblim." />
+	</item>
+	<item id="46048" article="a" name="shiny dugtrio piece of diglett">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Dugtrio. Use it on your Shiny Diglett to evolve it into Shiny Dugtrio." />
+	</item>
+	<item id="46049" article="a" name="shiny dusclops traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Dusclops. Use it on your Shiny Duskull to evolve it into Shiny Dusclops." />
+	</item>
+	<item id="46050" article="a" name="shiny dusknoir traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Dusknoir. Use it on your Shiny Dusclops to evolve it into Shiny Dusknoir." />
+	</item>
+	<item id="46051" article="a" name="shiny dustox pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Dustox. Use it on your Shiny Cascoon to evolve it into Shiny Dustox." />
+	</item>
+	<item id="46052" article="a" name="shiny electivire screw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Electivire. Use it on your Shiny Electabuzz to evolve it into Shiny Electivire." />
+	</item>
+	<item id="46053" article="a" name="shiny electrode electric box">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Electrode. Use it on your Shiny Voltorb to evolve it into Shiny Electrode." />
+	</item>
+	<item id="46054" article="a" name="shiny empoleon water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Empoleon. Use it on your Shiny Prinplup to evolve it into Shiny Empoleon." />
+	</item>
+	<item id="46055" article="a" name="shiny espeon future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Espeon. Use it on your Shiny Eevee to evolve it into Shiny Espeon." />
+	</item>
+	<item id="46056" article="a" name="shiny exeggutor leaves">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Exeggutor. Use it on your Shiny Exeggcute to evolve it into Shiny Exeggutor." />
+	</item>
+	<item id="46057" article="a" name="shiny exploud future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Exploud. Use it on your Shiny Loudred to evolve it into Shiny Exploud." />
+	</item>
+	<item id="46058" article="a" name="shiny fearow red wing">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Fearow. Use it on your Shiny Spearow to evolve it into Shiny Fearow." />
+	</item>
+	<item id="46059" article="a" name="shiny feraligatr red scale">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Feraligatr. Use it on your Shiny Croconaw to evolve it into Shiny Feraligatr." />
+	</item>
+	<item id="46060" article="a" name="shiny flaaffy sheep wool">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Flaaffy. Use it on your Shiny Mareep to evolve it into Shiny Flaaffy." />
+	</item>
+	<item id="46061" article="a" name="shiny flareon future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Flareon. Use it on your Shiny Eevee to evolve it into Shiny Flareon." />
+	</item>
+	<item id="46062" article="a" name="shiny floatzel water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Floatzel. Use it on your Shiny Buizel to evolve it into Shiny Floatzel." />
+	</item>
+	<item id="46063" article="a" name="shiny flygon sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Flygon. Use it on your Shiny Vibrava to evolve it into Shiny Flygon." />
+	</item>
+	<item id="46064" article="a" name="shiny forretress piece of shell">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Forretress. Use it on your Shiny Pineco to evolve it into Shiny Forretress." />
+	</item>
+	<item id="46065" article="a" name="shiny gabite dragon tooth">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Gabite. Use it on your Shiny Gible to evolve it into Shiny Gabite." />
+	</item>
+	<item id="46066" article="a" name="shiny garchomp dragon tooth">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Garchomp. Use it on your Shiny Gabite to evolve it into Shiny Garchomp." />
+	</item>
+	<item id="46067" article="a" name="shiny gardevoir future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Gardevoir. Use it on your Shiny Kirlia to evolve it into Shiny Gardevoir." />
+	</item>
+	<item id="46068" article="a" name="shiny gastrodon sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Gastrodon. Use it on your Shiny Shellos to evolve it into Shiny Gastrodon." />
+	</item>
+	<item id="46069" article="a" name="shiny gengar traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Gengar. Use it on your Shiny Haunter to evolve it into Shiny Gengar." />
+	</item>
+	<item id="46070" article="a" name="shiny glalie snowball">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Glalie. Use it on your Shiny Snorunt to evolve it into Shiny Glalie." />
+	</item>
+	<item id="46071" article="a" name="shiny gloom poisonous flower">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Gloom. Use it on your Shiny Oddish to evolve it into Shiny Gloom." />
+	</item>
+	<item id="46072" article="a" name="shiny golbat big bat wing">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Golbat. Use it on your Shiny Zubat to evolve it into Shiny Golbat." />
+	</item>
+	<item id="46073" article="a" name="shiny golduck psyduck mug">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Golduck. Use it on your Shiny Psyduck to evolve it into Shiny Golduck." />
+	</item>
+	<item id="46074" article="a" name="shiny golem strange rock">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Golem. Use it on your Shiny Graveler to evolve it into Shiny Golem." />
+	</item>
+	<item id="46075" article="a" name="shiny granbull dog ears">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Granbull. Use it on your Shiny Snubbull to evolve it into Shiny Granbull." />
+	</item>
+	<item id="46076" article="a" name="shiny graveler strange rock">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Graveler. Use it on your Shiny Geodude to evolve it into Shiny Graveler." />
+	</item>
+	<item id="46077" article="a" name="shiny grotle seed">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Grotle. Use it on your Shiny Turtwig to evolve it into Shiny Grotle." />
+	</item>
+	<item id="46078" article="a" name="shiny grovyle seed">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Grovyle. Use it on your Shiny Treecko to evolve it into Shiny Grovyle." />
+	</item>
+	<item id="46079" article="a" name="shiny grumpig future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Grumpig. Use it on your Shiny Spoink to evolve it into Shiny Grumpig." />
+	</item>
+	<item id="46080" article="a" name="shiny gyarados gyarados tail">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Gyarados. Use it on your Shiny Magikarp to evolve it into Shiny Gyarados." />
+	</item>
+	<item id="46081" article="a" name="shiny hariyama punch machine">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Hariyama. Use it on your Shiny Makuhita to evolve it into Shiny Hariyama." />
+	</item>
+	<item id="46082" article="a" name="shiny haunter traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Haunter. Use it on your Shiny Gastly to evolve it into Shiny Haunter." />
+	</item>
+	<item id="46083" article="a" name="shiny hippowdon sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Hippowdon. Use it on your Shiny Hippopotas to evolve it into Shiny Hippowdon." />
+	</item>
+	<item id="46084" article="a" name="shiny hitmontop kick machine">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Hitmontop. Use it on your Shiny Tyrogue to evolve it into Shiny Hitmontop." />
+	</item>
+	<item id="46085" article="a" name="shiny honchkrow traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Honchkrow. Use it on your Shiny Murkrow to evolve it into Shiny Honchkrow." />
+	</item>
+	<item id="46086" article="a" name="shiny houndoom strange bone">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Houndoom. Use it on your Shiny Houndour to evolve it into Shiny Houndoom." />
+	</item>
+	<item id="46087" article="a" name="shiny huntail water gem">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Huntail. Use it on your Shiny Clamperl to evolve it into Shiny Huntail." />
+	</item>
+	<item id="46088" article="a" name="shiny infernape kick machine">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Infernape. Use it on your Shiny Monferno to evolve it into Shiny Infernape." />
+	</item>
+	<item id="46089" article="a" name="shiny ivysaur bulb">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Ivysaur. Use it on your Shiny Bulbasaur to evolve it into Shiny Ivysaur." />
+	</item>
+	<item id="46090" article="a" name="shiny jigglypuff microphone">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Jigglypuff. Use it on your Shiny Igglybuff to evolve it into Shiny Jigglypuff." />
+	</item>
+	<item id="46091" article="a" name="shiny jumpluff yellow flower">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Jumpluff. Use it on your Shiny Skiploom to evolve it into Shiny Jumpluff." />
+	</item>
+	<item id="46092" article="a" name="shiny jynx ice bra">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Jynx. Use it on your Shiny Smoochum to evolve it into Shiny Jynx." />
+	</item>
+	<item id="46093" article="a" name="shiny kabutops dome fossil">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Kabutops. Use it on your Shiny Kabuto to evolve it into Shiny Kabutops." />
+	</item>
+	<item id="46094" article="a" name="shiny kakuna pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Kakuna. Use it on your Shiny Weedle to evolve it into Shiny Kakuna." />
+	</item>
+	<item id="46095" article="a" name="shiny kingdra seahorse tail">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Kingdra. Use it on your Shiny Seadra to evolve it into Shiny Kingdra." />
+	</item>
+	<item id="46096" article="a" name="shiny kingler crab claw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Kingler. Use it on your Shiny Krabby to evolve it into Shiny Kingler." />
+	</item>
+	<item id="46097" article="a" name="shiny kirlia future orb">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Kirlia. Use it on your Shiny Ralts to evolve it into Shiny Kirlia." />
+	</item>
+	<item id="46098" article="a" name="shiny kricketune pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Kricketune. Use it on your Shiny Kricketot to evolve it into Shiny Kricketune." />
+	</item>
+	<item id="46099" article="a" name="shiny lairon piece of steel">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Lairon. Use it on your Shiny Aron to evolve it into Shiny Lairon." />
+	</item>
+	<item id="46100" article="a" name="shiny lanturn water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Lanturn. Use it on your Shiny Chinchou to evolve it into Shiny Lanturn." />
+	</item>
+	<item id="46101" article="a" name="shiny ledian ladybug shell">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Ledian. Use it on your Shiny Ledyba to evolve it into Shiny Ledian." />
+	</item>
+	<item id="46102" article="a" name="shiny lickilicky comb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Lickilicky. Use it on your Shiny Lickitung to evolve it into Shiny Lickilicky." />
+	</item>
+	<item id="46103" article="a" name="shiny linoone future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Linoone. Use it on your Shiny Zigzagoon to evolve it into Shiny Linoone." />
+	</item>
+	<item id="46104" article="a" name="shiny lombre seed">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Lombre. Use it on your Shiny Lotad to evolve it into Shiny Lombre." />
+	</item>
+	<item id="46105" article="a" name="shiny lopunny comb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Lopunny. Use it on your Shiny Buneary to evolve it into Shiny Lopunny." />
+	</item>
+	<item id="46106" article="a" name="shiny loudred future orb">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Loudred. Use it on your Shiny Whismur to evolve it into Shiny Loudred." />
+	</item>
+	<item id="46107" article="a" name="shiny lucario punch machine">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Lucario. Use it on your Shiny Riolu to evolve it into Shiny Lucario." />
+	</item>
+	<item id="46108" article="a" name="shiny ludicolo seed">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Ludicolo. Use it on your Shiny Lombre to evolve it into Shiny Ludicolo." />
+	</item>
+	<item id="46109" article="a" name="shiny lumineon water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Lumineon. Use it on your Shiny Finneon to evolve it into Shiny Lumineon." />
+	</item>
+	<item id="46110" article="a" name="shiny luxio electric box">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Luxio. Use it on your Shiny Shinx to evolve it into Shiny Luxio." />
+	</item>
+	<item id="46111" article="a" name="shiny luxray screw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Luxray. Use it on your Shiny Luxio to evolve it into Shiny Luxray." />
+	</item>
+	<item id="46112" article="a" name="shiny machamp belt of champion">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Machamp. Use it on your Shiny Machoke to evolve it into Shiny Machamp." />
+	</item>
+	<item id="46113" article="a" name="shiny machoke belt of champion">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Machoke. Use it on your Shiny Machop to evolve it into Shiny Machoke." />
+	</item>
+	<item id="46114" article="a" name="shiny magcargo lava shell">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Magcargo. Use it on your Shiny Slugma to evolve it into Shiny Magcargo." />
+	</item>
+	<item id="46115" article="a" name="shiny magmar magma foot">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Magmar. Use it on your Shiny Magby to evolve it into Shiny Magmar." />
+	</item>
+	<item id="46116" article="a" name="shiny magmortar pot of lava">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Magmortar. Use it on your Shiny Magmar to evolve it into Shiny Magmortar." />
+	</item>
+	<item id="46117" article="a" name="shiny magneton magnet">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Magneton. Use it on your Shiny Magnemite to evolve it into Shiny Magneton." />
+	</item>
+	<item id="46118" article="a" name="shiny magnezone piece of steel">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Magnezone. Use it on your Shiny Magneton to evolve it into Shiny Magnezone." />
+	</item>
+	<item id="46119" article="a" name="shiny mamoswine sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Mamoswine. Use it on your Shiny Piloswine to evolve it into Shiny Mamoswine." />
+	</item>
+	<item id="46120" article="a" name="shiny manectric screw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Manectric. Use it on your Shiny Electrike to evolve it into Shiny Manectric." />
+	</item>
+	<item id="46121" article="a" name="shiny mantine water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Mantine. Use it on your Shiny Mantyke to evolve it into Shiny Mantine." />
+	</item>
+	<item id="46122" article="a" name="shiny marill blue ball tail">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Marill. Use it on your Shiny Azurill to evolve it into Shiny Marill." />
+	</item>
+	<item id="46123" article="a" name="shiny marowak old skull">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Marowak. Use it on your Shiny Cubone to evolve it into Shiny Marowak." />
+	</item>
+	<item id="46124" article="a" name="shiny marshtomp sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Marshtomp. Use it on your Shiny Mudkip to evolve it into Shiny Marshtomp." />
+	</item>
+	<item id="46125" article="a" name="shiny masquerain straw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Masquerain. Use it on your Shiny Surskit to evolve it into Shiny Masquerain." />
+	</item>
+	<item id="46126" article="a" name="shiny medicham future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Medicham. Use it on your Shiny Meditite to evolve it into Shiny Medicham." />
+	</item>
+	<item id="46127" article="a" name="shiny meganium great petals">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Meganium. Use it on your Shiny Bayleef to evolve it into Shiny Meganium." />
+	</item>
+	<item id="46128" article="a" name="shiny metagross future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Metagross. Use it on your Shiny Metang to evolve it into Shiny Metagross." />
+	</item>
+	<item id="46129" article="a" name="shiny metang future orb">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Metang. Use it on your Shiny Beldum to evolve it into Shiny Metang." />
+	</item>
+	<item id="46130" article="a" name="shiny metapod pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Metapod. Use it on your Shiny Caterpie to evolve it into Shiny Metapod." />
+	</item>
+	<item id="46131" article="a" name="shiny mightyena dark gem">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Mightyena. Use it on your Shiny Poochyena to evolve it into Shiny Mightyena." />
+	</item>
+	<item id="46132" article="a" name="shiny milotic water gem">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Milotic. Use it on your Shiny Feebas to evolve it into Shiny Milotic." />
+	</item>
+	<item id="46133" article="a" name="shiny mismagius traces of ghost">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Mismagius. Use it on your Shiny Misdreavus to evolve it into Shiny Mismagius." />
+	</item>
+	<item id="46134" article="a" name="shiny monferno kick machine">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Monferno. Use it on your Shiny Chimchar to evolve it into Shiny Monferno." />
+	</item>
+	<item id="46135" article="a" name="shiny mothim pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Mothim. Use it on your Shiny Wormadam to evolve it into Shiny Mothim." />
+	</item>
+	<item id="46136" article="a" name="shiny mr. mime future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Mr. Mime. Use it on your Shiny Mime Jr to evolve it into Shiny Mr. Mime." />
+	</item>
+	<item id="46137" article="a" name="shiny muk sticky hand">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Muk. Use it on your Shiny Grimer to evolve it into Shiny Muk." />
+	</item>
+	<item id="46138" article="a" name="shiny nidoking male ear">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Nidoking. Use it on your Shiny Nidorino to evolve it into Shiny Nidoking." />
+	</item>
+	<item id="46139" article="a" name="shiny nidoqueen female ear">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Nidoqueen. Use it on your Shiny Nidorina to evolve it into Shiny Nidoqueen." />
+	</item>
+	<item id="46140" article="a" name="shiny nidorina female ear">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Nidorina. Use it on your Shiny Nidoran Female to evolve it into Shiny Nidorina." />
+	</item>
+	<item id="46141" article="a" name="shiny nidorino male ear">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Nidorino. Use it on your Shiny Nidoran Male to evolve it into Shiny Nidorino." />
+	</item>
+	<item id="46142" article="a" name="shiny ninetales fox tail">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Ninetales. Use it on your Shiny Vulpix to evolve it into Shiny Ninetales." />
+	</item>
+	<item id="46143" article="a" name="shiny ninjask straw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Ninjask. Use it on your Shiny Nincada to evolve it into Shiny Ninjask." />
+	</item>
+	<item id="46144" article="a" name="shiny noctowl owl feather">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Noctowl. Use it on your Shiny Hoothoot to evolve it into Shiny Noctowl." />
+	</item>
+	<item id="46145" article="a" name="shiny nuzleaf dark gem">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Nuzleaf. Use it on your Shiny Seedot to evolve it into Shiny Nuzleaf." />
+	</item>
+	<item id="46146" article="a" name="shiny octillery tentacle">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Octillery. Use it on your Shiny Remoraid to evolve it into Shiny Octillery." />
+	</item>
+	<item id="46147" article="a" name="shiny omastar helix fossil">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Omastar. Use it on your Shiny Omanyte to evolve it into Shiny Omastar." />
+	</item>
+	<item id="46148" article="a" name="shiny parasect bag of pollem">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Parasect. Use it on your Shiny Paras to evolve it into Shiny Parasect." />
+	</item>
+	<item id="46149" article="a" name="shiny pelipper feather">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Pelipper. Use it on your Shiny Wingull to evolve it into Shiny Pelipper." />
+	</item>
+	<item id="46150" article="a" name="shiny persian luck medallion">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Persian. Use it on your Shiny Meowth to evolve it into Shiny Persian." />
+	</item>
+	<item id="46151" article="a" name="shiny pidgeot feather">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Pidgeot. Use it on your Shiny Pidgeotto to evolve it into Shiny Pidgeot." />
+	</item>
+	<item id="46152" article="a" name="shiny pidgeotto feather">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Pidgeotto. Use it on your Shiny Pidgey to evolve it into Shiny Pidgeotto." />
+	</item>
+	<item id="46153" article="a" name="shiny pikachu electric rat tail">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Pikachu. Use it on your Shiny Pichu to evolve it into Shiny Pikachu." />
+	</item>
+	<item id="46154" article="a" name="shiny piloswine sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Piloswine. Use it on your Shiny Swinub to evolve it into Shiny Piloswine." />
+	</item>
+	<item id="46155" article="a" name="shiny politoed water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Politoed. Use it on your Shiny Poliwhirl to evolve it into Shiny Politoed." />
+	</item>
+	<item id="46156" article="a" name="shiny poliwhirl water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Poliwhirl. Use it on your Shiny Poliwag to evolve it into Shiny Poliwhirl." />
+	</item>
+	<item id="46157" article="a" name="shiny poliwrath water pendant">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Poliwrath. Use it on your Shiny Poliwhirl to evolve it into Shiny Poliwrath." />
+	</item>
+	<item id="46158" article="a" name="shiny porygon-z future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Porygon-Z. Use it on your Shiny Porygon2 to evolve it into Shiny Porygon-Z." />
+	</item>
+	<item id="46159" article="a" name="shiny primeape fur">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Primeape. Use it on your Shiny Mankey to evolve it into Shiny Primeape." />
+	</item>
+	<item id="46160" article="a" name="shiny prinplup water gem">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Prinplup. Use it on your Shiny Piplup to evolve it into Shiny Prinplup." />
+	</item>
+	<item id="46161" article="a" name="shiny probopass piece of steel">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Probopass. Use it on your Shiny Nosepass to evolve it into Shiny Probopass." />
+	</item>
+	<item id="46162" article="a" name="shiny pupitar sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Pupitar. Use it on your Shiny Larvitar to evolve it into Shiny Pupitar." />
+	</item>
+	<item id="46163" article="a" name="shiny purugly comb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Purugly. Use it on your Shiny Glameow to evolve it into Shiny Purugly." />
+	</item>
+	<item id="46164" article="a" name="shiny quagsire wooper horn">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Quagsire. Use it on your Shiny Wooper to evolve it into Shiny Quagsire." />
+	</item>
+	<item id="46165" article="a" name="shiny quilava hot fur">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Quilava. Use it on your Shiny Cyndaquil to evolve it into Shiny Quilava." />
+	</item>
+	<item id="46166" article="a" name="shiny raichu strange electric tail">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Raichu. Use it on your Shiny Pikachu to evolve it into Shiny Raichu." />
+	</item>
+	<item id="46167" article="a" name="shiny rampardos sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Rampardos. Use it on your Shiny Cranidos to evolve it into Shiny Rampardos." />
+	</item>
+	<item id="46168" article="a" name="shiny rapidash fire horse foot">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Rapidash. Use it on your Shiny Ponyta to evolve it into Shiny Rapidash." />
+	</item>
+	<item id="46169" article="a" name="shiny raticate rat tail">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Raticate. Use it on your Shiny Rattata to evolve it into Shiny Raticate." />
+	</item>
+	<item id="46170" article="a" name="shiny rhydon horn">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Rhydon. Use it on your Shiny Rhyhorn to evolve it into Shiny Rhydon." />
+	</item>
+	<item id="46171" article="a" name="shiny rhyperior sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Rhyperior. Use it on your Shiny Rhydon to evolve it into Shiny Rhyperior." />
+	</item>
+	<item id="46172" article="a" name="shiny roselia bottle of poison">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Roselia. Use it on your Shiny Budew to evolve it into Shiny Roselia." />
+	</item>
+	<item id="46173" article="a" name="shiny roserade leaves">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Roserade. Use it on your Shiny Roselia to evolve it into Shiny Roserade." />
+	</item>
+	<item id="46174" article="a" name="shiny salamence straw">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Salamence. Use it on your Shiny Shelgon to evolve it into Shiny Salamence." />
+	</item>
+	<item id="46175" article="a" name="shiny sandslash armadillo claw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Sandslash. Use it on your Shiny Sandshrew to evolve it into Shiny Sandslash." />
+	</item>
+	<item id="46176" article="a" name="shiny sceptile seed">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Sceptile. Use it on your Shiny Grovyle to evolve it into Shiny Sceptile." />
+	</item>
+	<item id="46177" article="a" name="shiny scizor scizor claw">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Scizor. Use it on your Shiny Scyther to evolve it into Shiny Scizor." />
+	</item>
+	<item id="46178" article="a" name="shiny seadra seahorse tail">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Seadra. Use it on your Shiny Horsea to evolve it into Shiny Seadra." />
+	</item>
+	<item id="46179" article="a" name="shiny seaking horn">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Seaking. Use it on your Shiny Goldeen to evolve it into Shiny Seaking." />
+	</item>
+	<item id="46180" article="a" name="shiny sealeo water gem">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Sealeo. Use it on your Shiny Spheal to evolve it into Shiny Sealeo." />
+	</item>
+	<item id="46181" article="a" name="shiny sharpedo dark gem">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Sharpedo. Use it on your Shiny Carvanha to evolve it into Shiny Sharpedo." />
+	</item>
+	<item id="46182" article="a" name="shiny shelgon future orb">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Shelgon. Use it on your Shiny Bagon to evolve it into Shiny Shelgon." />
+	</item>
+	<item id="46183" article="a" name="shiny shiftry dark gem">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Shiftry. Use it on your Shiny Nuzleaf to evolve it into Shiny Shiftry." />
+	</item>
+	<item id="46184" article="a" name="shiny skiploom yellow flower">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Skiploom. Use it on your Shiny Hoppip to evolve it into Shiny Skiploom." />
+	</item>
+	<item id="46185" article="a" name="shiny skuntank bottle of poison">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Skuntank. Use it on your Shiny Stunky to evolve it into Shiny Skuntank." />
+	</item>
+	<item id="46186" article="a" name="shiny slaking future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Slaking. Use it on your Shiny Vigoroth to evolve it into Shiny Slaking." />
+	</item>
+	<item id="46187" article="a" name="shiny slowbro slow tail">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Slowbro. Use it on your Shiny Slowpoke to evolve it into Shiny Slowbro." />
+	</item>
+	<item id="46188" article="a" name="shiny slowking mystic shell hat">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Slowking. Use it on your Shiny Slowbro to evolve it into Shiny Slowking." />
+	</item>
+	<item id="46189" article="a" name="shiny snorlax bitten apple">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Snorlax. Use it on your Shiny Munchlax to evolve it into Shiny Snorlax." />
+	</item>
+	<item id="46190" article="a" name="shiny starmie gem star">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Starmie. Use it on your Shiny Staryu to evolve it into Shiny Starmie." />
+	</item>
+	<item id="46191" article="a" name="shiny steelix steelix tail">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Steelix. Use it on your Shiny Onix to evolve it into Shiny Steelix." />
+	</item>
+	<item id="46192" article="a" name="shiny sudowoodo future orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Sudowoodo. Use it on your Shiny Bonsly to evolve it into Shiny Sudowoodo." />
+	</item>
+	<item id="46193" article="a" name="shiny sunflora leaves">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Sunflora. Use it on your Shiny Sunkern to evolve it into Shiny Sunflora." />
+	</item>
+	<item id="46194" article="a" name="shiny swalot gosme">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Swalot. Use it on your Shiny Gulpin to evolve it into Shiny Swalot." />
+	</item>
+	<item id="46195" article="a" name="shiny swampert sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Swampert. Use it on your Shiny Marshtomp to evolve it into Shiny Swampert." />
+	</item>
+	<item id="46196" article="a" name="shiny swellow feather">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Swellow. Use it on your Shiny Taillow to evolve it into Shiny Swellow." />
+	</item>
+	<item id="46197" article="a" name="shiny tangrowth seed">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Tangrowth. Use it on your Shiny Tangela to evolve it into Shiny Tangrowth." />
+	</item>
+	<item id="46198" article="a" name="shiny tentacruel giant ruby">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Tentacruel. Use it on your Shiny Tentacool to evolve it into Shiny Tentacruel." />
+	</item>
+	<item id="46199" article="a" name="shiny togekiss feather">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Togekiss. Use it on your Shiny Togetic to evolve it into Shiny Togekiss." />
+	</item>
+	<item id="46200" article="a" name="shiny togetic egg shell">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Togetic. Use it on your Shiny Togepi to evolve it into Shiny Togetic." />
+	</item>
+	<item id="46201" article="a" name="shiny torterra bag of pollem">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Torterra. Use it on your Shiny Grotle to evolve it into Shiny Torterra." />
+	</item>
+	<item id="46202" article="a" name="shiny toxicroak bottle of poison">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Toxicroak. Use it on your Shiny Croagunk to evolve it into Shiny Toxicroak." />
+	</item>
+	<item id="46203" article="a" name="shiny typhlosion hot fur">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Typhlosion. Use it on your Shiny Quilava to evolve it into Shiny Typhlosion." />
+	</item>
+	<item id="46204" article="a" name="shiny tyranitar sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Tyranitar. Use it on your Shiny Pupitar to evolve it into Shiny Tyranitar." />
+	</item>
+	<item id="46205" article="a" name="shiny umbreon dark gem">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Umbreon. Use it on your Shiny Eevee to evolve it into Shiny Umbreon." />
+	</item>
+	<item id="46206" article="a" name="shiny ursaring bear paw">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Ursaring. Use it on your Shiny Teddiursa to evolve it into Shiny Ursaring." />
+	</item>
+	<item id="46207" article="a" name="shiny vaporeon future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Vaporeon. Use it on your Shiny Eevee to evolve it into Shiny Vaporeon." />
+	</item>
+	<item id="46208" article="a" name="shiny venomoth moth wing">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Venomoth. Use it on your Shiny Venonat to evolve it into Shiny Venomoth." />
+	</item>
+	<item id="46209" article="a" name="shiny venusaur bulb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Venusaur. Use it on your Shiny Ivysaur to evolve it into Shiny Venusaur." />
+	</item>
+	<item id="46210" article="a" name="shiny vibrava sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Vibrava. Use it on your Shiny Trapinch to evolve it into Shiny Vibrava." />
+	</item>
+	<item id="46211" article="a" name="shiny victreebel plant tail">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Victreebel. Use it on your Shiny Weepinbell to evolve it into Shiny Victreebel." />
+	</item>
+	<item id="46212" article="a" name="shiny vigoroth future orb">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Vigoroth. Use it on your Shiny Slakoth to evolve it into Shiny Vigoroth." />
+	</item>
+	<item id="46213" article="a" name="shiny vileplume poisonous flower">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Vileplume. Use it on your Shiny Gloom to evolve it into Shiny Vileplume." />
+	</item>
+	<item id="46214" article="a" name="shiny wailord water gem">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Wailord. Use it on your Shiny Wailmer to evolve it into Shiny Wailord." />
+	</item>
+	<item id="46215" article="a" name="shiny walrein water gem">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Walrein. Use it on your Shiny Sealeo to evolve it into Shiny Walrein." />
+	</item>
+	<item id="46216" article="a" name="shiny wartortle squirtle hull">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Wartortle. Use it on your Shiny Squirtle to evolve it into Shiny Wartortle." />
+	</item>
+	<item id="46217" article="a" name="shiny weavile ice orb">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Weavile. Use it on your Shiny Sneasel to evolve it into Shiny Weavile." />
+	</item>
+	<item id="46218" article="a" name="shiny weepinbell leaves">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Weepinbell. Use it on your Shiny Bellsprout to evolve it into Shiny Weepinbell." />
+	</item>
+	<item id="46219" article="a" name="shiny weezing venom flute">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Weezing. Use it on your Shiny Koffing to evolve it into Shiny Weezing." />
+	</item>
+	<item id="46220" article="a" name="shiny whiscash sandbag">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Whiscash. Use it on your Shiny Barboach to evolve it into Shiny Whiscash." />
+	</item>
+	<item id="46221" article="a" name="shiny wigglytuff microphone">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Wigglytuff. Use it on your Shiny Jigglypuff to evolve it into Shiny Wigglytuff." />
+	</item>
+	<item id="46222" article="a" name="shiny wobbuffet future orb">
+		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Wobbuffet. Use it on your Shiny Wynaut to evolve it into Shiny Wobbuffet." />
+	</item>
+	<item id="46223" article="a" name="shiny wormadam pot of moss bug">
+		<attribute key="description" value="Shiny evolution item (tier 3). A rare drop from a wild Shiny Wormadam. Use it on your Shiny Burmy to evolve it into Shiny Wormadam." />
+	</item>
+	<item id="46224" article="a" name="shiny xatu feather">
+		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Xatu. Use it on your Shiny Natu to evolve it into Shiny Xatu." />
+	</item>
 </items>

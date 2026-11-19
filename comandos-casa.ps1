@@ -311,3 +311,27 @@ if ($big.Count -gt 0 -or $total -gt 150) {
     git commit -q -m "PokeDash: servidor y cliente (sin mapa, sprites ni binarios)"
     git push
 }
+
+# ---------------------------------------------------------------------
+# [9] Dibujo brillante para los objetos de evolucion shiny (46001+)
+#     Crea en Tibia.dat/Tibia.spr una copia "brillante" del dibujo de cada
+#     objeto y la asigna en items.otb. Primero hace una PRUEBA sin tocar nada
+#     y genera tools\pokeassets\preview.png (izquierda original, derecha brillo).
+#     Guarda copias *.bak de los 3 archivos antes de modificarlos.
+#     IMPORTANTE: cierra el cliente y el servidor antes de ejecutarlo.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+$t   = (Resolve-Path 'tools\pokeassets').Path
+$dat = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path
+$spr = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path
+$otb = (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path
+$pre = Join-Path $t 'preview.png'
+Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies System.Drawing
+[PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
+Start-Process $pre
+# Si la prueba dice "Prueba OK" y la imagen te gusta, ejecuta estas 4 lineas:
+[PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $null, $false)
+git add bases/pokedashpota1.0/data/items/items.otb tools/pokeassets/preview.png
+git commit -q -m "Objetos de evolucion shiny con dibujo brillante"
+git push

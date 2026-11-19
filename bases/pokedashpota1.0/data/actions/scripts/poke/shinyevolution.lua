@@ -1,6 +1,6 @@
--- Objeto de evolucion shiny (action id 46001+, ver data/lib/core/shinyevolution.lua)
+-- Objeto de evolucion shiny (items 46001+, ver data/lib/core/shinyevolution.lua)
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	local entry = shinyEvoItems[item:getActionId()]
+	local entry = shinyEvoItems[item:getId()]
 	if not entry then
 		return false
 	end
