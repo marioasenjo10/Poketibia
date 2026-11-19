@@ -1,5 +1,5 @@
 local defaultOptions = {
-  vsync = false,
+  vsync = true,
   showFps = false,
   showPing = false,
   fullscreen = false,
@@ -16,7 +16,7 @@ local defaultOptions = {
   showPrivateMessagesOnScreen = true,
   showLeftPanel = false,
   foregroundFrameRate = 61,
-  backgroundFrameRate = 201,
+  backgroundFrameRate = 60,
   painterEngine = 0,
   enableAudio = true,
   enableMusicSound = true,
