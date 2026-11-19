@@ -120,6 +120,7 @@ if NpcHandler == nil then
 		obj.keywordHandler = keywordHandler
 		obj.messages = {}
 		obj.shopItems = {}
+		obj.clickFocus = {}
 
 		setmetatable(obj.messages, self.messages)
 		self.messages.__index = self.messages
@@ -220,6 +221,7 @@ if NpcHandler == nil then
 		self.eventDelayedSay[focus] = nil
 		self.talkStart[focus] = nil
 		self.topic[focus] = nil
+		if self.clickFocus then self.clickFocus[focus] = nil end
 
 		local callback = self:getCallback(CALLBACK_ONRELEASEFOCUS)
 		if callback == nil or callback(focus) then
@@ -339,6 +341,12 @@ if NpcHandler == nil then
 			return
 		end
 
+		if self.clickFocus and self.clickFocus[cid] then
+			self:resetNpc(cid)
+			self:releaseFocus(cid)
+			return
+		end
+
 		local callback = self:getCallback(CALLBACK_FAREWELL)
 		if callback == nil or callback() then
 			if self:processModuleCallback(CALLBACK_FAREWELL) then
@@ -420,9 +428,54 @@ if NpcHandler == nil then
 		end
 	end
 
+	-- Click derecho en el NPC (estilo PKA). El cliente manda en privado "#npcclick <id del npc>".
+	--  - NPC con tienda: abre la ventana de compra/venta directamente, sin mensajes.
+	--  - NPC sin tienda (enfermera, NPCs de conversacion): como si le hubiesen dicho "hi".
+	NPC_CLICK_WORD = "#npcclick"
+
+	function NpcHandler:onClick(cid)
+		if not self:isInRange(cid) then
+			return
+		end
+
+		if next(self.shopItems) == nil then
+			if not self:isFocused(cid) then
+				self:greet(cid, "hi")
+			end
+			self.talkStart[cid] = os.time()
+			return
+		end
+
+		if not self:onTradeRequest(cid) then
+			return
+		end
+
+		if not self:isFocused(cid) then
+			self.clickFocus[cid] = true
+			self:addFocus(cid)
+		end
+		self.talkStart[cid] = os.time()
+
+		local items = {}
+		for i = 1, #self.shopItems do
+			items[#items + 1] = self.shopItems[i]
+		end
+		local handler = self
+		openShopWindow(cid, items,
+			function(cid, itemid, subType, amount, ignoreCap, inBackpacks) handler:onBuy(cid, itemid, subType, amount, ignoreCap, inBackpacks) end,
+			function(cid, itemid, subType, amount, ignoreCap, inBackpacks) handler:onSell(cid, itemid, subType, amount, ignoreCap, inBackpacks) end)
+	end
+
 	-- Handles onCreatureSay events. If you with to handle this yourself, please use the CALLBACK_CREATURE_SAY callback.
 	function NpcHandler:onCreatureSay(creature, msgtype, msg)
 		local cid = creature.uid
+		local clickId = msg:match("^" .. NPC_CLICK_WORD .. " (%d+)$")
+		if clickId then
+			if tonumber(clickId) == getNpcCid() then
+				self:onClick(cid)
+			end
+			return
+		end
 		local callback = self:getCallback(CALLBACK_CREATURE_SAY)
 		if callback == nil or callback(cid, msgtype, msg) then
 			if self:processModuleCallback(CALLBACK_CREATURE_SAY, cid, msgtype, msg) then
@@ -453,7 +506,10 @@ if NpcHandler == nil then
 		local callback = self:getCallback(CALLBACK_PLAYER_ENDTRADE)
 		if callback == nil or callback(cid) then
 			if self:processModuleCallback(CALLBACK_PLAYER_ENDTRADE, cid, msgtype, msg) then
-				if self:isFocused(cid) then
+				if self.clickFocus and self.clickFocus[cid] then
+					self:resetNpc(cid)
+					self:releaseFocus(cid)
+				elseif self:isFocused(cid) then
 					local player = Player(cid)
 					local playerName = player and player:getName() or -1
 					local parseInfo = { [TAG_PLAYERNAME] = playerName }
@@ -556,6 +612,11 @@ if NpcHandler == nil then
 
 	-- Should be called on this npc's focus if the distance to focus is greater then talkRadius.
 	function NpcHandler:onWalkAway(cid)
+		if self.clickFocus and self.clickFocus[cid] and self:isFocused(cid) then
+			self:resetNpc(cid)
+			self:releaseFocus(cid)
+			return
+		end
 		if self:isFocused(cid) then
 			local callback = self:getCallback(CALLBACK_CREATURE_DISAPPEAR)
 			if callback == nil or callback(cid) then --pota

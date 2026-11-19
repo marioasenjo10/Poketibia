@@ -638,7 +638,8 @@ function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
   menu:display(menuPosition)
 end
 
--- Click derecho sobre un NPC = hablarle (estilo PKA): dice "hi" y despues "trade".
+-- Click derecho sobre un NPC (estilo PKA): manda al servidor un aviso oculto "#npcclick <id>"
+-- (nadie lo ve). El servidor abre la tienda, cura (enfermera) o inicia la conversacion.
 -- Si esta lejos, primero camina hasta tenerlo a 3 casillas o menos.
 local NPC_TALK_RANGE = 3
 local npcTalkEvent = nil
@@ -685,11 +686,7 @@ function talkToNpc(npc)
     local dist = npcDistance(player:getPosition(), npcPos)
     if dist <= NPC_TALK_RANGE then
       player:stopAutoWalk()
-      g_game.talk('hi')
-      npcTalkEvent = scheduleEvent(function()
-        npcTalkEvent = nil
-        if g_game.isOnline() then g_game.talkPrivate(MessageModes.NpcTo, creature:getName(), 'trade') end
-      end, 500)
+      g_game.talkPrivate(MessageModes.NpcTo, creature:getName(), '#npcclick ' .. npcId)
       return
     end
     if dist == 999 then return end

@@ -35,7 +35,7 @@ local function creatureGreetCallback(cid, message)
 			ball:transform(balls[ballKey].usedOn)
 		end
 	end
-	selfSay('Take care yourself.', cid)
+	player:sendTextMessage(MESSAGE_STATUS_SMALL, 'Your pokemon have been healed.')
 	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 	return false
 end
