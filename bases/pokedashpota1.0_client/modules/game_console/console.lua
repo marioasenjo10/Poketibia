@@ -85,6 +85,61 @@ local communicationSettings = {
   whitelistedPlayers = {}
 }
 
+-- Modo WASD (estilo PKA): con la casilla del chat marcada se anda con WASD y el chat se oculta.
+-- Enter abre el chat para un mensaje; al enviarlo (o con Enter vacio / Escape) se vuelve a andar.
+local wasdMode = false
+local wasdChatOpen = false
+local ignoreEnterUp = false
+
+local function bindWasd(bind)
+  local gameInterface = modules.game_interface
+  local keys = { W = North, D = East, S = South, A = West, E = NorthEast, Q = NorthWest, C = SouthEast, Z = SouthWest }
+  for key, dir in pairs(keys) do
+    gameInterface.unbindWalkKey(key)
+    if bind then gameInterface.bindWalkKey(key, dir) end
+  end
+end
+
+local function showChat(show)
+  consoleTextEdit:setVisible(show)
+  consoleTextEdit:setText("")
+  if show then consoleTextEdit:focus() end
+  bindWasd(not show)
+end
+
+local function closeWasdChat()
+  if wasdMode and wasdChatOpen then
+    wasdChatOpen = false
+    showChat(false)
+    return true
+  end
+  return false
+end
+
+local function onEnterUp()
+  if not wasdMode then return end
+  if ignoreEnterUp then
+    ignoreEnterUp = false
+    return
+  end
+  if not wasdChatOpen then
+    wasdChatOpen = true
+    showChat(true)
+  end
+end
+
+local function applyWasdMode()
+  wasdChatOpen = false
+  ignoreEnterUp = false
+  if consoleToggleChat:isChecked() ~= wasdMode then
+    consoleToggleChat:setChecked(wasdMode) -- llama a toggleChat()
+  elseif wasdMode then
+    disableChat()
+  else
+    enableChat()
+  end
+end
+
 function init()
   connect(g_game, {
     onTalk = onTalk,
@@ -126,6 +181,8 @@ function init()
   g_keyboard.bindKeyPress('Tab', function() consoleTabBar:selectNextTab() end, consolePanel)
   g_keyboard.bindKeyPress('Shift+Tab', function() consoleTabBar:selectPrevTab() end, consolePanel)
   g_keyboard.bindKeyDown('Enter', sendCurrentMessage, consolePanel)
+  g_keyboard.bindKeyDown('Escape', closeWasdChat, consolePanel)
+  g_keyboard.bindKeyUp('Enter', onEnterUp)
   g_keyboard.bindKeyPress('Ctrl+A', function() consoleTextEdit:clearText() end, consolePanel)
 
   -- apply buttom functions after loaded
@@ -138,6 +195,7 @@ function init()
   g_keyboard.bindKeyDown('Ctrl+H', openHelp)
 
   consoleToggleChat = consolePanel:getChildById('toggleChat')
+  wasdMode = g_settings.get('wasdMode', 'true') == 'true'
   load()
 
   if g_game.isOnline() then
@@ -167,63 +225,26 @@ function selectAll(consoleBuffer)
 end
 
 function toggleChat()
-  if consoleToggleChat:isChecked() then
+  wasdMode = consoleToggleChat:isChecked()
+  g_settings.set('wasdMode', wasdMode and 'true' or 'false')
+  wasdChatOpen = false
+  if wasdMode then
     disableChat()
   else
     enableChat()
   end
 end
 
+-- chat normal: las letras escriben
 function enableChat()
-  local gameInterface = modules.game_interface
-
-  consoleTextEdit:setVisible(true)
-  consoleTextEdit:setText("")
-
-  g_keyboard.unbindKeyUp("Space")
-  g_keyboard.unbindKeyUp("Enter")
-  g_keyboard.unbindKeyUp("Escape")
-
-  gameInterface.unbindWalkKey("W")
-  gameInterface.unbindWalkKey("D")
-  gameInterface.unbindWalkKey("S")
-  gameInterface.unbindWalkKey("A")
-
-  gameInterface.unbindWalkKey("E")
-  gameInterface.unbindWalkKey("Q")
-  gameInterface.unbindWalkKey("C")
-  gameInterface.unbindWalkKey("Z")
-
-  consoleToggleChat:setTooltip(tr("Disable chat mode, allow to walk using ASDW"))
+  showChat(true)
+  consoleToggleChat:setTooltip(tr('Marca la casilla para andar con WASD (Enter abre el chat)'))
 end
 
+-- modo WASD: chat oculto, las letras mueven al personaje
 function disableChat()
-  local gameInterface = modules.game_interface
-
-  consoleTextEdit:setVisible(false)
-  consoleTextEdit:setText("")
-
-  local quickFunc = function()
-    if consoleToggleChat:isChecked() then
-      consoleToggleChat:setChecked(false)
-    end
-    enableChat()
-  end
-  g_keyboard.bindKeyUp("Space", quickFunc)
-  g_keyboard.bindKeyUp("Enter", quickFunc)
-  g_keyboard.bindKeyUp("Escape", quickFunc)
-
-  gameInterface.bindWalkKey("W", North)
-  gameInterface.bindWalkKey("D", East)
-  gameInterface.bindWalkKey("S", South)
-  gameInterface.bindWalkKey("A", West)
-
-  gameInterface.bindWalkKey("E", NorthEast)
-  gameInterface.bindWalkKey("Q", NorthWest)
-  gameInterface.bindWalkKey("C", SouthEast)
-  gameInterface.bindWalkKey("Z", SouthWest)
-
-  consoleToggleChat:setTooltip(tr("Enable chat mode"))
+  showChat(false)
+  consoleToggleChat:setTooltip(tr('Modo WASD: Enter para escribir. Desmarca la casilla para chat normal'))
 end
 
 function terminate()
@@ -245,6 +266,8 @@ function terminate()
 
   if g_game.isOnline() then clear() end
 
+  g_keyboard.unbindKeyUp('Enter', onEnterUp)
+  bindWasd(false)
   g_keyboard.unbindKeyDown('Ctrl+O')
   g_keyboard.unbindKeyDown('Ctrl+E')
   g_keyboard.unbindKeyDown('Ctrl+H')
@@ -794,6 +817,9 @@ end
 
 function sendCurrentMessage()
   local message = consoleTextEdit:getText()
+  if closeWasdChat() then
+    ignoreEnterUp = true -- que el Enter al soltarse no vuelva a abrir el chat
+  end
   if #message == 0 then return end
   consoleTextEdit:clearText()
 
@@ -1408,6 +1434,7 @@ end
 function online()
   defaultTab = addTab(tr('Default'), true)
   serverTab = addTab(tr('Server Log'), false)
+  applyWasdMode()
 
   if g_game.getClientVersion() < 862 then
     g_keyboard.bindKeyDown('Ctrl+R', openPlayerReportRuleViolationWindow)

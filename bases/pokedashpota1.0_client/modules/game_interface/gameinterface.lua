@@ -114,6 +114,9 @@ function unbindWalkKey(key)
   g_keyboard.unbindKeyDown(key, gameRootPanel)
   g_keyboard.unbindKeyUp(key, gameRootPanel)
   g_keyboard.unbindKeyPress(key, gameRootPanel)
+  -- bindWalkKey usa combos "alone" que unbindKeyDown/Up no quitan
+  if gameRootPanel.boundAloneKeyDownCombos then gameRootPanel.boundAloneKeyDownCombos[key] = nil end
+  if gameRootPanel.boundAloneKeyUpCombos then gameRootPanel.boundAloneKeyUpCombos[key] = nil end
 end
 
 function bindTurnKey(key, dir)
@@ -635,8 +638,83 @@ function createThingMenu(menuPosition, lookThing, useThing, creatureThing)
   menu:display(menuPosition)
 end
 
+-- Click derecho sobre un NPC = hablarle (estilo PKA): dice "hi" y despues "trade".
+-- Si esta lejos, primero camina hasta tenerlo a 3 casillas o menos.
+local NPC_TALK_RANGE = 3
+local npcTalkEvent = nil
+
+local function npcDistance(a, b)
+  if a.z ~= b.z then return 999 end
+  return math.max(math.abs(a.x - b.x), math.abs(a.y - b.y))
+end
+
+local function walkNearNpc(player, npcPos)
+  local ppos = player:getPosition()
+  local spots = {}
+  for dx = -2, 2 do
+    for dy = -2, 2 do
+      if dx ~= 0 or dy ~= 0 then
+        local pos = { x = npcPos.x + dx, y = npcPos.y + dy, z = npcPos.z }
+        table.insert(spots, { pos = pos, dist = npcDistance(ppos, pos) * 10 + math.max(math.abs(dx), math.abs(dy)) })
+      end
+    end
+  end
+  table.sort(spots, function(a, b) return a.dist < b.dist end)
+  for _, spot in ipairs(spots) do
+    if player:autoWalk(spot.pos) then return true end
+  end
+  return false
+end
+
+function talkToNpc(npc)
+  if npcTalkEvent then
+    removeEvent(npcTalkEvent)
+    npcTalkEvent = nil
+  end
+  local player = g_game.getLocalPlayer()
+  if not player or not npc then return end
+  local npcId = npc:getId()
+  local tries = 0
+
+  local function tryTalk()
+    npcTalkEvent = nil
+    if not g_game.isOnline() then return end
+    local creature = g_map.getCreatureById(npcId)
+    if not creature then return end
+    local npcPos = creature:getPosition()
+    local dist = npcDistance(player:getPosition(), npcPos)
+    if dist <= NPC_TALK_RANGE then
+      player:stopAutoWalk()
+      g_game.talk('hi')
+      npcTalkEvent = scheduleEvent(function()
+        npcTalkEvent = nil
+        if g_game.isOnline() then g_game.talkPrivate(MessageModes.NpcTo, creature:getName(), 'trade') end
+      end, 500)
+      return
+    end
+    if dist == 999 then return end
+    tries = tries + 1
+    if tries == 1 and not walkNearNpc(player, npcPos) then
+      modules.game_textmessage.displayFailureMessage(tr('There is no way.'))
+      return
+    end
+    if tries > 75 then return end -- ~15 s
+    npcTalkEvent = scheduleEvent(tryTalk, 200)
+  end
+
+  tryTalk()
+end
+
 function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, useThing, creatureThing, attackCreature)
   local keyboardModifiers = g_keyboard.getModifiers()
+
+  if mouseButton == MouseRightButton and keyboardModifiers == KeyboardNoModifier and not g_mouse.isPressed(MouseLeftButton) then
+    local npc = (attackCreature and attackCreature:isNpc() and attackCreature) or (creatureThing and creatureThing:isNpc() and creatureThing)
+    if npc then
+      talkToNpc(npc)
+      return true
+    end
+  end
 
   if not modules.client_options.getOption('classicControl') then
     if keyboardModifiers == KeyboardNoModifier and mouseButton == MouseRightButton then
