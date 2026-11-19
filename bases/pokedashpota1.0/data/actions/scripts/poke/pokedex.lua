@@ -131,7 +131,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if target ~= item and target:isCreature() ~= true then return false end
 
 	if target:isCreature() then -- check if it is on dex or add to dex
-		if not target:isMonster() then			
+		if not target:isMonster() then
+			if player:isUsingOtClient() then
+				player:sendPokedexList()
+				return true
+			end
 			local text = player:getPokedexStatus(baseStorageDex)
 			if #text >= 1000 then
 				player:showTextDialog(pokedexId, string.sub(text, math.floor(#text/2) + 1 , #text))
@@ -153,8 +157,16 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			player:setStorageValue(storage, 0)
 			getPlayerPosition(player):sendMagicEffect(329)
 			player:addExperience(givenExp, true)
+			if player:isUsingOtClient() then
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, target:getName() .. " registered in your pokedex!")
+				player:sendPokedexInfo(monsterNumber)
+			end
 		else -- open status of monster
 			getPlayerPosition(player):sendMagicEffect(300)
+			if player:isUsingOtClient() and not target:getMaster() then
+				player:sendPokedexInfo(monsterNumber)
+				return true
+			end
 			local monsterType = MonsterType(target:getName())
 			local portraitId = monsterType:portraitId()
 			local portraitItemType = ItemType(portraitId)

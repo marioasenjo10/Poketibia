@@ -344,3 +344,24 @@ Start-Job $pokeassets -ArgumentList $true | Receive-Job -Wait -AutoRemoveJob
 git add bases/pokedashpota1.0/data/items/items.otb tools/pokeassets/preview.png
 git commit -q -m "Objetos de evolucion shiny con dibujo brillante"
 git push
+
+# ---------------------------------------------------------------------
+# [10] Mapa entero en el mapa grande (Ctrl+Tab)
+#      Genera el minimapa de todo el mundo a partir del mapa del servidor
+#      (global_dash.otbm) y lo guarda en el cliente como
+#      modules\game_minimap\world.otmm. Repetir si cambias el mapa.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+Start-Job {
+    Set-Location 'C:\Develop\Poketibia-project'
+    $t = (Resolve-Path 'tools\pokeassets').Path
+    Add-Type -Path "$t\Otb.cs","$t\Things.cs","$t\Minimap.cs" -ReferencedAssemblies System.Drawing
+    [WorldMap]::Run((Resolve-Path 'bases\pokedashpota1.0\data\world\global_dash.otbm').Path,
+                    (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path,
+                    (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path,
+                    (Join-Path (Get-Location) 'bases\pokedashpota1.0_client\modules\game_minimap\world.otmm'))
+} | Receive-Job -Wait -AutoRemoveJob
+git add bases/pokedashpota1.0_client/modules/game_minimap/world.otmm
+git commit -q -m "Mapa entero para el mapa grande (world.otmm)"
+git push

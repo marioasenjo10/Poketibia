@@ -1,0 +1,10 @@
+Module
+  name: game_pokedex
+  description: Pokedex estilo PKA (info, botin y localizacion)
+  author: Poketibia
+  autoload: true
+  autoload-priority: 1000
+  scripts: [ pokedex ]
+  sandboxed: true
+  @onLoad: init()
+  @onUnload: terminate()

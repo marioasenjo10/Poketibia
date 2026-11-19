@@ -15,6 +15,10 @@ public class DatThing
 {
 	public int Start, End;
 	public List<int> SpritePositions = new List<int>();
+	// para el minimapa (Minimap.cs)
+	public int Priority = 5; // 0 suelo, 1 borde, 2 abajo, 3 encima, 5 normal
+	public int GroundSpeed, MinimapColor;
+	public bool NotWalkable, NotPathable;
 }
 
 public class Dat
@@ -67,6 +71,11 @@ public class Dat
 		{
 			byte a = Data[p++];
 			if (a == 0xFF) break;
+			if (a == 0) { t.Priority = 0; t.GroundSpeed = U16(p); }
+			else if (a >= 1 && a <= 3) { if (a < t.Priority) t.Priority = a; }
+			else if (a == 12) t.NotWalkable = true;
+			else if (a == 15) t.NotPathable = true;
+			else if (a == 29) t.MinimapColor = U16(p);
 			switch (a)
 			{
 				case 0: case 8: case 9: case 26: case 29: case 30: case 33: case 35: p += 2; break; // u16

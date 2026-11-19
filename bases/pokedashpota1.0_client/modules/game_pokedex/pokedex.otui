@@ -1,0 +1,403 @@
+PokedexRow < Label
+  height: 18
+  font: noto-11px
+  text-offset: 6 2
+  focusable: true
+  color: #dde5f0
+  background-color: alpha
+
+  $on:
+    color: #5c6b80
+
+  $focus:
+    background-color: #2e4a6e
+    color: #ffffff
+
+PokedexSection < Label
+  height: 15
+  font: noto-bold-11px
+  color: #ffd84a
+  margin-top: 6
+
+PokedexText < Label
+  font: noto-11px
+  color: #dde5f0
+  text-wrap: true
+  text-auto-resize: true
+
+PokedexTab < UIButton
+  size: 120 24
+  image-source: /game_pokemonmoves/images/button
+  image-border: 6
+  font: noto-bold-11px
+  color: #9fb3cc
+  focusable: false
+
+  $hover:
+    image-source: /game_pokemonmoves/images/button_hover
+    color: #ffffff
+
+  $on:
+    image-source: /game_pokemonmoves/images/button_hover
+    color: #ffd84a
+
+PokedexTypeBadge < Label
+  size: 70 16
+  font: noto-bold-11px
+  color: #ffffff
+  text-align: center
+  phantom: true
+
+PokedexStat < UIWidget
+  height: 16
+
+  Label
+    id: name
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    width: 120
+    font: noto-11px
+    color: #9fb3cc
+    phantom: true
+
+  Label
+    id: value
+    anchors.left: name.right
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    font: noto-bold-11px
+    color: #ffffff
+    phantom: true
+
+PokedexMoveIcon < UIWidget
+  size: 36 36
+  image-source: /game_pokemonmoves/images/slot
+  image-border: 7
+
+  UIWidget
+    id: icon
+    size: 30 30
+    anchors.centerIn: parent
+    phantom: true
+
+PokedexMoves < UIWidget
+  height: 36
+  layout:
+    type: grid
+    cell-size: 36 36
+    cell-spacing: 4
+    flow: true
+
+PokedexLootRow < UIWidget
+  height: 40
+  image-source: /game_pokemonmoves/images/box
+  image-border: 8
+
+  Item
+    id: item
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    virtual: true
+    phantom: true
+
+  Label
+    id: name
+    anchors.left: item.right
+    anchors.right: chance.left
+    anchors.top: parent.top
+    margin-left: 8
+    margin-top: 6
+    font: noto-bold-11px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: count
+    anchors.left: name.left
+    anchors.right: name.right
+    anchors.top: name.bottom
+    margin-top: 1
+    font: noto-11px
+    color: #9fb3cc
+    phantom: true
+
+  Label
+    id: chance
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    width: 70
+    text-align: right
+    font: noto-bold-11px
+    color: #7ee07e
+    phantom: true
+
+PokedexLocationRow < UIWidget
+  height: 40
+  image-source: /game_pokemonmoves/images/box
+  image-border: 8
+
+  Label
+    id: town
+    anchors.left: parent.left
+    anchors.right: showButton.left
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 6
+    font: noto-bold-11px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: detail
+    anchors.left: town.left
+    anchors.right: town.right
+    anchors.top: town.bottom
+    margin-top: 1
+    font: noto-11px
+    color: #9fb3cc
+    phantom: true
+
+  UIButton
+    id: showButton
+    size: 100 24
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 8
+    image-source: /game_pokemonmoves/images/button
+    image-border: 6
+    font: noto-bold-11px
+    color: #e6edf6
+    text: Ver en mapa
+    focusable: false
+
+    $hover:
+      image-source: /game_pokemonmoves/images/button_hover
+      color: #ffffff
+
+PokedexScroll < ScrollablePanel
+  anchors.top: tabInfo.bottom
+  anchors.bottom: parent.bottom
+  anchors.left: headerBox.left
+  anchors.right: headerBox.right
+  margin-top: 8
+  margin-bottom: 14
+  margin-right: 14
+  layout:
+    type: verticalBox
+    spacing: 4
+
+PokedexScrollBar < VerticalScrollBar
+  anchors.top: tabInfo.bottom
+  anchors.bottom: parent.bottom
+  anchors.right: headerBox.right
+  margin-top: 8
+  margin-bottom: 14
+  step: 20
+  pixels-scroll: true
+
+UIWindow
+  id: pokedexWindow
+  size: 640 460
+  anchors.centerIn: parent
+  image-source: /game_pokemonmoves/images/window
+  image-border: 10
+  @onEscape: modules.game_pokedex.hide()
+
+  Label
+    id: title
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 12
+    margin-left: 14
+    font: noto-bold-14px
+    color: #ffffff
+    text: Pokedex
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: seenLabel
+    anchors.left: title.right
+    anchors.verticalCenter: title.verticalCenter
+    margin-left: 12
+    font: noto-11px
+    color: #9fb3cc
+    text-auto-resize: true
+    phantom: true
+
+  UIButton
+    id: closeButton
+    size: 16 16
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 14
+    margin-right: 14
+    image-source: /game_pokemonmoves/images/close
+    focusable: false
+    @onClick: modules.game_pokedex.hide()
+
+    $hover:
+      image-source: /game_pokemonmoves/images/close_hover
+
+  TextEdit
+    id: searchEdit
+    anchors.top: title.bottom
+    anchors.left: parent.left
+    margin-top: 10
+    margin-left: 12
+    width: 190
+
+  Label
+    id: searchHint
+    anchors.fill: searchEdit
+    text-offset: 6 4
+    font: noto-11px
+    color: #8a8a8a
+    text: Buscar...
+    phantom: true
+
+  TextList
+    id: dexList
+    anchors.top: searchEdit.bottom
+    anchors.bottom: parent.bottom
+    anchors.left: searchEdit.left
+    width: 176
+    margin-top: 6
+    margin-bottom: 14
+    background-color: #0f1724
+    border-color: #2e3d52
+    focusable: false
+    vertical-scrollbar: dexListScrollBar
+
+  VerticalScrollBar
+    id: dexListScrollBar
+    anchors.top: dexList.top
+    anchors.bottom: dexList.bottom
+    anchors.left: dexList.right
+    step: 18
+    pixels-scroll: true
+
+  UIWidget
+    id: headerBox
+    anchors.top: searchEdit.top
+    anchors.left: dexListScrollBar.right
+    anchors.right: parent.right
+    margin-left: 10
+    margin-right: 12
+    height: 88
+    image-source: /game_pokemonmoves/images/box
+    image-border: 8
+    phantom: true
+
+  UICreature
+    id: creature
+    size: 72 72
+    anchors.left: headerBox.left
+    anchors.verticalCenter: headerBox.verticalCenter
+    margin-left: 8
+    phantom: true
+
+  Label
+    id: nameLabel
+    anchors.left: creature.right
+    anchors.top: headerBox.top
+    margin-left: 10
+    margin-top: 10
+    font: noto-bold-14px
+    color: #ffffff
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: numberLabel
+    anchors.left: nameLabel.right
+    anchors.verticalCenter: nameLabel.verticalCenter
+    margin-left: 8
+    font: noto-11px
+    color: #9fb3cc
+    text-auto-resize: true
+    phantom: true
+
+  PokedexTypeBadge
+    id: type1
+    anchors.left: nameLabel.left
+    anchors.top: nameLabel.bottom
+    margin-top: 6
+
+  PokedexTypeBadge
+    id: type2
+    anchors.left: type1.right
+    anchors.top: type1.top
+    margin-left: 6
+
+  Label
+    id: catchLabel
+    anchors.left: nameLabel.left
+    anchors.right: headerBox.right
+    anchors.top: type1.bottom
+    margin-top: 6
+    margin-right: 10
+    font: noto-11px
+    color: #9fb3cc
+    phantom: true
+
+  Label
+    id: emptyLabel
+    anchors.left: headerBox.left
+    anchors.right: headerBox.right
+    anchors.top: headerBox.bottom
+    margin-top: 80
+    text-align: center
+    text-wrap: true
+    text-auto-resize: true
+    font: noto-11px
+    color: #6c7a8d
+    text: Elige un pokemon de la lista o usa la pokedex sobre un pokemon salvaje.
+    phantom: true
+
+  PokedexTab
+    id: tabInfo
+    anchors.top: headerBox.bottom
+    anchors.left: headerBox.left
+    margin-top: 8
+    text: Informacion
+    @onClick: modules.game_pokedex.showTab('info')
+
+  PokedexTab
+    id: tabLoot
+    anchors.top: tabInfo.top
+    anchors.left: tabInfo.right
+    margin-left: 6
+    text: Botin
+    @onClick: modules.game_pokedex.showTab('loot')
+
+  PokedexTab
+    id: tabLocation
+    anchors.top: tabInfo.top
+    anchors.left: tabLoot.right
+    margin-left: 6
+    text: Localizacion
+    @onClick: modules.game_pokedex.showTab('location')
+
+  PokedexScroll
+    id: infoPanel
+    vertical-scrollbar: infoScrollBar
+
+  PokedexScrollBar
+    id: infoScrollBar
+
+  PokedexScroll
+    id: lootPanel
+    vertical-scrollbar: lootScrollBar
+
+  PokedexScrollBar
+    id: lootScrollBar
+
+  PokedexScroll
+    id: locationPanel
+    vertical-scrollbar: locationScrollBar
+
+  PokedexScrollBar
+    id: locationScrollBar

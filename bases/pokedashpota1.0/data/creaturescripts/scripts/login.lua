@@ -43,6 +43,9 @@ function onLogin(player)
 	-- Refresh Pokemon Bar
 	player:refreshPokemonBar({}, {})
 
+	-- Nombres de las ciudades para el mapa grande del cliente
+	player:sendTownList()
+
 	-- Check fly
 --	if player:getStorageValue(storageFly) > 0 or player:getStorageValue(storageSurf) > 0 or player:getStorageValue(storageDive) > 0 then
 --		player:setStorageValue(storageFly, -1)

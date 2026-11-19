@@ -14,5 +14,7 @@ function onExtendedOpcode(player, opcode, buffer)
 		if i and i >= 1 and i <= #moveWords and i == math.floor(i) then
 			doSummonMove(player, i)
 		end
+	elseif opcode == OPCODE_POKEDEX then
+		onPokedexOpcode(player, buffer)
 	end
 end
