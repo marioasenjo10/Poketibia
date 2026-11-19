@@ -288,3 +288,26 @@ Get-Content "$d\events\scripts\player.lua" -TotalCount 120 | Out-File $o -Append
 git add $o
 git commit -m "Paso 7: arreglo /cb + info"
 git push
+
+# ---------------------------------------------------------------------
+# [8] Subir a git el servidor y el cliente de PokeDash
+#     El .gitignore (ya actualizado) deja FUERA: el mapa .otbm, los
+#     sprites (things), los .exe/.dll, los binarios de Linux y los logs.
+#     Si algo pesa demasiado, NO sube nada y te dice qué es.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+git add bases/pokedashpota1.0 bases/pokedashpota1.0_client
+$files = @(git -c core.quotepath=off diff --cached --name-only)
+$sizes = $files | ForEach-Object { $f = Get-Item -LiteralPath $_ -ErrorAction SilentlyContinue; if ($f) { [pscustomobject]@{ Path = $_; MB = [math]::Round($f.Length / 1MB, 1) } } }
+$total = [math]::Round((($sizes | Measure-Object MB -Sum).Sum), 1)
+"Archivos: $($files.Count)   Total: $total MB"
+$big = @($sizes | Where-Object { $_.MB -gt 20 })
+if ($big.Count -gt 0 -or $total -gt 150) {
+    "DEMASIADO GRANDE, no se sube nada. Archivos grandes:"
+    $sizes | Sort-Object MB -Descending | Select-Object -First 10 | Format-Table -AutoSize
+    git reset -q
+} else {
+    git commit -q -m "PokeDash: servidor y cliente (sin mapa, sprites ni binarios)"
+    git push
+}

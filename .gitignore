@@ -1,2 +1,15 @@
-# Bases de la comunidad (pesadas, solo para pruebas locales)
-bases/
+# Bases de la comunidad: se ignora todo salvo el servidor y el cliente de PokeDash
+bases/*
+!bases/pokedashpota1.0/
+!bases/pokedashpota1.0_client/
+
+# Dentro de PokeDash: lo pesado, binarios y archivos generados
+bases/pokedashpota1.0/data/world/*.otbm
+bases/pokedashpota1.0/data/logs/
+bases/pokedashpota1.0_client/data/things/
+bases/**/*.exe
+bases/**/*.dll
+bases/**/*_linux64
+bases/**/*.log
+bases/**/*.bak
+bases/**/.DS_Store
