@@ -22,6 +22,16 @@ local readyAt = {}           -- [nombre en minusculas] = g_clock.millis() en que
 local comboKey
 local pokemonName
 
+-- Cooldowns visuales: [slot] = g_clock.millis() en que termina
+local cdEnd = {}
+local cdToken = {}
+
+-- Arrastre de la barra
+local DRAG_THRESHOLD = 4
+local dragStart, dragOffset
+local isDragging = false
+local lastDragEnd = 0
+
 function msgcontains(message, keyword)
   local message, keyword = message:lower(), keyword:lower()
   if message == keyword then
@@ -58,10 +68,13 @@ function getOpCode(protocol, opcode, buffer)
   end
   -- numeros en bloques de #moves: velocidad, cooldown restante, necesita objetivo, alcance
   local n = #moves
+  local now = g_clock.millis()
+  cdEnd = {}
   for i = 1, n do
      local inside = {id = i, words = moves[i], lvl = 1, exhaustion = numbers[i], cooldownRemaining = numbers[n + i] or 0,
                      isTarget = numbers[2 * n + i], range = numbers[3 * n + i]}
      table.insert(spells, inside)
+     if inside.cooldownRemaining > 0 then cdEnd[i] = now + inside.cooldownRemaining end
   end
   onMovesReceived()
   getSpells(spells)
@@ -71,7 +84,14 @@ end
 
 function init()
   sbw = g_ui.displayUI('pokemonmoves')
-  sbw:move(10,50)
+  local savedPos = g_settings.getPoint('pokemonmoves_pos')
+  if savedPos and (savedPos.x ~= 0 or savedPos.y ~= 0) then
+    sbw:setPosition(savedPos)
+    sbw:bindRectToParent()
+  else
+    sbw:move(10,50)
+  end
+  makeDraggable(sbw:recursiveGetChildById('mainWindow'))
   g_mouse.bindPress(sbw, function() createMenu() end, MouseRightButton)
   sbw:hide()
   connect(g_game, 'onTalk', messageSentCallback)
@@ -121,6 +141,7 @@ end
 function terminate()
   ProtocolGame.unregisterExtendedOpcode(OPCODE_SKILLBAR)
   removeEvent(comboEvent)
+  g_settings.set('pokemonmoves_pos', sbw:getPosition())
   if comboWindow then comboWindow:destroy() comboWindow = nil end
   sbw:destroy()
   disconnect(g_game, { onGameEnd = function() sbw:hide() end })
@@ -131,6 +152,7 @@ function terminate()
 end
 
 function createMenu()
+  if isDragging or g_clock.millis() - lastDragEnd < 200 then return end
   local menu = g_ui.createWidget('PopupMenu')
   if side == 'horizontal' then
     menu:addOption('Poner vertical', function() side = 'vertical' getSpells(spells) end)
@@ -199,7 +221,11 @@ function getSpells(table)
     if player:getLevel() < icon.lvl then progress:setText('L'..icon.lvl) progress:setColor('red') progress:setPercent(0) end
     if progress:getPercent() == 100 then progress:setText('') elseif icon.lvl < player:getLevel() then progress:setText(progress:getPercent()) end
     progress:setPhantom(true)
-    icon.onClick = function() useSpell(i) end
+    makeDraggable(icon)
+    icon.onClick = function() if not justDragged() then useSpell(i) end end
+    if cdEnd[i] and cdEnd[i] > g_clock.millis() then
+      startCooldown(i, cdEnd[i] - g_clock.millis())
+    end
   end
   local n = #table + 1
   local toggle = g_ui.createWidget('ComboToggle', spellBarWindow)
@@ -213,7 +239,8 @@ function getSpells(table)
     toggle:setMarginTop(n * 32 + 2 * n - 32)
     height = n * 32 + 2 * n
   end
-  toggle.onClick = function() runCombo() end
+  makeDraggable(toggle)
+  toggle.onClick = function() if not justDragged() then runCombo() end end
   updateComboToggle()
   sbw:setHeight(height)
   sbw:setWidth(width)  
@@ -231,30 +258,71 @@ end
 function startDownDelay(i)
   local spell = sbw:recursiveGetChildById('spell'..i)
   if not spell then return end
-  local progress = sbw:recursiveGetChildById('progress'..i)
-  progress:setPercent(0)
-  progress:setText('0%')
-  progress:setColor('red')
-  spell.exhaustionNeeded = 0
-  scheduleEvent(function() spellTimeleft(i) end,100) 
+  startCooldown(i, spell.exhaustion or 0)
 end
 
-function spellTimeleft(i)
+-- Muestra la cuenta atras en segundos sobre el icono del ataque
+function startCooldown(i, duration)
+  if duration <= 0 then return end
+  cdEnd[i] = g_clock.millis() + duration
+  cdToken[i] = (cdToken[i] or 0) + 1
+  spellTimeleft(i, cdToken[i])
+end
+
+function spellTimeleft(i, token)
+  if token ~= cdToken[i] then return end
   local spell = sbw:recursiveGetChildById('spell'..i)
-  if not spell then return end
   local progress = sbw:recursiveGetChildById('progress'..i)
-  spell.exhaustionNeeded = spell.exhaustionNeeded + 100
-  if spell.exhaustionNeeded < spell.exhaustion then
-    progress:setPercent(math.floor(((spell.exhaustionNeeded) * 100)/spell.exhaustion))
-    progress:setText(progress:getPercent())
-    progress:setColor('red')
+  if not spell or not progress then return end
+  local remaining = (cdEnd[i] or 0) - g_clock.millis()
+  if remaining > 0 then
+    local total = math.max(spell.exhaustion or 0, remaining)
+    progress:setPercent(math.floor((total - remaining) * 100 / total))
+    progress:setText(tostring(math.ceil(remaining / 1000)))
+    progress:setColor('white')
+    scheduleEvent(function() spellTimeleft(i, token) end, 100)
   else
+    cdEnd[i] = nil
     progress:setPercent(100)
     progress:setText('')
-    spell.exhaustionNeeded = 0    
+  end
+end
+
+-- ===================== Mover la barra =====================
+
+function justDragged()
+  return isDragging or g_clock.millis() - lastDragEnd < 200
+end
+
+function makeDraggable(widget)
+  widget:setDraggable(true)
+  widget.onDragEnter = function(self, mousePos)
+    dragStart = mousePos
+    dragOffset = { x = mousePos.x - sbw:getX(), y = mousePos.y - sbw:getY() }
     return true
   end
-  scheduleEvent(function() spellTimeleft(i) end,100) 
+  widget.onDragMove = function(self, mousePos, mouseMoved)
+    if not dragStart then return true end
+    if not isDragging then
+      if math.abs(mousePos.x - dragStart.x) < DRAG_THRESHOLD and math.abs(mousePos.y - dragStart.y) < DRAG_THRESHOLD then
+        return true
+      end
+      isDragging = true
+      sbw:breakAnchors()
+    end
+    sbw:setPosition({ x = mousePos.x - dragOffset.x, y = mousePos.y - dragOffset.y })
+    sbw:bindRectToParent()
+    return true
+  end
+  widget.onDragLeave = function(self, droppedWidget, mousePos)
+    if isDragging then
+      lastDragEnd = g_clock.millis()
+      g_settings.set('pokemonmoves_pos', sbw:getPosition())
+    end
+    isDragging = false
+    dragStart = nil
+    return true
+  end
 end
 
 -- ===================== Smart Combo =====================
