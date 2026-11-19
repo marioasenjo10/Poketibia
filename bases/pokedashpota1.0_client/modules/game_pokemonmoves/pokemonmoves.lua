@@ -311,7 +311,8 @@ function init()
   else
     sbw:move(10,50)
   end
-  makeDraggable(sbw:recursiveGetChildById('mainWindow'))
+  -- el fondo (Panel) es phantom: los clics caen en la ventana raiz, que es la que se arrastra
+  makeDraggable(sbw)
   g_mouse.bindPress(sbw, function() createMenu() end, MouseRightButton)
   sbw:hide()
   connect(g_game, 'onTalk', messageSentCallback)

@@ -48,6 +48,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			if evolutionName ~= "" then
 				local itemType = ItemType(evolution.itemName)
 				if itemType and itemType:getId() == item:getId() then
+					if shinyEvoByTarget[evolutionName] then
+						player:sendTextMessage(MESSAGE_STATUS_SMALL, "Shiny pokemon do not evolve with stones. You need the rare item dropped by a wild " .. evolutionName .. ".")
+						return true
+					end
 					local isAncient = false
 					if item:getName() == "unique ancient stone" then
 						if player:getStorageValue(storageEvolutionAncient) > 0 then

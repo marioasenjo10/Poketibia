@@ -11,4 +11,5 @@ dofile('data/lib/core/tile.lua')
 
 dofile('data/lib/core/item_attributes.lua')
 dofile('data/lib/core/newfunctions.lua')
+dofile('data/lib/core/shinyevolution.lua')
 dofile('data/lib/core/string.lua')

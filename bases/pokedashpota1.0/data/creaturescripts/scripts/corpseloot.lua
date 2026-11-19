@@ -30,12 +30,26 @@ function onPostDeath(creature, corpse, killer, mostDamage, unjustified, mostDama
 		return true
 	end
 	local player = Player(owner)
+	local shinyEvoItem = doShinyEvoDrop(creature, corpse)
+	if shinyEvoItem then
+		doSendMultipleEffects(corpse:getPosition(), 56, 10, 600)
+		if player then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, creature:getName() .. " dropped a rare shiny evolution item!")
+		end
+	end
 	if player and player:isPlayer() and player:isAutoLooting() then
 		local msg = "[AUTOLOOT] "
 		local nItems = 0
 		for i = corpse:getSize() - 1, 0, -1 do
 			local item = corpse:getItem(i)				
-			if item then
+			if item and shinyEvoItems[item:getActionId()] then
+				-- objetos especiales (evolucion shiny): se mueven tal cual para no perder el action id
+				if player:addItemEx(item:clone()) == RETURNVALUE_NOERROR then
+					msg = msg .. "1 " .. item:getName() .. " (shiny evolution), "
+					item:remove()
+					nItems = nItems + 1
+				end
+			elseif item then
 				local itemId = item:getId()
 				local itemName = item:getName()
 				local itemCount = item:getCount()
