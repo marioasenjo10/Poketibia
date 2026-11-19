@@ -335,3 +335,52 @@ Start-Process $pre
 git add bases/pokedashpota1.0/data/items/items.otb tools/pokeassets/preview.png
 git commit -q -m "Objetos de evolucion shiny con dibujo brillante"
 git push
+
+
+PS C:\Develop\Poketibia-project> Set-Location 'C:\Develop\Poketibia-project'
+PS C:\Develop\Poketibia-project> git pull
+Already up to date.
+PS C:\Develop\Poketibia-project> $t   = (Resolve-Path 'tools\pokeassets').Path
+PS C:\Develop\Poketibia-project> $dat = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path
+PS C:\Develop\Poketibia-project> $spr = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path
+PS C:\Develop\Poketibia-project> $otb = (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path
+PS C:\Develop\Poketibia-project> $pre = Join-Path $t 'preview.png'
+PS C:\Develop\Poketibia-project> Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies System.Drawing
+
+PS C:\Develop\Poketibia-project> [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
+Excepción al llamar a "Run" con los argumentos "7": "No se pudo leer Tibia.dat: atributo desconocido 254 en 
+593"
+En línea: 1 Carácter: 1
++ [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : Exception
+ 
+PS C:\Develop\Poketibia-project> Start-Process $pre
+Start-Process : Este comando no se puede ejecutar debido al error: El sistema no puede encontrar el archivo 
+especificado.
+En línea: 1 Carácter: 1
++ Start-Process $pre
++ ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException
+    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand
+ 
+PS C:\Develop\Poketibia-project> # Si la prueba dice "Prueba OK" y la imagen te gusta, ejecuta estas 4 lineas:
+PS C:\Develop\Poketibia-project> [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $null, $false)
+Excepción al llamar a "Run" con los argumentos "7": "No se pudo leer Tibia.dat: atributo desconocido 254 en 
+593"
+En línea: 1 Carácter: 1
++ [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $null, $false)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : Exception
+ 
+PS C:\Develop\Poketibia-project> git add bases/pokedashpota1.0/data/items/items.otb tools/pokeassets/preview.png
+fatal: pathspec 'tools/pokeassets/preview.png' did not match any files
+PS C:\Develop\Poketibia-project> git commit -q -m "Objetos de evolucion shiny con dibujo brillante"
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+PS C:\Develop\Poketibia-project> git push
+Everything up-to-date
