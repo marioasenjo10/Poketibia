@@ -2384,54 +2384,103 @@ function moveNeedsTarget(move)
 	return getMoveInfo(move.name).target
 end
 
--- Lanza el ataque numero i del pokemon del jugador (m1..m12 o Smart Combo por opcode)
-function doSummonMove(player, i)
+-- Lanza el ataque numero i del pokemon del jugador (m1..m12 y Smart Combo).
+-- Con quiet = true no manda avisos y devuelve el motivo del fallo (lo usa el combo).
+function doSummonMove(player, i, quiet)
+	local function fail(message, reason)
+		if not quiet then
+			player:sendCancelMessage(message)
+			player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		end
+		return false, reason
+	end
+
 	local summon = player:getSummon()
 	if not summon then
-		player:sendCancelMessage("Sorry, not possible. You need a summon to conjure spells.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
+		return fail("Sorry, not possible. You need a summon to conjure spells.", "sin pokemon")
 	end
 
 	local tile = Tile(player:getPosition())
 	if tile and tile:hasFlag(TILESTATE_PROTECTIONZONE) then
-		player:sendCancelMessage("Sorry, not possible in protection zone.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
+		return fail("Sorry, not possible in protection zone.", "zona protegida")
 	end
 
 	local summonName = summon:getName()
 	local move = MonsterType(summonName):getMoveList()[i]
 	if not move then
-		player:sendCancelMessage("Sorry, not possible.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
+		return fail("Sorry, not possible.", "no existe")
 	end
 
 	local target = summon:getTarget()
 	local needsTarget = moveNeedsTarget(move)
 	local range = tonumber(move.range) or 0
 	if needsTarget and not target then
-		player:sendCancelMessage("Sorry, not possible. You need a target.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
+		return fail("Sorry, not possible. You need a target.", "sin objetivo")
 	end
 	if target and needsTarget and range > 0 and getDistanceBetween(summon:getPosition(), target:getPosition()) > range then
-		player:sendCancelMessage("Sorry, not possible. You are too far.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
+		return fail("Sorry, not possible. You are too far.", "lejos")
 	end
 	if getCreatureCondition(summon, CONDITION_SLEEP) then
-		player:sendCancelMessage("Sorry, not possible. Your pokemon is sleeping.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
+		return fail("Sorry, not possible. Your pokemon is sleeping.", "dormido")
+	end
+	if quiet then
+		local ball = player:getUsingBall()
+		if ball and os.time() <= (ball:getSpecialAttribute("cd" .. i) or 0) then
+			return false, "recarga"
+		end
 	end
 	if player:checkMoveExhaustion(i, move.speed / 1000) then
-		return false
+		return false, "recarga"
 	end
 	doCreatureCastSpell(summon, move.name)
 	player:say(summonName .. ", use " .. move.name .. "!", TALKTYPE_MONSTER_SAY)
 	return true
+end
+
+-- Smart Combo: el cliente manda la secuencia una sola vez ("smartcombo 1,3,2")
+-- y el servidor lanza los ataques uno a uno. Al acabar avisa al cliente por opcode 61:
+-- "lanzados|slot:motivo,slot:motivo"
+local SMART_COMBO_GAP = 900
+local OPCODE_COMBO_DONE = 61
+local smartComboEvents = {}
+
+local function smartComboStep(cid, slots, index, cast, skipped)
+	smartComboEvents[cid] = nil
+	local player = Player(cid)
+	if not player then return end
+	while index <= #slots do
+		local slot = slots[index]
+		index = index + 1
+		local ok, reason = doSummonMove(player, slot, true)
+		if ok then
+			cast = cast + 1
+			if index <= #slots then
+				smartComboEvents[cid] = addEvent(smartComboStep, SMART_COMBO_GAP, cid, slots, index, cast, skipped)
+				return
+			end
+		else
+			table.insert(skipped, slot .. ":" .. (reason or "?"))
+			if reason == "sin pokemon" or reason == "zona protegida" then break end
+		end
+	end
+	player:sendExtendedOpcode(OPCODE_COMBO_DONE, cast .. "|" .. table.concat(skipped, ","))
+end
+
+function doSmartCombo(player, param)
+	local cid = player:getId()
+	if smartComboEvents[cid] then
+		stopEvent(smartComboEvents[cid])
+		smartComboEvents[cid] = nil
+	end
+	local slots = {}
+	for s in (param or ""):gmatch("%d+") do
+		local i = tonumber(s)
+		if i >= 1 and i <= #moveWords and #slots < #moveWords then
+			slots[#slots + 1] = i
+		end
+	end
+	if #slots == 0 then return end
+	smartComboStep(cid, slots, 1, 0, {})
 end
 
 function doReleaseSummon(cid, pos, effect, message, missile)

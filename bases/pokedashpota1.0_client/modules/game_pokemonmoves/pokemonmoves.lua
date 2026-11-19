@@ -8,22 +8,16 @@ local spellBarWindow -- UIWindow
 local hideLevel = false -- hide spells that can not be used due to level dependence
 
 -- Smart Combo
-local COMBO_TICK = 200       -- ms entre comprobaciones
-local COMBO_GAP = 800        -- ms minimos entre dos ataques
-local CONFIRM_TIMEOUT = 1200 -- ms esperando a que el pokemon diga "use X!"
-local SERVER_MARGIN = 1100   -- el servidor cuenta el cooldown en segundos enteros
-local PENDING_RETRY = 1500   -- si el servidor no confirma el ataque, reintentar tras esto
+-- El cliente bloquea g_game.talk fuera de una tecla/clic (anti-bot), asi que al pulsar
+-- la tecla se manda la secuencia entera una vez ("smartcombo 1,3,2") y el servidor
+-- lanza los ataques uno a uno. Al acabar responde por el opcode 61.
+local COMBO_GAP = 900        -- ms entre ataques (igual que en el servidor), duracion del destello
+local OPCODE_COMBO_DONE = 61
 local comboWindow
 local comboSequence = {}     -- nombres de ataques en orden
-local comboRunning = false   -- true mientras se esta lanzando la secuencia
-local comboEvent
+local comboRunning = false   -- true mientras el servidor esta lanzando la secuencia
+local comboEvent             -- seguridad: parar el combo si el servidor no contesta
 local comboPos = 1
-local comboSkipped = {}      -- ataques que el combo no pudo lanzar en esta pasada
-local comboPending           -- ataque enviado esperando confirmacion {words, slot, sentAt, tries, confirmed}
-local lastServerMsg = ''     -- ultimo mensaje del servidor (para saber por que fallo un ataque)
-local lastServerMsgAt = 0
-local lastCast = 0
-local readyAt = {}           -- [nombre en minusculas] = g_clock.millis() en que vuelve a estar listo
 local comboKey
 local pokemonName
 local pokemonPortrait = 0    -- id del item retrato (como el del slot de la cabeza)
@@ -107,13 +101,13 @@ function init()
   g_mouse.bindPress(sbw, function() createMenu() end, MouseRightButton)
   sbw:hide()
   connect(g_game, 'onTalk', messageSentCallback)
-  connect(g_game, { onTextMessage = onServerText })
   connect(g_game, { onGameEnd = function() sbw:hide() end })
   connect(LocalPlayer, {
     onLevelChange = onLevelChange
   })
   ProtocolGame.registerExtendedOpcode(OPCODE_SKILLBAR, getOpCode)
   ProtocolGame.registerExtendedOpcode(OPCODE_POKEINFO, onPokemonInfo)
+  ProtocolGame.registerExtendedOpcode(OPCODE_COMBO_DONE, onComboDone)
 end
 
 -- Opcode 60: "retrato|looktype|nombre|elem:cat:efecto;elem:cat:efecto;..."
@@ -132,11 +126,6 @@ end
 
 function onLevelChange(localPlayer, value, percent)
   getSpells(spells)
-end
-
-function onServerText(mode, text)
-  lastServerMsg = text or ''
-  lastServerMsgAt = g_clock.millis()
 end
 
 function messageSentCallback(name, level, mode, text, channelId, pos)
@@ -158,12 +147,10 @@ function messageSentCallback(name, level, mode, text, channelId, pos)
     text = string.gsub(text, "use ", "")
     text = string.gsub(text, "!", "")
     text = text:split(", ")[2]
-    if comboPending and text and comboPending.words:lower() == text:lower() then
-      comboPending.confirmed = true
-    end
+    if not text then return end
+    onComboMoveUsed(text)
     for i = 1, #spells do
       if spells[i].words:lower() == text:lower() then 
-        readyAt[text:lower()] = g_clock.millis() + (spells[i].exhaustion or 0) + SERVER_MARGIN
         startDownDelay(i)
         break
       end
@@ -176,13 +163,13 @@ end
 function terminate()
   ProtocolGame.unregisterExtendedOpcode(OPCODE_SKILLBAR)
   ProtocolGame.unregisterExtendedOpcode(OPCODE_POKEINFO)
+  ProtocolGame.unregisterExtendedOpcode(OPCODE_COMBO_DONE)
   removeEvent(comboEvent)
   g_settings.set('pokemonmoves_pos', sbw:getPosition())
   if comboWindow then comboWindow:destroy() comboWindow = nil end
   sbw:destroy()
   disconnect(g_game, { onGameEnd = function() sbw:hide() end })
   disconnect(g_game, 'onTalk', messageSentCallback)
-  disconnect(g_game, { onTextMessage = onServerText })
   disconnect(LocalPlayer, {
     onLevelChange = onLevelChange
   })
@@ -486,15 +473,6 @@ function onMovesReceived()
   for _, w in ipairs(saved:split(',')) do
     if w ~= '' and findSlot(w) then comboSequence[#comboSequence + 1] = w end
   end
-
-  local now = g_clock.millis()
-  readyAt = {}
-  for i = 1, #spells do
-    local remaining = spells[i].cooldownRemaining or 0
-    if remaining > 0 then
-      readyAt[spells[i].words:lower()] = now + remaining + SERVER_MARGIN
-    end
-  end
   comboPos = 1
   refreshComboWindow()
 end
@@ -548,18 +526,24 @@ function runCombo()
     return
   end
   if comboRunning then return end
+  local slots = {}
+  for _, w in ipairs(comboSequence) do
+    local slot = findSlot(w)
+    if slot then slots[#slots + 1] = slot end
+  end
+  if #slots == 0 then return end
+  -- se manda desde la tecla/clic, asi la proteccion anti-bot no lo bloquea
+  g_game.talk('smartcombo ' .. table.concat(slots, ','))
   comboRunning = true
   comboPos = 1
-  comboSkipped = {}
-  comboPending = nil
+  removeEvent(comboEvent)
+  comboEvent = scheduleEvent(function() comboEvent = nil stopCombo() end, #slots * (COMBO_GAP + 600) + 3000)
   updateComboToggle()
-  comboLoop()
 end
 
-local function stopCombo()
+function stopCombo()
   comboRunning = false
   comboPos = 1
-  comboPending = nil
   removeEvent(comboEvent)
   comboEvent = nil
   updateComboToggle()
@@ -596,20 +580,6 @@ function clearCombo()
   if comboRunning then stopCombo() end
   saveCombo()
   refreshComboWindow()
-end
-
-local function findPokemonCreature()
-  local player = g_game.getLocalPlayer()
-  if not player or not pokemonName then return nil end
-  local best, bestDist
-  for _, c in ipairs(g_map.getSpectators(player:getPosition(), false)) do
-    if c:getName() == pokemonName and not c:isPlayer() then
-      local p = c:getPosition()
-      local d = math.max(math.abs(p.x - player:getPosition().x), math.abs(p.y - player:getPosition().y))
-      if not bestDist or d < bestDist then best, bestDist = c, d end
-    end
-  end
-  return best
 end
 
 local function createSlot(parent, words, number)
@@ -708,101 +678,29 @@ function refreshComboWindow()
   updateComboToggle()
 end
 
--- Lanza los ataques de la secuencia uno tras otro.
--- Salta los que esten en cooldown y, si no estas atacando (o el objetivo esta lejos),
--- los que necesitan objetivo. Los de area se lanzan siempre.
-local function canCastNow(slot)
-  local spell = spells[slot]
-  if spell.isTarget ~= 1 then return true end
-  local target = g_game.getAttackingCreature()
-  if not target then return false end
-  if spell.range and spell.range > 0 then
-    local poke = findPokemonCreature()
-    if poke then
-      local a, b = poke:getPosition(), target:getPosition()
-      if a.z ~= b.z or math.max(math.abs(a.x - b.x), math.abs(a.y - b.y)) > spell.range then
-        return false
-      end
-    end
-  end
-  return true
-end
-
--- El cliente bloquea g_game.talk si no viene de una tecla/clic (proteccion anti-bot),
--- asi que el combo pide el ataque al servidor por opcode, que no esta bloqueado.
-local function castMove(slot)
-  local protocol = g_game.getProtocolGame()
-  if protocol then
-    protocol:sendExtendedOpcode(OPCODE_SKILLBAR, tostring(slot))
-  else
-    g_game.talk('m' .. slot)
-  end
-end
-
-function comboTick()
+-- El servidor confirma cada ataque con "Pokemon, use X!": avanzar el contador y destacar el icono
+function onComboMoveUsed(words)
   if not comboRunning then return end
-  if not g_game.isOnline() or not sbw:isVisible() then return stopCombo() end
-  local now = g_clock.millis()
+  local pos = comboPosition(words)
+  if pos then comboPos = pos + 1 end
+  local slot = findSlot(words)
+  if slot then flashSpell(slot) end
+  updateComboToggle()
+end
 
-  -- Esperar a que el servidor confirme el ultimo ataque ("Raichu, use X!")
-  if comboPending then
-    local p = comboPending
-    if p.confirmed then
-      comboPending = nil
-    elseif now - p.sentAt < CONFIRM_TIMEOUT then
-      return
-    else
-      local serverSaid = lastServerMsgAt >= p.sentAt and lastServerMsg ~= ''
-      if not serverSaid and p.tries < 2 then
-        -- el servidor no contesto nada: reintentar una vez
-        p.tries = p.tries + 1
-        p.sentAt = now
-        castMove(p.slot)
-        return
-      end
-      local reason = serverSaid and lastServerMsg or 'el servidor no respondio'
-      comboSkipped[#comboSkipped + 1] = titleCase(p.words) .. ' (' .. reason .. ')'
-      g_logger.info('[SmartCombo] ' .. p.words .. ' (m' .. p.slot .. ') fallo: ' .. reason)
-      readyAt[p.words:lower()] = nil
-      comboPending = nil
+-- Opcode 61: "lanzados|slot:motivo,slot:motivo"
+function onComboDone(protocol, opcode, buffer)
+  local parts = buffer:split('|')
+  local skipped = {}
+  for _, entry in ipairs((parts[2] or ''):split(',')) do
+    local slot, reason = entry:match('^(%d+):(.*)$')
+    slot = tonumber(slot)
+    if slot and spells[slot] then
+      skipped[#skipped + 1] = titleCase(spells[slot].words) .. ' (' .. reason .. ')'
     end
   end
-
-  if now - lastCast < COMBO_GAP then return end
-
-  while comboPos <= #comboSequence do
-    local words = comboSequence[comboPos]
-    local slot = findSlot(words)
-    comboPos = comboPos + 1
-    if slot then
-      if now < (readyAt[words:lower()] or 0) then
-        comboSkipped[#comboSkipped + 1] = titleCase(words) .. ' (recarga)'
-      elseif not canCastNow(slot) then
-        comboSkipped[#comboSkipped + 1] = titleCase(words) .. ' (sin objetivo)'
-      else
-        castMove(slot)
-        comboPending = { words = words, slot = slot, sentAt = now, tries = 1 }
-        lastCast = now
-        readyAt[words:lower()] = now + PENDING_RETRY
-        flashSpell(slot)
-        updateComboToggle()
-        return
-      end
-    end
-  end
-  if #comboSkipped > 0 then
-    local msg = 'Combo: no salio ' .. table.concat(comboSkipped, ', ')
-    g_logger.info('[SmartCombo] ' .. msg)
-    modules.game_textmessage.displayFailureMessage(msg)
+  if #skipped > 0 then
+    modules.game_textmessage.displayFailureMessage('Combo: no salio ' .. table.concat(skipped, ', '))
   end
   stopCombo()
-end
-
--- Repite comboTick cada COMBO_TICK ms mientras el combo este en marcha
-function comboLoop()
-  comboEvent = nil
-  comboTick()
-  if comboRunning then
-    comboEvent = scheduleEvent(comboLoop, COMBO_TICK)
-  end
 end
