@@ -1,0 +1,8 @@
+Font
+  name: noto-11px
+  texture: noto-11px
+  height: 15
+  glyph-size: 16 16
+  y-offset: 0
+  spacing: 0 0
+  space-width: 3

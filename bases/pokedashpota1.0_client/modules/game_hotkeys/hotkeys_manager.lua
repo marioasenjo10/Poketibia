@@ -240,6 +240,10 @@ function save()
   hotkeyList = hotkeys
   g_settings.setNode('game_hotkeys', hotkeySettings)
   g_settings.save()
+  -- actualizar las teclas que muestra la barra de ataques
+  if modules.game_pokemonmoves and modules.game_pokemonmoves.refreshKeyLabels then
+    modules.game_pokemonmoves.refreshKeyLabels()
+  end
 end
 
 function loadDefautComboKeys()

@@ -1,0 +1,3 @@
+noto-11px, noto-bold-9px, noto-bold-11px and noto-bold-14px are bitmap renderings of
+Noto Sans (Copyright 2022 The Noto Project Authors, https://github.com/notofonts/latin-greek-cyrillic),
+licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org

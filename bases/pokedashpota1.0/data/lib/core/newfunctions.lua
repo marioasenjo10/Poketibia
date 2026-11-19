@@ -2598,13 +2598,15 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 				table.insert(movesTable, "," .. move.speed)
 			end
 		end
+		-- un valor por ataque existente (si no, los bloques siguientes se desplazan en el cliente)
 		for i = 1, #moveWords do
-			local move = "cd" .. tostring(i)
-			local moveCooldown = ball:getSpecialAttribute(move) or 0
-			if os.time() > moveCooldown then
-				table.insert(movesTable, ",0")
-			else
-				table.insert(movesTable, "," .. 1000 * math.floor(ball:getSpecialAttribute(move) - os.time()))
+			if moves[i] then
+				local moveCooldown = ball:getSpecialAttribute("cd" .. i) or 0
+				if os.time() > moveCooldown then
+					table.insert(movesTable, ",0")
+				else
+					table.insert(movesTable, "," .. 1000 * math.floor(moveCooldown - os.time()))
+				end
 			end
 		end
 		-- Smart Combo: 1 si el ataque necesita objetivo, 0 si es de area

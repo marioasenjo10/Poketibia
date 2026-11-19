@@ -1,54 +1,154 @@
-SpellButton < UIButton
-  width: 32
-  height: 32
-  focusable: false
-  image-color: white
-  image-size: 32 32
+KeyLabel < Label
+  font: noto-bold-9px
+  color: #ffffff
+  image-source: /game_pokemonmoves/images/keycap
+  image-border: 3
+  padding: 0 3 0 3
+  text-auto-resize: true
   anchors.left: parent.left
-  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  margin-left: 2
+  margin-bottom: 2
+  phantom: true
 
-  $!hover:
-    image-border: 3
-  $hover:
-    image-border: 2
-    image-color: #ffffff99
+SpellButton < UIButton
+  size: 32 32
+  anchors.centerIn: parent
+  focusable: false
+  image-size: 32 32
+
   $pressed:
-    image-color: #999999
-  $disabled:
-    image-color: #ffffff66
+    image-color: #bbbbbb
 
 SpellProgressSpell < UIProgressRect
-  background: #585858AA
+  size: 32 32
+  anchors.centerIn: parent
+  background: #0a0f18b0
   percent: 100
   focusable: false
-  font: verdana-11px-rounded
-  color: green
+  phantom: true
+  font: noto-bold-14px
+  color: #ffffff
+
+SpellSlot < UIWidget
+  size: 38 38
   anchors.left: parent.left
   anchors.top: parent.top
-  size: 32 32
+  image-source: /game_pokemonmoves/images/slot
+  image-border: 7
+  phantom: true
+
+  SpellButton
+    id: icon
+
+  SpellProgressSpell
+    id: progress
+
+  KeyLabel
+    id: key
 
 ComboToggle < UIButton
-  size: 32 32
+  size: 38 38
   anchors.left: parent.left
   anchors.top: parent.top
-  font: verdana-11px-rounded
+  image-source: /game_pokemonmoves/images/slot
+  image-border: 7
+  font: noto-bold-11px
   text: AUTO
   color: #ffd84a
-  background-color: #13263fdd
-  border-width: 1
-  border-color: #4f7fb8
+  focusable: false
+
+  KeyLabel
+    id: key
+
+BarLock < UIButton
+  size: 20 20
+  anchors.left: parent.left
+  anchors.top: parent.top
+  image-source: /game_pokemonmoves/images/unlock
   focusable: false
 
   $hover:
-    border-color: #ffffff
-    background-color: #1f3a5fdd
+    image-color: #ffffffcc
+
+MoveTooltip < UIWidget
+  width: 250
+  image-source: /game_pokemonmoves/images/tooltip
+  image-border: 7
+  padding: 7 10 9 10
+  phantom: true
+  focusable: false
+  layout:
+    type: verticalBox
+    fit-children: true
+    spacing: 4
+
+  Label
+    id: name
+    height: 19
+    font: noto-bold-14px
+    color: #ffd84a
+    phantom: true
+
+  UIWidget
+    id: separator
+    height: 1
+    background-color: #3a4f6b
+    phantom: true
+
+  UIWidget
+    id: info
+    height: 15
+    phantom: true
+
+    Label
+      id: kind
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      font: noto-bold-11px
+      text-auto-resize: true
+      phantom: true
+
+    Label
+      id: rest
+      anchors.left: kind.right
+      anchors.verticalCenter: parent.verticalCenter
+      font: noto-11px
+      color: #9fb3cc
+      text-auto-resize: true
+      phantom: true
+
+    Label
+      id: element
+      anchors.left: rest.right
+      anchors.verticalCenter: parent.verticalCenter
+      font: noto-bold-11px
+      text-auto-resize: true
+      phantom: true
+
+  Label
+    id: desc
+    font: noto-11px
+    color: #dde5f0
+    text-wrap: true
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: hint
+    font: noto-11px
+    color: #7fa3c9
+    text-wrap: true
+    text-auto-resize: true
+    phantom: true
 
 UIWindow
   focusable: false
+
   Panel
     id: mainWindow
     size: 70 70
     focusable: false
-    opacity: 0.95
-    image-source: /images/ui/window
+    image-source: /game_pokemonmoves/images/bar
+    image-border: 7
     anchors.fill: parent
