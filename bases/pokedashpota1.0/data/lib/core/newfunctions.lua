@@ -2457,6 +2457,20 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 				table.insert(movesTable, "," .. 1000 * math.floor(ball:getSpecialAttribute(move) - os.time()))
 			end
 		end
+		-- Smart Combo: 1 si el ataque necesita objetivo, 0 si es de area
+		for i = 1, #moveWords do
+			local move = moves[i]
+			if move then
+				table.insert(movesTable, "," .. (move.isTarget == 1 and 1 or 0))
+			end
+		end
+		-- Smart Combo: alcance maximo de cada ataque (0 = sin limite)
+		for i = 1, #moveWords do
+			local move = moves[i]
+			if move then
+				table.insert(movesTable, "," .. (move.range or 0))
+			end
+		end
 		table.insert(movesTable, ",")
 		player:sendExtendedOpcode(52, table.concat(movesTable))
 

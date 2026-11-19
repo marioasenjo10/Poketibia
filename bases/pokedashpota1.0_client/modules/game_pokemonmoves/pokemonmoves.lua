@@ -47,22 +47,20 @@ end
 
 function getOpCode(protocol, opcode, buffer)
   local moves = {}
-  local cooldowns = {}
-  local cooldownRemaining = {}
+  local numbers = {}
   spells = {}
   for match in string.gmatch(buffer, "([^,]+),%s*") do
     if tonumber(match) == nil then
       moves[#moves + 1] = match
     else
-      if #cooldowns < #moves then
-        cooldowns[#cooldowns + 1] = tonumber(match)
-      else
-        cooldownRemaining[#cooldownRemaining + 1] = tonumber(match)        
-      end
+      numbers[#numbers + 1] = tonumber(match)
     end
   end
-  for i = 1, #moves do
-     local inside = {id = i, words = moves[i], lvl = 1, exhaustion = cooldowns[i], cooldownRemaining = cooldownRemaining[i]}
+  -- numeros en bloques de #moves: velocidad, cooldown restante, necesita objetivo, alcance
+  local n = #moves
+  for i = 1, n do
+     local inside = {id = i, words = moves[i], lvl = 1, exhaustion = numbers[i], cooldownRemaining = numbers[n + i] or 0,
+                     isTarget = numbers[2 * n + i], range = numbers[3 * n + i]}
      table.insert(spells, inside)
   end
   onMovesReceived()
@@ -394,6 +392,13 @@ local function createSlot(parent, words, number)
   return slot
 end
 
+local function moveKind(words)
+  local slot = findSlot(words)
+  local s = slot and spells[slot]
+  if not s or s.isTarget == nil then return '' end
+  return s.isTarget == 1 and ' [objetivo]' or ' [area]'
+end
+
 function refreshComboWindow()
   if not comboWindow then return end
   comboWindow:getChildById('pokemonLabel'):setText(pokemonName or 'Pokemon actual')
@@ -411,7 +416,7 @@ function refreshComboWindow()
   for i = 1, #spells do
     local words = spells[i].words
     local b = createSlot(avail, words)
-    b:setTooltip(words .. ' (clic para agregar)')
+    b:setTooltip(words .. moveKind(words) .. ' (clic para agregar)')
     b.onClick = function() addToCombo(words) end
   end
 
@@ -419,7 +424,7 @@ function refreshComboWindow()
   seq:destroyChildren()
   for pos, words in ipairs(comboSequence) do
     local b = createSlot(seq, words, pos)
-    b:setTooltip(pos .. '. ' .. words .. ' (clic para quitar)')
+    b:setTooltip(pos .. '. ' .. words .. moveKind(words) .. ' (clic para quitar)')
     b.onClick = function() removeFromCombo(pos) end
   end
 
@@ -427,7 +432,26 @@ function refreshComboWindow()
   updateComboToggle()
 end
 
--- Lanza los ataques de la secuencia uno tras otro (salta los que esten en cooldown)
+-- Lanza los ataques de la secuencia uno tras otro.
+-- Salta los que esten en cooldown y, si no estas atacando (o el objetivo esta lejos),
+-- los que necesitan objetivo. Los de area se lanzan siempre.
+local function canCastNow(slot)
+  local spell = spells[slot]
+  if spell.isTarget ~= 1 then return true end
+  local target = g_game.getAttackingCreature()
+  if not target then return false end
+  if spell.range and spell.range > 0 then
+    local poke = findPokemonCreature()
+    if poke then
+      local a, b = poke:getPosition(), target:getPosition()
+      if a.z ~= b.z or math.max(math.abs(a.x - b.x), math.abs(a.y - b.y)) > spell.range then
+        return false
+      end
+    end
+  end
+  return true
+end
+
 function comboTick()
   if not comboRunning then return end
   if not g_game.isOnline() or not sbw:isVisible() then return stopCombo() end
@@ -438,7 +462,7 @@ function comboTick()
     local words = comboSequence[comboPos]
     local slot = findSlot(words)
     comboPos = comboPos + 1
-    if slot and now >= (readyAt[words:lower()] or 0) then
+    if slot and now >= (readyAt[words:lower()] or 0) and canCastNow(slot) then
       g_game.talk('m' .. slot)
       lastCast = now
       readyAt[words:lower()] = now + PENDING_RETRY
