@@ -84,13 +84,13 @@ public class Dat
 		{
 			if (hasGroups) p++;
 			int w = Data[p++], h = Data[p++];
-			if (w == 0 || h == 0 || w > 8 || h > 8) throw new Exception("tamano invalido en " + p);
+			if (w == 0 || h == 0) throw new Exception("tamano invalido " + w + "x" + h + " en " + p);
 			if (w > 1 || h > 1) p++;
 			int layers = Data[p++], px = Data[p++], py = Data[p++], pz = Data[p++], phases = Data[p++];
-			if (layers == 0 || px == 0 || py == 0 || pz == 0 || phases == 0) throw new Exception("patrones invalidos en " + p);
+			if (layers == 0 || px == 0 || py == 0 || pz == 0 || phases == 0) throw new Exception("patrones invalidos " + layers + "/" + px + "/" + py + "/" + pz + "/" + phases + " en " + p);
 			if (phases > 1) p += 6 + phases * 8;
-			int total = w * h * layers * px * py * pz * phases;
-			if (total > 8192) throw new Exception("demasiados sprites en " + p);
+			long total = (long)w * h * layers * px * py * pz * phases;
+			if (p + total * 4 > Data.Length) throw new Exception("demasiados sprites (" + total + ") en " + p);
 			for (int i = 0; i < total; i++) { t.SpritePositions.Add(p); p += 4; }
 			if (p > Data.Length) throw new Exception("fin de archivo en sprites");
 		}

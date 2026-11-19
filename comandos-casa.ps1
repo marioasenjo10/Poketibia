@@ -344,23 +344,3 @@ Start-Job $pokeassets -ArgumentList $true | Receive-Job -Wait -AutoRemoveJob
 git add bases/pokedashpota1.0/data/items/items.otb tools/pokeassets/preview.png
 git commit -q -m "Objetos de evolucion shiny con dibujo brillante"
 git push
-
-
-PS C:\Develop\Poketibia-project> $pokeassets = {
->>     param($guardar)
->>     Set-Location 'C:\Develop\Poketibia-project'
->>     $t   = (Resolve-Path 'tools\pokeassets').Path
->>     $dat = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path
->>     $spr = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path
->>     $otb = (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path
->>     Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies System.Drawing
->>     [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, (Join-Path $t 'preview.png'), -not $guardar)
->> }
-PS C:\Develop\Poketibia-project> Start-Job $pokeassets -ArgumentList $false | Receive-Job -Wait -AutoRemoveJob
-Excepción al llamar a "Run" con los argumentos "7": "No se pudo leer Tibia.dat: item 26833: tamano invalido en 904676"
-    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
-    + FullyQualifiedErrorId : Exception
-    + PSComputerName        : localhost
- 
-PS C:\Develop\Poketibia-project> if (Test-Path 'tools\pokeassets\preview.png') { Start-Process 'tools\pokeassets\preview.png' }
-PS C:\Develop\Poketibia-project> 
