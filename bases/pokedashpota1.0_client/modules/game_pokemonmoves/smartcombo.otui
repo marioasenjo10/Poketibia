@@ -1,0 +1,85 @@
+MainWindow
+  id: smartComboWindow
+  text: Smart Combo
+  size: 470 250
+  @onEscape: modules.game_pokemonmoves.toggleComboWindow()
+
+  Label
+    id: pokemonLabel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    text-align: center
+    color: #ffffff
+
+  Label
+    id: availableLabel
+    text: Movimientos disponibles (clic para agregar):
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 8
+
+  Panel
+    id: availablePanel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 36
+    margin-top: 4
+    padding: 2
+    background-color: #00000055
+    layout:
+      type: horizontalBox
+      spacing: 4
+
+  Label
+    id: sequenceLabel
+    text: Secuencia del combo (clic para quitar):
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    width: 300
+    margin-top: 10
+
+  Label
+    id: countLabel
+    anchors.top: prev.top
+    anchors.right: parent.right
+    width: 120
+    text-align: right
+
+  Panel
+    id: sequencePanel
+    anchors.top: prev.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 36
+    margin-top: 4
+    padding: 2
+    background-color: #00000055
+    layout:
+      type: horizontalBox
+      spacing: 4
+
+  Button
+    id: clearButton
+    text: Limpiar
+    width: 80
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    @onClick: modules.game_pokemonmoves.clearCombo()
+
+  Button
+    id: toggleButton
+    width: 150
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.bottom: parent.bottom
+    @onClick: modules.game_pokemonmoves.toggleCombo()
+
+  Button
+    id: closeButton
+    text: Cerrar
+    width: 80
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: modules.game_pokemonmoves.toggleComboWindow()

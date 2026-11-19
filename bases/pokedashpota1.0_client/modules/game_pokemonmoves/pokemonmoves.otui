@@ -27,6 +27,33 @@ SpellProgressSpell < UIProgressRect
   anchors.top: parent.top
   size: 32 32
 
+ComboToggle < UIButton
+  size: 32 32
+  anchors.left: parent.left
+  anchors.top: parent.top
+  font: verdana-11px-rounded
+  text: AUTO
+  color: #bbbbbb
+  background-color: #00000099
+  border-width: 1
+  border-color: #555555
+  focusable: false
+
+  $hover:
+    border-color: #ffffff
+
+ComboMoveButton < UIButton
+  size: 32 32
+  image-size: 32 32
+  focusable: false
+  font: verdana-11px-rounded
+  color: #ffff00
+  text-align: topLeft
+  text-offset: 2 0
+
+  $hover:
+    image-color: #ffffff99
+
 UIWindow
   focusable: false
   Panel
