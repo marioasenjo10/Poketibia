@@ -11,7 +11,7 @@ local hideLevel = false -- hide spells that can not be used due to level depende
 -- El cliente bloquea g_game.talk fuera de una tecla/clic (anti-bot), asi que al pulsar
 -- la tecla se manda la secuencia entera una vez ("smartcombo 1,3,2") y el servidor
 -- lanza los ataques uno a uno. Al acabar responde por el opcode 61.
-local COMBO_GAP = 900        -- ms entre ataques (igual que en el servidor), duracion del destello
+local COMBO_GAP = 500        -- ms entre ataques (igual que en el servidor), duracion del destello
 local OPCODE_COMBO_DONE = 61
 local comboWindow
 local comboSequence = {}     -- nombres de ataques en orden

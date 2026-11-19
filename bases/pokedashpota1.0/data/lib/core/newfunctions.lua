@@ -2440,7 +2440,7 @@ end
 -- Smart Combo: el cliente manda la secuencia una sola vez ("smartcombo 1,3,2")
 -- y el servidor lanza los ataques uno a uno. Al acabar avisa al cliente por opcode 61:
 -- "lanzados|slot:motivo,slot:motivo"
-local SMART_COMBO_GAP = 900
+local SMART_COMBO_GAP = 500
 local OPCODE_COMBO_DONE = 61
 local smartComboEvents = {}
 
