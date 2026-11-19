@@ -397,6 +397,10 @@ function doKeyCombo(keyCombo)
 
   if hotKey.itemId == nil then
     if not hotKey.value or #hotKey.value == 0 then return end
+    if hotKey.value:lower():trim() == 'combo' and modules.game_pokemonmoves then
+      modules.game_pokemonmoves.runCombo()
+      return
+    end
     if hotKey.autoSend then
       modules.game_console.sendMessage(hotKey.value)
     else

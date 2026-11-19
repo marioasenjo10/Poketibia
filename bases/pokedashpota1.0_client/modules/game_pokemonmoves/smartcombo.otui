@@ -191,18 +191,20 @@ UIWindow
 
   Button
     id: toggleButton
-    width: 160
-    anchors.horizontalCenter: parent.horizontalCenter
+    text: Probar combo
+    width: 110
+    anchors.left: clearButton.right
     anchors.bottom: parent.bottom
+    margin-left: 8
     margin-bottom: 10
-    @onClick: modules.game_pokemonmoves.toggleCombo()
+    @onClick: modules.game_pokemonmoves.runCombo()
 
   ComboLabel
     id: hintLabel
     anchors.right: parent.right
     anchors.verticalCenter: clearButton.verticalCenter
     margin-right: 12
-    width: 140
+    width: 250
     text-align: right
     color: #6c7a8d
-    text: Clic: agregar / quitar
+    text: Hotkey (Ctrl+K): escribe "combo"

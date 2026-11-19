@@ -32,7 +32,7 @@ ComboToggle < UIButton
   anchors.left: parent.left
   anchors.top: parent.top
   font: verdana-11px-rounded
-  text: AUTO
+  !text: '>>'
   color: #bbbbbb
   background-color: #00000099
   border-width: 1

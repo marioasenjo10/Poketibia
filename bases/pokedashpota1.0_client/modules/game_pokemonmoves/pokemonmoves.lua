@@ -14,7 +14,7 @@ local SERVER_MARGIN = 1100   -- el servidor cuenta el cooldown en segundos enter
 local PENDING_RETRY = 1500   -- si el servidor no confirma el ataque, reintentar tras esto
 local comboWindow
 local comboSequence = {}     -- nombres de ataques en orden
-local comboActive = false
+local comboRunning = false   -- true mientras se esta lanzando la secuencia
 local comboEvent
 local comboPos = 1
 local lastCast = 0
@@ -141,7 +141,7 @@ function createMenu()
   end
   menu:addSeparator()
   menu:addOption('Abrir Smart Combo', function() toggleComboWindow() end)
-  menu:addOption(comboActive and 'Desactivar auto combo' or 'Activar auto combo', function() toggleCombo() end)
+  menu:addOption('Lanzar combo', function() runCombo() end)
   menu:display()
 end
 
@@ -215,7 +215,7 @@ function getSpells(table)
     toggle:setMarginTop(n * 32 + 2 * n - 32)
     height = n * 32 + 2 * n
   end
-  toggle.onClick = function() toggleCombo() end
+  toggle.onClick = function() runCombo() end
   updateComboToggle()
   sbw:setHeight(height)
   sbw:setWidth(width)  
@@ -305,27 +305,37 @@ end
 function updateComboToggle()
   local toggle = sbw and sbw:recursiveGetChildById('comboToggle')
   if toggle then
-    if comboActive then
+    toggle:setTooltip('Lanzar combo (configura una tecla con el texto: combo)')
+    if comboRunning then
       toggle:setBackgroundColor('#2e7d32cc')
       toggle:setColor('#ffffff')
-      toggle:setTooltip('Auto combo ACTIVADO (clic para desactivar)')
     else
       toggle:setBackgroundColor('#00000099')
       toggle:setColor('#bbbbbb')
-      toggle:setTooltip('Auto combo desactivado (clic para activar)')
     end
-  end
-  if comboWindow then
-    comboWindow:getChildById('toggleButton'):setText(comboActive and 'Desactivar auto combo' or 'Activar auto combo')
   end
 end
 
-function toggleCombo()
-  if not comboActive and #comboSequence == 0 then
+-- Lanza la secuencia entera una vez (desde la hotkey "combo", el boton de la barra o el menu)
+function runCombo()
+  if not g_game.isOnline() then return end
+  if not sbw:isVisible() then
+    modules.game_textmessage.displayFailureMessage('Saca primero a tu pokemon.')
+    return
+  end
+  if #comboSequence == 0 then
     modules.game_textmessage.displayFailureMessage('Configura primero el Smart Combo (clic derecho en la barra).')
     return
   end
-  comboActive = not comboActive
+  if comboRunning then return end
+  comboRunning = true
+  comboPos = 1
+  updateComboToggle()
+  comboTick()
+end
+
+local function stopCombo()
+  comboRunning = false
   comboPos = 1
   updateComboToggle()
 end
@@ -351,22 +361,14 @@ end
 
 function removeFromCombo(pos)
   table.remove(comboSequence, pos)
-  if comboPos > #comboSequence then comboPos = 1 end
-  if #comboSequence == 0 and comboActive then
-    comboActive = false
-    updateComboToggle()
-  end
+  if comboRunning then stopCombo() end
   saveCombo()
   refreshComboWindow()
 end
 
 function clearCombo()
   comboSequence = {}
-  comboPos = 1
-  if comboActive then
-    comboActive = false
-    updateComboToggle()
-  end
+  if comboRunning then stopCombo() end
   saveCombo()
   refreshComboWindow()
 end
@@ -425,25 +427,24 @@ function refreshComboWindow()
   updateComboToggle()
 end
 
--- Bucle del auto combo: lanza el siguiente ataque listo de la secuencia
+-- Lanza los ataques de la secuencia uno tras otro (salta los que esten en cooldown)
 function comboTick()
-  if not comboActive or #comboSequence == 0 then return end
-  if not g_game.isOnline() or not sbw:isVisible() then return end
-  if not g_game.isAttacking() then return end
+  if not comboRunning then return end
+  if not g_game.isOnline() or not sbw:isVisible() then return stopCombo() end
   local now = g_clock.millis()
   if now - lastCast < COMBO_GAP then return end
 
-  local n = #comboSequence
-  for k = 0, n - 1 do
-    local pos = (comboPos - 1 + k) % n + 1
-    local words = comboSequence[pos]
+  while comboPos <= #comboSequence do
+    local words = comboSequence[comboPos]
     local slot = findSlot(words)
+    comboPos = comboPos + 1
     if slot and now >= (readyAt[words:lower()] or 0) then
       g_game.talk('m' .. slot)
       lastCast = now
       readyAt[words:lower()] = now + PENDING_RETRY
-      comboPos = pos % n + 1
+      if comboPos > #comboSequence then stopCombo() end
       return
     end
   end
+  stopCombo()
 end
