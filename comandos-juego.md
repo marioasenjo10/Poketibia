@@ -21,7 +21,7 @@ Los marcados con (?) no están probados todavía.
 | Comando | Qué hace | Ejemplo |
 |---|---|---|
 | `/m nombre` | Invocar un monstruo/Pokémon salvaje | `/m pikachu` |
-| `/cb nombre` | Crear una pokeball con ese Pokémon (?) | `/cb charizard` |
+| `/cb nombre, nivel, boost` | Crear una ultraball con ese Pokémon (nivel y boost opcionales). Necesitas nivel ≥ (nivel + boost) / 1,5 para usarlo | `/cb groudon, 50, 10` |
 | `/i nombre o id` | Crear un item | `/i ultra ball` |
 | `/s nombre` | Poner un NPC | `/s Nurse Joy` |
 | `/summon nombre` | Invocar un monstruo como summon tuyo (?) | |

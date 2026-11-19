@@ -203,7 +203,7 @@ git commit -m "Diagnostico calentamiento"
 git push
 
 # ---------------------------------------------------------------------
-# [6] Ver cómo funciona /cb (crear pokeball) y cómo se guarda un poke
+# [6] (HECHO) Ver cómo funciona /cb (crear pokeball) y cómo se guarda un poke
 #     Genera paso6.txt con el script de /cb, el de usar la pokeball
 #     y las funciones de la librería que guardan el Pokémon en la ball.
 #     Después: commit + push.
@@ -232,7 +232,7 @@ git commit -m "Paso 6: scripts de pokeball"
 git push
 
 # ---------------------------------------------------------------------
-# [7] Arreglar /cb para que use la misma función que el juego
+# [7] (HECHO) Arreglar /cb para que use la misma función que el juego
 #     (doAddPokeball) y sacar más info por si no basta.
 #     - Guarda el original como create_pokeball.lua.bak
 #     - Genera paso7.txt. Después: commit + push.
