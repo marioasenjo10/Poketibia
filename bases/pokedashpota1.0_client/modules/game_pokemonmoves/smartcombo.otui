@@ -1,65 +1,183 @@
-MainWindow
-  id: smartComboWindow
-  text: Smart Combo
-  size: 470 250
-  @onEscape: modules.game_pokemonmoves.toggleComboWindow()
+ComboBox2 < UIWidget
+  background-color: #0b111b
+  border-width: 1
+  border-color: #26364d
+  phantom: true
+
+ComboSlot < UIButton
+  size: 38 38
+  background-color: #16243a
+  border-width: 1
+  border-color: #2f4a6e
+  focusable: false
+
+  $hover:
+    border-color: #8fc1ff
+    background-color: #1f3352
+
+  UIWidget
+    id: icon
+    size: 32 32
+    anchors.centerIn: parent
+    phantom: true
 
   Label
-    id: pokemonLabel
+    id: number
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-left: 2
+    font: verdana-11px-rounded
+    color: #ffd84a
+    phantom: true
+
+ComboLabel < Label
+  font: verdana-11px-antialised
+  color: #c9d3e0
+
+UIWindow
+  id: smartComboWindow
+  size: 480 344
+  anchors.centerIn: parent
+  background-color: #080d15f0
+  border-width: 1
+  border-color: #2a3f5f
+  @onEscape: modules.game_pokemonmoves.toggleComboWindow()
+
+  UIWidget
+    id: header
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
+    height: 30
+    background-color: #13263f
+    phantom: true
+
+  Label
+    id: bolt
+    anchors.left: header.left
+    anchors.verticalCenter: header.verticalCenter
+    margin-left: 10
+    font: verdana-11px-rounded
+    color: #ffd84a
+    !text: '>>'
+    phantom: true
+
+  Label
+    id: title
+    anchors.left: prev.right
+    anchors.verticalCenter: header.verticalCenter
+    margin-left: 6
+    font: verdana-11px-rounded
+    color: #ffffff
+    text: Smart Combo
+    phantom: true
+
+  UIButton
+    id: closeButton
+    anchors.right: header.right
+    anchors.verticalCenter: header.verticalCenter
+    margin-right: 8
+    size: 18 18
+    font: verdana-11px-rounded
+    text: X
+    color: #e53935
+    focusable: false
+    @onClick: modules.game_pokemonmoves.toggleComboWindow()
+
+    $hover:
+      color: #ff7373
+
+  ComboBox2
+    id: portraitBox
+    anchors.top: header.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin: 10 10 0 10
+    height: 104
+
+  UIWidget
+    id: portraitBg
+    anchors.top: portraitBox.top
+    anchors.horizontalCenter: portraitBox.horizontalCenter
+    margin-top: 8
+    size: 72 72
+    background-color: #1b2b44
+    phantom: true
+
+  UICreature
+    id: portrait
+    anchors.centerIn: portraitBg
+    size: 64 64
+    phantom: true
+
+  Label
+    id: pokemonLabel
+    anchors.top: portraitBg.bottom
+    anchors.left: portraitBox.left
+    anchors.right: portraitBox.right
+    margin-top: 4
     text-align: center
+    font: verdana-11px-rounded
     color: #ffffff
 
-  Label
+  ComboLabel
     id: availableLabel
-    text: Movimientos disponibles (clic para agregar):
-    anchors.top: prev.bottom
+    text: Movimientos disponibles:
+    anchors.top: portraitBox.bottom
     anchors.left: parent.left
-    anchors.right: parent.right
-    margin-top: 8
+    margin-top: 10
+    margin-left: 12
+    width: 250
 
-  Panel
-    id: availablePanel
+  ComboBox2
+    id: availableBox
     anchors.top: prev.bottom
     anchors.left: parent.left
     anchors.right: parent.right
-    height: 36
-    margin-top: 4
-    padding: 2
-    background-color: #00000055
+    margin: 4 10 0 10
+    height: 50
+
+  UIWidget
+    id: availablePanel
+    anchors.fill: availableBox
+    padding: 6 8 6 8
     layout:
       type: horizontalBox
-      spacing: 4
+      spacing: 6
 
-  Label
+  ComboLabel
     id: sequenceLabel
-    text: Secuencia del combo (clic para quitar):
-    anchors.top: prev.bottom
+    text: Secuencia del combo:
+    anchors.top: availableBox.bottom
     anchors.left: parent.left
-    width: 300
     margin-top: 10
+    margin-left: 12
+    width: 250
 
-  Label
+  ComboLabel
     id: countLabel
     anchors.top: prev.top
     anchors.right: parent.right
-    width: 120
+    margin-right: 12
+    width: 150
     text-align: right
+    color: #8a98ab
 
-  Panel
-    id: sequencePanel
-    anchors.top: prev.bottom
+  ComboBox2
+    id: sequenceBox
+    anchors.top: sequenceLabel.bottom
     anchors.left: parent.left
     anchors.right: parent.right
-    height: 36
-    margin-top: 4
-    padding: 2
-    background-color: #00000055
+    margin: 4 10 0 10
+    height: 50
+
+  UIWidget
+    id: sequencePanel
+    anchors.fill: sequenceBox
+    padding: 6 8 6 8
     layout:
       type: horizontalBox
-      spacing: 4
+      spacing: 6
 
   Button
     id: clearButton
@@ -67,19 +185,24 @@ MainWindow
     width: 80
     anchors.left: parent.left
     anchors.bottom: parent.bottom
+    margin-left: 10
+    margin-bottom: 10
     @onClick: modules.game_pokemonmoves.clearCombo()
 
   Button
     id: toggleButton
-    width: 150
+    width: 160
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.bottom: parent.bottom
+    margin-bottom: 10
     @onClick: modules.game_pokemonmoves.toggleCombo()
 
-  Button
-    id: closeButton
-    text: Cerrar
-    width: 80
+  ComboLabel
+    id: hintLabel
     anchors.right: parent.right
-    anchors.bottom: parent.bottom
-    @onClick: modules.game_pokemonmoves.toggleComboWindow()
+    anchors.verticalCenter: clearButton.verticalCenter
+    margin-right: 12
+    width: 140
+    text-align: right
+    color: #6c7a8d
+    text: Clic: agregar / quitar

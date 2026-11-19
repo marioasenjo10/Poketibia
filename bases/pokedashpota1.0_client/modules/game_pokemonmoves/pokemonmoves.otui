@@ -42,18 +42,6 @@ ComboToggle < UIButton
   $hover:
     border-color: #ffffff
 
-ComboMoveButton < UIButton
-  size: 32 32
-  image-size: 32 32
-  focusable: false
-  font: verdana-11px-rounded
-  color: #ffff00
-  text-align: topLeft
-  text-offset: 2 0
-
-  $hover:
-    image-color: #ffffff99
-
 UIWindow
   focusable: false
   Panel

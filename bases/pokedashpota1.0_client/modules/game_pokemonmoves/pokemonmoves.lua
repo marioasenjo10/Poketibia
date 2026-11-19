@@ -93,6 +93,12 @@ function messageSentCallback(name, level, mode, text, channelId, pos)
   if not g_game.isOnline() then return end
   if g_game.getLocalPlayer():getName() ~= name then return end
   if mode ~= 34 then return end
+  local helpName = text:match("^(.-), I need your help!")
+  if helpName then
+    pokemonName = helpName
+    refreshComboWindow()
+    return
+  end
   if msgcontains(text, "use") then
     local pokeName = text:match("^(.-), use ")
     if pokeName and pokeName ~= pokemonName then
@@ -129,9 +135,9 @@ end
 function createMenu()
   local menu = g_ui.createWidget('PopupMenu')
   if side == 'horizontal' then
-    menu:addOption('Set Vertical', function() side = 'vertical' getSpells(spells) end)
+    menu:addOption('Poner vertical', function() side = 'vertical' getSpells(spells) end)
   else
-    menu:addOption('Set Horizontal',function() side = 'horizontal' getSpells(spells) end)
+    menu:addOption('Poner horizontal',function() side = 'horizontal' getSpells(spells) end)
   end
   menu:addSeparator()
   menu:addOption('Abrir Smart Combo', function() toggleComboWindow() end)
@@ -293,7 +299,6 @@ function onMovesReceived()
     end
   end
   comboPos = 1
-  pokemonName = nil
   refreshComboWindow()
 end
 
@@ -366,31 +371,57 @@ function clearCombo()
   refreshComboWindow()
 end
 
+local function findPokemonCreature()
+  local player = g_game.getLocalPlayer()
+  if not player or not pokemonName then return nil end
+  local best, bestDist
+  for _, c in ipairs(g_map.getSpectators(player:getPosition(), false)) do
+    if c:getName() == pokemonName and not c:isPlayer() then
+      local p = c:getPosition()
+      local d = math.max(math.abs(p.x - player:getPosition().x), math.abs(p.y - player:getPosition().y))
+      if not bestDist or d < bestDist then best, bestDist = c, d end
+    end
+  end
+  return best
+end
+
+local function createSlot(parent, words, number)
+  local slot = g_ui.createWidget('ComboSlot', parent)
+  slot:getChildById('icon'):setImageSource(iconPath(words))
+  slot:getChildById('number'):setText(number and tostring(number) or '')
+  return slot
+end
+
 function refreshComboWindow()
   if not comboWindow then return end
-  comboWindow:getChildById('pokemonLabel'):setText(pokemonName and ('Pokemon: ' .. pokemonName) or 'Pokemon actual')
+  comboWindow:getChildById('pokemonLabel'):setText(pokemonName or 'Pokemon actual')
+  local creature = findPokemonCreature()
+  local portrait = comboWindow:getChildById('portrait')
+  if creature then
+    portrait:setCreature(creature)
+    portrait:show()
+  else
+    portrait:hide()
+  end
 
   local avail = comboWindow:getChildById('availablePanel')
   avail:destroyChildren()
   for i = 1, #spells do
     local words = spells[i].words
-    local b = g_ui.createWidget('ComboMoveButton', avail)
-    b:setImageSource(iconPath(words))
-    b:setTooltip(words)
+    local b = createSlot(avail, words)
+    b:setTooltip(words .. ' (clic para agregar)')
     b.onClick = function() addToCombo(words) end
   end
 
   local seq = comboWindow:getChildById('sequencePanel')
   seq:destroyChildren()
   for pos, words in ipairs(comboSequence) do
-    local b = g_ui.createWidget('ComboMoveButton', seq)
-    b:setImageSource(iconPath(words))
-    b:setText(tostring(pos))
+    local b = createSlot(seq, words, pos)
     b:setTooltip(pos .. '. ' .. words .. ' (clic para quitar)')
     b.onClick = function() removeFromCombo(pos) end
   end
 
-  comboWindow:getChildById('countLabel'):setText(#comboSequence .. ' / ' .. #spells .. ' ataques')
+  comboWindow:getChildById('countLabel'):setText(#comboSequence .. ' movimiento(s)')
   updateComboToggle()
 end
 
