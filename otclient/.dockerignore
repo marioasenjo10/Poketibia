@@ -16,7 +16,6 @@ Dockerfile*
 *.dll
 *.exe
 *.ilk
-*.log
 *.pdb
 *.obj
 *.lib
