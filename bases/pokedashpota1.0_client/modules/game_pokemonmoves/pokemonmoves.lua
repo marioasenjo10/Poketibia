@@ -9,7 +9,7 @@ local hideLevel = false -- hide spells that can not be used due to level depende
 
 -- Smart Combo
 local COMBO_TICK = 200       -- ms entre comprobaciones
-local COMBO_GAP = 700        -- ms minimos entre dos ataques
+local COMBO_GAP = 1000       -- ms minimos entre dos ataques
 local SERVER_MARGIN = 1100   -- el servidor cuenta el cooldown en segundos enteros
 local PENDING_RETRY = 1500   -- si el servidor no confirma el ataque, reintentar tras esto
 local comboWindow
@@ -17,6 +17,7 @@ local comboSequence = {}     -- nombres de ataques en orden
 local comboRunning = false   -- true mientras se esta lanzando la secuencia
 local comboEvent
 local comboPos = 1
+local comboSkipped = {}      -- ataques que el combo no pudo lanzar en esta pasada
 local lastCast = 0
 local readyAt = {}           -- [nombre en minusculas] = g_clock.millis() en que vuelve a estar listo
 local comboKey
@@ -369,7 +370,7 @@ local ELEMENTS = {
 }
 
 local CATEGORIES = {
-  areawaves = 'Onda en area delante del pokemon',
+  areawaves = 'Onda alrededor del pokemon',
   singletargetweak = 'Golpe rapido al objetivo (dano bajo)',
   singletarget = 'Ataque directo al objetivo (dano medio)',
   singletargetstrong = 'Ataque potente al objetivo (dano alto)',
@@ -417,8 +418,12 @@ function moveDescription(slot)
   if CATEGORIES[info.category or ''] then parts[#parts + 1] = CATEGORIES[info.category] end
   if EFFECTS[info.effect or ''] then parts[#parts + 1] = EFFECTS[info.effect] end
   local s = spells[slot]
-  if s and s.range and s.range > 0 then parts[#parts + 1] = 'Alcance ' .. s.range end
-  if #parts == 0 then return 'Movimiento de apoyo' end
+  if s and s.range and s.range > 0 then parts[#parts + 1] = 'Alcance ' .. s.range .. ' sqm' end
+  if #parts == 0 then
+    if s and s.isTarget == 1 then return 'Ataca a tu objetivo' end
+    if s and s.isTarget == 0 then return 'Sale aunque no ataques a nada' end
+    return ''
+  end
   return table.concat(parts, '. ')
 end
 
@@ -512,6 +517,7 @@ function runCombo()
   if comboRunning then return end
   comboRunning = true
   comboPos = 1
+  comboSkipped = {}
   updateComboToggle()
   comboLoop()
 end
@@ -632,8 +638,10 @@ function refreshComboWindow()
 
   local portrait = comboWindow:getChildById('portrait')
   local creature = comboWindow:getChildById('portraitCreature')
-  if pokemonPortrait and pokemonPortrait > 0 then
-    portrait:setItemId(pokemonPortrait)
+  -- misma imagen que usa la barra de pokemons (game_pokemonbar/bar_icon/<nombre>.png)
+  local img = pokemonName and ('/game_pokemonbar/bar_icon/' .. pokemonName:lower() .. '.png')
+  if img and g_resources.fileExists(img) then
+    portrait:setImageSource(img)
     portrait:show()
     creature:hide()
   elseif pokemonLook and pokemonLook > 0 then
@@ -695,14 +703,23 @@ function comboTick()
     local words = comboSequence[comboPos]
     local slot = findSlot(words)
     comboPos = comboPos + 1
-    if slot and now >= (readyAt[words:lower()] or 0) and canCastNow(slot) then
-      g_game.talk('m' .. slot)
-      lastCast = now
-      readyAt[words:lower()] = now + PENDING_RETRY
-      flashSpell(slot)
-      updateComboToggle()
-      return
+    if slot then
+      if now < (readyAt[words:lower()] or 0) then
+        comboSkipped[#comboSkipped + 1] = titleCase(words) .. ' (recarga)'
+      elseif not canCastNow(slot) then
+        comboSkipped[#comboSkipped + 1] = titleCase(words) .. ' (sin objetivo)'
+      else
+        g_game.talk('m' .. slot)
+        lastCast = now
+        readyAt[words:lower()] = now + PENDING_RETRY
+        flashSpell(slot)
+        updateComboToggle()
+        return
+      end
     end
+  end
+  if #comboSkipped > 0 then
+    modules.game_textmessage.displayFailureMessage('Combo: no salio ' .. table.concat(comboSkipped, ', '))
   end
   stopCombo()
 end

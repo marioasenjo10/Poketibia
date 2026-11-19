@@ -21,12 +21,14 @@ function onSay(player, words, param)
 	for i = 1, #moveWords do
 		if words == moveWords[i] then			
 			if move[i] then
-				if move[i].isTarget == 1 and not target then
+				local needsTarget = moveNeedsTarget(move[i])
+				local range = tonumber(move[i].range) or 0
+				if needsTarget and not target then
 					player:sendCancelMessage("Sorry, not possible. You need a target.")
 					player:getPosition():sendMagicEffect(CONST_ME_POFF)
 					break
 				end
-				if target and move[i].isTarget == 1 and move[i].range ~= 0 and summon:getPosition():getDistance(target:getPosition()) > move[i].range then
+				if target and needsTarget and range > 0 and getDistanceBetween(summon:getPosition(), target:getPosition()) > range then
 					player:sendCancelMessage("Sorry, not possible. You are too far.")
 					player:getPosition():sendMagicEffect(CONST_ME_POFF)
 					break

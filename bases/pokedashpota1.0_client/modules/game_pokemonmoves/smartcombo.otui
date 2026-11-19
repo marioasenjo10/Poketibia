@@ -185,11 +185,10 @@ UIWindow
     border-color: #2f4a6e
     phantom: true
 
-  UIItem
+  UIWidget
     id: portrait
     anchors.centerIn: portraitBg
     size: 64 64
-    virtual: true
     phantom: true
 
   UICreature

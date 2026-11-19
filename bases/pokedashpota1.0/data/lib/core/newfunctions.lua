@@ -2339,7 +2339,10 @@ local moveInfoCache = nil
 local function buildMoveInfoCache()
 	moveInfoCache = {}
 	local f = io.open("data/spells/spells.xml", "r")
-	if not f then return end
+	if not f then
+		print("[SmartCombo] No se pudo abrir data/spells/spells.xml")
+		return
+	end
 	local xml = f:read("*a")
 	f:close()
 	for tag in xml:gmatch("<instant[^>]*>") do
@@ -2347,12 +2350,14 @@ local function buildMoveInfoCache()
 		local script = tag:match('script="([^"]+)"')
 		if name and script then
 			local element = script:match("^moves/([^/]+)/") or ""
-			local category, effect = "", ""
+			local category, effect, target = "", "", false
 			local sf = io.open("data/spells/scripts/" .. script, "r")
 			if sf then
 				local src = sf:read("*a")
 				sf:close()
 				category = src:match("damageMultiplierMoves%.(%w+)") or ""
+				-- si el script usa getTarget() el ataque no hace nada sin objetivo
+				target = src:find("getTarget%(%)") ~= nil
 				if src:find("CONDITION_POISON") then effect = "poison"
 				elseif src:find("CONDITION_FIRE") then effect = "burn"
 				elseif src:find("CONDITION_REGENERATION") or src:find("COMBAT_HEALING") then effect = "heal"
@@ -2360,14 +2365,23 @@ local function buildMoveInfoCache()
 				elseif src:find("CONDITION_PARALYZE") then effect = "slow"
 				end
 			end
-			moveInfoCache[name:lower()] = {element = element, category = category, effect = effect}
+			moveInfoCache[name:lower()] = {element = element, category = category, effect = effect, target = target}
 		end
 	end
+	local count = 0
+	for _ in pairs(moveInfoCache) do count = count + 1 end
+	print("[SmartCombo] Info de " .. count .. " ataques cargada")
 end
 
 function getMoveInfo(moveName)
 	if not moveInfoCache then buildMoveInfoCache() end
-	return moveInfoCache[moveName:lower()] or {element = "", category = "", effect = ""}
+	return moveInfoCache[moveName:lower()] or {element = "", category = "", effect = "", target = false}
+end
+
+-- true si el ataque necesita un objetivo (isTarget del XML del monstruo o el script usa getTarget)
+function moveNeedsTarget(move)
+	if move.isTarget == true or tonumber(move.isTarget) == 1 then return true end
+	return getMoveInfo(move.name).target
 end
 
 function doReleaseSummon(cid, pos, effect, message, missile)
@@ -2498,14 +2512,14 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		for i = 1, #moveWords do
 			local move = moves[i]
 			if move then
-				table.insert(movesTable, "," .. (move.isTarget == 1 and 1 or 0))
+				table.insert(movesTable, "," .. (moveNeedsTarget(move) and 1 or 0))
 			end
 		end
 		-- Smart Combo: alcance maximo de cada ataque (0 = sin limite)
 		for i = 1, #moveWords do
 			local move = moves[i]
 			if move then
-				table.insert(movesTable, "," .. (move.range or 0))
+				table.insert(movesTable, "," .. (tonumber(move.range) or 0))
 			end
 		end
 		table.insert(movesTable, ",")
