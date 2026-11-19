@@ -47,7 +47,11 @@ public class Dat
 		d.EffectCount = d.U16(8);
 		d.MissileCount = d.U16(10);
 		int p = 12;
-		for (int id = 100; id <= d.ItemCount; id++) d.Items[id] = d.ParseThing(ref p, false);
+		try
+		{
+			for (int id = 100; id <= d.ItemCount; id++) d.Items[id] = d.ParseThing(ref p, false);
+		}
+		catch (Exception e) { throw new Exception("item " + (d.Items.Count + 100) + ": " + e.Message); }
 		d.ItemsEnd = p;
 		for (int id = 1; id <= d.CreatureCount; id++) d.ParseThing(ref p, true);
 		for (int id = 1; id <= d.EffectCount; id++) d.ParseThing(ref p, false);
@@ -68,6 +72,7 @@ public class Dat
 				case 0: case 8: case 9: case 26: case 29: case 30: case 33: case 35: p += 2; break; // u16
 				case 22: case 25: p += 4; break; // luz, desplazamiento
 				case 34: p += 6; p += 2 + U16(p); p += 4; break; // mercado
+				case 0xFE: break; // "usable" de Object Builder, sin datos
 				default: if (a >= 0x40) throw new Exception("atributo desconocido " + a + " en " + (p - 1)); break;
 			}
 			if (p >= Data.Length) throw new Exception("fin de archivo en atributos");
