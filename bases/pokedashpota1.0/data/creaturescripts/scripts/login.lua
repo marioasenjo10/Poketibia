@@ -32,6 +32,7 @@ function onLogin(player)
 
 	-- Events
 	player:registerEvent("PlayerDeath")
+	player:registerEvent("ExtendedOpcode")
 	player:registerEvent("DropLoot")
 	player:registerEvent("MonsterHealthChange")
 

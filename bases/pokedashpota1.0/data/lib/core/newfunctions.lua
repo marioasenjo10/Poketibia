@@ -2384,6 +2384,56 @@ function moveNeedsTarget(move)
 	return getMoveInfo(move.name).target
 end
 
+-- Lanza el ataque numero i del pokemon del jugador (m1..m12 o Smart Combo por opcode)
+function doSummonMove(player, i)
+	local summon = player:getSummon()
+	if not summon then
+		player:sendCancelMessage("Sorry, not possible. You need a summon to conjure spells.")
+		player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		return false
+	end
+
+	local tile = Tile(player:getPosition())
+	if tile and tile:hasFlag(TILESTATE_PROTECTIONZONE) then
+		player:sendCancelMessage("Sorry, not possible in protection zone.")
+		player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		return false
+	end
+
+	local summonName = summon:getName()
+	local move = MonsterType(summonName):getMoveList()[i]
+	if not move then
+		player:sendCancelMessage("Sorry, not possible.")
+		player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		return false
+	end
+
+	local target = summon:getTarget()
+	local needsTarget = moveNeedsTarget(move)
+	local range = tonumber(move.range) or 0
+	if needsTarget and not target then
+		player:sendCancelMessage("Sorry, not possible. You need a target.")
+		player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		return false
+	end
+	if target and needsTarget and range > 0 and getDistanceBetween(summon:getPosition(), target:getPosition()) > range then
+		player:sendCancelMessage("Sorry, not possible. You are too far.")
+		player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		return false
+	end
+	if getCreatureCondition(summon, CONDITION_SLEEP) then
+		player:sendCancelMessage("Sorry, not possible. Your pokemon is sleeping.")
+		player:getPosition():sendMagicEffect(CONST_ME_POFF)
+		return false
+	end
+	if player:checkMoveExhaustion(i, move.speed / 1000) then
+		return false
+	end
+	doCreatureCastSpell(summon, move.name)
+	player:say(summonName .. ", use " .. move.name .. "!", TALKTYPE_MONSTER_SAY)
+	return true
+end
+
 function doReleaseSummon(cid, pos, effect, message, missile)
 	local player = Player(cid)
 	if not player then return false end

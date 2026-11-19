@@ -9,6 +9,10 @@ function onExtendedOpcode(player, opcode, buffer)
 			-- player:setStorageValue(SOME_STORAGE_ID, SOME_VALUE)
 		end
 	elseif opcode == OPCODE_SKILLBAR then
-
+		-- Smart Combo: el cliente manda el numero del ataque (1..12)
+		local i = tonumber(buffer)
+		if i and i >= 1 and i <= #moveWords and i == math.floor(i) then
+			doSummonMove(player, i)
+		end
 	end
 end

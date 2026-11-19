@@ -728,6 +728,17 @@ local function canCastNow(slot)
   return true
 end
 
+-- El cliente bloquea g_game.talk si no viene de una tecla/clic (proteccion anti-bot),
+-- asi que el combo pide el ataque al servidor por opcode, que no esta bloqueado.
+local function castMove(slot)
+  local protocol = g_game.getProtocolGame()
+  if protocol then
+    protocol:sendExtendedOpcode(OPCODE_SKILLBAR, tostring(slot))
+  else
+    g_game.talk('m' .. slot)
+  end
+end
+
 function comboTick()
   if not comboRunning then return end
   if not g_game.isOnline() or not sbw:isVisible() then return stopCombo() end
@@ -746,7 +757,7 @@ function comboTick()
         -- el servidor no contesto nada: reintentar una vez
         p.tries = p.tries + 1
         p.sentAt = now
-        g_game.talk('m' .. p.slot)
+        castMove(p.slot)
         return
       end
       local reason = serverSaid and lastServerMsg or 'el servidor no respondio'
@@ -769,7 +780,7 @@ function comboTick()
       elseif not canCastNow(slot) then
         comboSkipped[#comboSkipped + 1] = titleCase(words) .. ' (sin objetivo)'
       else
-        g_game.talk('m' .. slot)
+        castMove(slot)
         comboPending = { words = words, slot = slot, sentAt = now, tries = 1 }
         lastCast = now
         readyAt[words:lower()] = now + PENDING_RETRY
