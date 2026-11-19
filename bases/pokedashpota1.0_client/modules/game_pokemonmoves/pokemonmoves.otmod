@@ -5,7 +5,7 @@ Module
   website: http://www.pokedashgames.com
   autoload: true
   autoload-priority: 1000
-  scripts: [ pokemonmoves ]
+  scripts: [ movesdata, pokemonmoves ]
   sandboxed: true
   @onLoad: init()
   @onUnload: terminate()

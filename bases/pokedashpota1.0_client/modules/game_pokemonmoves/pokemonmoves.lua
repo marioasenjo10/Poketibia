@@ -9,7 +9,8 @@ local hideLevel = false -- hide spells that can not be used due to level depende
 
 -- Smart Combo
 local COMBO_TICK = 200       -- ms entre comprobaciones
-local COMBO_GAP = 1000       -- ms minimos entre dos ataques
+local COMBO_GAP = 800        -- ms minimos entre dos ataques
+local CONFIRM_TIMEOUT = 1200 -- ms esperando a que el pokemon diga "use X!"
 local SERVER_MARGIN = 1100   -- el servidor cuenta el cooldown en segundos enteros
 local PENDING_RETRY = 1500   -- si el servidor no confirma el ataque, reintentar tras esto
 local comboWindow
@@ -18,6 +19,9 @@ local comboRunning = false   -- true mientras se esta lanzando la secuencia
 local comboEvent
 local comboPos = 1
 local comboSkipped = {}      -- ataques que el combo no pudo lanzar en esta pasada
+local comboPending           -- ataque enviado esperando confirmacion {words, slot, sentAt, tries, confirmed}
+local lastServerMsg = ''     -- ultimo mensaje del servidor (para saber por que fallo un ataque)
+local lastServerMsgAt = 0
 local lastCast = 0
 local readyAt = {}           -- [nombre en minusculas] = g_clock.millis() en que vuelve a estar listo
 local comboKey
@@ -78,6 +82,9 @@ function getOpCode(protocol, opcode, buffer)
   for i = 1, n do
      local inside = {id = i, words = moves[i], lvl = 1, exhaustion = numbers[i], cooldownRemaining = numbers[n + i] or 0,
                      isTarget = numbers[2 * n + i], range = numbers[3 * n + i]}
+     -- el tipo OBJETIVO/AREA sale de movesdata.lua (mas fiable que lo que manda el servidor)
+     local d = MOVES_DATA and MOVES_DATA[moves[i]:lower()]
+     if d and inside.isTarget ~= 1 then inside.isTarget = d[1] end
      table.insert(spells, inside)
      if inside.cooldownRemaining > 0 then cdEnd[i] = now + inside.cooldownRemaining end
   end
@@ -100,6 +107,7 @@ function init()
   g_mouse.bindPress(sbw, function() createMenu() end, MouseRightButton)
   sbw:hide()
   connect(g_game, 'onTalk', messageSentCallback)
+  connect(g_game, { onTextMessage = onServerText })
   connect(g_game, { onGameEnd = function() sbw:hide() end })
   connect(LocalPlayer, {
     onLevelChange = onLevelChange
@@ -126,6 +134,11 @@ function onLevelChange(localPlayer, value, percent)
   getSpells(spells)
 end
 
+function onServerText(mode, text)
+  lastServerMsg = text or ''
+  lastServerMsgAt = g_clock.millis()
+end
+
 function messageSentCallback(name, level, mode, text, channelId, pos)
   if not g_game.isOnline() then return end
   if g_game.getLocalPlayer():getName() ~= name then return end
@@ -145,6 +158,9 @@ function messageSentCallback(name, level, mode, text, channelId, pos)
     text = string.gsub(text, "use ", "")
     text = string.gsub(text, "!", "")
     text = text:split(", ")[2]
+    if comboPending and text and comboPending.words:lower() == text:lower() then
+      comboPending.confirmed = true
+    end
     for i = 1, #spells do
       if spells[i].words:lower() == text:lower() then 
         readyAt[text:lower()] = g_clock.millis() + (spells[i].exhaustion or 0) + SERVER_MARGIN
@@ -166,6 +182,7 @@ function terminate()
   sbw:destroy()
   disconnect(g_game, { onGameEnd = function() sbw:hide() end })
   disconnect(g_game, 'onTalk', messageSentCallback)
+  disconnect(g_game, { onTextMessage = onServerText })
   disconnect(LocalPlayer, {
     onLevelChange = onLevelChange
   })
@@ -369,25 +386,40 @@ local ELEMENTS = {
   dark = {'Siniestro', '#a08070'}, steel = {'Acero', '#b8b8d0'}, fairy = {'Hada', '#ee99ac'},
 }
 
-local CATEGORIES = {
-  areawaves = 'Onda alrededor del pokemon',
-  singletargetweak = 'Golpe rapido al objetivo (dano bajo)',
-  singletarget = 'Ataque directo al objetivo (dano medio)',
-  singletargetstrong = 'Ataque potente al objetivo (dano alto)',
-  areatarget = 'Golpea en area alrededor del objetivo',
-  frontlinear = 'Rayo en linea recta (dano muy alto)',
-  frontarea = 'Gran area delante del pokemon (dano alto)',
+local CATEGORY_SHAPE = {
+  areawaves = 'Ondas alrededor de tu pokemon',
+  frontlinear = 'Rayo en linea recta hacia delante',
+  frontarea = 'Gran area delante de tu pokemon',
+  areatarget = 'Area alrededor del objetivo',
+  ultimate = 'Definitivo: gran area alrededor',
   passive = 'Habilidad pasiva',
-  ultimate = 'Definitivo: gran area alrededor (dano maximo)',
+}
+
+local CATEGORY_POWER = {
+  singletargetweak = 'dano bajo', areawaves = 'dano medio', singletarget = 'dano medio',
+  areatarget = 'dano medio', passive = 'dano medio', singletargetstrong = 'dano alto',
+  frontarea = 'dano alto', frontlinear = 'dano muy alto', ultimate = 'dano maximo',
 }
 
 local EFFECTS = {
-  poison = 'Envenena', burn = 'Quema', heal = 'Cura',
-  buff = 'Mejora al pokemon', slow = 'Ralentiza o inmoviliza',
+  poison = 'envenena', burn = 'quema', heal = 'cura',
+  buff = 'mejora a tu pokemon', slow = 'ralentiza',
 }
 
 local function titleCase(s)
   return (s:gsub("(%a)([%w']*)", function(a, b) return a:upper() .. b end))
+end
+
+-- Datos fijos del movimiento (movesdata.lua): {objetivo, elemento, categoria, efecto}
+local function staticData(words)
+  return MOVES_DATA and words and MOVES_DATA[words:lower()]
+end
+
+local function infoFor(slot)
+  local s = spells[slot]
+  local d = s and staticData(s.words)
+  if d then return { element = d[2], category = d[3], effect = d[4] } end
+  return moveInfo[slot] or {}
 end
 
 function moveIsTarget(slot)
@@ -408,23 +440,24 @@ function moveCooldownText(slot)
 end
 
 function moveElement(slot)
-  local info = moveInfo[slot]
-  return info and ELEMENTS[info.element]
+  return ELEMENTS[infoFor(slot).element or '']
 end
 
+-- Ej: "Golpea a tu objetivo, dano medio, alcance 1 sqm"
 function moveDescription(slot)
-  local info = moveInfo[slot] or {}
-  local parts = {}
-  if CATEGORIES[info.category or ''] then parts[#parts + 1] = CATEGORIES[info.category] end
-  if EFFECTS[info.effect or ''] then parts[#parts + 1] = EFFECTS[info.effect] end
   local s = spells[slot]
-  if s and s.range and s.range > 0 then parts[#parts + 1] = 'Alcance ' .. s.range .. ' sqm' end
-  if #parts == 0 then
-    if s and s.isTarget == 1 then return 'Ataca a tu objetivo' end
-    if s and s.isTarget == 0 then return 'Sale aunque no ataques a nada' end
-    return ''
+  if not s then return '' end
+  local info = infoFor(slot)
+  local parts = {}
+  if s.isTarget == 1 then
+    parts[1] = 'Golpea a tu objetivo'
+  else
+    parts[1] = CATEGORY_SHAPE[info.category or ''] or 'Ataque en area'
   end
-  return table.concat(parts, '. ')
+  if CATEGORY_POWER[info.category or ''] then parts[#parts + 1] = CATEGORY_POWER[info.category] end
+  if EFFECTS[info.effect or ''] then parts[#parts + 1] = EFFECTS[info.effect] end
+  if s.range and s.range > 0 then parts[#parts + 1] = 'alcance ' .. s.range .. ' sqm' end
+  return table.concat(parts, ', ')
 end
 
 function moveTooltip(slot)
@@ -518,6 +551,7 @@ function runCombo()
   comboRunning = true
   comboPos = 1
   comboSkipped = {}
+  comboPending = nil
   updateComboToggle()
   comboLoop()
 end
@@ -525,6 +559,7 @@ end
 local function stopCombo()
   comboRunning = false
   comboPos = 1
+  comboPending = nil
   removeEvent(comboEvent)
   comboEvent = nil
   updateComboToggle()
@@ -697,6 +732,31 @@ function comboTick()
   if not comboRunning then return end
   if not g_game.isOnline() or not sbw:isVisible() then return stopCombo() end
   local now = g_clock.millis()
+
+  -- Esperar a que el servidor confirme el ultimo ataque ("Raichu, use X!")
+  if comboPending then
+    local p = comboPending
+    if p.confirmed then
+      comboPending = nil
+    elseif now - p.sentAt < CONFIRM_TIMEOUT then
+      return
+    else
+      local serverSaid = lastServerMsgAt >= p.sentAt and lastServerMsg ~= ''
+      if not serverSaid and p.tries < 2 then
+        -- el servidor no contesto nada: reintentar una vez
+        p.tries = p.tries + 1
+        p.sentAt = now
+        g_game.talk('m' .. p.slot)
+        return
+      end
+      local reason = serverSaid and lastServerMsg or 'el servidor no respondio'
+      comboSkipped[#comboSkipped + 1] = titleCase(p.words) .. ' (' .. reason .. ')'
+      g_logger.info('[SmartCombo] ' .. p.words .. ' (m' .. p.slot .. ') fallo: ' .. reason)
+      readyAt[p.words:lower()] = nil
+      comboPending = nil
+    end
+  end
+
   if now - lastCast < COMBO_GAP then return end
 
   while comboPos <= #comboSequence do
@@ -710,6 +770,7 @@ function comboTick()
         comboSkipped[#comboSkipped + 1] = titleCase(words) .. ' (sin objetivo)'
       else
         g_game.talk('m' .. slot)
+        comboPending = { words = words, slot = slot, sentAt = now, tries = 1 }
         lastCast = now
         readyAt[words:lower()] = now + PENDING_RETRY
         flashSpell(slot)
@@ -719,7 +780,9 @@ function comboTick()
     end
   end
   if #comboSkipped > 0 then
-    modules.game_textmessage.displayFailureMessage('Combo: no salio ' .. table.concat(comboSkipped, ', '))
+    local msg = 'Combo: no salio ' .. table.concat(comboSkipped, ', ')
+    g_logger.info('[SmartCombo] ' .. msg)
+    modules.game_textmessage.displayFailureMessage(msg)
   end
   stopCombo()
 end
