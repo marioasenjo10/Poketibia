@@ -339,3 +339,29 @@ if (Test-Path $pre) { Start-Process $pre }
 git add bases/pokedashpota1.0/data/items/items.otb tools/pokeassets/preview.png
 git commit -q -m "Objetos de evolucion shiny con dibujo brillante"
 git push
+
+
+
+PS C:\Develop\Poketibia-project> Set-Location 'C:\Develop\Poketibia-project'
+PS C:\Develop\Poketibia-project> git pull
+Already up to date.
+PS C:\Develop\Poketibia-project> $t   = (Resolve-Path 'tools\pokeassets').Path
+PS C:\Develop\Poketibia-project> $dat = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path
+PS C:\Develop\Poketibia-project> $spr = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path
+PS C:\Develop\Poketibia-project> $otb = (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path
+PS C:\Develop\Poketibia-project> $pre = Join-Path $t 'preview.png'
+PS C:\Develop\Poketibia-project> Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies System.Drawing
+Add-Type : No se puede agregar el tipo. El nombre de tipo 'OtbItem' ya existe.
+En línea: 1 Carácter: 1
++ Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies Syste ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (OtbItem:String) [Add-Type], Exception
+    + FullyQualifiedErrorId : TYPE_ALREADY_EXISTS,Microsoft.PowerShell.Commands.AddTypeCommand
+ 
+PS C:\Develop\Poketibia-project> [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
+Excepción al llamar a "Run" con los argumentos "7": "No se pudo leer Tibia.dat: atributo desconocido 254 en 593"
+En línea: 1 Carácter: 1
++ [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : Exception
