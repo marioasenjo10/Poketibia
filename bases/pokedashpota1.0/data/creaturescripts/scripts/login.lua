@@ -35,6 +35,7 @@ function onLogin(player)
 	player:registerEvent("ExtendedOpcode")
 	player:registerEvent("DropLoot")
 	player:registerEvent("MonsterHealthChange")
+	player:registerEvent("TrainerAdvance")
 
 	-- Update questlog
 	player:updateQuestLog()

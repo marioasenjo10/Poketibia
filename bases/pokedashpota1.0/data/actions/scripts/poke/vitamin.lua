@@ -48,7 +48,9 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	end
 
 	if statusToBeIncreased == "pokeLevel" then
-		if target:getLevel() >= summonMaxLevel then
+		if trainerLevelScaling then
+			player:sendCancelMessage("Pokemon do not have levels. Their power depends on your trainer level.")
+		elseif target:getLevel() >= summonMaxLevel then
 			player:sendCancelMessage("Sorry, not possible to feed this Pokemon anymore.")
 		else
 			player:say(target:getName() .. ", take this!", TALKTYPE_SAY)

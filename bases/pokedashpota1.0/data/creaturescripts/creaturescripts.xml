@@ -15,6 +15,7 @@
 	<event type="preparedeath" name="LegendariesDeath" script="legendariesdeath.lua" />-->
 	<event type="extendedopcode" name="ExtendedOpcode" script="extendedopcode.lua" />
 	<event type="healthchange" name="MonsterHealthChange" script="monsterhealthchange.lua" />
+	<event type="advance" name="TrainerAdvance" script="traineradvance.lua" />
 	<event type="move" name="FlyEvent" script="flyevent.lua" />
 	<event type="move" name="RemoveSummon" script="removesummon.lua" />
 	<event type="modalwindow" name="ModalWindowHelper" script="modalwindowhelper.lua" />

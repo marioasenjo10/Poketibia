@@ -21,6 +21,11 @@ summonLevelDamageBuff = 0.008 -- buff due to summon's level
 playerLevelDamageBuff = 0.0005 -- buff due to player's level
 summonBoostDamageBuff = 0.008 -- buff due to summon's boost
 summonLoveDamageBuff = 0.0002 -- buff due to summon's love
+-- Estilo Poke Alliance: los pokemon de los jugadores no tienen nivel propio (no ganan exp
+-- ni suben de nivel, evolucionan con piedras). Su fuerza (dano, vida, defensa, velocidad)
+-- depende del nivel del entrenador. Los pokemon salvajes siguen usando su nivel.
+trainerLevelScaling = true
+trainerLevelDamageBuff = 0.008 -- buff por nivel del entrenador (lo mismo que daba antes cada nivel del pokemon)
 vitaminStatusBuff = 1.2
 hunterDamageBuff = 1.1
 blockerHealthBuff = 1.25
@@ -1460,6 +1465,10 @@ end
 function getNeededExp(level) return (50 * (level * level * level - 6 * level * level + 17 * level - 12) / 3) end
 
 function statusGainFormula(playerLevel, summonLevel, summonBoost, pokeLove)
+	-- playerLevel > 0 solo para pokemon de jugadores (los salvajes pasan 0)
+	if trainerLevelScaling and playerLevel and playerLevel > 0 then
+		return (1.0 + playerLevel * trainerLevelDamageBuff + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
+	end
 	return (1.0 + summonLevel * summonLevelDamageBuff + playerLevel * playerLevelDamageBuff + summonBoost * summonBoostDamageBuff + pokeLove * summonLoveDamageBuff)
 end
 

@@ -13,7 +13,8 @@ function Player:onLook(thing, position, distance)
 			local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
 			local pokeLove = item:getSpecialAttribute("pokeLove") or 0
 			if pokeName ~= nil and pokeLevel ~= nil then			
-				description = string.format("%s\nIt belongs to %s. Level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), pokeLevel, pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
+				local levelStr = trainerLevelScaling and ("Trainer level: " .. master:getLevel()) or ("Level: " .. pokeLevel)
+				description = string.format("%s\nIt belongs to %s. %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), levelStr, pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
 			end
 		end
 	end
@@ -32,7 +33,8 @@ function Player:onLook(thing, position, distance)
 			healthStr = "It is fainted."
 		end
 		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
-			description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. %s", description, pokeName, pokeLevel, pokeBoost, healthStr)
+			local levelStr = trainerLevelScaling and ("Required level: " .. math.floor((pokeLevel + pokeBoost) / 1.5)) or ("Level: " .. pokeLevel)
+			description = string.format("%s\nIt contains a %s. %s. Boost: +%s. %s", description, pokeName, levelStr, pokeBoost, healthStr)
 		end
 	end
 	if thing:isPlayer() and thing ~= self then
@@ -110,7 +112,8 @@ function Player:onLookInBattleList(creature, distance)
 		local pokeName = master:getName()
 		local pokeLevel = creature:getLevel()
 		if pokeName ~= nil and pokeLevel ~= nil then			
-			description = string.format("%s\nIt belongs to %s. Level: %s.", description, master:getName(), pokeLevel)
+			local levelStr = (trainerLevelScaling and master:isPlayer()) and ("Trainer level: " .. master:getLevel()) or ("Level: " .. pokeLevel)
+			description = string.format("%s\nIt belongs to %s. %s.", description, master:getName(), levelStr)
 		end
 	end
 	if self:getGroup():getAccess() then
@@ -146,7 +149,8 @@ function Player:onLookInTrade(partner, item, distance)
 			healthStr = "It is fainted."
 		end
 		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
-			description = string.format("%s\nIt contains a %s. Level: %s. Boost: +%s. Love: +%s. %s", description, pokeName, pokeLevel, pokeBoost, pokeLove, healthStr)
+			local levelStr = trainerLevelScaling and ("Required level: " .. math.floor((pokeLevel + pokeBoost) / 1.5)) or ("Level: " .. pokeLevel)
+			description = string.format("%s\nIt contains a %s. %s. Boost: +%s. Love: +%s. %s", description, pokeName, levelStr, pokeBoost, pokeLove, healthStr)
 		end
 	end
 	self:sendTextMessage(MESSAGE_INFO_DESCR, description)
@@ -348,7 +352,7 @@ function Player:onGainExperience(source, exp, rawExp)
 		exp = exp * explorerExperienceBuff
 	end
 
-	if hasSummons(self) then
+	if hasSummons(self) and not trainerLevelScaling then
 		local creature = self:getSummon()
 --		local item = self:getSlotItem(CONST_SLOT_AMMO)
 		local item = self:getUsingBall()
