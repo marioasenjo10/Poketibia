@@ -316,52 +316,31 @@ if ($big.Count -gt 0 -or $total -gt 150) {
 # [9] Dibujo brillante para los objetos de evolucion shiny (46001+)
 #     Crea en Tibia.dat/Tibia.spr una copia "brillante" del dibujo de cada
 #     objeto y la asigna en items.otb. Primero hace una PRUEBA sin tocar nada
-#     y genera tools\pokeassets\preview.png (izquierda original, derecha brillo).
+#     y abre tools\pokeassets\preview.png (izquierda original, derecha brillo).
 #     Guarda copias *.bak de los 3 archivos antes de modificarlos.
-#     IMPORTANTE: cierra el cliente y el servidor antes de ejecutarlo, y
-#     usa una ventana NUEVA de PowerShell (si no, carga la version vieja).
+#     Cierra el cliente y el servidor antes. Se puede pegar en cualquier
+#     ventana: la herramienta se ejecuta cada vez en un proceso aparte.
 # ---------------------------------------------------------------------
 Set-Location 'C:\Develop\Poketibia-project'
 git pull
-$t   = (Resolve-Path 'tools\pokeassets').Path
-$dat = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path
-$spr = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path
-$otb = (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path
-$pre = Join-Path $t 'preview.png'
-Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies System.Drawing
-[PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
-if (Test-Path $pre) { Start-Process $pre }
+$pokeassets = {
+    param($guardar)
+    Set-Location 'C:\Develop\Poketibia-project'
+    $t   = (Resolve-Path 'tools\pokeassets').Path
+    $dat = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path
+    $spr = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path
+    $otb = (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path
+    Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies System.Drawing
+    [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, (Join-Path $t 'preview.png'), -not $guardar)
+}
+Start-Job $pokeassets -ArgumentList $false | Receive-Job -Wait -AutoRemoveJob
+if (Test-Path 'tools\pokeassets\preview.png') { Start-Process 'tools\pokeassets\preview.png' }
 
 # ---------------------------------------------------------------------
 # [9b] SOLO si [9] ha dicho "Prueba OK" y la imagen te gusta: guardar y subir
+#      (pegalo en la misma ventana que [9])
 # ---------------------------------------------------------------------
-[PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $null, $false)
+Start-Job $pokeassets -ArgumentList $true | Receive-Job -Wait -AutoRemoveJob
 git add bases/pokedashpota1.0/data/items/items.otb tools/pokeassets/preview.png
 git commit -q -m "Objetos de evolucion shiny con dibujo brillante"
 git push
-
-
-
-PS C:\Develop\Poketibia-project> Set-Location 'C:\Develop\Poketibia-project'
-PS C:\Develop\Poketibia-project> git pull
-Already up to date.
-PS C:\Develop\Poketibia-project> $t   = (Resolve-Path 'tools\pokeassets').Path
-PS C:\Develop\Poketibia-project> $dat = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path
-PS C:\Develop\Poketibia-project> $spr = (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path
-PS C:\Develop\Poketibia-project> $otb = (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path
-PS C:\Develop\Poketibia-project> $pre = Join-Path $t 'preview.png'
-PS C:\Develop\Poketibia-project> Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies System.Drawing
-Add-Type : No se puede agregar el tipo. El nombre de tipo 'OtbItem' ya existe.
-En línea: 1 Carácter: 1
-+ Add-Type -Path "$t\Otb.cs","$t\Things.cs" -ReferencedAssemblies Syste ...
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidOperation: (OtbItem:String) [Add-Type], Exception
-    + FullyQualifiedErrorId : TYPE_ALREADY_EXISTS,Microsoft.PowerShell.Commands.AddTypeCommand
- 
-PS C:\Develop\Poketibia-project> [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
-Excepción al llamar a "Run" con los argumentos "7": "No se pudo leer Tibia.dat: atributo desconocido 254 en 593"
-En línea: 1 Carácter: 1
-+ [PokeAssets]::Run($dat, $spr, $otb, 46001, 46999, $pre, $true)
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
-    + FullyQualifiedErrorId : Exception
