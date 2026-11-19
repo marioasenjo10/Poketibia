@@ -12,8 +12,8 @@ ComboSlot < UIButton
   focusable: false
 
   $hover:
-    border-color: #8fc1ff
-    background-color: #1f3352
+    border-color: #ff7373
+    background-color: #3a1f24
 
   UIWidget
     id: icon
@@ -28,15 +28,104 @@ ComboSlot < UIButton
     margin-left: 2
     font: verdana-11px-rounded
     color: #ffd84a
-    phantom: true
 
 ComboLabel < Label
-  font: verdana-11px-antialised
+  font: verdana-11px-rounded
   color: #c9d3e0
+
+MoveRow < UIButton
+  height: 40
+  background-color: #111a28
+  border-width: 1
+  border-color: #1e2d44
+  focusable: false
+
+  $hover:
+    background-color: #1a2a42
+    border-color: #4f7fb8
+
+  Label
+    id: key
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 6
+    width: 26
+    font: verdana-11px-rounded
+    color: #8fc1ff
+
+  UIWidget
+    id: icon
+    size: 32 32
+    anchors.left: key.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 2
+    phantom: true
+
+  Label
+    id: name
+    anchors.left: icon.right
+    anchors.top: parent.top
+    margin-left: 8
+    margin-top: 5
+    width: 200
+    font: verdana-11px-rounded
+    color: #ffffff
+
+  Label
+    id: badge
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-right: 8
+    margin-top: 5
+    size: 68 14
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffffff
+
+  Label
+    id: element
+    anchors.right: badge.left
+    anchors.top: badge.top
+    margin-right: 6
+    size: 66 14
+    text-align: right
+    font: verdana-11px-rounded
+
+  Label
+    id: cd
+    anchors.right: parent.right
+    anchors.top: badge.bottom
+    margin-right: 8
+    margin-top: 3
+    size: 68 14
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffd84a
+
+  Label
+    id: inCombo
+    anchors.right: cd.left
+    anchors.top: cd.top
+    margin-right: 6
+    size: 66 14
+    text-align: right
+    font: verdana-11px-rounded
+    color: #7CFC00
+
+  Label
+    id: desc
+    anchors.left: icon.right
+    anchors.right: inCombo.left
+    anchors.top: name.bottom
+    margin-left: 8
+    margin-top: 3
+    margin-right: 4
+    height: 14
+    color: #9aa8bb
 
 UIWindow
   id: smartComboWindow
-  size: 480 344
+  size: 560 536
   anchors.centerIn: parent
   background-color: #080d15f0
   border-width: 1
@@ -53,31 +142,20 @@ UIWindow
     phantom: true
 
   Label
-    id: bolt
+    id: title
     anchors.left: header.left
     anchors.verticalCenter: header.verticalCenter
-    margin-left: 10
+    margin-left: 12
     font: verdana-11px-rounded
     color: #ffd84a
-    !text: '>>'
-    phantom: true
-
-  Label
-    id: title
-    anchors.left: prev.right
-    anchors.verticalCenter: header.verticalCenter
-    margin-left: 6
-    font: verdana-11px-rounded
-    color: #ffffff
-    text: Smart Combo
-    phantom: true
+    text: SMART COMBO
 
   UIButton
     id: closeButton
     anchors.right: header.right
     anchors.verticalCenter: header.verticalCenter
     margin-right: 8
-    size: 18 18
+    size: 20 20
     font: verdana-11px-rounded
     text: X
     color: #e53935
@@ -86,80 +164,152 @@ UIWindow
 
     $hover:
       color: #ff7373
+      background-color: #ffffff22
 
   ComboBox2
-    id: portraitBox
+    id: topBox
     anchors.top: header.bottom
     anchors.left: parent.left
     anchors.right: parent.right
     margin: 10 10 0 10
-    height: 104
+    height: 80
 
   UIWidget
     id: portraitBg
-    anchors.top: portraitBox.top
-    anchors.horizontalCenter: portraitBox.horizontalCenter
-    margin-top: 8
-    size: 72 72
+    anchors.left: topBox.left
+    anchors.verticalCenter: topBox.verticalCenter
+    margin-left: 8
+    size: 68 68
     background-color: #1b2b44
+    border-width: 1
+    border-color: #2f4a6e
+    phantom: true
+
+  UIItem
+    id: portrait
+    anchors.centerIn: portraitBg
+    size: 64 64
+    virtual: true
     phantom: true
 
   UICreature
-    id: portrait
+    id: portraitCreature
     anchors.centerIn: portraitBg
     size: 64 64
     phantom: true
 
   Label
     id: pokemonLabel
-    anchors.top: portraitBg.bottom
-    anchors.left: portraitBox.left
-    anchors.right: portraitBox.right
-    margin-top: 4
-    text-align: center
+    anchors.left: portraitBg.right
+    anchors.top: topBox.top
+    margin-left: 12
+    margin-top: 10
+    width: 400
     font: verdana-11px-rounded
     color: #ffffff
 
+  Label
+    id: helpLabel
+    anchors.left: pokemonLabel.left
+    anchors.top: pokemonLabel.bottom
+    margin-top: 6
+    width: 440
+    color: #9aa8bb
+    text: Clic en un movimiento para anadirlo al combo. Se lanzan en ese orden.
+
+  Label
+    id: legendTarget
+    anchors.left: pokemonLabel.left
+    anchors.top: helpLabel.bottom
+    margin-top: 6
+    size: 68 14
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffffff
+    background-color: #8e2b2b
+    text: OBJETIVO
+
+  Label
+    id: legendTargetText
+    anchors.left: prev.right
+    anchors.verticalCenter: prev.verticalCenter
+    margin-left: 4
+    width: 140
+    color: #9aa8bb
+    text: necesita que ataques
+
+  Label
+    id: legendArea
+    anchors.left: prev.right
+    anchors.verticalCenter: prev.verticalCenter
+    margin-left: 8
+    size: 68 14
+    text-align: center
+    font: verdana-11px-rounded
+    color: #ffffff
+    background-color: #1f5fa8
+    text: AREA
+
+  Label
+    id: legendAreaText
+    anchors.left: prev.right
+    anchors.verticalCenter: prev.verticalCenter
+    margin-left: 4
+    width: 140
+    color: #9aa8bb
+    text: sale siempre
+
   ComboLabel
-    id: availableLabel
-    text: Movimientos disponibles:
-    anchors.top: portraitBox.bottom
+    id: movesLabel
+    text: MOVIMIENTOS
+    anchors.top: topBox.bottom
     anchors.left: parent.left
     margin-top: 10
     margin-left: 12
     width: 250
 
-  ComboBox2
-    id: availableBox
-    anchors.top: prev.bottom
+  UIScrollArea
+    id: movesList
+    anchors.top: movesLabel.bottom
     anchors.left: parent.left
     anchors.right: parent.right
-    margin: 4 10 0 10
-    height: 50
-
-  UIWidget
-    id: availablePanel
-    anchors.fill: availableBox
-    padding: 6 8 6 8
+    margin-top: 4
+    margin-left: 10
+    margin-right: 27
+    height: 254
+    padding: 2
+    background-color: #0b111b
+    border-width: 1
+    border-color: #26364d
+    vertical-scrollbar: movesScroll
     layout:
-      type: horizontalBox
-      spacing: 6
+      type: verticalBox
+      spacing: 2
+
+  VerticalScrollBar
+    id: movesScroll
+    anchors.top: movesList.top
+    anchors.bottom: movesList.bottom
+    anchors.left: movesList.right
+    margin-left: 2
+    step: 42
+    pixels-scroll: true
 
   ComboLabel
     id: sequenceLabel
-    text: Secuencia del combo:
-    anchors.top: availableBox.bottom
+    text: SECUENCIA DEL COMBO
+    anchors.top: movesList.bottom
     anchors.left: parent.left
     margin-top: 10
     margin-left: 12
     width: 250
 
-  ComboLabel
+  Label
     id: countLabel
-    anchors.top: prev.top
+    anchors.top: sequenceLabel.top
     anchors.right: parent.right
     margin-right: 12
-    width: 150
+    width: 200
     text-align: right
     color: #8a98ab
 
@@ -179,6 +329,14 @@ UIWindow
       type: horizontalBox
       spacing: 6
 
+  Label
+    id: emptyLabel
+    anchors.centerIn: sequenceBox
+    width: 400
+    text-align: center
+    color: #6c7a8d
+    text: Todavia no hay movimientos. Haz clic arriba para anadirlos.
+
   Button
     id: clearButton
     text: Limpiar
@@ -190,7 +348,7 @@ UIWindow
     @onClick: modules.game_pokemonmoves.clearCombo()
 
   Button
-    id: toggleButton
+    id: runButton
     text: Probar combo
     width: 110
     anchors.left: clearButton.right
@@ -199,12 +357,12 @@ UIWindow
     margin-bottom: 10
     @onClick: modules.game_pokemonmoves.runCombo()
 
-  ComboLabel
+  Label
     id: hintLabel
     anchors.right: parent.right
     anchors.verticalCenter: clearButton.verticalCenter
     margin-right: 12
-    width: 250
+    width: 320
     text-align: right
     color: #6c7a8d
-    text: Hotkey (Ctrl+K): escribe "combo"
+    text: Tecla rapida en Hotkeys (Ctrl+K) con el texto combo

@@ -21,6 +21,10 @@ local lastCast = 0
 local readyAt = {}           -- [nombre en minusculas] = g_clock.millis() en que vuelve a estar listo
 local comboKey
 local pokemonName
+local pokemonPortrait = 0    -- id del item retrato (como el del slot de la cabeza)
+local pokemonLook = 0        -- looktype del pokemon (si no hay retrato)
+local moveInfo = {}          -- [slot] = {element, category, effect} enviado por el servidor
+local OPCODE_POKEINFO = 60
 
 -- Cooldowns visuales: [slot] = g_clock.millis() en que termina
 local cdEnd = {}
@@ -100,7 +104,21 @@ function init()
     onLevelChange = onLevelChange
   })
   ProtocolGame.registerExtendedOpcode(OPCODE_SKILLBAR, getOpCode)
-  comboEvent = cycleEvent(comboTick, COMBO_TICK)
+  ProtocolGame.registerExtendedOpcode(OPCODE_POKEINFO, onPokemonInfo)
+end
+
+-- Opcode 60: "retrato|looktype|nombre|elem:cat:efecto;elem:cat:efecto;..."
+function onPokemonInfo(protocol, opcode, buffer)
+  local parts = buffer:split('|')
+  pokemonPortrait = tonumber(parts[1]) or 0
+  pokemonLook = tonumber(parts[2]) or 0
+  if parts[3] and parts[3] ~= '' then pokemonName = parts[3] end
+  moveInfo = {}
+  for _, s in ipairs((parts[4] or ''):split(';')) do
+    local e = s:split(':')
+    moveInfo[#moveInfo + 1] = { element = e[1] or '', category = e[2] or '', effect = e[3] or '' }
+  end
+  refreshComboWindow()
 end
 
 function onLevelChange(localPlayer, value, percent)
@@ -140,6 +158,7 @@ end
 
 function terminate()
   ProtocolGame.unregisterExtendedOpcode(OPCODE_SKILLBAR)
+  ProtocolGame.unregisterExtendedOpcode(OPCODE_POKEINFO)
   removeEvent(comboEvent)
   g_settings.set('pokemonmoves_pos', sbw:getPosition())
   if comboWindow then comboWindow:destroy() comboWindow = nil end
@@ -199,7 +218,7 @@ function getSpells(table)
     icon.lvl = table[i].lvl
     icon.exhaustion = table[i].exhaustion
     icon.exhaustionNeeded = icon.exhaustion - table[i].cooldownRemaining
-    icon:setTooltip(table[i].words)
+    icon:setTooltip(moveTooltip(i))
     if side == 'horizontal' then
       icon:setMarginTop(3)
       height = 38
@@ -338,6 +357,80 @@ local function iconPath(words)
   return "moves_icon/" .. words .. "_on.png"
 end
 
+-- ---------- Informacion de los movimientos ----------
+
+local ELEMENTS = {
+  electric = {'Electrico', '#f8d030'}, fire = {'Fuego', '#f08030'}, water = {'Agua', '#6890f0'},
+  grass = {'Planta', '#78c850'}, normal = {'Normal', '#c6c6a7'}, psychic = {'Psiquico', '#f85888'},
+  poison = {'Veneno', '#c060c0'}, bug = {'Bicho', '#a8b820'}, ground = {'Tierra', '#e0c068'},
+  rock = {'Roca', '#b8a038'}, flying = {'Volador', '#a890f0'}, fighting = {'Lucha', '#e05048'},
+  ghost = {'Fantasma', '#9080c0'}, ice = {'Hielo', '#98d8d8'}, dragon = {'Dragon', '#8058f8'},
+  dark = {'Siniestro', '#a08070'}, steel = {'Acero', '#b8b8d0'}, fairy = {'Hada', '#ee99ac'},
+}
+
+local CATEGORIES = {
+  areawaves = 'Onda en area delante del pokemon',
+  singletargetweak = 'Golpe rapido al objetivo (dano bajo)',
+  singletarget = 'Ataque directo al objetivo (dano medio)',
+  singletargetstrong = 'Ataque potente al objetivo (dano alto)',
+  areatarget = 'Golpea en area alrededor del objetivo',
+  frontlinear = 'Rayo en linea recta (dano muy alto)',
+  frontarea = 'Gran area delante del pokemon (dano alto)',
+  passive = 'Habilidad pasiva',
+  ultimate = 'Definitivo: gran area alrededor (dano maximo)',
+}
+
+local EFFECTS = {
+  poison = 'Envenena', burn = 'Quema', heal = 'Cura',
+  buff = 'Mejora al pokemon', slow = 'Ralentiza o inmoviliza',
+}
+
+local function titleCase(s)
+  return (s:gsub("(%a)([%w']*)", function(a, b) return a:upper() .. b end))
+end
+
+function moveIsTarget(slot)
+  local s = spells[slot]
+  return s and s.isTarget == 1
+end
+
+function moveTypeText(slot)
+  local s = spells[slot]
+  if not s or s.isTarget == nil then return '?' end
+  return s.isTarget == 1 and 'OBJETIVO' or 'AREA'
+end
+
+function moveCooldownText(slot)
+  local s = spells[slot]
+  if not s or not s.exhaustion then return '' end
+  return 'CD ' .. math.floor(s.exhaustion / 1000 + 0.5) .. 's'
+end
+
+function moveElement(slot)
+  local info = moveInfo[slot]
+  return info and ELEMENTS[info.element]
+end
+
+function moveDescription(slot)
+  local info = moveInfo[slot] or {}
+  local parts = {}
+  if CATEGORIES[info.category or ''] then parts[#parts + 1] = CATEGORIES[info.category] end
+  if EFFECTS[info.effect or ''] then parts[#parts + 1] = EFFECTS[info.effect] end
+  local s = spells[slot]
+  if s and s.range and s.range > 0 then parts[#parts + 1] = 'Alcance ' .. s.range end
+  if #parts == 0 then return 'Movimiento de apoyo' end
+  return table.concat(parts, '. ')
+end
+
+function moveTooltip(slot)
+  local s = spells[slot]
+  if not s then return '' end
+  local el = moveElement(slot)
+  local line2 = moveTypeText(slot) .. '  |  ' .. moveCooldownText(slot)
+  if el then line2 = line2 .. '  |  ' .. el[1] end
+  return 'M' .. slot .. ' - ' .. titleCase(s.words) .. '\n' .. line2 .. '\n' .. moveDescription(slot)
+end
+
 local function saveCombo()
   if comboKey then
     g_settings.set(comboKey, table.concat(comboSequence, ','))
@@ -371,15 +464,38 @@ end
 function updateComboToggle()
   local toggle = sbw and sbw:recursiveGetChildById('comboToggle')
   if toggle then
-    toggle:setTooltip('Lanzar combo (configura una tecla con el texto: combo)')
+    toggle:setTooltip('Lanzar Smart Combo\nAsigna una tecla en Hotkeys (Ctrl+K) con el texto: combo')
     if comboRunning then
-      toggle:setBackgroundColor('#2e7d32cc')
+      toggle:setText((comboPos - 1) .. '/' .. #comboSequence)
+      toggle:setBackgroundColor('#2e7d32dd')
+      toggle:setBorderColor('#7CFC00')
       toggle:setColor('#ffffff')
     else
-      toggle:setBackgroundColor('#00000099')
-      toggle:setColor('#bbbbbb')
+      toggle:setText('AUTO')
+      toggle:setBackgroundColor('#13263fdd')
+      toggle:setBorderColor('#4f7fb8')
+      toggle:setColor(#comboSequence > 0 and '#ffd84a' or '#8a98ab')
     end
   end
+  if comboWindow then
+    local seq = comboWindow:getChildById('sequencePanel')
+    for pos, child in ipairs(seq:getChildren()) do
+      local current = comboRunning and pos == comboPos - 1
+      child:setBorderColor(current and '#ffd84a' or '#2f4a6e')
+      child:setBorderWidth(current and 2 or 1)
+    end
+  end
+end
+
+-- Marca en amarillo el icono del ataque que acaba de lanzar el combo
+local function flashSpell(slot)
+  local icon = sbw:recursiveGetChildById('spell' .. slot)
+  if not icon then return end
+  icon:setBorderWidth(2)
+  icon:setBorderColor('#ffd84a')
+  scheduleEvent(function()
+    if not icon:isDestroyed() then icon:setBorderWidth(0) end
+  end, COMBO_GAP)
 end
 
 -- Lanza la secuencia entera una vez (desde la hotkey "combo", el boton de la barra o el menu)
@@ -397,12 +513,14 @@ function runCombo()
   comboRunning = true
   comboPos = 1
   updateComboToggle()
-  comboTick()
+  comboLoop()
 end
 
 local function stopCombo()
   comboRunning = false
   comboPos = 1
+  removeEvent(comboEvent)
+  comboEvent = nil
   updateComboToggle()
 end
 
@@ -460,41 +578,88 @@ local function createSlot(parent, words, number)
   return slot
 end
 
-local function moveKind(words)
-  local slot = findSlot(words)
-  local s = slot and spells[slot]
-  if not s or s.isTarget == nil then return '' end
-  return s.isTarget == 1 and ' [objetivo]' or ' [area]'
+local function comboPosition(words)
+  for pos, w in ipairs(comboSequence) do
+    if w:lower() == words:lower() then return pos end
+  end
+  return nil
+end
+
+local function createMoveRow(parent, slot)
+  local s = spells[slot]
+  local row = g_ui.createWidget('MoveRow', parent)
+  row:getChildById('key'):setText('M' .. slot)
+  row:getChildById('icon'):setImageSource(iconPath(s.words))
+  row:getChildById('name'):setText(titleCase(s.words))
+  row:getChildById('desc'):setText(moveDescription(slot))
+  row:getChildById('cd'):setText(moveCooldownText(slot))
+
+  local badge = row:getChildById('badge')
+  badge:setText(moveTypeText(slot))
+  if s.isTarget == 1 then
+    badge:setBackgroundColor('#8e2b2b')
+  elseif s.isTarget ~= nil then
+    badge:setBackgroundColor('#1f5fa8')
+  else
+    badge:setBackgroundColor('#444c58')
+  end
+
+  local el = moveElement(slot)
+  local element = row:getChildById('element')
+  if el then
+    element:setText(el[1])
+    element:setColor(el[2])
+  else
+    element:setText('')
+  end
+
+  local pos = comboPosition(s.words)
+  local inCombo = row:getChildById('inCombo')
+  if pos then
+    inCombo:setText('#' .. pos)
+    row:setTooltip('Ya esta en el combo (posicion ' .. pos .. '). Clic en la secuencia para quitarlo.')
+  else
+    inCombo:setText('+')
+    row:setTooltip('Clic para anadirlo al combo')
+  end
+  row.onClick = function() addToCombo(s.words) end
+  return row
 end
 
 function refreshComboWindow()
   if not comboWindow then return end
-  comboWindow:getChildById('pokemonLabel'):setText(pokemonName or 'Pokemon actual')
-  local creature = findPokemonCreature()
+  comboWindow:getChildById('pokemonLabel'):setText(pokemonName or 'Saca a tu pokemon')
+
   local portrait = comboWindow:getChildById('portrait')
-  if creature then
-    portrait:setCreature(creature)
+  local creature = comboWindow:getChildById('portraitCreature')
+  if pokemonPortrait and pokemonPortrait > 0 then
+    portrait:setItemId(pokemonPortrait)
     portrait:show()
+    creature:hide()
+  elseif pokemonLook and pokemonLook > 0 then
+    creature:setOutfit({ type = pokemonLook })
+    creature:show()
+    portrait:hide()
   else
     portrait:hide()
+    creature:hide()
   end
 
-  local avail = comboWindow:getChildById('availablePanel')
-  avail:destroyChildren()
+  local list = comboWindow:getChildById('movesList')
+  list:destroyChildren()
   for i = 1, #spells do
-    local words = spells[i].words
-    local b = createSlot(avail, words)
-    b:setTooltip(words .. moveKind(words) .. ' (clic para agregar)')
-    b.onClick = function() addToCombo(words) end
+    createMoveRow(list, i)
   end
 
   local seq = comboWindow:getChildById('sequencePanel')
   seq:destroyChildren()
   for pos, words in ipairs(comboSequence) do
     local b = createSlot(seq, words, pos)
-    b:setTooltip(pos .. '. ' .. words .. moveKind(words) .. ' (clic para quitar)')
+    local slot = findSlot(words)
+    b:setTooltip((slot and moveTooltip(slot) or words) .. '\n\nClic para quitar del combo')
     b.onClick = function() removeFromCombo(pos) end
   end
+  comboWindow:getChildById('emptyLabel'):setVisible(#comboSequence == 0)
 
   comboWindow:getChildById('countLabel'):setText(#comboSequence .. ' movimiento(s)')
   updateComboToggle()
@@ -534,9 +699,19 @@ function comboTick()
       g_game.talk('m' .. slot)
       lastCast = now
       readyAt[words:lower()] = now + PENDING_RETRY
-      if comboPos > #comboSequence then stopCombo() end
+      flashSpell(slot)
+      updateComboToggle()
       return
     end
   end
   stopCombo()
+end
+
+-- Repite comboTick cada COMBO_TICK ms mientras el combo este en marcha
+function comboLoop()
+  comboEvent = nil
+  comboTick()
+  if comboRunning then
+    comboEvent = scheduleEvent(comboLoop, COMBO_TICK)
+  end
 end

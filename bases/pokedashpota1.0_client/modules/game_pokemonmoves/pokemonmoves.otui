@@ -32,15 +32,16 @@ ComboToggle < UIButton
   anchors.left: parent.left
   anchors.top: parent.top
   font: verdana-11px-rounded
-  !text: '>>'
-  color: #bbbbbb
-  background-color: #00000099
+  text: AUTO
+  color: #ffd84a
+  background-color: #13263fdd
   border-width: 1
-  border-color: #555555
+  border-color: #4f7fb8
   focusable: false
 
   $hover:
     border-color: #ffffff
+    background-color: #1f3a5fdd
 
 UIWindow
   focusable: false

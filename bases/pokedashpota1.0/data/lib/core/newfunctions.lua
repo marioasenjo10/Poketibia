@@ -2333,6 +2333,43 @@ function doTransformPokeball(item)
 	return false
 end
 
+-- Smart Combo: info de cada ataque (elemento, categoria de dano y efecto), leida una vez
+-- de spells.xml y de los scripts de data/spells/scripts/moves
+local moveInfoCache = nil
+local function buildMoveInfoCache()
+	moveInfoCache = {}
+	local f = io.open("data/spells/spells.xml", "r")
+	if not f then return end
+	local xml = f:read("*a")
+	f:close()
+	for tag in xml:gmatch("<instant[^>]*>") do
+		local name = tag:match('name="([^"]+)"')
+		local script = tag:match('script="([^"]+)"')
+		if name and script then
+			local element = script:match("^moves/([^/]+)/") or ""
+			local category, effect = "", ""
+			local sf = io.open("data/spells/scripts/" .. script, "r")
+			if sf then
+				local src = sf:read("*a")
+				sf:close()
+				category = src:match("damageMultiplierMoves%.(%w+)") or ""
+				if src:find("CONDITION_POISON") then effect = "poison"
+				elseif src:find("CONDITION_FIRE") then effect = "burn"
+				elseif src:find("CONDITION_REGENERATION") or src:find("COMBAT_HEALING") then effect = "heal"
+				elseif src:find("CONDITION_ATTRIBUTES") or src:find("CONDITION_HASTE") then effect = "buff"
+				elseif src:find("CONDITION_PARALYZE") then effect = "slow"
+				end
+			end
+			moveInfoCache[name:lower()] = {element = element, category = category, effect = effect}
+		end
+	end
+end
+
+function getMoveInfo(moveName)
+	if not moveInfoCache then buildMoveInfoCache() end
+	return moveInfoCache[moveName:lower()] or {element = "", category = "", effect = ""}
+end
+
 function doReleaseSummon(cid, pos, effect, message, missile)
 	local player = Player(cid)
 	if not player then return false end
@@ -2472,6 +2509,16 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			end
 		end
 		table.insert(movesTable, ",")
+		-- Smart Combo: retrato, outfit, nombre y elemento/categoria/efecto de cada ataque
+		local movesInfo = {}
+		for i = 1, #moveWords do
+			local move = moves[i]
+			if move then
+				local info = getMoveInfo(move.name)
+				table.insert(movesInfo, info.element .. ":" .. info.category .. ":" .. info.effect)
+			end
+		end
+		player:sendExtendedOpcode(60, (monsterType:portraitId() or 0) .. "|" .. monster:getOutfit().lookType .. "|" .. monster:getName() .. "|" .. table.concat(movesInfo, ";"))
 		player:sendExtendedOpcode(52, table.concat(movesTable))
 
 		return monster:getId()
