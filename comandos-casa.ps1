@@ -409,3 +409,19 @@ Get-ChildItem bases -Recurse -File -Include *.exe | ForEach-Object {
 git add $o
 git commit -q -m "Diagnostico nivel en nombre"
 git push
+
+# ---------------------------------------------------------------------
+# [13] Subir una copia del .exe del servidor para analizarlo
+#      (para quitar el " [nivel]" del nombre). Tambien deja una copia de
+#      seguridad del original: pokedashpota_win64.exe.orig
+#      No modifica el servidor.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+$exe = 'bases\pokedashpota1.0\pokedashpota_win64.exe'
+if (-not (Test-Path "$exe.orig")) { Copy-Item $exe "$exe.orig" }
+New-Item -ItemType Directory -Force analisis | Out-Null
+Copy-Item $exe 'analisis\pokedashpota_win64.bin' -Force
+git add analisis/pokedashpota_win64.bin
+git commit -q -m "Copia del exe del servidor para analisis"
+git push
