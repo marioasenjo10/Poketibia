@@ -64,7 +64,6 @@
 		<voice sentence="SHINY LUXIO!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="40000"/>
 		<item name="electric box" countmax="2" chance="40000"/>
 		<item name="screw" countmax="2" chance="50000"/>
 

@@ -64,8 +64,6 @@
 		<summon name="stone golem" interval="1000" chance="10" />
 	</summons>
 	<loot>
-		<item name="gold coin" countmax="66" chance="100000" />
-		<item name="gold coin" chance="100000" countmax="20" />
 		<item name="dark mushroom" countmax="5" chance="5000" />
 		<item name="red piece of cloth" chance="800" />
 		<item name="assassin star" chance="2400" countmax="4" />

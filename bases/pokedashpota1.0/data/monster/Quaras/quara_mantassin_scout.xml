@@ -48,7 +48,6 @@
 	</voices>
 	<loot>
 		<item name="small sapphire" chance="920" />
-		<item name="gold coin" countmax="30" chance="94000" />
 		<item name="stealth ring" chance="520" />
 		<item id="2229" chance="920" /><!-- skull -->
 		<item name="two handed sword" chance="580" />

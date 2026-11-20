@@ -55,9 +55,6 @@
 	</voices>
 	<loot>
 		<item name="small ruby" countmax="2" chance="7761" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="49" chance="50000" />
-		<item name="platinum coin" chance="40000" />
 		<item name="halberd" chance="6861" />
 		<item name="warrior helmet" chance="1350" />
 		<item name="crown armor" chance="350" />

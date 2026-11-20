@@ -61,7 +61,6 @@
 		<voice sentence="Gaaahhh!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="77" chance="50000" />
 		<item name="shrimp" chance="25000" />
 		<item name="fish fin" chance="100000" />
 		<item name="relic sword" chance="50000" />

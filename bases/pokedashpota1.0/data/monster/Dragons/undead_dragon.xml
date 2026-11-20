@@ -84,9 +84,6 @@
 		<item name="golden mug" chance="6002" />
 		<item name="black pearl" countmax="2" chance="22780" />
 		<item name="small sapphire" countmax="2" chance="28370" />
-		<item name="gold coin" countmax="100" chance="35500" />
-		<item name="gold coin" countmax="98" chance="55500" />
-		<item name="platinum coin" countmax="5" chance="52000" />
 		<item name="life crystal" chance="2500" />
 		<item name="war axe" chance="1290" />
 		<item name="golden armor" chance="860" />

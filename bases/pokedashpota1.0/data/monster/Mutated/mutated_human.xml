@@ -69,8 +69,6 @@
 		<voice sentence="Oh by the gods! What is this... aaaaaargh!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="80" chance="44000" />
-		<item name="gold coin" countmax="50" chance="44000" />
 		<item name="strange talisman" chance="4980" />
 		<item name="silver amulet" chance="70" />
 		<item name="fishbone" chance="10050" />

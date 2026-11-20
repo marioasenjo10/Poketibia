@@ -57,8 +57,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="38" chance="50000" />
-		<item name="platinum coin" countmax="3" chance="50000" />
 		<item name="flawless ice crystal" chance="100000" />
 	</loot>
 </monster>

@@ -49,10 +49,7 @@
 	</voices>
 	<loot>
 		<item name="black pearl" countmax="28" chance="7777" />
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="50" chance="100000" />
 		<item name="talon" countmax="13" chance="6500" />
-		<item name="platinum coin" countmax="6" chance="80000" />
 		<item name="platinum amulet" chance="12222" />
 		<item name="fire axe" chance="8200" />
 		<item name="golden legs" chance="6555" />

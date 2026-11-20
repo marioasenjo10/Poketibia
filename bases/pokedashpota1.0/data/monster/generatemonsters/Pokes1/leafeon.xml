@@ -69,7 +69,6 @@
 		<voice sentence="LEAFEON!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="60" chance="40000"/>
 		<item name="seed" countmax="2" chance="40000"/>
 		<item name="bag of pollem" countmax="1" chance="50000"/>
 

@@ -69,7 +69,6 @@
 		<voice sentence="SHINY TOXICROAK!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="63" chance="40000"/>
 		<item name="bottle of poison" countmax="2" chance="40000"/>
 
 	</loot>

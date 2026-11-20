@@ -62,10 +62,7 @@
 		<voice sentence="I ssssmell warm blood!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="5000" />
-		<item name="gold coin" countmax="88" chance="4400" />
 		<item name="small amethyst" countmax="3" chance="4900" />
-		<item name="platinum coin" countmax="2" chance="4090" />
 		<item name="yellow gem" chance="1000" />
 		<item name="life ring" chance="770" />
 		<item name="terra rod" chance="1001" />

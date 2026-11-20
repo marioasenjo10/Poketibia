@@ -56,6 +56,5 @@
 		<immunity earth="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
 	</loot>
 </monster>

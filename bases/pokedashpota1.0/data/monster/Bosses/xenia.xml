@@ -52,7 +52,6 @@
 		<item name="crystal necklace" chance="2500" />
 		<item name="small diamond" countmax="2" chance="2500" />
 		<item name="small ruby" countmax="2" chance="2500" />
-		<item name="gold coin" countmax="45" chance="100000" />
 		<item name="protection amulet" chance="1000" />
 		<item name="double axe" chance="3333" />
 		<item name="machete" chance="10000" />

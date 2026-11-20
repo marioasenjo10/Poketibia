@@ -73,7 +73,6 @@
 		<voice sentence="SHINY CARNIVINE!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="seed" countmax="1" chance="40000"/>
 
 	</loot>

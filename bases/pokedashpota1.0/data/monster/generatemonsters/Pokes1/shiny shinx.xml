@@ -62,7 +62,6 @@
 		<voice sentence="SHINY SHINX!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="40000"/>
 		<item name="electric box" countmax="1" chance="50000"/>
 		<item name="screw" countmax="1" chance="40000"/>
 

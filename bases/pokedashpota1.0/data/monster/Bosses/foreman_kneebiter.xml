@@ -37,7 +37,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="90000" />
 		<item name="battle shield" chance="6666" />
 		<item name="iron ore" countmax="2" chance="2500" />
 	</loot>

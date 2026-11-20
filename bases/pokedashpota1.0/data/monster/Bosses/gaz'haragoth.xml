@@ -78,9 +78,7 @@
 		<voice sentence="Gaz'haragoth calls down: DEATH AND DOOM!" yell="1" />
 	</voices>
 	<loot>
-		<item name="platinum coin" countmax="50" chance="10000" />
 		<item name="blue gem" countmax="2" chance="10000" />
-		<item name="crystal coin" countmax="6" chance="10000" />
 		<item name="life ring" chance="6000" />
 		<item name="boots of haste" chance="6000" />
 		<item name="red piece of cloth" chance="6000" />

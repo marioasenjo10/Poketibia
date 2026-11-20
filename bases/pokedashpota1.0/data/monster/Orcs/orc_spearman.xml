@@ -46,7 +46,6 @@
 		<voice sentence="Ugaar!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="11" chance="25050" />
 		<item name="spear" chance="17440" />
 		<item name="machete" chance="3000" />
 		<item name="studded legs" chance="10000" />

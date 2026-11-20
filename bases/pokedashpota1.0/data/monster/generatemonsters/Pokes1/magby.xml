@@ -63,7 +63,6 @@
 	</voices>
 	<loot>
 		<item name="fire stone" countmax="1" chance="35"/>
-		<item name="gold coin" countmax="14" chance="40000"/>
 		<item name="essence of fire" countmax="2" chance="40000"/>
 		<item name="pot of lava" countmax="1" chance="5000"/>
 		<item name="magma foot" countmax="2" chance="5000"/>

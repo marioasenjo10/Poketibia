@@ -64,7 +64,6 @@
 		<voice sentence="Stand Still!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="75100" />
 		<item name="wand of decay" chance="280" />
 		<item name="blank rune" chance="10000" />
 		<item name="strong health potion" chance="3000" />

@@ -64,7 +64,6 @@
 		<voice sentence="CHERUBI!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="17" chance="40000"/>
 		<item name="seed" countmax="1" chance="40000"/>
 		<item name="leaves" countmax="1" chance="50000"/>
 

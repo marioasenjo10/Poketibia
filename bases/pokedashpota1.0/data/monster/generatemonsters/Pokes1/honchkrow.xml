@@ -71,7 +71,6 @@
 		<voice sentence="HONCHKROW!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="traces of ghost" countmax="2" chance="50000"/>
 		<item name="traces of ghost" countmax="2" chance="50000"/>
 

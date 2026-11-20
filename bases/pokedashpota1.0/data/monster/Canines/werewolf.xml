@@ -74,9 +74,6 @@
 		<voice sentence="HRAAAAAAAAAARRRRRR!" yell="1" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="90" chance="35000" />
-		<item name="gold coin" countmax="90" chance="35000" />
-		<item name="gold coin" countmax="45" chance="35000" />
 		<item id="2169" chance="800" /><!-- time ring -->
 		<item name="platinum amulet" chance="870" />
 		<item name="stone skin amulet" chance="1000" />

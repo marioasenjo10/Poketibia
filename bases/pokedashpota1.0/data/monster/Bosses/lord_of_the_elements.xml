@@ -77,7 +77,6 @@
 		<item name="small ruby" countmax="4" chance="11111" />
 		<item name="small emerald" countmax="4" chance="11111" />
 		<item name="small amethyst" countmax="3" chance="11111" />
-		<item name="platinum coin" countmax="9" chance="50000" />
 		<item name="earthborn titan armor" chance="2063" />
 		<item name="gold ingot" chance="25000" />
 	</loot>

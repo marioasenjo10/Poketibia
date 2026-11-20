@@ -64,7 +64,6 @@
 		<voice sentence="SHINY BURMY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="40000"/>
 		<item name="pot of moss bug" countmax="1" chance="40000"/>
 		<item name="pot of moss bug" countmax="1" chance="40000"/>
 

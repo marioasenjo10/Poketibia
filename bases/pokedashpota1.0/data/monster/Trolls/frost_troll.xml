@@ -45,7 +45,6 @@
 		<voice sentence="Broar!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="12" chance="50840" />
 		<item name="twigs" chance="8300" />
 		<item name="rapier" chance="15500" />
 		<item name="spear" chance="21500" />

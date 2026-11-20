@@ -73,7 +73,6 @@
 		<voice sentence="EMPOLEON!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="water gem" countmax="4" chance="50000"/>
 		<item name="water pendant" countmax="3" chance="40000"/>
 		<item name="piece of steel" countmax="1" chance="60000"/>

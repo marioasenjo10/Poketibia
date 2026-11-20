@@ -74,7 +74,6 @@
 	</voices>
 	<loot>
 		<item name="darkness stone" countmax="1" chance="225"/>
-		<item name="gold coin" countmax="90" chance="40000"/>
 		<item name="bottle of poison" countmax="2" chance="40000"/>
 		<item name="traces of ghost" countmax="2" chance="20000"/>
 

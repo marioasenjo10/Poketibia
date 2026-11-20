@@ -43,6 +43,10 @@ function onLogin(player)
 	-- Refresh Pokemon Bar
 	player:refreshPokemonBar({}, {})
 
+	-- Dinero solo en el banco: monedas antiguas al banco y saldo al cliente
+	player:convertCoinsToBank()
+	player:sendBankBalance()
+
 	-- Nombres de las ciudades para el mapa grande del cliente
 	player:checkTownDiscovery()
 	player:sendTownList()

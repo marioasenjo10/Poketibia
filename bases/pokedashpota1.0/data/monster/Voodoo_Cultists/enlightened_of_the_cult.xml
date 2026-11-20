@@ -76,7 +76,6 @@
 		<item id="1962" chance="910" /><!-- orange book -->
 		<item name="piggy bank" chance="130" />
 		<item name="small sapphire" chance="550" />
-		<item name="gold coin" countmax="70" chance="64550" />
 		<item name="energy ring" chance="450" />
 		<item name="platinum amulet" chance="200" />
 		<item name="wand of inferno" chance="180" />

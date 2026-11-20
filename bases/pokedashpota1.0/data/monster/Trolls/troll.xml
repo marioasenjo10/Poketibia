@@ -48,7 +48,6 @@
 	</voices>
 	<loot>
 		<item id="2120" chance="7950" /><!-- rope -->
-		<item name="gold coin" countmax="12" chance="65300" />
 		<item name="silver amulet" chance="80" />
 		<item name="hand axe" chance="18000" />
 		<item name="spear" chance="13000" />

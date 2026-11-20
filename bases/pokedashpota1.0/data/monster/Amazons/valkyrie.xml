@@ -52,7 +52,6 @@
 	</voices>
 	<loot>
 		<item name="small diamond" chance="200" />
-		<item name="gold coin" countmax="12" chance="30000" />
 		<item name="protection amulet" chance="1086" />
 		<item id="2229" chance="760" /><!-- skull -->
 		<item name="double axe" chance="492" />

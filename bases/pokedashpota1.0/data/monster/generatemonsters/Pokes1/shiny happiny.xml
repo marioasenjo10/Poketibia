@@ -64,7 +64,6 @@
 		<voice sentence="SHINY HAPPINY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="20" chance="40000"/>
 		<item name="comb" countmax="1" chance="40000"/>
 
 	</loot>

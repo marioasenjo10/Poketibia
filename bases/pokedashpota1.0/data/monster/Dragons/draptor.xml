@@ -59,8 +59,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="90" chance="33750" />
-		<item name="gold coin" countmax="60" chance="33750" />
 		<item name="strong health potion" chance="3150" />
 		<item name="strong mana potion" chance="4150" />
 		<item name="dragon robe" chance="950" />

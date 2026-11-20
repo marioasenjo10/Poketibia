@@ -57,7 +57,6 @@
 	</voices>
 	<loot>
 		<item name="wolf tooth chain" chance="10120" />
-		<item name="gold coin" countmax="40" chance="64000" />
 		<item name="necrotic rod" chance="1140" />
 		<item name="garlic necklace" chance="1000" />
 		<item name="silver dagger" chance="500" />

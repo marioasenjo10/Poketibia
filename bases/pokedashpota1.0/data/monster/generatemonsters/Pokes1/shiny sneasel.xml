@@ -76,7 +76,6 @@
 	</voices>
 	<loot>
 		<item name="darkness stone" countmax="1" chance="88"/>
-		<item name="gold coin" countmax="35" chance="40000"/>
 		<item name="red gem" countmax="2" chance="40000"/>
 		<item name="ice block" countmax="1" chance="5000"/>
 		<item name="snowball" countmax="2" chance="40000"/>

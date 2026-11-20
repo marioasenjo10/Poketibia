@@ -64,7 +64,6 @@
 		<voice sentence="Rooawwrr" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="67500" />
 		<item name="dragon ham" chance="61000" />
 		<item name="health potion" chance="400" />
 		<item name="dragon's tail" chance="4300" />

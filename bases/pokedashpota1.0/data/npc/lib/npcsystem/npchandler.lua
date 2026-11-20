@@ -461,6 +461,7 @@ if NpcHandler == nil then
 			items[#items + 1] = self.shopItems[i]
 		end
 		local handler = self
+		Player(cid):sendBankBalance()
 		openShopWindow(cid, items,
 			function(cid, itemid, subType, amount, ignoreCap, inBackpacks) handler:onBuy(cid, itemid, subType, amount, ignoreCap, inBackpacks) end,
 			function(cid, itemid, subType, amount, ignoreCap, inBackpacks) handler:onSell(cid, itemid, subType, amount, ignoreCap, inBackpacks) end)

@@ -65,10 +65,6 @@
 	<loot>
 		<item name="emerald bangle" chance="3500" />
 		<item name="small sapphire" countmax="4" chance="11000" />
-		<item name="gold coin" countmax="100" chance="60000" />
-		<item name="gold coin" countmax="100" chance="60000" />
-		<item name="gold coin" countmax="67" chance="50000" />
-		<item name="platinum coin" countmax="7" chance="100000" />
 		<item name="violet gem" chance="700" />
 		<item name="yellow gem" chance="5940" />
 		<item name="energy ring" chance="3150" />

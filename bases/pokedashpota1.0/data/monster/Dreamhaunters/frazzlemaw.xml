@@ -72,8 +72,6 @@
 		<voice sentence="mwaaah!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="platinum coin" countmax="7" chance="100000" />
 		<item name="banana skin" chance="9500" />
 		<item name="piece of iron" chance="10400" />
 		<item name="fishbone" chance="10000" />

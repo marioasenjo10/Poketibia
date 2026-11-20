@@ -69,7 +69,6 @@
 		<voice sentence="SHINY WEAVILE!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="75" chance="40000"/>
 		<item name="dark gem" countmax="1" chance="50000"/>
 		<item name="ice orb" countmax="1" chance="50000"/>
 

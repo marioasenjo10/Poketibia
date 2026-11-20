@@ -47,7 +47,6 @@
 		<voice sentence="Mrrr!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="20" chance="100000" />
 		<item name="meat" countmax="4" chance="33600" />
 		<item name="ham" countmax="3" chance="39200" />
 	</loot>

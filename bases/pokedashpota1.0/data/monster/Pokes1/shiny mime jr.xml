@@ -64,7 +64,6 @@
 		<voice sentence="SHINY MIME JR!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="20" chance="40000"/>
 		<item name="future orb" countmax="1" chance="50000"/>
 
 	</loot>

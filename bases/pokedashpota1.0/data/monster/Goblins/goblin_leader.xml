@@ -43,7 +43,6 @@
 		<voice sentence="Goblinkiller! Catch him !!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="10" chance="40000" />
 		<item id="2230" chance="11500" /><!-- bone -->
 		<item name="mouldy cheese" chance="9000" />
 		<item name="dagger" chance="10300" />

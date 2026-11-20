@@ -75,9 +75,6 @@
 	<loot>
 		<item name="golden mug" chance="2870" />
 		<item name="small sapphire" chance="12000" />
-		<item name="gold coin" countmax="100" chance="32300" />
-		<item name="gold coin" countmax="100" chance="32300" />
-		<item name="gold coin" countmax="39" chance="32300" />
 		<item name="energy ring" chance="590" />
 		<item name="life ring" chance="6250" />
 		<item name="life crystal" chance="800" />

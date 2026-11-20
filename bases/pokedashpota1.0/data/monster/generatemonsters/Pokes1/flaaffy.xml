@@ -71,7 +71,6 @@
 	</voices>
 	<loot>
 		<item name="thunder stone" countmax="1" chance="125"/>
-		<item name="gold coin" countmax="50" chance="40000"/>
 		<item name="electric box" countmax="2" chance="5000"/>
 		<item name="screw" countmax="2" chance="40000"/>
 		<item name="sheep wool" countmax="2" chance="5000"/>

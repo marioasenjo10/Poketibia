@@ -67,8 +67,6 @@
 	</voices>
 	<loot>
 		<item name="small sapphire" countmax="3" chance="7000" />
-		<item name="gold coin" countmax="80" chance="50000" />
-		<item name="gold coin" countmax="80" chance="50000" />
 		<item name="blue gem" chance="1500" />
 		<item name="energy ring" chance="7000" />
 		<item name="mind stone" chance="1500" />

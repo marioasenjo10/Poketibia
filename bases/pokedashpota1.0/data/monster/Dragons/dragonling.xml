@@ -65,9 +65,6 @@
 		<voice sentence="FI?" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="37500" />
-		<item name="gold coin" countmax="100" chance="37500" />
-		<item name="gold coin" countmax="27" chance="37500" />
 		<item name="strong health potion" countmax="2" chance="24480" />
 		<item name="strong mana potion" countmax="2" chance="16900" />
 		<item name="blazing bone" chance="12410" />

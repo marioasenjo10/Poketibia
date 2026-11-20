@@ -73,8 +73,6 @@
 		<voice sentence="What a disgusting smell of life!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="12" chance="80000" />
 		<item name="stealth ring" chance="888" />
 		<item name="platinum amulet" chance="1666" />
 		<item id="2175" chance="10000" />

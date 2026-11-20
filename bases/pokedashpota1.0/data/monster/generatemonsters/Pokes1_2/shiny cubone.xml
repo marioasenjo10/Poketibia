@@ -68,7 +68,6 @@
 	</voices>
 	<loot>
 		<item name="earth stone" countmax="1" chance="75"/>
-		<item name="gold coin" countmax="30" chance="40000"/>
 		<item name="sandbag" countmax="2" chance="40000"/>
 		<item name="sandbag" countmax="1" chance="5000"/>
 		<item name="bone" countmax="1" chance="5000"/>

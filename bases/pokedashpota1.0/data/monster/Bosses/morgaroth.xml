@@ -94,7 +94,6 @@
 		<item name="small emerald" countmax="6" chance="20000" />
 		<item name="small amethyst" countmax="18" chance="33333" />
 		<item name="talon" countmax="7" chance="16666" />
-		<item name="platinum coin" countmax="74" chance="50000" />
 		<item name="green gem" chance="33333" />
 		<item name="blue gem" chance="11111" />
 		<item name="might ring" chance="20000" />

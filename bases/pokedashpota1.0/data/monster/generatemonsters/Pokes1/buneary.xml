@@ -68,7 +68,6 @@
 		<voice sentence="BUNEARY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="40000"/>
 		<item name="comb" countmax="1" chance="40000"/>
 
 	</loot>

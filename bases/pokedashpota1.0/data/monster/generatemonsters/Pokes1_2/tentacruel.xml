@@ -69,7 +69,6 @@
 	</voices>
 	<loot>
 		<item name="water stone" countmax="1" chance="225"/>
-		<item name="gold coin" countmax="90" chance="40000"/>
 		<item name="bottle of poison" countmax="2" chance="40000"/>
 		<item name="ruby" countmax="1" chance="5000"/>
 		<item name="water gem" countmax="2" chance="40000"/>

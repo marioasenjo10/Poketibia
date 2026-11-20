@@ -54,7 +54,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="40" chance="60000" />
 		<item name="corncob" chance="890" />
 		<item name="dark mushroom" chance="7692" />
 		<item name="sling herb" countmax="2" chance="446" />

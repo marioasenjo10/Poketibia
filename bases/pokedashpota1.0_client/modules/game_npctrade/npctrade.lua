@@ -34,6 +34,8 @@ sellAllButton = nil
 
 playerFreeCapacity = 0
 playerMoney = 0
+bankBalance = nil -- dinero del banco (el servidor lo manda por opcode); no hay monedas
+local OPCODE_BANK = 64
 tradeItems = {}
 playerItems = {}
 selectedItem = nil
@@ -86,6 +88,7 @@ function init()
 
   connect(LocalPlayer, { onFreeCapacityChange = onFreeCapacityChange,
                          onInventoryChange = onInventoryChange } )
+  ProtocolGame.registerExtendedOpcode(OPCODE_BANK, onBankOpcode)
 
   initialized = true
 end
@@ -101,6 +104,17 @@ function terminate()
 
   disconnect(LocalPlayer, { onFreeCapacityChange = onFreeCapacityChange,
                             onInventoryChange = onInventoryChange } )
+  ProtocolGame.unregisterExtendedOpcode(OPCODE_BANK)
+end
+
+function onBankOpcode(protocol, opcode, buffer)
+  bankBalance = tonumber(buffer)
+  if bankBalance then
+    playerMoney = bankBalance
+    if npcWindow:isVisible() then
+      refreshPlayerGoods()
+    end
+  end
 end
 
 function show()
@@ -428,7 +442,7 @@ function onCloseNpcTrade()
 end
 
 function onPlayerGoods(money, items)
-  playerMoney = money
+  playerMoney = bankBalance or money
 
   playerItems = {}
   for key,item in pairs(items) do

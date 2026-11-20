@@ -33,7 +33,6 @@
 	</attacks>
 	<defenses armor="10" defense="15" />
 	<loot>
-		<item name="gold coin" countmax="47" chance="100000" />
 		<item name="worm" countmax="45" chance="20000" />
 		<item name="gland" chance="3333" />
 	</loot>

@@ -67,7 +67,6 @@
 		<voice sentence="HEATRAN!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="195" chance="40000"/>
 
 	</loot>
 </monster>

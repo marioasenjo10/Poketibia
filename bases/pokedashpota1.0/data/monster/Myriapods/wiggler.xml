@@ -60,8 +60,6 @@
 		<voice sentence="Crick! Crick!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="platinum coin" chance="14790" />
 		<item name="terra rod" chance="850" />
 		<item name="serpent sword" chance="1360" />
 		<item name="black shield" chance="1320" />

@@ -44,7 +44,6 @@
 		<voice sentence="Don't mess with us!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="50110" />
 		<item name="club ring" chance="740" />
 		<item name="spear" chance="8700" />
 		<item name="studded legs" chance="5220" />

@@ -66,7 +66,6 @@
 		<voice sentence="STUNKY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="20" chance="40000"/>
 		<item name="bottle of poison" countmax="1" chance="50000"/>
 		<item name="dark gem" countmax="1" chance="50000"/>
 

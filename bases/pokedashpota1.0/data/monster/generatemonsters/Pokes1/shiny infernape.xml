@@ -71,7 +71,6 @@
 		<voice sentence="SHINY INFERNAPE!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="essence of fire" countmax="5" chance="40000"/>
 		<item name="pot of lava" countmax="2" chance="50000"/>
 		<item name="kick machine" countmax="2" chance="50000"/>

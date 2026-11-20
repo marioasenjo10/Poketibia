@@ -65,8 +65,6 @@
 		<voice sentence="Hussssssh!!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="platinum coin" countmax="8" chance="100000" />
 		<item name="stealth ring" chance="1200" />
 		<item name="boots of haste" chance="360" />
 		<item name="dark shield" chance="2000" />

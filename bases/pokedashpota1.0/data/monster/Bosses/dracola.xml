@@ -69,7 +69,6 @@
 		<voice sentence="DEATH CAN'T STOP MY HUNGER!" yell="1" />
 	</voices>
 	<loot>
-		<item name="platinum coin" countmax="8" chance="20000" />
 		<item name="demonic essence" countmax="4" chance="1000" />
 		<item name="Dracola's eye" chance="100000" />
 	</loot>

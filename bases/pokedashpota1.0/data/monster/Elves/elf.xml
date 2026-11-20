@@ -51,7 +51,6 @@
 		<voice sentence="Death to the defilers!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="44000" />
 		<item name="longsword" chance="10800" />
 		<item name="studded helmet" chance="13500" />
 		<item name="studded armor" chance="8960" />

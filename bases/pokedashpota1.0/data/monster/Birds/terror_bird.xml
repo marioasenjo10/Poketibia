@@ -46,8 +46,6 @@
 		<voice sentence="Carrah Carrah!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="81500" />
-		<item name="gold coin" countmax="3" chance="48000" />
 		<item name="feather headdress" chance="630" />
 		<item name="feather headdress" chance="150" />
 		<item name="feather headdress" chance="260" />

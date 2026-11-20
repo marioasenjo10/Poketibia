@@ -73,7 +73,6 @@
 		<voice sentence="SHINY GALLADE!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="67" chance="40000"/>
 		<item name="future orb" countmax="1" chance="50000"/>
 		<item name="kick machine" countmax="1" chance="70000"/>
 

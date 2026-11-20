@@ -51,7 +51,6 @@
 	<loot>
 		<item name="small blue pillow" chance="420" />
 		<item id="2072" chance="360" /><!-- lute -->
-		<item name="gold coin" countmax="9" chance="99000" />
 		<item name="dwarven ring" chance="120" />
 		<item name="dirty cape" chance="55000" />
 		<item name="wooden hammer" chance="6500" />

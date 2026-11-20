@@ -59,7 +59,6 @@
 		<voice sentence="Boohaa!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="87500" />
 		<item name="small amethyst" chance="2860" />
 		<item name="longsword" chance="7761" />
 		<item name="brass armor" chance="5000" />

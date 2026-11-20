@@ -57,9 +57,6 @@
 	</immunities>
 	<loot>
 		<item name="small ruby" countmax="2" chance="6100" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="100" chance="25000" />
-		<item name="gold coin" countmax="12" chance="25000" />
 		<item name="bronze amulet" countmax="1" chance="15000" />
 		<item name="wand of inferno" chance="2240" />
 		<item name="fire sword" chance="530" />

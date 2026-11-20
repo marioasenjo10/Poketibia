@@ -68,8 +68,6 @@
 		<voice sentence="I will study your corpse!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="65" chance="30000" />
-		<item name="gold coin" countmax="50" chance="30000" />
 		<item id="2162" chance="2000" /><!-- magic lightwand -->
 		<item name="life crystal" chance="2000" />
 		<item name="soulfire rune" chance="6000" />

@@ -59,7 +59,6 @@
 		<voice sentence="Httt.... hmnnsss..." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="65" chance="82000" />
 		<item name="half-eaten brain" countmax="3" chance="30000" />
 	</loot>
 </monster>

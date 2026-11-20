@@ -69,7 +69,6 @@
 	</voices>
 	<loot>
 		<item name="heart stone" countmax="1" chance="55"/>
-		<item name="gold coin" countmax="22" chance="40000"/>
 		<item name="feather" countmax="1" chance="5000"/>
 		<item name="straw" countmax="2" chance="40000"/>
 

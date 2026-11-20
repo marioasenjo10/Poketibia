@@ -69,12 +69,8 @@
 	<loot>
 		<item name="small diamond" countmax="2" chance="2439" />
 		<item name="small ruby" countmax="2" chance="3000" />
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="72" chance="100000" />
 		<item name="small emerald" countmax="3" chance="5366" />
 		<item name="talon" chance="5710" />
-		<item name="platinum coin" countmax="6" chance="95000" />
 		<item name="yellow gem" chance="1219" />
 		<item name="green gem" chance="613" />
 		<item name="red gem" chance="1538" />

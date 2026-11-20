@@ -71,8 +71,6 @@
 	</immunities>
 	<loot>
 		<item name="small stone" countmax="10" chance="10000" />
-		<item name="gold coin" countmax="100" chance="43000" />
-		<item name="gold coin" countmax="30" chance="50000" />
 		<item name="blank rune" chance="10000" />
 		<item name="strong mana potion" chance="1910" />
 		<item name="earth arrow" countmax="30" chance="20160" />

@@ -82,10 +82,6 @@
 	<loot>
 		<item id="2120" countmax="3" chance="8000" /><!-- small amethyst -->
 		<item id="2124" chance="410" /><!-- crystal ring-->
-		<item name="gold coin" countmax="100" chance="30000" />
-		<item name="gold coin" countmax="100" chance="30000" />
-		<item name="gold coin" countmax="69" chance="38000" />
-		<item name="platinum coin" countmax="4" chance="2800" />
 		<item name="terra rod" chance="20000" />
 		<item name="golden legs" chance="130" />
 		<item name="steel boots" chance="790" />

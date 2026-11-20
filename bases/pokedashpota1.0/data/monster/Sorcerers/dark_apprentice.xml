@@ -66,7 +66,6 @@
 		<voice sentence="I must dispose of my masters enemies!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="45" chance="7500" />
 		<item name="wand of decay" chance="110" />
 		<item name="wand of dragonbreath" chance="1980" />
 		<item name="blank rune" countmax="3" chance="8125" />

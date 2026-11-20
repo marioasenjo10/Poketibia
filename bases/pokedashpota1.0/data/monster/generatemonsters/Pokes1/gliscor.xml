@@ -71,7 +71,6 @@
 		<voice sentence="GLISCOR!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="75" chance="40000"/>
 		<item name="sandbag" countmax="1" chance="40000"/>
 		<item name="feather" countmax="1" chance="40000"/>
 

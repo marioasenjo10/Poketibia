@@ -50,7 +50,6 @@
 		<voice sentence="The X marks the spot!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="38" chance="54260" />
 		<item name="axe" chance="2500" />
 		<item name="mace" chance="1700" />
 		<item name="iron helmet" chance="500" />

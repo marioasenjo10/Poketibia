@@ -75,7 +75,6 @@
 		<voice sentence="BASTIODON!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="small stone" countmax="2" chance="40000"/>
 		<item name="sandbag" countmax="1" chance="50000"/>
 		<item name="piece of steel" countmax="2" chance="40000"/>

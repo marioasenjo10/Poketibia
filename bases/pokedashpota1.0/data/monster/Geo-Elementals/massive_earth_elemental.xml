@@ -71,9 +71,6 @@
 	</immunities>
 	<loot>
 		<item name="small stone" countmax="10" chance="25280" />
-		<item name="gold coin" countmax="100" chance="32000" />
-		<item name="gold coin" countmax="100" chance="32000" />
-		<item name="gold coin" countmax="41" chance="32000" />
 		<item name="stone skin amulet" chance="980" />
 		<item name="protection amulet" chance="1580" />
 		<item name="dwarven ring" chance="2790" />

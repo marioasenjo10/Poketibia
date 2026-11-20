@@ -65,9 +65,6 @@
 	<loot>
 		<item name="ring of the sky" chance="1830" />
 		<item name="small sapphire" countmax="5" chance="1830" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="69" chance="47000" />
-		<item name="platinum coin" countmax="8" chance="77400" />
 		<item name="stealth ring" chance="4880" />
 		<item name="mind stone" chance="9760" />
 		<item name="boots of haste" chance="610" />

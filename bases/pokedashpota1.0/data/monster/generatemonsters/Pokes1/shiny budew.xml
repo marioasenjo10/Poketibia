@@ -62,7 +62,6 @@
 		<voice sentence="SHINY BUDEW!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="40000"/>
 		<item name="bottle of poison" countmax="1" chance="40000"/>
 		<item name="seed" countmax="2" chance="20000"/>
 		<item name="leaves" countmax="2" chance="30000"/>

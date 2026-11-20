@@ -44,7 +44,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="90" chance="100000" />
 		<item name="small emerald" chance="2880" />
 		<item name="epee" chance="560" />
 		<item name="health potion" chance="5090" />

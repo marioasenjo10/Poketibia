@@ -73,7 +73,6 @@
 		<voice sentence="SHINY GARCHOMP!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="90" chance="40000"/>
 		<item name="dragon tooth" countmax="3" chance="50000"/>
 		<item name="sandbag" countmax="1" chance="40000"/>
 

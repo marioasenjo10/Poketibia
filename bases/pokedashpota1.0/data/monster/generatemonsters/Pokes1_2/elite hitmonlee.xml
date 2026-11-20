@@ -67,7 +67,6 @@
 	</voices>
 	<loot>
 		<item name="punch stone" countmax="1" chance="450"/>
-		<item name="gold coin" countmax="180" chance="40000"/>
 		<item name="kick machine" countmax="1" chance="5000"/>
 
 	</loot>

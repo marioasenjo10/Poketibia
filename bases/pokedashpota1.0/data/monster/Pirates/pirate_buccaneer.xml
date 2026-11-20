@@ -55,7 +55,6 @@
 	</voices>
 	<loot>
 		<item id="2050" chance="10190" /><!-- torch -->
-		<item name="gold coin" countmax="59" chance="67740" />
 		<item name="worn leather boots" chance="9900" />
 		<item name="sabre" chance="10100" />
 		<item name="throwing knife" countmax="5" chance="9000" />

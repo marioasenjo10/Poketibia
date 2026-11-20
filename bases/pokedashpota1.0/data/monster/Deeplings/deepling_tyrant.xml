@@ -55,9 +55,6 @@
 		<voice sentence="QJELL NETA NA!!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="97" chance="100000" />
-		<item name="gold coin" countmax="97" chance="100000" />
-		<item name="platinum coin" countmax="4" chance="70000" />
 		<item name="great mana potion" countmax="3" chance="32640" />
 		<item name="great health potion" countmax="3" chance="33430" />
 		<item name="eye of a deepling" chance="28850" />

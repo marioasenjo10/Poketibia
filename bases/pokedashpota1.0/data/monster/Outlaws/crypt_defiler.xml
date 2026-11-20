@@ -52,7 +52,6 @@
 		<voice sentence="I don't like competition" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="39" chance="50900" />
 		<item name="axe" chance="2730" />
 		<item name="mace" chance="1800" />
 		<item name="iron helmet" chance="450" />

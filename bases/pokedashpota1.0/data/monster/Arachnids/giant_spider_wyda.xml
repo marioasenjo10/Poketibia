@@ -37,6 +37,5 @@
 		<element firePercent="-10" />
 	</elements>
 	<loot>
-		<item name="gold coin" countmax="5" chance="100000" />
 	</loot>
 </monster>

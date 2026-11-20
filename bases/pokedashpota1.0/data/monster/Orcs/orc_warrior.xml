@@ -45,7 +45,6 @@
 		<voice sentence="Alk!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="65000" />
 		<item name="poison dagger" chance="120" />
 		<item name="chain armor" chance="7360" />
 		<item name="copper shield" chance="560" />

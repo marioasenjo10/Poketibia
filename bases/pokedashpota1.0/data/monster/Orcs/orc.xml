@@ -45,7 +45,6 @@
 		<voice sentence="Prek tars, dekklep zurk." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="14" chance="84810" />
 		<item name="sabre" chance="5850" />
 		<item name="axe" chance="4960" />
 		<item name="studded helmet" chance="2950" />

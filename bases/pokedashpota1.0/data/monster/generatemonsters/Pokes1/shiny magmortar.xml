@@ -77,7 +77,6 @@
 		<voice sentence="SHINY MAGMORTAR!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="85" chance="40000"/>
 		<item name="essence of fire" countmax="2" chance="50000"/>
 		<item name="pot of lava" countmax="2" chance="50000"/>
 

@@ -71,7 +71,6 @@
 		<voice sentence="VESPIQUEN!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="45" chance="40000"/>
 		<item name="pot of moss bug" countmax="2" chance="50000"/>
 		<item name="pot of moss bug" countmax="2" chance="50000"/>
 

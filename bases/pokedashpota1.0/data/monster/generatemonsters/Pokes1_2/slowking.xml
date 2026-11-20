@@ -71,7 +71,6 @@
 	</voices>
 	<loot>
 		<item name="water stone" countmax="1" chance="350"/>
-		<item name="gold coin" countmax="140" chance="40000"/>
 		<item name="king's rock stone" countmax="none" chance="100"/>
 
 	</loot>

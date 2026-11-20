@@ -80,7 +80,6 @@
 	</voices>
 	<loot>
 		<item name="ice stone" countmax="1" chance="475"/>
-		<item name="gold coin" countmax="190" chance="40000"/>
 		<item name="articuno feather" countmax="1" chance="50"/>
 
 	</loot>

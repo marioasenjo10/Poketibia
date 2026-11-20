@@ -51,7 +51,6 @@
 		<voice sentence="Ribbit!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="21" chance="75000" />
 		<item name="two handed sword" chance="500" />
 		<item name="mace" chance="2000" />
 		<item id="2667" chance="22000" /><!-- fish -->

@@ -62,7 +62,6 @@
 		<voice sentence="When I'm finished with you, you'll be a shadow of your former self." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="64" chance="100000" />
 		<item name="boots of haste" chance="60" />
 		<item name="clerical mace" chance="290" />
 		<item name="mystic turban" chance="580" />

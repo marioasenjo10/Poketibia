@@ -50,6 +50,5 @@
 		<voice sentence="I bet it was you who killed my mom!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
 	</loot>
 </monster>

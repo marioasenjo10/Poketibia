@@ -64,8 +64,6 @@
 	</voices>
 	<loot>
 		<item name="small diamond" chance="380" />
-		<item name="gold coin" countmax="70" chance="47500" />
-		<item name="gold coin" countmax="45" chance="37500" />
 		<item name="life crystal" chance="120" />
 		<item name="wand of inferno" chance="1005" />
 		<item name="double axe" chance="960" />

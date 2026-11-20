@@ -58,7 +58,6 @@
 		<voice sentence="Chrr." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="87" chance="99700" />
 		<item name="shard" chance="40000" />
 		<item id="7441" chance="80000" /><!-- ice cube -->
 		<item name="crystal sword" chance="30000" />

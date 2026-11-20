@@ -70,8 +70,6 @@
 		<item id="1963" chance="2350" /><!-- blue book -->
 		<item name="small oil lamp" chance="690" />
 		<item name="small sapphire" countmax="4" chance="2560" />
-		<item name="gold coin" countmax="70" chance="60000" />
-		<item name="gold coin" countmax="45" chance="70000" />
 		<item name="mystic turban" chance="70" />
 		<item id="2684" chance="23480" /><!-- carrot -->
 		<item name="blue rose" chance="440" />

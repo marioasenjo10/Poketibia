@@ -54,8 +54,6 @@
 	</voices>
 	<loot>
 		<item name="small ruby" chance="3440" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="43" chance="49000" />
 		<item name="life crystal" chance="1000" />
 		<item name="halberd" chance="1840" />
 		<item name="plate armor" chance="4170" />

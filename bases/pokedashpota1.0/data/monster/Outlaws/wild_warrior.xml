@@ -48,7 +48,6 @@
 	</voices>
 	<loot>
 		<item id="2110" chance="520" /><!-- doll -->
-		<item name="gold coin" countmax="30" chance="49070" />
 		<item name="axe" chance="30710" />
 		<item name="war hammer" chance="100" />
 		<item name="mace" chance="9800" />

@@ -66,9 +66,6 @@
 		<voice sentence="I'm taking you down with me!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="60000" />
-		<item name="gold coin" countmax="100" chance="60000" />
-		<item name="gold coin" countmax="36" chance="60000" />
 		<item name="morning star" chance="10000" />
 		<item name="broadsword" chance="10000" />
 		<item name="warrior helmet" chance="1886" />

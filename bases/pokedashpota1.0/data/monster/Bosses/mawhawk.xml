@@ -54,8 +54,6 @@
 		<voice sentence="Knorrrr!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="10000" />
-		<item name="platinum coin" countmax="25" chance="10000" />
 		<item name="fire sword" chance="10000" />
 		<item name="iron ore" chance="10000" />
 		<item name="fish fin" chance="10000" />

@@ -42,7 +42,6 @@
 		<voice sentence="Hand me your purse!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="49000" />
 		<item name="axe" chance="29900" />
 		<item name="mace" chance="10100" />
 		<item name="chain helmet" chance="5000" />

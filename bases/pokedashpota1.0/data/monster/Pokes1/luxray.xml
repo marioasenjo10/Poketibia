@@ -67,7 +67,6 @@
 		<voice sentence="LUXRAY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="60" chance="40000"/>
 		<item name="screw" countmax="2" chance="40000"/>
 		<item name="electric box" countmax="2" chance="60000"/>
 		<item name="screw" countmax="1" chance="70000"/>

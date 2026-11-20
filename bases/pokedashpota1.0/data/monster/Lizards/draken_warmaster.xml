@@ -59,9 +59,6 @@
 	<loot>
 		<item name="ring of the sky" chance="180" />
 		<item name="small ruby" countmax="5" chance="1525" />
-		<item name="gold coin" countmax="100" chance="47000" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="platinum coin" countmax="5" chance="50625" />
 		<item name="tower shield" chance="2035" />
 		<item name="meat" chance="30300" />
 		<item name="great health potion" countmax="3" chance="4850" />

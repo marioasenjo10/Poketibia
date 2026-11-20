@@ -55,6 +55,5 @@
 		<voice sentence="Show me how good you are without some rolled newspaper!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="75" chance="50000" />
 	</loot>
 </monster>

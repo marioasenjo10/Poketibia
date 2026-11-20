@@ -78,7 +78,6 @@
 	</voices>
 	<loot>
 		<item id="2050" chance="15000" /><!-- torch -->
-		<item name="gold coin" countmax="79" chance="100000" />
 		<item name="small amethyst" countmax="1" chance="8888" />
 		<item name="stealth ring" chance="4555" />
 		<item name="necrotic rod" chance="833" />

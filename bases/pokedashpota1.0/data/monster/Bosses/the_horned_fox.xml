@@ -61,7 +61,6 @@
 		<voice sentence="Help me, boys!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="100000" />
 		<item name="wand of cosmic energy" chance="1333" />
 		<item name="sword ring" chance="2000" />
 		<item name="dagger" chance="6666" />

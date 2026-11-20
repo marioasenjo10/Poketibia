@@ -48,7 +48,6 @@
 		<summon name="Orc Berserker" interval="2000" chance="30" max="3" />
 	</summons>
 	<loot>
-		<item name="gold coin" chance="50000" countmax="59" />
 		<item name="gold ring" chance="5506" />
 		<item name="protection amulet" chance="9000" />
 		<item name="two handed sword" chance="18180" />

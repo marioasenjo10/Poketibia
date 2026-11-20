@@ -74,7 +74,6 @@
 	</voices>
 	<loot>
 		<item name="thunder stone" countmax="5" chance="475"/>
-		<item name="gold coin" countmax="190" chance="40000"/>
 		<item name="zapdos feather" countmax="1" chance="50"/>
 
 	</loot>

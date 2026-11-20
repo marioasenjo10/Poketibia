@@ -64,7 +64,6 @@
 		<voice sentence="SHINY BIDOOF!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="40000"/>
 		<item name="bitten apple" countmax="1" chance="40000"/>
 
 	</loot>

@@ -65,7 +65,6 @@
 		<item name="piggy bank" chance="80" />
 		<item id="2120" chance="2190" /><!-- rope -->
 		<item name="wedding ring" chance="4910" />
-		<item name="gold coin" countmax="100" chance="59500" />
 		<item name="might ring" chance="470" />
 		<item name="two handed sword" chance="1500" />
 		<item name="war hammer" chance="870" />

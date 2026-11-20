@@ -74,7 +74,6 @@
 		<item name="silver brooch" chance="1250" />
 		<item name="white pearl" chance="1010" />
 		<item name="black pearl" chance="2030" />
-		<item name="gold coin" countmax="80" chance="30000" />
 		<item name="silver amulet" chance="8700" />
 		<item id="2175" chance="520" /><!-- spellbook -->
 		<item name="life crystal" chance="70" />

@@ -43,7 +43,6 @@
 		<immunity paralyze="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="15" chance="63000" />
 		<item name="meat" chance="14666" />
 	</loot>
 </monster>

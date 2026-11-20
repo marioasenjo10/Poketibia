@@ -62,7 +62,6 @@
 	</voices>
 	<loot>
 		<item id="1951" chance="910" /><!-- parchment -->
-		<item name="gold coin" countmax="67" chance="48000" />
 		<item name="stealth ring" chance="650" />
 		<item name="spike sword" chance="130" />
 		<item name="red robe" chance="130" />

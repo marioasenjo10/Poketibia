@@ -83,7 +83,6 @@
 	<loot>
 		<item name="water stone" countmax="1" chance="450"/>
 		<item name="ice stone" countmax="1" chance="450"/>
-		<item name="platinum coin" countmax="2" chance="40000"/>
 
 	</loot>
 </monster>

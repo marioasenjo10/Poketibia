@@ -60,8 +60,6 @@
 		<voice sentence="Remain. Obedient." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="44000" />
-		<item name="gold coin" countmax="79" chance="50000" />
 		<item name="yellow gem" chance="550" />
 		<item name="might ring" chance="940" />
 		<item name="life crystal" chance="9150" />

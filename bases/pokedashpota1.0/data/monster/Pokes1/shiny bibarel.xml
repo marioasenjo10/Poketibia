@@ -65,7 +65,6 @@
 		<voice sentence="SHINY BIBAREL!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="40" chance="40000"/>
 		<item name="bitten apple" countmax="2" chance="40000"/>
 		<item name="water gem" countmax="2" chance="30000"/>
 

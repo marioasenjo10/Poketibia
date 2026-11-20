@@ -68,8 +68,6 @@
 	</voices>
 	<loot>
 		<item name="silver brooch" chance="12500" />
-		<item name="gold coin" countmax="243" chance="50000" />
-		<item name="platinum coin" countmax="5" chance="33333" />
 		<item name="scarab coin" countmax="5" chance="14285" />
 		<item name="pharaoh sword" chance="5000" />
 		<item name="twin axe" chance="2500" />

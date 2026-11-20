@@ -66,8 +66,6 @@
 		<voice sentence="You are not worzzy to touch zzizz zzacred ground!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="69825" />
-		<item name="gold coin" countmax="10" chance="69825" />
 		<item name="small emerald" chance="5750" />
 		<item name="green gem" chance="16300" />
 		<item id="2169" chance="11025" /><!-- time ring -->

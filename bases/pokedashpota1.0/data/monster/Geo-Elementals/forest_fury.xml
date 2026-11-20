@@ -48,7 +48,6 @@
 		<voice sentence="By the power of Greenskull!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="53" chance="87250" />
 		<item name="crossbow" chance="2750" />
 		<item name="bolt" countmax="15" chance="48270" />
 		<item name="meat" chance="24930" />

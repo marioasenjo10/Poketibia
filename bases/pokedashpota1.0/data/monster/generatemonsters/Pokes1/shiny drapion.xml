@@ -73,7 +73,6 @@
 		<voice sentence="SHINY DRAPION!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="57" chance="40000"/>
 		<item name="bottle of poison" countmax="2" chance="50000"/>
 		<item name="dark gem" countmax="2" chance="50000"/>
 

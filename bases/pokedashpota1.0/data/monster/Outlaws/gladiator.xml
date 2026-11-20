@@ -49,7 +49,6 @@
 		<voice sentence="Take this!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="49500" />
 		<item id="2376" chance="12620" /><!-- sword -->
 		<item name="mace" chance="11160" />
 		<item name="chain helmet" chance="5200" />

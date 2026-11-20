@@ -64,7 +64,6 @@
 		<voice sentence="SHINY STARLY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="40000"/>
 		<item name="feather" countmax="1" chance="40000"/>
 		<item name="bird beak" countmax="2" chance="30000"/>
 

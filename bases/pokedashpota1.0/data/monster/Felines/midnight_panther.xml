@@ -57,7 +57,6 @@
 		<immunity energy="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="57" chance="100000" />
 		<item name="life ring" chance="12500" />
 		<item name="meat" countmax="4" chance="25000" />
 		<item name="panther head" chance="12500" />

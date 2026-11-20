@@ -46,7 +46,6 @@
 		<voice sentence="Crrrrk! Chhhhr!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
 		<item name="crystal sword" chance="4710" />
 		<item name="glorious axe" chance="360" />
 		<item name="strong health potion" chance="7140" />

@@ -69,7 +69,6 @@
 		<voice sentence="SHINY GLACEON!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="60" chance="40000"/>
 		<item name="snowball" countmax="2" chance="40000"/>
 		<item name="ice orb" countmax="2" chance="40000"/>
 

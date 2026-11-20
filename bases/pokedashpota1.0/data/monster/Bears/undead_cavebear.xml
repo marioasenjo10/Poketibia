@@ -43,7 +43,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="80" chance="9750" />
 		<item name="maxilla maximus" chance="900" />
 		<item name="maxilla" chance="2350" />
 		<item name="cavebear skull" chance="3150" />

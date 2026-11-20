@@ -66,7 +66,6 @@
 	</voices>
 	<loot>
 		<item name="leaf stone" countmax="1" chance="50"/>
-		<item name="gold coin" countmax="20" chance="40000"/>
 		<item name="bag of pollem" countmax="1" chance="5000"/>
 		<item name="bottle of poison" countmax="2" chance="40000"/>
 		<item name="leaves" countmax="1" chance="5000"/>

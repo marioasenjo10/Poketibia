@@ -83,9 +83,6 @@
 		<voice sentence="I will make you believe in magic." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="90" chance="50000" />
-		<item name="gold coin" countmax="80" chance="50000" />
-		<item name="gold coin" countmax="60" chance="50000" />
 		<item name="small amethyst" countmax="3" chance="7000" />
 		<item name="violet gem" chance="500" />
 		<item name="orb" chance="500" />

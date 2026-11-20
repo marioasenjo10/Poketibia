@@ -51,7 +51,6 @@
 		<voice sentence="Grrrrrr" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="90" chance="55000" />
 		<item name="obsidian lance" chance="1110" />
 		<item name="orcish axe" chance="1320" />
 		<item name="crossbow" chance="440" />

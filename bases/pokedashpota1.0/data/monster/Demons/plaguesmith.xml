@@ -70,11 +70,7 @@
 	<loot>
 		<item name="emerald bangle" chance="341" />
 		<item name="silver brooch" chance="2000" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="100" chance="40000" />
-		<item name="gold coin" countmax="65" chance="50000" />
 		<item name="small amethyst" countmax="3" chance="5000" />
-		<item name="platinum coin" countmax="2" chance="7142" />
 		<item name="axe ring" chance="4347" />
 		<item name="club ring" chance="4761" />
 		<item name="piece of iron" chance="20000" />

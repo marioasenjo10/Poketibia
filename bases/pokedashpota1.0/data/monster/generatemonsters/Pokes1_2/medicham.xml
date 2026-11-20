@@ -71,7 +71,6 @@
 	</voices>
 	<loot>
 		<item name="punch stone" countmax="1" chance="138"/>
-		<item name="gold coin" countmax="55" chance="40000"/>
 
 	</loot>
 </monster>

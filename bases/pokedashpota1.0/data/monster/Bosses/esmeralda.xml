@@ -61,9 +61,6 @@
 		<voice sentence="Fcccccchhhhhh" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="58775" />
-		<item name="gold coin" countmax="19" chance="58775" />
-		<item name="platinum coin" countmax="4" chance="68125" />
 		<item name="ring of healing" chance="100000" />
 		<item name="halberd" chance="30050" />
 		<item name="epee" chance="14150" />

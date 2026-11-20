@@ -58,9 +58,6 @@
 		<item name="emerald bangle" chance="2200" />
 		<item id="2136" chance="190" /><!-- demonbone amulet -->
 		<item name="small diamond" chance="1400" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="100" chance="40000" />
-		<item name="gold coin" countmax="46" chance="10000" />
 		<item name="bronze amulet" chance="1000" />
 		<item name="wand of inferno" chance="9450" />
 		<item name="burnt scroll" chance="50000" />

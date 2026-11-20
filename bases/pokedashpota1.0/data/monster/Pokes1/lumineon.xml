@@ -71,7 +71,6 @@
 		<voice sentence="LUMINEON!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="45" chance="40000"/>
 		<item name="water gem" countmax="1" chance="50000"/>
 		<item name="water pendant" countmax="1" chance="40000"/>
 

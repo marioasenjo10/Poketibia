@@ -73,7 +73,6 @@
 		<item id="2032" chance="4000" /><!-- bowl -->
 		<item name="oil lamp" chance="2857" />
 		<item name="crystal necklace" chance="1818" />
-		<item name="gold coin" countmax="20" chance="100000" />
 		<item name="yellow gem" chance="1333" />
 		<item name="life crystal" chance="2857" />
 		<item name="blank rune" chance="4000" />

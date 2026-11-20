@@ -1,19 +1,11 @@
-local config = {
-	[ITEM_GOLD_COIN] = {changeTo = ITEM_PLATINUM_COIN},
-	[ITEM_PLATINUM_COIN] = {changeBack = ITEM_GOLD_COIN, changeTo = ITEM_CRYSTAL_COIN},
-	[ITEM_CRYSTAL_COIN] = {changeBack = ITEM_PLATINUM_COIN}
-}
-
+-- usar una moneda la ingresa en el banco (ya no hay monedas en el juego)
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	local coin = config[item:getId()]
-	if coin.changeTo and item.type == 100 then
-		item:remove()
-		player:addItem(coin.changeTo, 1)
-	elseif coin.changeBack then
-		item:remove(1)
-		player:addItem(coin.changeBack, 100)
-	else
+	local amount = item:getCount() * (COIN_VALUES[item:getId()] or 0)
+	if amount <= 0 then
 		return false
 	end
+	item:remove()
+	player:addMoney(amount)
+	player:sendTextMessage(MESSAGE_INFO_DESCR, "Se han ingresado $" .. amount .. " en tu banco.")
 	return true
 end

@@ -61,8 +61,6 @@
 		<voice sentence="Remain. Obedient." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="40000" />
-		<item name="gold coin" countmax="40" chance="45000" />
 		<item name="stealth ring" chance="450" />
 		<item name="gold ring" chance="10" />
 		<item name="halberd" chance="3003" />

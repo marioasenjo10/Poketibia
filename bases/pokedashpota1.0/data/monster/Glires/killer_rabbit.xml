@@ -48,6 +48,5 @@
 		<voice sentence="Who is lunch NOW?" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="90" chance="50000" />
 	</loot>
 </monster>

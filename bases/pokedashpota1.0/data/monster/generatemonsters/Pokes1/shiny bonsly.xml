@@ -64,7 +64,6 @@
 		<voice sentence="SHINY BONSLY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="20" chance="40000"/>
 		<item name="small stone" countmax="1" chance="40000"/>
 
 	</loot>

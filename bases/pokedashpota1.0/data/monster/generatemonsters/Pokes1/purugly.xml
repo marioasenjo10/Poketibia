@@ -69,7 +69,6 @@
 		<voice sentence="PURUGLY!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="33" chance="40000"/>
 		<item name="comb" countmax="2" chance="40000"/>
 
 	</loot>

@@ -65,8 +65,6 @@
 		<voice sentence="Grrrrunt" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="199" chance="100000" />
-		<item name="platinum coin" countmax="11" chance="100000" />
 		<item name="yellow gem" chance="6480" />
 		<item name="red gem" chance="1180" />
 		<item name="wand of inferno" chance="2950" />

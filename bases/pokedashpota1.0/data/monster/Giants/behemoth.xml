@@ -61,10 +61,7 @@
 	<loot>
 		<item name="amphora" chance="100" />
 		<item name="crystal necklace" chance="2530" />
-		<item name="gold coin" countmax="100" chance="595300" />
-		<item name="gold coin" countmax="99" chance="40000" />
 		<item name="small amethyst" countmax="5" chance="6380" />
-		<item name="platinum coin" countmax="5" chance="59800" />
 		<item name="strange symbol" chance="750" />
 		<item id="2231" chance="670" /><!-- big bone -->
 		<item name="two handed sword" chance="5980" />

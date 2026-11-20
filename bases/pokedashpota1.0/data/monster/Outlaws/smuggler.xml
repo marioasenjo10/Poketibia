@@ -43,7 +43,6 @@
 	</voices>
 	<loot>
 		<item id="2050" countmax="2" chance="30200" /><!-- torch -->
-		<item name="gold coin" countmax="10" chance="80000" />
 		<item id="2376" chance="5000" /><!-- sword -->
 		<item name="knife" chance="9920" />
 		<item name="combat knife" chance="4400" />

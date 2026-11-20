@@ -38,7 +38,6 @@
 		<voice sentence="Mine, all mine!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="10" chance="33333" />
 		<item name="dwarven ring" chance="793" />
 		<item name="axe" chance="14285" />
 		<item name="studded armor" chance="6666" />

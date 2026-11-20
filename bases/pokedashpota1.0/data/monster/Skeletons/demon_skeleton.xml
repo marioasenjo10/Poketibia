@@ -52,7 +52,6 @@
 		<item id="2050" chance="5270" /><!-- torch -->
 		<item name="black pearl" chance="2900" />
 		<item name="small ruby" chance="1400" />
-		<item name="gold coin" countmax="75" chance="97000" />
 		<item name="mind stone" chance="520" />
 		<item name="mysterious fetish" chance="690" />
 		<item name="throwing star" countmax="3" chance="10000" />

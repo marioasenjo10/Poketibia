@@ -64,7 +64,6 @@
 		<voice sentence="MUNCHLAX!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="25" chance="40000"/>
 		<item name="ruby" countmax="1" chance="40000"/>
 
 	</loot>

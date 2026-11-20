@@ -74,7 +74,6 @@
 	</voices>
 	<loot>
 		<item name="cocoon stone" countmax="1" chance="80"/>
-		<item name="gold coin" countmax="32" chance="40000"/>
 		<item name="small stone" countmax="2" chance="40000"/>
 		<item name="stone shell" countmax="1" chance="5000"/>
 

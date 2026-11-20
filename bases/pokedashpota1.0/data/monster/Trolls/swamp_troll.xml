@@ -44,7 +44,6 @@
 	</voices>
 	<loot>
 		<item id="2050" chance="15000" /><!-- torch -->
-		<item name="gold coin" countmax="5" chance="50300" />
 		<item name="mouldy cheese" chance="10000" />
 		<item name="spear" chance="13000" />
 		<item name="fishing rod" chance="60" />

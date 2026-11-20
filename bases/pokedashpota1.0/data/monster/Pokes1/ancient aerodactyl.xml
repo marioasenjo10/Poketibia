@@ -82,7 +82,6 @@
 	</voices>
 	<loot>
 		<item name="rock stone" countmax="2" chance="450"/>
-		<item name="platinum coin" countmax="2" chance="40000"/>
 
 	</loot>
 </monster>

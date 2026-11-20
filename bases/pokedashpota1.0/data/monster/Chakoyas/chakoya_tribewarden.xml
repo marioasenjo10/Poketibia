@@ -50,7 +50,6 @@
 		<voice sentence="Si ji jusipa!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="60000" />
 		<item name="short sword" chance="4680" />
 		<item name="bone shield" chance="1000" />
 		<item id="2667" chance="20000" /><!-- fish -->

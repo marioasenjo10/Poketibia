@@ -71,7 +71,6 @@
 		<voice sentence="SHINY PROBOPASS!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="60" chance="40000"/>
 		<item name="small stone" countmax="2" chance="40000"/>
 		<item name="piece of steel" countmax="1" chance="50000"/>
 

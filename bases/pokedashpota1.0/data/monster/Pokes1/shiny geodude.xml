@@ -67,7 +67,6 @@
 	</voices>
 	<loot>
 		<item name="rock stone" countmax="1" chance="63"/>
-		<item name="gold coin" countmax="25" chance="40000"/>
 		<item name="sandbag" countmax="2" chance="40000"/>
 		<item name="small stone" countmax="2" chance="40000"/>
 		<item name="stone orb" countmax="1" chance="5000"/>

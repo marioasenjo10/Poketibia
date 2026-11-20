@@ -76,9 +76,6 @@
 		<voice sentence="Munch munch munch!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="70000" />
-		<item name="gold coin" countmax="97" chance="70000" />
-		<item name="platinum coin" countmax="7" chance="100000" />
 		<item name="war hammer" chance="4010" />
 		<item name="white piece of cloth" chance="6430" />
 		<item name="green piece of cloth" chance="3003" />

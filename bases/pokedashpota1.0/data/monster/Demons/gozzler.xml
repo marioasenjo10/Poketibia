@@ -60,7 +60,6 @@
 	<loot>
 		<item name="brown flask" chance="8750" />
 		<item name="small sapphire" chance="360" />
-		<item name="gold coin" countmax="70" chance="52500" />
 		<item name="dwarven ring" chance="190" />
 		<item name="battle axe" chance="3100" />
 		<item name="sabre" chance="8250" />

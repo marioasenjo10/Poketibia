@@ -85,7 +85,6 @@
 	</voices>
 	<loot>
 		<item name="3047" countmax="50" chance="none"/>
-		<item name="1" countmax="40000" chance="gold_coin"/>
 		<item name="20" countmax="50000" chance="future_orb"/>
 		<item name="1" countmax="none" chance="none"/>
 

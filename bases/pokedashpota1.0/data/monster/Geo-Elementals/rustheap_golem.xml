@@ -47,7 +47,6 @@
 		<voice sentence="Let da mashing begin!" />
 	</voices>
 	<loot>
-		<item id="2148" countmax="47" chance="82000" /><!-- gold coin -->
 		<item id="7618" chance="210" /><!-- health potion -->
 		<item id="2666" chance="30070" /><!-- meat -->
 		<item id="2510" chance="2500" /><!-- plate shield -->

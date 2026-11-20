@@ -68,10 +68,6 @@
 		<voice sentence="I WILL FEAST ON YOUR SOUL!" yell="1" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="33725" />
-		<item name="gold coin" countmax="100" chance="33725" />
-		<item name="gold coin" countmax="66" chance="33725" />
-		<item name="platinum coin" countmax="2" chance="29840" />
 		<item name="soul orb" chance="12170" />
 		<item name="demonic essence" chance="8920" />
 		<item name="great mana potion" countmax="2" chance="30560" />

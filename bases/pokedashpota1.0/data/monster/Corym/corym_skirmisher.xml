@@ -51,7 +51,6 @@
 		<voice sentence="&lt;sniff&gt;&lt;sniff&gt;&lt;sniff&gt;" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="45" chance="50000" />
 		<item id="2696" chance="20000" /><!-- cheese -->
 		<item name="bola" chance="7692" />
 		<item name="spike shield" chance="645" />

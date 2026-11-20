@@ -67,8 +67,6 @@
 		<voice sentence="Slurp!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50750" />
-		<item name="gold coin" countmax="5" chance="50750" />
 		<item name="plate legs" chance="2040" />
 		<item name="great health potion" chance="2000" />
 		<item name="great spirit potion" chance="2008" />

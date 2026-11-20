@@ -73,7 +73,6 @@
 		<voice sentence="SHINY MAGNEZONE!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="80" chance="40000"/>
 		<item name="electric box" countmax="1" chance="50000"/>
 		<item name="piece of steel" countmax="1" chance="40000"/>
 

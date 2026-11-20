@@ -67,7 +67,6 @@
 	</voices>
 	<loot>
 		<item name="heart stone" countmax="1" chance="50"/>
-		<item name="gold coin" countmax="20" chance="40000"/>
 		<item name="nail" countmax="1" chance="5000"/>
 		<item name="luck medallion" countmax="1" chance="5000"/>
 		<item name="wool ball" countmax="1" chance="5000"/>

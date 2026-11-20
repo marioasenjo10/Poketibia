@@ -45,7 +45,6 @@
 		<voice sentence="Hurr!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="25" chance="67500" />
 		<item name="bronze amulet" chance="110" />
 		<item id="2376" chance="5000" /><!-- sword -->
 		<item name="axe" chance="4000" />

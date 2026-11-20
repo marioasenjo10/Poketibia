@@ -43,7 +43,6 @@
 	</voices>
 	<loot>
 		<item id="2120" chance="4700" /><!-- Rope -->
-		<item name="gold coin" countmax="15" chance="60000" />
 		<item name="mace" chance="3780" />
 		<item id="2419" chance="420" /><!-- Scimitar -->
 		<item name="bow" chance="1090" />

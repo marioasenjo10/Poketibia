@@ -73,8 +73,6 @@
 		<voice sentence="kchh" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="platinum coin" countmax="8" chance="100000" />
 		<item name="energy ring" chance="3000" />
 		<item name="life ring" chance="4200" />
 		<item name="ring of healing" chance="3000" />

@@ -66,7 +66,6 @@
 		<voice sentence="CHIMCHAR!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="17" chance="40000"/>
 		<item name="essence of fire" countmax="4" chance="40000"/>
 		<item name="pot of lava" countmax="1" chance="50000"/>
 

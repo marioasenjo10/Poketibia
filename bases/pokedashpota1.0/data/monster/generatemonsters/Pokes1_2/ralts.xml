@@ -62,7 +62,6 @@
 	</voices>
 	<loot>
 		<item name="enigma stone" countmax="1" chance="55"/>
-		<item name="gold coin" countmax="22" chance="40000"/>
 
 	</loot>
 </monster>

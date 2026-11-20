@@ -72,7 +72,6 @@
 		<voice sentence="Freeze!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="88" chance="10000" />
 		<item name="boots of haste" chance="2000" />
 		<item name="dragon necklace" chance="3250" />
 		<item name="skull staff" chance="4500" />

@@ -45,7 +45,6 @@
 	<loot>
 		<item id="2050" chance="10000" /><!-- torch -->
 		<item id="2050" chance="9880" /><!-- torch -->
-		<item name="gold coin" countmax="10" chance="43900" />
 		<item id="2230" chance="49100" /><!-- bone -->
 		<item id="2376" chance="1940" /><!-- sword -->
 		<item name="hatchet" chance="4850" />

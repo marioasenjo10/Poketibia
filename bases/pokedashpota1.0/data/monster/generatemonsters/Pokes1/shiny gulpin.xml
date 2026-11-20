@@ -67,7 +67,6 @@
 	</voices>
 	<loot>
 		<item name="venom stone" countmax="1" chance="65"/>
-		<item name="gold coin" countmax="26" chance="40000"/>
 		<item name="bottle of poison" countmax="5" chance="40000"/>
 		<item name="gosme" countmax="1" chance="10000"/>
 

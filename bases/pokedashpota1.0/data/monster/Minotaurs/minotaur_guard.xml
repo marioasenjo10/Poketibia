@@ -44,7 +44,6 @@
 		<voice sentence="Kaplar!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="20" chance="59640" />
 		<item name="double axe" chance="400" />
 		<item name="chain armor" chance="2980" />
 		<item name="brass armor" chance="4390" />

@@ -90,11 +90,8 @@
 	</voices>
 	<loot>
 		<item name="purple tome" chance="1190" />
-		<item name="gold coin" countmax="100" chance="60000" />
-		<item name="gold coin" countmax="99" chance="60000" />
 		<item name="small emerald" chance="10000" />
 		<item name="talon" chance="3571" />
-		<item name="platinum coin" countmax="6" chance="100000" />
 		<item name="might ring" chance="170" />
 		<item name="stealth ring" chance="1333" />
 		<item name="platinum amulet" chance="813" />

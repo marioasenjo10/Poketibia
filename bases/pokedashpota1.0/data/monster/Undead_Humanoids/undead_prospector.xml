@@ -56,7 +56,6 @@
 	</voices>
 	<loot>
 		<item id="2050" chance="46150" /><!-- torch -->
-		<item name="gold coin" countmax="30" chance="53850" />
 		<item name="life ring" chance="200" />
 		<item id="2229" chance="240" /><!-- skull -->
 		<item name="knife" chance="15380" />

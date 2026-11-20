@@ -49,8 +49,6 @@
 		<voice sentence="Chrrrrr" yell="1" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="43" chance="100000" />
 		<item name="strong mana potion" chance="14285" />
 		<item name="giant crab pincer" chance="5000" />
 	</loot>

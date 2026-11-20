@@ -63,9 +63,6 @@
 		<voice sentence="Creak!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="98" chance="100000" />
-		<item name="platinum coin" countmax="7" chance="95000" />
 		<item id="2169" chance="1000" /><!-- time ring -->
 		<item name="tower shield" chance="620" />
 		<item name="titan axe" chance="1540" />

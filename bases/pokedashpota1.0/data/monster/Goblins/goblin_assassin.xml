@@ -61,7 +61,6 @@
 	</voices>
 	<loot>
 		<item name="small stone" countmax="3" chance="9900" />
-		<item name="gold coin" countmax="9" chance="50000" />
 		<item id="2230" chance="13000" /><!-- bone -->
 		<item name="mouldy cheese" chance="6610" />
 		<item name="dagger" chance="17000" />

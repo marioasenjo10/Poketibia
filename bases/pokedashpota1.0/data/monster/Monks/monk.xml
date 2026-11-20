@@ -57,7 +57,6 @@
 		<item id="1949" chance="2000" /><!-- scroll -->
 		<item name="brown flask" chance="820" />
 		<item id="2044" chance="880" /><!-- lamp -->
-		<item name="gold coin" countmax="18" chance="15000" />
 		<item name="power ring" chance="100" />
 		<item name="life crystal" chance="1002" />
 		<item name="ankh" chance="2240" />

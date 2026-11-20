@@ -70,7 +70,6 @@
 		<voice sentence="CRANIDOS!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="20" chance="40000"/>
 		<item name="sandbag" countmax="1" chance="50000"/>
 		<item name="small stone" countmax="2" chance="50000"/>
 

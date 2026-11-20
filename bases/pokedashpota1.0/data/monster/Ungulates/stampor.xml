@@ -59,8 +59,6 @@
 		<voice sentence="KRRRRRNG" yell="1" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="242" chance="30000" />
-		<item name="platinum coin" countmax="2" chance="9920" />
 		<item name="war hammer" chance="1010" />
 		<item name="knight armor" chance="870" />
 		<item name="spiked squelcher" chance="160" />

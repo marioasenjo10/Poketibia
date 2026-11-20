@@ -60,8 +60,6 @@
 		<item name="piggy bank" chance="210" />
 		<item id="2120" chance="16020" /><!-- rope -->
 		<item name="ruby necklace" chance="740" />
-		<item name="gold coin" countmax="80" chance="23000" />
-		<item name="gold coin" countmax="56" chance="23000" />
 		<item name="boots of haste" chance="320" />
 		<item name="two handed sword" chance="8470" />
 		<item name="halberd" chance="11850" />

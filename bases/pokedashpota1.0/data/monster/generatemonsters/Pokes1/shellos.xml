@@ -66,7 +66,6 @@
 		<voice sentence="SHELLOS!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="40000"/>
 		<item name="water gem" countmax="1" chance="40000"/>
 		<item name="water pendant" countmax="1" chance="40000"/>
 

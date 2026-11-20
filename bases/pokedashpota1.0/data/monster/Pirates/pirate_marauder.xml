@@ -53,7 +53,6 @@
 	</voices>
 	<loot>
 		<item id="2050" chance="9880" /><!-- torch -->
-		<item name="gold coin" countmax="40" chance="77670" />
 		<item name="spear" countmax="2" chance="5140" />
 		<item name="chain armor" chance="3000" />
 		<item name="plate shield" chance="5000" />

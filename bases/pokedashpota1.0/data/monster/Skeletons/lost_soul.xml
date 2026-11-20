@@ -61,9 +61,6 @@
 		<item name="ruby necklace" chance="1500" />
 		<item name="white pearl" countmax="3" chance="10000" />
 		<item name="black pearl" countmax="3" chance="12000" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="98" chance="49000" />
-		<item name="platinum coin" countmax="7" chance="100000" />
 		<item name="red gem" chance="15000" />
 		<item name="stone skin amulet" chance="2780" />
 		<item name="blank rune" countmax="3" chance="35250" />

@@ -46,7 +46,6 @@
 	</summons>
 	<loot>
 		<item name="small diamond" chance="100000" />
-		<item name="gold coin" countmax="40" chance="100000" />
 		<item name="skull of Ratha" countmax="1" chance="100000" />
 		<item name="double axe" chance="1500" />
 		<item name="plate armor" chance="4000" />

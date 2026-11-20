@@ -74,7 +74,6 @@
 	</voices>
 	<loot>
 		<item name="metal coat" countmax="1" chance="473"/>
-		<item name="gold coin" countmax="189" chance="40000"/>
 		<item name="piece of steel" countmax="2" chance="40000"/>
 
 	</loot>

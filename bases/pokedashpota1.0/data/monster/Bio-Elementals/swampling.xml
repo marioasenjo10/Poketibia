@@ -49,7 +49,6 @@
 	</voices>
 	<loot>
 		<item id="2120" chance="4540" /><!-- rope -->
-		<item name="gold coin" countmax="12" chance="60000" />
 		<item name="white mushroom" countmax="5" chance="8980" />
 		<item name="rat cheese" chance="18670" />
 		<item name="swampling moss" chance="12610" />

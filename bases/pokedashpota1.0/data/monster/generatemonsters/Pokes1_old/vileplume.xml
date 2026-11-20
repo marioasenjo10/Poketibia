@@ -51,6 +51,5 @@
 		<voice sentence="VILEPLUME!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="12" chance="30000" />
 	</loot>
 </monster>

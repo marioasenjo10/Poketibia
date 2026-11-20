@@ -49,7 +49,6 @@
 		<voice sentence="For the pharao!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="50000" />
 		<item name="scarab coin" countmax="1" chance="2600" />
 		<item name="mace" chance="3760" />
 		<item id="2419" chance="1640" /><!-- scimitar -->

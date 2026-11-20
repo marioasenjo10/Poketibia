@@ -73,7 +73,6 @@
 		<voice sentence="SHINY MAMOSWINE!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="95" chance="40000"/>
 		<item name="snowball" countmax="1" chance="50000"/>
 		<item name="sandbag" countmax="1" chance="50000"/>
 

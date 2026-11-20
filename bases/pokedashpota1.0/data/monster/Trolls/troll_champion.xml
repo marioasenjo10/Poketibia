@@ -46,7 +46,6 @@
 		<voice sentence="Groar" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="12" chance="64000" />
 		<item name="silver amulet" chance="230" />
 		<item name="spear" chance="25000" />
 		<item name="studded club" chance="5450" />

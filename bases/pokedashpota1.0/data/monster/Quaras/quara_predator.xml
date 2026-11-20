@@ -57,8 +57,6 @@
 	</voices>
 	<loot>
 		<item name="small diamond" countmax="2" chance="5160" />
-		<item name="gold coin" countmax="100" chance="28000" />
-		<item name="gold coin" countmax="53" chance="50000" />
 		<item name="double axe" chance="3171" />
 		<item name="shrimp" countmax="5" chance="4860" />
 		<item name="skull helmet" chance="400" />

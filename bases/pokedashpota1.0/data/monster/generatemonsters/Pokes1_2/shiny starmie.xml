@@ -73,7 +73,6 @@
 	</voices>
 	<loot>
 		<item name="water stone" countmax="1" chance="88"/>
-		<item name="gold coin" countmax="35" chance="40000"/>
 		<item name="blue gem" countmax="2" chance="10000"/>
 		<item name="future orb" countmax="1" chance="5000"/>
 		<item name="ruby" countmax="1" chance="5000"/>

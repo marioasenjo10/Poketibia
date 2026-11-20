@@ -61,7 +61,6 @@
 	<loot>
 		<item name="emerald bangle" chance="540" />
 		<item name="small sapphire" chance="5000" />
-		<item name="gold coin" countmax="90" chance="100000" />
 		<item name="wand of inferno" chance="810" />
 		<item name="power bolt" countmax="2" chance="3400" />
 		<item name="dragon ham" countmax="3" chance="60500" />

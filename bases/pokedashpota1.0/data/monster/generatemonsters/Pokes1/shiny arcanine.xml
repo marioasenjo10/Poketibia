@@ -77,7 +77,6 @@
 	</voices>
 	<loot>
 		<item name="fire stone" countmax="1" chance="138"/>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="essence of fire" countmax="2" chance="40000"/>
 		<item name="fur" countmax="1" chance="5000"/>
 		<item name="nail" countmax="2" chance="5000"/>

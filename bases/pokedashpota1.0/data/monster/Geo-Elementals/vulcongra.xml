@@ -56,9 +56,6 @@
 		<voice sentence="Yag! Yag! Yag!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="7" chance="50000" />
-		<item name="platinum coin" chance="14780" />
 		<item name="wand of inferno" chance="1000" />
 		<item name="sword ring" chance="2920" />
 		<item name="fire sword" chance="260" />

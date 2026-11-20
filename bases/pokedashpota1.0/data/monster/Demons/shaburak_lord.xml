@@ -68,9 +68,6 @@
 	</voices>
 	<loot>
 		<item name="small ruby" countmax="5" chance="6120" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="78" chance="50000" />
-		<item name="platinum coin" countmax="2" chance="33333" />
 		<item name="energy ring" chance="1652" />
 		<item name="wand of inferno" chance="800" />
 		<item name="steel boots" chance="160" />

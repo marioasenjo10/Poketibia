@@ -67,7 +67,6 @@
 		<voice sentence="PACHIRISU!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="45" chance="40000"/>
 		<item name="electric box" countmax="1" chance="40000"/>
 		<item name="screw" countmax="1" chance="40000"/>
 

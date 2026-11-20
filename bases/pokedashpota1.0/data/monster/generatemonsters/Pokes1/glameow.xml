@@ -66,7 +66,6 @@
 		<voice sentence="GLAMEOW!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="15" chance="40000"/>
 		<item name="comb" countmax="2" chance="50000"/>
 
 	</loot>

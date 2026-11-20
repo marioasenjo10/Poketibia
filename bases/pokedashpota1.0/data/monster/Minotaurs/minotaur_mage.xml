@@ -60,7 +60,6 @@
 	</voices>
 	<loot>
 		<item id="2050" chance="4950" /><!-- torch -->
-		<item name="gold coin" countmax="35" chance="85780" />
 		<item name="wand of cosmic energy" chance="600" />
 		<item name="leather helmet" chance="3000" />
 		<item name="leather legs" chance="5190" />

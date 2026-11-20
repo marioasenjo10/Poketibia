@@ -67,9 +67,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="37" chance="50000" />
-		<item name="platinum coin" countmax="2" chance="70000" />
 		<item name="brown mushroom" countmax="2" chance="14500" />
 		<item name="iron ore" chance="9470" />
 		<item name="great mana potion" chance="13470" />

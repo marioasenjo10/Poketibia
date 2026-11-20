@@ -73,7 +73,6 @@
 	</voices>
 	<loot>
 		<item name="ice stone" countmax="1" chance="100"/>
-		<item name="gold coin" countmax="40" chance="40000"/>
 		<item name="ice orb" countmax="1" chance="5000"/>
 		<item name="snowball" countmax="2" chance="40000"/>
 		<item name="straw" countmax="2" chance="40000"/>

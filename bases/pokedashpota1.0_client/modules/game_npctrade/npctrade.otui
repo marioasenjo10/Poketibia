@@ -123,7 +123,7 @@ MainWindow
       id: price
 
     Label
-      !text: tr('Your Money') .. ':'
+      !text: 'Banco:'
       anchors.left: parent.left
       anchors.top: prev.bottom
       margin-top: 5

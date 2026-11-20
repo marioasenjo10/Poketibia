@@ -73,7 +73,6 @@
 	</voices>
 	<loot>
 		<item name="leaf stone" countmax="1" chance="65"/>
-		<item name="gold coin" countmax="26" chance="40000"/>
 		<item name="seed" countmax="2" chance="40000"/>
 		<item name="straw" countmax="2" chance="40000"/>
 		<item name="yellow flower" countmax="1" chance="5000"/>

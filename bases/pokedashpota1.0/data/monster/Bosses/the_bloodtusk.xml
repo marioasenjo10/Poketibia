@@ -44,8 +44,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="65" chance="66900" />
-		<item name="platinum coin" countmax="3" chance="83825" />
 		<item name="tusk shield" chance="83825" />
 		<item name="furry club" chance="50500" />
 		<item name="mammoth fur cape" chance="42175" />

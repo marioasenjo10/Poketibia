@@ -49,7 +49,6 @@
 		<voice sentence="We are swift as the wind of the desert!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="40" chance="56250" />
 		<item name="axe" chance="2730" />
 		<item name="mace" chance="2120" />
 		<item name="iron helmet" chance="650" />

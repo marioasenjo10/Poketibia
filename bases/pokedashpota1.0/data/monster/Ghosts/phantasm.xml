@@ -80,12 +80,8 @@
 	</voices>
 	<loot>
 		<item name="small ruby" countmax="3" chance="12160" />
-		<item name="gold coin" countmax="100" chance="30000" />
-		<item name="gold coin" countmax="100" chance="30000" />
-		<item name="gold coin" countmax="33" chance="28000" />
 		<item name="small emerald" countmax="3" chance="10190" />
 		<item name="small amethyst" countmax="3" chance="14570" />
-		<item name="platinum coin" countmax="4" chance="87730" />
 		<item name="stealth ring" chance="550" />
 		<item name="blank rune" countmax="2" chance="22500" />
 		<item name="crown armor" chance="660" />

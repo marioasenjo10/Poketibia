@@ -71,8 +71,6 @@
 		<voice sentence="Fcccccchhhhhh" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="65" chance="38000" />
-		<item name="gold coin" countmax="65" chance="40000" />
 		<item name="stealth ring" chance="540" />
 		<item name="mouldy cheese" chance="930" />
 		<item name="skull of Ratha" chance="20180" />

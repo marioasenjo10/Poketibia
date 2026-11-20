@@ -73,8 +73,6 @@
 	</voices>
 	<loot>
 		<item id="2124" chance="1030" /><!-- crystal ring -->
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="10" chance="50000" />
 		<item name="platinum amulet" chance="121" />
 		<item name="boots of haste" chance="121" />
 		<item name="protection amulet" chance="847" />

@@ -59,6 +59,5 @@
 		<voice sentence="I feel you're getting sleepy! Maeh!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="60" chance="75000" />
 	</loot>
 </monster>

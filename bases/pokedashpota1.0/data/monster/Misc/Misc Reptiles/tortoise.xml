@@ -40,7 +40,6 @@
 		<element firePercent="-10" />
 	</elements>
 	<loot>
-		<item name="gold coin" countmax="30" chance="59000" />
 		<item name="battle hammer" chance="730" />
 		<item name="plate shield" chance="2850" />
 		<item id="2667" chance="4600" /><!-- fish -->

@@ -71,7 +71,6 @@
 	</voices>
 	<loot>
 		<item name="water stone" countmax="1" chance="700"/>
-		<item name="gold coin" countmax="280" chance="40000"/>
 		<item name="bird beak" countmax="1" chance="5000"/>
 		<item name="feather" countmax="1" chance="5000"/>
 		<item name="straw" countmax="2" chance="40000"/>

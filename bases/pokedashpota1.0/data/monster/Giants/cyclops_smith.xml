@@ -52,7 +52,6 @@
 		<voice sentence="Ai humy phary ty kaynon" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="70" chance="82920" />
 		<item name="club ring" chance="90" />
 		<item name="battle axe" chance="5450" />
 		<item name="double axe" chance="880" />

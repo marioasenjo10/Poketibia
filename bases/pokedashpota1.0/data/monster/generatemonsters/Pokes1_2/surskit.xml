@@ -62,7 +62,6 @@
 	</voices>
 	<loot>
 		<item name="cocoon stone" countmax="1" chance="38"/>
-		<item name="gold coin" countmax="15" chance="40000"/>
 
 	</loot>
 </monster>

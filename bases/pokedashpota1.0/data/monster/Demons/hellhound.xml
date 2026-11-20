@@ -80,8 +80,6 @@
 	</voices>
 	<loot>
 		<item name="black pearl" countmax="4" chance="9400" />
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="platinum coin" countmax="7" chance="100000" />
 		<item name="wand of inferno" chance="9000" />
 		<item id="2231" chance="1000" /><!-- big bone -->
 		<item name="spike sword" chance="16310" />

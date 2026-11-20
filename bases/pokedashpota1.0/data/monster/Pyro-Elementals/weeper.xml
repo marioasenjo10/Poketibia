@@ -64,8 +64,6 @@
 	</voices>
 	<loot>
 		<item name="small ruby" countmax="3" chance="15690" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="99" chance="50000" />
 		<item name="bronze amulet" countmax="7" chance="100000" />
 		<item name="fire sword" chance="3280" />
 		<item name="fire axe" chance="2150" />

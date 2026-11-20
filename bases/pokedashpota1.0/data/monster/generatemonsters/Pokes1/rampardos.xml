@@ -75,7 +75,6 @@
 		<voice sentence="RAMPARDOS!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="60" chance="40000"/>
 		<item name="small stone" countmax="2" chance="40000"/>
 		<item name="sandbag" countmax="3" chance="50000"/>
 

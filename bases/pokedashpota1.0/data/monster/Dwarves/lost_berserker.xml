@@ -69,9 +69,6 @@
 	</voices>
 	<loot>
 		<item name="piggy bank" chance="3920" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="platinum coin" countmax="9" chance="100000" />
 		<item name="dwarven ring" chance="2280" />
 		<item name="knight axe" chance="2070" />
 		<item name="fire axe" chance="380" />

@@ -71,7 +71,6 @@
 	</voices>
 	<loot>
 		<item name="rock stone" countmax="1" chance="200"/>
-		<item name="gold coin" countmax="80" chance="40000"/>
 
 	</loot>
 </monster>

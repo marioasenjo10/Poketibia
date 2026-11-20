@@ -68,7 +68,6 @@
 	</voices>
 	<loot>
 		<item name="water stone" countmax="1" chance="75"/>
-		<item name="gold coin" countmax="30" chance="40000"/>
 		<item name="water gem" countmax="3" chance="40000"/>
 		<item name="water pendant" countmax="1" chance="5000"/>
 		<item name="blue ball" countmax="1" chance="5000"/>

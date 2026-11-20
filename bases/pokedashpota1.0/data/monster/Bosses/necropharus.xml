@@ -62,7 +62,6 @@
 	</voices>
 	<loot>
 		<item id="2032" chance="10000" /><!-- bowl -->
-		<item name="gold coin" countmax="40" chance="100000" />
 		<item name="moonlight rod" chance="500" />
 		<item name="boots of haste" chance="666" />
 		<item id="2229" countmax="3" chance="20000" /><!-- skull -->

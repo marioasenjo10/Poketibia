@@ -67,7 +67,6 @@
 		<voice sentence="Taste the sweetness of death!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="90" chance="30050" />
 		<item name="boots of haste" chance="210" />
 		<item name="clerical mace" chance="390" />
 		<item name="skull staff" chance="100" />

@@ -72,7 +72,6 @@
 	</voices>
 	<loot>
 		<item name="enigma stone" countmax="1" chance="225"/>
-		<item name="gold coin" countmax="90" chance="40000"/>
 		<item name="blue gem" countmax="2" chance="10000"/>
 		<item name="future orb" countmax="2" chance="30000"/>
 		<item name="linearly guided hypnose" countmax="1" chance="5000"/>

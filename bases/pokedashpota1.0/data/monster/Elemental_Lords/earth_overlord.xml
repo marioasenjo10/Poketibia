@@ -52,9 +52,6 @@
 		<immunity earth="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="68" chance="100000" />
-		<item name="platinum coin" countmax="3" chance="33333" />
 		<item name="terra mantle" chance="1923" />
 		<item name="mother soil" chance="100000" />
 		<item name="lump of earth" chance="33333" />

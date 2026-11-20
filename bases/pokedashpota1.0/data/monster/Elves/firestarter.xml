@@ -56,7 +56,6 @@
 		<voice sentence="DOWN with the followers of the bog!!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="35" chance="79000" />
 		<item name="longsword" chance="6000" />
 		<item name="bow" chance="4000" />
 		<item name="grapes" chance="20000" />

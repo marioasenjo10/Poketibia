@@ -67,7 +67,6 @@
 	</voices>
 	<loot>
 		<item name="dragon stone" countmax="1" chance="400"/>
-		<item name="gold coin" countmax="160" chance="40000"/>
 		<item name="dragon tooth" countmax="1" chance="5000"/>
 		<item name="straw" countmax="2" chance="40000"/>
 		<item name="dragon tail" countmax="1" chance="5000"/>

@@ -63,9 +63,6 @@
 	<loot>
 		<item name="white pearl" countmax="3" chance="9630" />
 		<item name="black pearl" chance="9090" />
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="gold coin" countmax="95" chance="100000" />
-		<item name="platinum coin" countmax="10" chance="100000" />
 		<item name="red gem" chance="6110" />
 		<item name="blue gem" chance="830" />
 		<item name="giant sword" chance="620" />

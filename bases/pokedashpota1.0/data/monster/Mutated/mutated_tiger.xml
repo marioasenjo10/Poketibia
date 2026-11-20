@@ -59,8 +59,6 @@
 		<voice sentence="CHHHHHHHHHHH" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="5" chance="50000" />
 		<item name="life ring" chance="5580" />
 		<item name="guardian shield" chance="380" />
 		<item name="meat" countmax="2" chance="29500" />

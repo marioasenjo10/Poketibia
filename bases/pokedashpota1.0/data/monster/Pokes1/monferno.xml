@@ -66,7 +66,6 @@
 		<voice sentence="MONFERNO!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="40" chance="40000"/>
 		<item name="essence of fire" countmax="4" chance="40000"/>
 		<item name="pot of lava" countmax="2" chance="50000"/>
 		<item name="kick machine" countmax="1" chance="40000"/>

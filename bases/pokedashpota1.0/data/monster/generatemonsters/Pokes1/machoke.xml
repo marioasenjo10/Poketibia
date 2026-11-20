@@ -69,7 +69,6 @@
 	</voices>
 	<loot>
 		<item name="punch stone" countmax="1" chance="175"/>
-		<item name="gold coin" countmax="70" chance="40000"/>
 		<item name="belt of champion" countmax="1" chance="5000"/>
 
 	</loot>

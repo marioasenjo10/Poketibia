@@ -71,7 +71,6 @@
 		<voice sentence="Freeze!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="90" chance="29630" />
 		<item name="clerical mace" chance="920" />
 		<item name="mystic turban" chance="430" />
 		<item name="green mushroom" chance="1310" />

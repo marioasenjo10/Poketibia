@@ -55,7 +55,6 @@
 		<voice sentence="Aaaauuuuuooooooo!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="52" chance="56000" />
 		<item name="hailstorm rod" chance="7400" />
 		<item name="meat" countmax="4" chance="52000" />
 		<item name="wolf paw" chance="3700" />

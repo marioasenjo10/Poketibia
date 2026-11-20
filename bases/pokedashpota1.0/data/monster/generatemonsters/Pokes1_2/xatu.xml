@@ -69,7 +69,6 @@
 	</voices>
 	<loot>
 		<item name="enigma stone" countmax="1" chance="163"/>
-		<item name="gold coin" countmax="65" chance="40000"/>
 		<item name="blue gem" countmax="2" chance="10000"/>
 		<item name="feather" countmax="1" chance="5000"/>
 		<item name="straw" countmax="2" chance="40000"/>

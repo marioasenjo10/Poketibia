@@ -83,7 +83,6 @@
 	</voices>
 	<loot>
 		<item name="crystal stone" countmax="1" chance="473"/>
-		<item name="gold coin" countmax="189" chance="40000"/>
 
 	</loot>
 </monster>

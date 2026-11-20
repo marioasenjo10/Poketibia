@@ -42,7 +42,6 @@
 		<voice sentence="Ribbit! Ribbit!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="10" chance="73230" />
 		<item name="worm" chance="8000" />
 	</loot>
 </monster>

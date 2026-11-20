@@ -55,7 +55,6 @@
 		<voice sentence="Gimme! Gimme!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="120" chance="100000" />
 		<item id="2696" chance="20000" /><!-- cheese -->
 		<item name="bola" chance="10000" />
 		<item name="spike shield" chance="4761" />

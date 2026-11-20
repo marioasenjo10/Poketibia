@@ -71,7 +71,6 @@
 	</voices>
 	<loot>
 		<item name="heart stone" countmax="1" chance="113"/>
-		<item name="gold coin" countmax="45" chance="40000"/>
 		<item name="horn" countmax="1" chance="5000"/>
 		<item name="bull tail" countmax="1" chance="5000"/>
 

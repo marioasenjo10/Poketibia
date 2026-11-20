@@ -60,9 +60,6 @@
 		<voice sentence="The torturer is in!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="99" chance="40000" />
-		<item name="platinum coin" countmax="8" chance="55000" />
 		<item name="golden legs" chance="30" />
 		<item id="2558" chance="5250" /><!-- saw -->
 		<item name="steel boots" chance="5050" />

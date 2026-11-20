@@ -73,10 +73,6 @@
 	</voices>
 	<loot>
 		<item name="white pearl" countmax="7" chance="3000" />
-		<item name="gold coin" countmax="100" chance="80000" />
-		<item name="gold coin" countmax="100" chance="70000" />
-		<item name="gold coin" countmax="83" chance="60000" />
-		<item name="crystal coin" countmax="3" chance="100000" />
 		<item name="mastermind shield" chance="1650" />
 		<item name="assassin star" countmax="25" chance="100000" />
 		<item name="great mana potion" chance="7000" />

@@ -61,8 +61,6 @@
 		<voice sentence="Rumble!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
-		<item name="platinum coin" countmax="7" chance="92000" />
 		<item name="stone skin amulet" chance="2270" />
 		<item name="dwarven ring" chance="2840" />
 		<item name="giant sword" chance="570" />

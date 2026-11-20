@@ -65,8 +65,6 @@
 		<voice sentence="Your lifeforce is waning!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="197" chance="100000" />
-		<item name="platinum coin" countmax="5" chance="100000" />
 		<item name="amulet of loss" chance="120" />
 		<item name="gold ring" chance="1870" />
 		<item name="hailstorm rod" chance="10000" />

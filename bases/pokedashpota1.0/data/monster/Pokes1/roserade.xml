@@ -75,7 +75,6 @@
 		<voice sentence="ROSERADE!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="70" chance="40000"/>
 		<item name="bottle of poison" countmax="2" chance="50000"/>
 		<item name="seed" countmax="2" chance="40000"/>
 		<item name="leaves" countmax="1" chance="40000"/>

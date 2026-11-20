@@ -50,7 +50,6 @@
 		<immunity lifedrain="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="8" chance="13000" />
 		<item name="blank rune" chance="8670" />
 		<item name="throwing knife" countmax="2" chance="11170" />
 		<item name="katana" chance="530" />

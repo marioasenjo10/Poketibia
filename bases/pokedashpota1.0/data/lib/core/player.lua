@@ -1,5 +1,6 @@
+-- solo ingresa monedas antiguas; el dinero ya esta siempre en el banco (lib/core/bank.lua)
 function Player.depositMoney(self, amount)
-	if not self:removeMoney(amount) then
+	if BankRaw.getMoney(self) < amount or not BankRaw.removeMoney(self, amount) then
 		return false
 	end
 
@@ -27,14 +28,9 @@ function Player.transferMoneyTo(self, target, amount)
 	return true
 end
 
+-- ya no existen monedas: no se puede sacar dinero del banco
 function Player.withdrawMoney(self, amount)
-	local balance = self:getBankBalance()
-	if amount > balance or not self:addMoney(amount) then
-		return false
-	end
-
-	self:setBankBalance(balance - amount)
-	return true
+	return false
 end
 
 local foodCondition = Condition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)

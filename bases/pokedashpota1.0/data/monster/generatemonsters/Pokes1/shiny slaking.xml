@@ -70,7 +70,6 @@
 	</voices>
 	<loot>
 		<item name="heart stone" countmax="1" chance="250"/>
-		<item name="gold coin" countmax="100" chance="40000"/>
 
 	</loot>
 </monster>

@@ -66,7 +66,6 @@
 	</voices>
 	<loot>
 		<item name="cocoon stone" countmax="1" chance="60"/>
-		<item name="gold coin" countmax="24" chance="40000"/>
 		<item name="pot of moss bug" countmax="3" chance="40000"/>
 		<item name="straw" countmax="2" chance="40000"/>
 		<item name="ladybug wing" countmax="1" chance="5000"/>

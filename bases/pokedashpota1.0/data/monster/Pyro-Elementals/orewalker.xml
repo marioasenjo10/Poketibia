@@ -66,9 +66,6 @@
 		<voice sentence="CLONK!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="98" chance="50000" />
-		<item name="platinum coin" countmax="10" chance="100000" />
 		<item name="yellow gem" chance="1030" />
 		<item name="dwarven ring" chance="4660" />
 		<item name="knight legs" chance="1910" />

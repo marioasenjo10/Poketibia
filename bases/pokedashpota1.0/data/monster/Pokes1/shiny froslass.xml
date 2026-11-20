@@ -71,7 +71,6 @@
 		<voice sentence="SHINY FROSLASS!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="60" chance="40000"/>
 		<item name="ice orb" countmax="1" chance="40000"/>
 		<item name="traces of ghost" countmax="2" chance="40000"/>
 

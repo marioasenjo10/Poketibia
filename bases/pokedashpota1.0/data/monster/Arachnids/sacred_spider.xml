@@ -43,8 +43,6 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="40000" />
-		<item name="gold coin" countmax="19" chance="50000" />
 		<item name="scarab coin" countmax="4" chance="7142" />
 		<item name="plate armor" chance="4761" />
 		<item name="spider fangs" chance="25000" />

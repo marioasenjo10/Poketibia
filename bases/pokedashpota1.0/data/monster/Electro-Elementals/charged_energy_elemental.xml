@@ -54,8 +54,6 @@
 		<immunity ice="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="22" chance="50000" />
 		<item name="flash arrow" countmax="3" chance="6250" />
 		<item name="energy soil" chance="2063" />
 	</loot>

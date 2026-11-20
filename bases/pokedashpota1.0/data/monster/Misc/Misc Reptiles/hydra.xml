@@ -68,10 +68,6 @@
 	</voices>
 	<loot>
 		<item name="small sapphire" chance="5000" />
-		<item name="gold coin" countmax="100" chance="34000" />
-		<item name="gold coin" countmax="100" chance="34000" />
-		<item name="gold coin" countmax="46" chance="20000" />
-		<item name="platinum coin" countmax="3" chance="48000" />
 		<item name="life crystal" chance="570" />
 		<item name="boots of haste" chance="130" />
 		<item name="stone skin amulet" chance="900" />

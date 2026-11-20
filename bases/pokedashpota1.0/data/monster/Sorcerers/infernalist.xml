@@ -86,8 +86,6 @@
 	<loot>
 		<item name="red tome" chance="300" />
 		<item name="piggy bank" chance="220" />
-		<item name="gold coin" countmax="100" chance="56500" />
-		<item name="gold coin" countmax="47" chance="40000" />
 		<item name="energy ring" chance="1800" />
 		<item name="skull staff" chance="6500" />
 		<item name="magic sulphur" chance="600" />

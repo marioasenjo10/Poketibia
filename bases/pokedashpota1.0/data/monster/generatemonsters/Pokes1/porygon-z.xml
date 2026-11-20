@@ -71,7 +71,6 @@
 		<voice sentence="PORYGON-Z!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="75" chance="40000"/>
 		<item name="future orb" countmax="1" chance="30000"/>
 
 	</loot>

@@ -57,7 +57,6 @@
 		<voice sentence="Futchi maruk buta!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="45" chance="18000" />
 		<item name="stealth ring" chance="90" />
 		<item name="gold ring" chance="30" />
 		<item name="protection amulet" chance="2190" />

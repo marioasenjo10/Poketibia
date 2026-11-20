@@ -69,8 +69,6 @@
 		<voice sentence="Knooorrrrr!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="50" chance="14000" />
-		<item name="gold coin" countmax="40" chance="16000" />
 		<item id="2229" chance="20000" /><!-- skull -->
 		<item id="2230" chance="47750" /><!-- bone -->
 		<item name="bone club" chance="4950" />

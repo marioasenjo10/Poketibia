@@ -85,7 +85,6 @@
 		<item name="ring of the sky" chance="430" />
 		<item id="2124" chance="700" /><!-- crystal ring -->
 		<item name="small sapphire" chance="1190" />
-		<item name="gold coin" countmax="80" chance="29340" />
 		<item name="talon" chance="1150" />
 		<item name="energy ring" chance="2200" />
 		<item name="mind stone" chance="2000" />

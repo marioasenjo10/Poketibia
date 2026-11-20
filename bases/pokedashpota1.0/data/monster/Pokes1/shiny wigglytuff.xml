@@ -68,7 +68,6 @@
 	</voices>
 	<loot>
 		<item name="heart stone" countmax="1" chance="138"/>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="comb" countmax="1" chance="5000"/>
 		<item name="microphone" countmax="1" chance="5000"/>
 

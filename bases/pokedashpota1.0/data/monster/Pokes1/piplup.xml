@@ -66,7 +66,6 @@
 		<voice sentence="PIPLUP!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="17" chance="40000"/>
 		<item name="water gem" countmax="2" chance="40000"/>
 		<item name="water pendant" countmax="1" chance="40000"/>
 

@@ -67,9 +67,6 @@
 	</voices>
 	<loot>
 		<item name="small diamond" countmax="4" chance="2440" />
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="100" chance="47000" />
-		<item name="platinum coin" countmax="8" chance="50360" />
 		<item name="meat" chance="30175" />
 		<item name="magic sulphur" chance="2100" />
 		<item name="assassin dagger" chance="980" />

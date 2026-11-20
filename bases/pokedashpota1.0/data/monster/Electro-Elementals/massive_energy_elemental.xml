@@ -63,8 +63,6 @@
 		<immunity paralyze="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="91" chance="50000" />
 		<item name="small amethyst" countmax="3" chance="3270" />
 		<item name="strong mana potion" chance="17450" />
 		<item name="great mana potion" chance="5450" />

@@ -83,9 +83,6 @@
 		<item name="gemmed book" chance="8500" />
 		<item name="golden mug" chance="3000" />
 		<item name="small sapphire" chance="5200" />
-		<item name="gold coin" countmax="100" chance="33000" />
-		<item name="gold coin" countmax="100" chance="33000" />
-		<item name="gold coin" countmax="42" chance="33000" />
 		<item name="energy ring" chance="5000" />
 		<item name="life crystal" chance="520" />
 		<item name="ice rapier" chance="350" />

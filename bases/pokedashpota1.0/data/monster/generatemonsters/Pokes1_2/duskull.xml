@@ -64,7 +64,6 @@
 	</voices>
 	<loot>
 		<item name="darkness stone" countmax="1" chance="100"/>
-		<item name="gold coin" countmax="40" chance="40000"/>
 
 	</loot>
 </monster>

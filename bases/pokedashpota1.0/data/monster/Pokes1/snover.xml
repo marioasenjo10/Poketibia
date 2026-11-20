@@ -64,7 +64,6 @@
 		<voice sentence="SNOVER!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="40000"/>
 		<item name="seed" countmax="1" chance="40000"/>
 		<item name="ice orb" countmax="1" chance="50000"/>
 

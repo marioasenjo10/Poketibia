@@ -50,7 +50,6 @@
 		<voice sentence="Huaauaauaauaa!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="40" chance="69000" />
 		<item name="power ring" chance="300" />
 		<item name="protection amulet" chance="990" />
 		<item name="club ring" chance="230" />

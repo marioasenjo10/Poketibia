@@ -73,7 +73,6 @@
 	</voices>
 	<loot>
 		<item name="heart stone" countmax="1" chance="125"/>
-		<item name="gold coin" countmax="50" chance="40000"/>
 		<item name="dog ears" countmax="1" chance="5000"/>
 
 	</loot>

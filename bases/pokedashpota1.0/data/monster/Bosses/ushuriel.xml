@@ -80,8 +80,6 @@
 		<voice sentence="The judgement is guilty! The sentence is death!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="190" chance="50000" />
-		<item name="platinum coin" countmax="26" chance="20000" />
 		<item name="orb" chance="16666" />
 		<item name="life crystal" chance="16666" />
 		<item name="mind stone" chance="20000" />

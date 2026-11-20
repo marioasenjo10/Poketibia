@@ -81,7 +81,6 @@
 	<loot>
 		<item name="crystal stone" countmax="1" chance="450"/>
 		<item name="rock stone" countmax="1" chance="450"/>
-		<item name="platinum coin" countmax="2" chance="40000"/>
 		<item name="crystal onix tail" countmax="1" chance="5000"/>
 
 	</loot>

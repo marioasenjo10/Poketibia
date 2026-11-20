@@ -73,7 +73,6 @@
 		<voice sentence="SHINY BRONZONG!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="55" chance="40000"/>
 		<item name="future orb" countmax="2" chance="50000"/>
 		<item name="piece of steel" countmax="2" chance="40000"/>
 

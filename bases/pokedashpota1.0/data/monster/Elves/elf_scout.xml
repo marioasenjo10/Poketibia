@@ -52,7 +52,6 @@
 	</voices>
 	<loot>
 		<item name="waterskin" chance="1350" />
-		<item name="gold coin" countmax="25" chance="75000" />
 		<item name="bow" chance="4000" />
 		<item name="arrow" countmax="12" chance="30710" />
 		<item name="poison arrow" countmax="4" chance="15400" />

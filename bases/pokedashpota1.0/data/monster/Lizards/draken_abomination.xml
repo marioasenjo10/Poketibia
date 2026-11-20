@@ -70,9 +70,6 @@
 		<voice sentence="Gll" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
-		<item name="gold coin" countmax="98" chance="47000" />
-		<item name="platinum coin" countmax="8" chance="50590" />
 		<item name="meat" countmax="4" chance="50450" />
 		<item name="great mana potion" countmax="3" chance="9950" />
 		<item name="terra hood" chance="8730" />

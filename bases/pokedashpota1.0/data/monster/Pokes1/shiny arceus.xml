@@ -71,7 +71,6 @@
 		<voice sentence="SHINY ARCEUS!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="195" chance="40000"/>
 
 	</loot>
 </monster>

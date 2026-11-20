@@ -64,7 +64,6 @@
 		<voice sentence="Aw... chhhrrr orders." />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="88" chance="68810" />
 		<item name="sword ring" chance="570" />
 		<item name="iron ore" chance="400" />
 		<item name="nail" chance="1460" />

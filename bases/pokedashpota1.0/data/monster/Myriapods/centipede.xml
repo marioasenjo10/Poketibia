@@ -42,7 +42,6 @@
 		<immunity earth="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="15" chance="80000" />
 		<item name="centipede leg" chance="10300" />
 	</loot>
 </monster>

@@ -60,6 +60,5 @@
 		<voice sentence="I will fill MY cushion with YOUR hair! CLUCK!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="100" chance="50000" />
 	</loot>
 </monster>

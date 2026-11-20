@@ -70,7 +70,6 @@
 	</voices>
 	<loot>
 		<item name="venom stone" countmax="1" chance="150"/>
-		<item name="gold coin" countmax="60" chance="40000"/>
 		<item name="bottle of poison" countmax="2" chance="40000"/>
 		<item name="straw" countmax="2" chance="40000"/>
 		<item name="tooth" countmax="1" chance="5000"/>

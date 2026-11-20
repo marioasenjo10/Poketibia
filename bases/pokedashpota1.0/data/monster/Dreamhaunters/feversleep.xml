@@ -69,10 +69,8 @@
 		<immunity invisible="1" />
 	</immunities>
 	<loot>
-		<item name="gold coin" countmax="100" chance="100000" />
 		<item name="small emerald" countmax="2" chance="11000" />
 		<item name="small amethyst" countmax="3" chance="12000" />
-		<item name="platinum coin" countmax="9" chance="100000" />
 		<item name="blue robe" chance="1500" />
 		<item name="great mana potion" countmax="2" chance="40000" />
 		<item name="ultimate health potion" chance="18000" />

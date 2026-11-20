@@ -78,7 +78,6 @@
 	</voices>
 	<loot>
 		<item name="water stone" countmax="1" chance="125"/>
-		<item name="gold coin" countmax="50" chance="40000"/>
 		<item name="straw" countmax="2" chance="40000"/>
 		<item name="water gem" countmax="2" chance="40000"/>
 		<item name="gyarados tail" countmax="1" chance="5000"/>

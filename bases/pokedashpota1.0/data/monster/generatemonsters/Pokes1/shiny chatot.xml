@@ -71,7 +71,6 @@
 		<voice sentence="SHINY CHATOT!" />
 	</voices>
 	<loot>
-		<item name="gold coin" countmax="30" chance="40000"/>
 		<item name="comb" countmax="2" chance="50000"/>
 		<item name="feather" countmax="2" chance="40000"/>
 
