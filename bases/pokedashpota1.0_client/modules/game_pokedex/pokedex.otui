@@ -539,9 +539,7 @@ UIWindow
       anchors.fill: parent
       margin: 1
       image-source: /game_pokedex/images/gradient
-      image-border-left: 8
-      image-border-top: 8
-      image-border-bottom: 8
+      image-smooth: true
       image-color: #3d8fe0
       phantom: true
 
