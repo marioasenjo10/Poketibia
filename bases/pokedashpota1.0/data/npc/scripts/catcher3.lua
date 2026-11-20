@@ -64,7 +64,7 @@ function creatureSayCallback(cid, type, msg)
 		local balls = player:getPokeballs()
 		for i=1, #balls do
 			local ball = balls[i]
-			ball:setSpecialAttribute("pokeHealth", 100000)
+			ball:setSpecialAttribute("pokeHealth", fullPokeHealth)
 		end
 		selfSay('Here you are young adept, take care yourself.', cid)
 		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)

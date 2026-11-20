@@ -413,8 +413,9 @@ function doKeyCombo(keyCombo)
   local hotKey = hotkeyList[keyCombo]
   if not hotKey then return end
 
-  -- teclas de una letra (E, R...): solo si no se esta escribiendo (modo WASD y chat cerrado)
-  if #keyCombo == 1 and modules.game_console and modules.game_console.areLetterKeysFree
+  -- teclas de escritura (letras, espacio, Shift+letra): solo si no se esta escribiendo
+  local isTypingKey = #keyCombo == 1 or keyCombo == 'Space' or keyCombo:match('^Shift%+.$')
+  if isTypingKey and modules.game_console and modules.game_console.areLetterKeysFree
      and not modules.game_console.areLetterKeysFree() then
     return
   end

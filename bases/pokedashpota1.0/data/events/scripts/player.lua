@@ -12,7 +12,8 @@ function Player:onLook(thing, position, distance)
 			local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
 			local pokeLove = item:getSpecialAttribute("pokeLove") or 0
 			if pokeName ~= nil then
-				description = string.format("%s\nIt belongs to %s. Trainer level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), master:getLevel(), pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
+				local shownName = pokeName .. ((tonumber(pokeBoost) or 0) > 0 and (" +" .. pokeBoost) or "")
+				description = string.format("You see %s, it belongs to %s.\nBoost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s. Love: %s.", shownName, master:getName(), pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
 			end
 		end
 	end
@@ -102,8 +103,13 @@ function Player:onLookInBattleList(creature, distance)
 	local description = "You see " .. creature:getDescription(distance)
 	if isSummon(creature) then
 		local master = creature:getMaster()
-		local levelStr = master:isPlayer() and (" Trainer level: " .. master:getLevel() .. ".") or ""
-		description = string.format("%s\nIt belongs to %s.%s", description, master:getName(), levelStr)
+		local ball = master:isPlayer() and master:getUsingBall()
+		local pokeName = ball and ball:getSpecialAttribute("pokeName")
+		if pokeName then
+			local boost = tonumber(ball:getSpecialAttribute("pokeBoost")) or 0
+			description = "You see " .. pokeName .. (boost > 0 and (" +" .. boost) or "")
+		end
+		description = string.format("%s, it belongs to %s.", description, master:getName())
 	end
 	if self:getGroup():getAccess() then
 		local str = "%s\nHealth: %d / %d"

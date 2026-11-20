@@ -8,6 +8,7 @@ stonesId = { -- lixo
 --legendaryPokemons = {"Zapdos", "Articuno", "Moltres", "Mew", "Mewtwo", "Raikou", "Entei", "Suicune", "Ho-oh", "Lugia", "Celebi", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Shiny Zapdos", "Shiny Articuno", "Shiny Moltres", "Shiny Mew", "Shiny Mewtwo", "Shiny Raikou", "Shiny Entei", "Shiny Suicune", "Shiny Ho-oh", "Shiny Lugia", "Shiny Celebi", "Shiny Regirock", "Shiny Regice", "Shiny Registeel", "Shiny Latias", "Shiny Latios", "Shiny Kyogre", "Shiny Groudon", "Shiny Rayquaza"}
 
 maxBoost = 50
+fullPokeHealth = 999999999 -- vida "llena": se recorta a la vida maxima al sacar el pokemon
 summonMaxLevel = 200 -- maximum level of pokes
 maxVitamins = 10
 shinyChance = 2
@@ -1880,14 +1881,14 @@ end
 function Monster.getTotalSpeed(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		local total = math.floor(monsterType:getBaseSpeed() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		local total = monsterType:getBaseSpeed()
 		local vitamins = self:getUsedVitaminsNumber("speed")
 		if vitamins > 0 then
 			total = total + math.floor(monsterType:getBaseSpeed() * vitamins / maxVitamins * vitaminStatusBuff)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getBaseSpeed() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
+		return monsterType:getBaseSpeed()
 	end
 	return 0
 end
@@ -2554,7 +2555,7 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		end
 		local maxHealth = monster:getTotalHealth()
 		monster:setMaxHealth(maxHealth)
-		monster:setHealth(health)
+		monster:setHealth(math.min(health, maxHealth))
 		monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 		if effect then
 			monster:getPosition():sendMagicEffect(effect)

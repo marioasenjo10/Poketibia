@@ -4,10 +4,12 @@ DexListRow < UIWidget
   background-color: alpha
 
   $hover:
-    background-color: #17253a
+    background-color: #2a2d33
 
   $focus:
-    background-color: #22406a
+    background-color: #3a1618
+    border-width: 1
+    border-color: #e53935
 
   UIWidget
     id: ball
@@ -25,7 +27,7 @@ DexListRow < UIWidget
     margin-left: 6
     width: 38
     font: poppins-semibold-11px
-    color: #5d6f88
+    color: #8a7f80
     phantom: true
 
   Label
@@ -36,7 +38,7 @@ DexListRow < UIWidget
     margin-left: 2
     margin-right: 6
     font: poppins-12px
-    color: #8b9ab0
+    color: #c2bcbc
     phantom: true
 
   UIWidget
@@ -46,7 +48,7 @@ DexListRow < UIWidget
     anchors.verticalCenter: parent.verticalCenter
     margin-right: 10
     image-source: /game_pokedex/images/dot
-    image-color: #33425a
+    image-color: #4a3c3e
     phantom: true
 
 DexChip < Label
@@ -61,29 +63,30 @@ DexChip < Label
 DexTab < UIButton
   size: 120 32
   font: poppins-semibold-11px
-  color: #7f93ad
-  background-color: alpha
+  color: #b0b4ba
+  background-color: #33373e
+  border-width: 1
+  border-color: #1a1c20
   focusable: false
 
   $hover:
     color: #ffffff
-    background-color: #142135
+    background-color: #43474f
 
   $on:
     color: #ffffff
-    background-color: #17263c
-    border-width-bottom: 2
-    border-color-bottom: #3d8fe0
+    background-color: #c62828
+    border-color: #ff5a4f
 
 DexSection < Label
   height: 16
   margin-top: 4
   font: poppins-semibold-11px
-  color: #8ea3bf
+  color: #ef7f7a
 
 DexText < Label
   font: poppins-12px
-  color: #c9d4e3
+  color: #dcdcdc
   text-wrap: true
   text-auto-resize: true
 
@@ -164,9 +167,11 @@ DexEvoCell < UIWidget
       anchors.top: creature.bottom
       anchors.left: parent.left
       anchors.right: parent.right
-      margin-left: 4
-      margin-right: 4
+      margin-left: 2
+      margin-right: 2
       text-align: center
+      text-wrap: true
+      text-auto-resize: true
       font: poppins-semibold-11px
       color: #ffffff
       phantom: true
@@ -379,7 +384,7 @@ DexLootCard < UIWidget
     margin-right: 10
     margin-bottom: 7
     height: 4
-    background-color: #24334b
+    background-color: #3a2a2c
     phantom: true
 
     UIWidget
@@ -417,7 +422,7 @@ UIWindow
   size: 900 600
   anchors.centerIn: parent
   image-source: /game_pokedex/images/panel
-  image-border: 10
+  image-border: 16
   @onEscape: modules.game_pokedex.hide()
 
   UIWidget
@@ -457,7 +462,7 @@ UIWindow
     anchors.verticalCenter: titleIcon.verticalCenter
     margin-left: 10
     size: 180 6
-    background-color: #1d2a3e
+    background-color: #3a2022
     phantom: true
 
     UIWidget
@@ -466,7 +471,7 @@ UIWindow
       anchors.top: parent.top
       anchors.bottom: parent.bottom
       width: 0
-      background-color: #3d8fe0
+      background-color: #39e639
       phantom: true
 
   UIButton
@@ -492,6 +497,9 @@ UIWindow
     width: 244
     height: 24
     font: poppins-12px
+    background-color: #2a1a1c
+    border-width: 1
+    border-color: #a02020
 
   Label
     id: searchHint
@@ -510,7 +518,7 @@ UIWindow
     width: 232
     margin-top: 8
     margin-bottom: 14
-    background-color: #0b1220
+    background-color: #1a1c20
     border-width: 0
     focusable: false
     vertical-scrollbar: dexListScrollBar
@@ -598,7 +606,7 @@ UIWindow
       anchors.left: type2.right
       anchors.top: type1.top
       margin-left: 6
-      image-color: #2b3b55
+      image-color: #3a3f47
 
     DexChip
       id: specialChip
@@ -687,7 +695,7 @@ UIWindow
     anchors.left: headerCard.left
     anchors.right: headerCard.right
     height: 1
-    background-color: #26354f
+    background-color: #c62828
     phantom: true
 
   Label

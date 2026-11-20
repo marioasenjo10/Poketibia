@@ -143,7 +143,7 @@ local function setChip(chip, text, color)
   end
   chip:setText(text)
   chip:setWidth(chip:getTextSize().width + 18)
-  chip:setImageColor(color or '#2b3b55')
+  chip:setImageColor(color or '#3a3f47')
   chip:show()
 end
 
@@ -270,7 +270,7 @@ local function updateRow(row, name, flags)
   row:getChildById('name'):setText(name)
   row:getChildById('name'):setColor(row.caught and '#ffffff' or (row.registered and '#c9d4e3' or '#7d8ba0'))
   row:getChildById('ball'):setVisible(row.caught)
-  row:getChildById('dot'):setImageColor(shinyCaught and '#ffcc40' or (row.registered and '#7ee07e' or '#33425a'))
+  row:getChildById('dot'):setImageColor(shinyCaught and '#ffcc40' or (row.registered and '#7ee07e' or '#4a3c3e'))
   local tip = row.caught and 'Capturado' or (row.registered and 'Registrado en la pokedex' or 'Sin registrar')
   if shinyCaught then tip = tip .. ' (y su version shiny)' end
   row:setTooltip(tip)
@@ -431,7 +431,7 @@ function buildHeader(info)
 
   local req = tonumber(info.stats[7]) or 0
   local levelText = req > 0 and ('NIVEL ' .. req) or 'TODO NIVEL'
-  setChip(child('levelChip'), levelText, '#2b3b55')
+  setChip(child('levelChip'), levelText, '#3a3f47')
   child('levelChip'):setTooltip('Nivel de entrenador necesario para usarlo')
   if info.legendary then
     setChip(child('specialChip'), 'LEGENDARIO', '#b8860b')
@@ -526,7 +526,7 @@ local function addChips(panel, chips)
   for _, c in ipairs(chips) do
     local chip = g_ui.createWidget('DexChip', flow)
     chip:setText(c[1])
-    chip:setImageColor(c[2] or '#2b3b55')
+    chip:setImageColor(c[2] or '#3a3f47')
   end
   flow:setHeight(gridHeight(#chips, 6, 20, 6))
   return flow
@@ -548,7 +548,7 @@ function buildInfoPanel(info)
   -- evoluciones
   addSection(panel, 'EVOLUCIONES')
   if #info.chain <= 1 then
-    addText(panel, 'Este pokemon no tiene evoluciones.', '#8ea3bf')
+    addText(panel, 'Este pokemon no tiene evoluciones.', '#a8a8a8')
   else
     local grid = g_ui.createWidget('DexEvoGrid', panel)
     local items = {}
@@ -591,7 +591,7 @@ function buildInfoPanel(info)
   -- habilidades de campo
   addSection(panel, 'HABILIDADES DE CAMPO')
   if #info.abilities == 0 then
-    addText(panel, 'Ninguna.', '#8ea3bf')
+    addText(panel, 'Ninguna.', '#a8a8a8')
   else
     local chips = {}
     for _, a in ipairs(info.abilities) do table.insert(chips, { a, '#2f5d8a' }) end
@@ -647,7 +647,7 @@ function buildMovesPanel(info)
   panel:destroyChildren()
   addSection(panel, 'MOVESET')
   if #info.moves == 0 then
-    addText(panel, 'Este pokemon no tiene ataques.', '#8ea3bf')
+    addText(panel, 'Este pokemon no tiene ataques.', '#a8a8a8')
     return
   end
   for i, move in ipairs(info.moves) do
@@ -693,10 +693,10 @@ function buildLootPanel(info)
   panel:destroyChildren()
   addSection(panel, 'BOTIN')
   if #info.loot == 0 then
-    addText(panel, 'Este pokemon no suelta objetos.', '#8ea3bf')
+    addText(panel, 'Este pokemon no suelta objetos.', '#a8a8a8')
     return
   end
-  addText(panel, 'Probabilidad de que salga cada objeto al derrotarlo (con el rate del servidor).', '#8ea3bf')
+  addText(panel, 'Probabilidad de que salga cada objeto al derrotarlo (con el rate del servidor).', '#a8a8a8')
   local grid = g_ui.createWidget('DexLootGrid', panel)
   for _, loot in ipairs(info.loot) do
     local card = g_ui.createWidget('DexLootCard', grid)

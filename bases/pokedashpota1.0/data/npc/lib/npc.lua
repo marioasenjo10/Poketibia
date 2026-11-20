@@ -14,7 +14,7 @@ function npcHealPlayer(player)
 
 	if hasSummons(player) then
 		local summon = player:getSummons()[1]
-		summon:addHealth(-summon:getHealth() + summon:getMaxHealth())
+		summon:addHealth(summon:getMaxHealth() - summon:getHealth())
 	end
 
 	local pokeballs = player:getPokeballs()
@@ -22,13 +22,17 @@ function npcHealPlayer(player)
 		local ball = pokeballs[i]
 		local ballId = ball:getId()
 		local ballKey = getBallKey(ballId)
-		ball:setSpecialAttribute("pokeHealth", 100000)
+		ball:setSpecialAttribute("pokeHealth", fullPokeHealth)
 		local isBallBeingUsed = ball:getSpecialAttribute("isBeingUsed")
 		if ballId == balls[ballKey].usedOff and isBallBeingUsed ~= 1 then
 			ball:transform(balls[ballKey].usedOn)
 		end
 	end
-	player:sendTextMessage(MESSAGE_STATUS_SMALL, 'Your pokemon have been healed.')
+	local window = ModalWindow(1001, "Pokemon Center", "Your pokemon have been healed!")
+	window:addButton(1, "Ok")
+	window:setDefaultEnterButton(1)
+	window:setDefaultEscapeButton(1)
+	window:sendToPlayer(player)
 	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 end
 
