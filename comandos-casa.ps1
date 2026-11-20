@@ -388,3 +388,24 @@ Start-Job {
 git add bases/pokedashpota1.0_client/modules/game_pokedex/portraits
 git commit -q -m "Retratos de los pokemon para la pokedex"
 git push
+
+# ---------------------------------------------------------------------
+# [12] Diagnostico: quien pone el " [nivel]" en el nombre del pokemon
+#      Busca en los .exe del servidor y del cliente PokeDash los textos
+#      relacionados con nivel/nombre y los guarda en nivel-nombre.txt.
+#      No modifica nada.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+$o = 'nivel-nombre.txt'
+Remove-Item $o -ErrorAction SilentlyContinue
+Get-ChildItem bases -Recurse -File -Include *.exe | ForEach-Object {
+    "=== $($_.FullName) ($([math]::Round($_.Length / 1MB, 1)) MB) ===" | Out-File $o -Append -Encoding utf8
+    $s = [Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes($_.FullName))
+    [regex]::Matches($s, '[\x20-\x7e]{2,120}') | ForEach-Object { $_.Value } |
+        Where-Object { $_ -match '^\s?\[.{0,6}$|%s \[|\{\} \[|\[%d\]|\[\{\}\]|[Ll]evel|[Ss]etName|getName|nameDescription' } |
+        Sort-Object -Unique | Out-File $o -Append -Encoding utf8
+}
+git add $o
+git commit -q -m "Diagnostico nivel en nombre"
+git push
