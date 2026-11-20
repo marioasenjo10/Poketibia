@@ -161,12 +161,11 @@ local function getPokedexLocations(name)
 		loadSpawns()
 	end
 	local points = spawnPoints[name:lower()]
-	local fromBase = false
 	if not points and name:sub(1, 6) == "Shiny " then
-		-- los shiny salen al azar en lugar de su forma normal
-		points = spawnPoints[name:sub(7):lower()]
-		fromBase = points ~= nil
+		-- los shiny salen al azar en lugar de su forma normal: no se ensena donde
+		return "", spawnPoints[name:sub(7):lower()] ~= nil, 0
 	end
+	local fromBase = false
 	if not points then
 		return "", false, 0
 	end
@@ -442,13 +441,28 @@ local function buildPokedexInfo(player, number)
 	}, "|")
 end
 
+local lastDexView = {}
+
 function Player.sendPokedexInfo(self, number)
 	local message = runSafe(self, "la ficha " .. tostring(number), buildPokedexInfo, self, number)
 	if not message then
 		return false
 	end
+	lastDexView[self:getGuid()] = number
 	sendDexMessage(self, message)
 	return true
+end
+
+-- abre la pokedex completa: la lista y la ficha indicada (o la ultima que se vio)
+function Player.openPokedex(self, number)
+	self:sendPokedexList()
+	number = number or lastDexView[self:getGuid()]
+	if not number or not monstersTable[number] then
+		number = dexNumbers()[1]
+	end
+	if number then
+		self:sendPokedexInfo(number)
+	end
 end
 
 function Player.sendTownList(self)
@@ -460,21 +474,23 @@ function Player.sendTownList(self)
 	self:sendExtendedOpcode(OPCODE_TOWNS, table.concat(parts, ";"))
 end
 
--- Peticiones del cliente (desde creaturescripts/scripts/extendedopcode.lua)
+-- Peticiones del cliente: talkaction "pokedexview list" / "pokedexview 25"
+-- (los opcodes cliente->servidor no llegan en este servidor)
 local lastRequest = {}
 
 function onPokedexOpcode(player, buffer)
-	local now = os.mtime and os.mtime() or os.clock() * 1000
-	local last = lastRequest[player:getId()] or 0
-	if now - last < 80 then
-		return
-	end
-	lastRequest[player:getId()] = now
+	buffer = (buffer or ""):gsub("^%s+", ""):gsub("%s+$", "")
 	if buffer == "list" then
-		player:sendPokedexList()
+		local now = os.mtime and os.mtime() or os.clock() * 1000
+		local last = lastRequest[player:getId()] or 0
+		if now - last < 300 then
+			return
+		end
+		lastRequest[player:getId()] = now
+		player:openPokedex()
 		return
 	end
-	local number = tonumber(buffer:match("^info:(%d+)$"))
+	local number = tonumber(buffer:match("^info:(%d+)$") or buffer:match("^(%d+)$"))
 	if number then
 		player:sendPokedexInfo(number)
 	end

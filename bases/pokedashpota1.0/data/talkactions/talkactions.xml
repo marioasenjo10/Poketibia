@@ -77,4 +77,5 @@
 	<talkaction words="m12" script="summonspells.lua" />
 	<talkaction words="!p" separator=" " script="usesummon.lua" />
 	<talkaction words="smartcombo" separator=" " script="smartcombo.lua" />
+	<talkaction words="pokedexview" separator=" " script="pokedexview.lua" />
 </talkactions>

@@ -130,7 +130,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	-- con OTClient: sobre ti (o el suelo) se abre la pokedex con la lista
 	if player:isUsingOtClient() and (target == item or not target:isCreature() or not target:isMonster()) then
-		player:sendPokedexList()
+		player:openPokedex()
 		return true
 	end
 
@@ -165,13 +165,13 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			player:addExperience(givenExp, true)
 			if player:isUsingOtClient() then
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, target:getName() .. " registered in your pokedex!")
-				player:sendPokedexInfo(monsterNumber)
+				player:openPokedex(monsterNumber)
 			end
 		else -- open status of monster
 			getPlayerPosition(player):sendMagicEffect(300)
 			if player:isUsingOtClient() then
 				-- la misma ventana de la pokedex, abierta en este pokemon (salvaje o con dueno)
-				player:sendPokedexInfo(monsterNumber)
+				player:openPokedex(monsterNumber)
 				return true
 			end
 			local monsterType = MonsterType(target:getName())

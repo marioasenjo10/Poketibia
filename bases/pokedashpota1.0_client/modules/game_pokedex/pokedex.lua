@@ -12,7 +12,6 @@ local listLoaded = false
 local current            -- ficha mostrada
 local lastNumber         -- ultima ficha pedida (para volver a abrirla)
 local currentTab = 'info'
-local requestEvent
 local pending = ''       -- trozos de un mensaje largo
 local focusFromCode = false
 
@@ -100,10 +99,11 @@ local function iconFor(name)
   return nil
 end
 
+-- los opcodes cliente->servidor no llegan: se pide con una talkaction que no sale en el chat.
+-- OJO: g_game.talk solo funciona dentro de un click/tecla (no desde timers ni mensajes del servidor)
 local function sendRequest(text)
-  local protocol = g_game.getProtocolGame()
-  if protocol then
-    protocol:sendExtendedOpcode(OPCODE_POKEDEX, text)
+  if g_game.isOnline() then
+    g_game.talk('pokedexview ' .. text)
   end
 end
 
@@ -161,7 +161,6 @@ function terminate()
   g_keyboard.unbindKeyDown('Ctrl+D')
   ProtocolGame.unregisterExtendedOpcode(OPCODE_POKEDEX)
   disconnect(g_game, { onGameEnd = onGameEnd })
-  if requestEvent then removeEvent(requestEvent) end
   window:destroy()
   dexButton:destroy()
 end
@@ -203,11 +202,7 @@ end
 function requestInfo(number)
   if not number then return end
   lastNumber = number
-  if requestEvent then removeEvent(requestEvent) end
-  requestEvent = scheduleEvent(function()
-    requestEvent = nil
-    sendRequest('info:' .. number)
-  end, 120)
+  sendRequest(tostring(number))
 end
 
 function onPokedexOpcode(protocol, opcode, buffer)
@@ -227,12 +222,8 @@ function onPokedexOpcode(protocol, opcode, buffer)
   if kind == 'L' then
     openWindow()
     ok, err = pcall(loadList, buffer)
-    if ok and not current then
-      requestInfo(lastNumber or 1)
-    end
   elseif kind == 'I' then
     openWindow()
-    if not listLoaded then sendRequest('list') end
     ok, err = pcall(loadInfo, buffer)
   elseif kind == 'E' then
     openWindow()
@@ -392,7 +383,7 @@ function loadInfo(buffer)
   end
   child('tabMoves'):setText('Ataques (' .. #info.moves .. ')')
   child('tabLoot'):setText('Botin (' .. #info.loot .. ')')
-  child('tabLocation'):setText('Localizacion (' .. #info.locations .. ')')
+  child('tabLocation'):setText(info.isShiny and 'Localizacion (?)' or ('Localizacion (' .. #info.locations .. ')'))
   for _, tab in pairs(TABS) do child(tab):show() end
   showTab(currentTab)
   focusRow(info.number)
@@ -437,9 +428,10 @@ function buildHeader(info)
   else
     world = 'Capturado por ' .. info.owners .. ' entrenadores'
   end
-  if info.worldCount > 0 then
+  if info.isShiny then
+    world = world .. '   |   ' .. (info.fromBase and 'Aparece al azar en lugar de su forma normal' or 'No aparece salvaje')
+  elseif info.worldCount > 0 then
     world = world .. '   |   ' .. info.worldCount .. ' puntos de aparicion'
-    if info.fromBase then world = world .. ' (al azar, en lugar de su forma normal)' end
   else
     world = world .. '   |   No aparece salvaje'
   end
@@ -726,6 +718,12 @@ function buildLocationPanel(info)
   local panel = child('locationPanel')
   panel:destroyChildren()
   addSection(panel, 'LOCALIZACION')
+  if info.isShiny then
+    addText(panel, 'No se puede ver la localizacion de los shiny.', '#ffd84a')
+    addText(panel, info.fromBase and 'Aparecen al azar, en lugar de su forma normal, en cualquier sitio donde sale ' .. info.name:sub(7) .. '.'
+      or 'No aparece en estado salvaje (evolucion, evento, misiones...).', '#8ea3bf')
+    return
+  end
   if #info.locations == 0 then
     addText(panel, 'No aparece en estado salvaje (evolucion, evento, misiones...).', '#8ea3bf')
     return
@@ -755,6 +753,12 @@ end
 
 function showAllOnMap()
   if not current then return end
+  if current.isShiny then
+    if modules.game_textmessage and modules.game_textmessage.displayFailureMessage then
+      modules.game_textmessage.displayFailureMessage('No se puede ver la localizacion de los shiny: aparecen al azar donde sale su forma normal.')
+    end
+    return
+  end
   if #current.locations == 0 then
     if modules.game_textmessage and modules.game_textmessage.displayFailureMessage then
       modules.game_textmessage.displayFailureMessage(current.name .. ' no aparece en estado salvaje.')

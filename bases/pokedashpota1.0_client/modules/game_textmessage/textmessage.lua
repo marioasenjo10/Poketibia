@@ -86,6 +86,9 @@ function displayMessage(mode, text)
 
   if msgtype == MessageSettings.none then return end
 
+  -- sin el aviso "Using the last info button..." al usar la pokedex con la tecla
+  if text:find('^Using ') and text:find('info button') then return end
+
   if msgtype.consoleTab ~= nil and (msgtype.consoleOption == nil or modules.client_options.getOption(msgtype.consoleOption)) then
     modules.game_console.addText(text, msgtype, tr(msgtype.consoleTab))
     --TODO move to game_console
