@@ -36,7 +36,7 @@ function onDeath(player, corpse, killer, mostDamage, unjustified, mostDamage_unj
 	end
 
 	if not player:getSlotItem(CONST_SLOT_BACKPACK) then
-		player:addItem(ITEM_BAG, 1, false, CONST_SLOT_BACKPACK)
+		player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
 	end
 	return true
 end

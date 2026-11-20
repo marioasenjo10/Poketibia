@@ -98,7 +98,7 @@ storageItemQuestItem = 91017
 storageItemQuestTime = 91018
 storageItemQuestDifficulty = 91019
 
-slotItems = {38680, 38681, 38682, 2263, 2270, 26820}
+slotItems = {38680, 38682, 2263, 2270, 26820}
 badgesPortraits = {26614, 26609, 26615, 26612, 26613, 26616, 26610, 26611, 38689, 38683, 38685, 38690, 38684, 38688, 38686, 38687}
 badgeContainer = 38680
 

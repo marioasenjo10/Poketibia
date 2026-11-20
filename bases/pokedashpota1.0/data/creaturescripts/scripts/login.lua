@@ -177,7 +177,7 @@ function onLogin(player)
 
 	-- mochila PKA permanente: no se pierde al morir y siempre existe
 	if not player:getSlotItem(CONST_SLOT_BACKPACK) then
-		player:addItem(ITEM_BAG, 1, false, CONST_SLOT_BACKPACK)
+		player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
 	end
 
 	return true
