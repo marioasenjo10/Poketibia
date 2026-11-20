@@ -7,9 +7,8 @@ DexListRow < UIWidget
     background-color: #2a2d33
 
   $focus:
-    background-color: #3a1618
-    border-width: 1
-    border-color: #e53935
+    background-color: #2a2d33
+    border-width: 0
 
   UIWidget
     id: ball
@@ -93,7 +92,7 @@ DexText < Label
 DexButton < UIButton
   height: 26
   image-source: /game_pokedex/images/card
-  image-border: 8
+  image-border: 5
   font: poppins-semibold-11px
   color: #dfe8f3
   focusable: false
@@ -137,7 +136,7 @@ DexEvoCell < UIWidget
     anchors.right: parent.right
     anchors.top: parent.top
     image-source: /game_pokedex/images/card
-    image-border: 8
+    image-border: 5
     focusable: false
 
     $hover:
@@ -198,7 +197,7 @@ DexStatGrid < UIWidget
 DexStat < UIWidget
   size: 144 40
   image-source: /game_pokedex/images/card
-  image-border: 8
+  image-border: 5
 
   Label
     id: name
@@ -248,7 +247,7 @@ DexEffRow < UIWidget
 DexMoveRow < UIWidget
   height: 52
   image-source: /game_pokedex/images/card
-  image-border: 8
+  image-border: 5
 
   UIWidget
     id: slot
@@ -322,7 +321,7 @@ DexLootGrid < UIWidget
 DexLootCard < UIWidget
   size: 292 58
   image-source: /game_pokedex/images/card
-  image-border: 8
+  image-border: 5
 
   Item
     id: item
@@ -540,7 +539,7 @@ UIWindow
     margin-right: 14
     height: 158
     image-source: /game_pokedex/images/card
-    image-border: 8
+    image-border: 5
 
     UIWidget
       id: gradient
