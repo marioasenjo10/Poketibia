@@ -14,6 +14,9 @@ function onLogin(player)
 		local monsterType = MonsterType(name)
 		local baseHealth = monsterType:getMaxHealth()
 		local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, 0, 0))
+		if not player:getSlotItem(CONST_SLOT_BACKPACK) then
+			player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
+		end
 		local backpack = player:getSlotItem(CONST_SLOT_BACKPACK)
 		local addPokeball = backpack:addItem(26661, 1)
 --		player:addItem(27141, 1, false, 1, CONST_SLOT_HEAD)
@@ -28,8 +31,6 @@ function onLogin(player)
 		end
 		player:addItem(26662, 100)
 		player:addItem(27646, 20)
-		player:addItem(27645, 20)
-		player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
 	end
 	-- mochila PKA permanente
 	if not player:getSlotItem(CONST_SLOT_BACKPACK) then

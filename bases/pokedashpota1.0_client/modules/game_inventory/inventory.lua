@@ -79,10 +79,14 @@ function toggle()
   if not player then return end
 
   local backpack = player:getInventoryItem(InventorySlotBack)
+  if not backpack then
+    backpack = g_game.findPlayerItem(1988, -1)
+  end
+
   if backpack then
     g_game.open(backpack)
   else
-    modules.game_textmessage.displayStatusMessage(tr('No tienes ninguna mochila equipada'))
+    modules.game_textmessage.displayStatusMessage(tr('La mochila por defecto se creara al volver a entrar'))
   end
 end
 
