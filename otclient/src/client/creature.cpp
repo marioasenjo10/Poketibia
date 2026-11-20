@@ -1380,12 +1380,28 @@ void Creature::setWidgetInformation(const UIWidgetPtr& info) {
 }
 
 void Creature::setName(const std::string_view name) {
-    if (name == m_name.getText())
+    std::string cleanName{name};
+
+    // Los Pokemon reciben el nombre limpio: no mostrar un sufijo como [5] sobre el sprite.
+    if (!cleanName.empty()) {
+        const size_t bracketPos = cleanName.rfind(" [");
+        if (bracketPos != std::string::npos && cleanName.back() == ']') {
+            bool numericSuffix = bracketPos + 2 < cleanName.size() - 1;
+            for (size_t i = bracketPos + 2; numericSuffix && i < cleanName.size() - 1; ++i) {
+                numericSuffix = cleanName[i] >= '0' && cleanName[i] <= '9';
+            }
+            if (numericSuffix) {
+                cleanName.erase(bracketPos);
+            }
+        }
+    }
+
+    if (cleanName == m_name.getText())
         return;
 
     const auto& oldName = m_name.getText();
-    m_name.setText(name);
-    callLuaField("onChangeName", name, oldName);
+    m_name.setText(cleanName);
+    callLuaField("onChangeName", cleanName, oldName);
 }
 
 void Creature::setCovered(bool covered) {
