@@ -1,0 +1,8 @@
+Font
+  name: poppins-bold-16px
+  texture: poppins-bold-16px
+  height: 21
+  glyph-size: 26 22
+  y-offset: 0
+  spacing: 0 0
+  space-width: 3

@@ -19,6 +19,8 @@ public class DatThing
 	public int Priority = 5; // 0 suelo, 1 borde, 2 abajo, 3 encima, 5 normal
 	public int GroundSpeed, MinimapColor;
 	public bool NotWalkable, NotPathable;
+	// primer grupo de frames (Portraits.cs)
+	public int Width, Height, Layers, PatX, PatY, PatZ, Phases;
 }
 
 public class Dat
@@ -26,6 +28,7 @@ public class Dat
 	public byte[] Data;
 	public int ItemCount, CreatureCount, EffectCount, MissileCount;
 	public Dictionary<int, DatThing> Items = new Dictionary<int, DatThing>();
+	public Dictionary<int, DatThing> Creatures = new Dictionary<int, DatThing>();
 	public int ItemsEnd;
 	public bool IdleAnimations;
 
@@ -57,7 +60,7 @@ public class Dat
 		}
 		catch (Exception e) { throw new Exception("item " + (d.Items.Count + 100) + ": " + e.Message); }
 		d.ItemsEnd = p;
-		for (int id = 1; id <= d.CreatureCount; id++) d.ParseThing(ref p, true);
+		for (int id = 1; id <= d.CreatureCount; id++) d.Creatures[id] = d.ParseThing(ref p, true);
 		for (int id = 1; id <= d.EffectCount; id++) d.ParseThing(ref p, false);
 		for (int id = 1; id <= d.MissileCount; id++) d.ParseThing(ref p, false);
 		if (p != data.Length) throw new Exception("tamano inesperado (" + p + " de " + data.Length + ")");
@@ -97,6 +100,7 @@ public class Dat
 			if (w > 1 || h > 1) p++;
 			int layers = Data[p++], px = Data[p++], py = Data[p++], pz = Data[p++], phases = Data[p++];
 			if (layers == 0 || px == 0 || py == 0 || pz == 0 || phases == 0) throw new Exception("patrones invalidos " + layers + "/" + px + "/" + py + "/" + pz + "/" + phases + " en " + p);
+			if (g == 0) { t.Width = w; t.Height = h; t.Layers = layers; t.PatX = px; t.PatY = py; t.PatZ = pz; t.Phases = phases; }
 			if (phases > 1) p += 6 + phases * 8;
 			long total = (long)w * h * layers * px * py * pz * phases;
 			if (p + total * 4 > Data.Length) throw new Exception("demasiados sprites (" + total + ") en " + p);

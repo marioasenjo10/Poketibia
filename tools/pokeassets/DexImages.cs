@@ -170,6 +170,27 @@ public static class DexImages
         }
     }
 
+    // chincheta de ciudad para el mapa grande
+    static void Pin(string dir, string name, Color fill)
+    {
+        int w = 16, h = 22;
+        using (Bitmap b = NewBitmap(w, h))
+        using (Graphics g = NewGraphics(b))
+        using (GraphicsPath path = new GraphicsPath())
+        {
+            float cx = w / 2f, r = 6.5f, cy = 7.5f;
+            path.AddArc(cx - r, cy - r, r * 2, r * 2, 150, 240);
+            path.AddLine(cx + r * (float)Math.Cos(Math.PI / 6), cy + r * 0.5f, cx, h - 1.5f);
+            path.CloseFigure();
+            using (SolidBrush shadow = new SolidBrush(Color.FromArgb(90, 0, 0, 0)))
+                g.FillEllipse(shadow, cx - 4f, h - 3.5f, 8f, 3f);
+            using (SolidBrush brush = new SolidBrush(fill)) g.FillPath(brush, path);
+            using (Pen p = new Pen(Color.FromArgb(200, 255, 255, 255), 1.2f)) g.DrawPath(p, path);
+            using (SolidBrush white = new SolidBrush(Color.White)) g.FillEllipse(white, cx - 2.5f, cy - 2.5f, 5f, 5f);
+            Save(b, dir, name);
+        }
+    }
+
     public static void Run(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -189,5 +210,7 @@ public static class DexImages
         Arrow(dir, "arrow.png");
         Circle(dir, "dot.png", 8, Color.White, Color.Transparent, 0);
         Circle(dir, "marker.png", 30, Color.FromArgb(215, 14, 21, 34), Color.FromArgb(255, 170, 40), 2f);
+        Pin(dir, "pin.png", Color.FromArgb(232, 52, 52));
+        Pin(dir, "pin_off.png", Color.FromArgb(120, 128, 142));
     }
 }

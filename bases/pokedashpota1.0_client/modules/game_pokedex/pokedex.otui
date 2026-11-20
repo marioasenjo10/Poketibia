@@ -23,8 +23,8 @@ DexListRow < UIWidget
     anchors.left: ball.right
     anchors.verticalCenter: parent.verticalCenter
     margin-left: 6
-    width: 36
-    font: noto-bold-11px
+    width: 38
+    font: poppins-semibold-11px
     color: #5d6f88
     phantom: true
 
@@ -35,7 +35,7 @@ DexListRow < UIWidget
     anchors.verticalCenter: parent.verticalCenter
     margin-left: 2
     margin-right: 6
-    font: noto-11px
+    font: poppins-12px
     color: #8b9ab0
     phantom: true
 
@@ -53,14 +53,14 @@ DexChip < Label
   height: 20
   image-source: /game_pokedex/images/chip
   image-border: 8
-  font: noto-bold-11px
+  font: poppins-semibold-11px
   color: #ffffff
   text-align: center
   phantom: true
 
 DexTab < UIButton
   size: 120 32
-  font: noto-bold-11px
+  font: poppins-semibold-11px
   color: #7f93ad
   background-color: alpha
   focusable: false
@@ -78,11 +78,11 @@ DexTab < UIButton
 DexSection < Label
   height: 16
   margin-top: 4
-  font: noto-bold-11px
+  font: poppins-semibold-11px
   color: #8ea3bf
 
 DexText < Label
-  font: noto-11px
+  font: poppins-12px
   color: #c9d4e3
   text-wrap: true
   text-auto-resize: true
@@ -91,7 +91,7 @@ DexButton < UIButton
   height: 26
   image-source: /game_pokedex/images/card
   image-border: 8
-  font: noto-bold-11px
+  font: poppins-semibold-11px
   color: #dfe8f3
   focusable: false
 
@@ -151,6 +151,14 @@ DexEvoCell < UIWidget
       margin-top: 4
       phantom: true
 
+    UIWidget
+      id: image
+      size: 64 64
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 4
+      phantom: true
+
     Label
       id: name
       anchors.top: creature.bottom
@@ -159,7 +167,7 @@ DexEvoCell < UIWidget
       margin-left: 4
       margin-right: 4
       text-align: center
-      font: noto-bold-11px
+      font: poppins-semibold-11px
       color: #ffffff
       phantom: true
 
@@ -170,7 +178,7 @@ DexEvoCell < UIWidget
       anchors.right: parent.right
       margin-top: 2
       text-align: center
-      font: noto-11px
+      font: poppins-12px
       color: #8ea3bf
       phantom: true
 
@@ -194,7 +202,7 @@ DexStat < UIWidget
     anchors.right: parent.right
     margin-top: 5
     margin-left: 10
-    font: noto-11px
+    font: poppins-12px
     color: #8ea3bf
     phantom: true
 
@@ -204,31 +212,31 @@ DexStat < UIWidget
     anchors.left: name.left
     anchors.right: parent.right
     margin-top: 1
-    font: noto-bold-11px
+    font: poppins-semibold-11px
     color: #ffffff
     phantom: true
 
 DexEffRow < UIWidget
-  height: 20
+  height: 42
 
   Label
     id: label
     anchors.left: parent.left
+    anchors.right: parent.right
     anchors.top: parent.top
-    width: 130
-    height: 20
-    font: noto-bold-11px
-    text-offset: 0 3
+    height: 18
+    font: poppins-semibold-11px
     phantom: true
 
   DexFlow
     id: chips
-    anchors.left: label.right
+    anchors.left: parent.left
     anchors.right: parent.right
-    anchors.top: parent.top
+    anchors.top: label.bottom
+    margin-top: 4
     layout:
       type: grid
-      cell-size: 80 20
+      cell-size: 90 20
       cell-spacing: 6
       flow: true
 
@@ -268,8 +276,8 @@ DexMoveRow < UIWidget
     anchors.left: slot.right
     anchors.top: parent.top
     margin-left: 10
-    margin-top: 8
-    font: noto-bold-11px
+    margin-top: 7
+    font: poppins-semibold-13px
     color: #ffffff
     text-auto-resize: true
     phantom: true
@@ -286,9 +294,9 @@ DexMoveRow < UIWidget
     anchors.left: name.left
     anchors.right: element.left
     anchors.top: name.bottom
-    margin-top: 4
+    margin-top: 3
     margin-right: 8
-    font: noto-11px
+    font: poppins-12px
     color: #8ea3bf
     phantom: true
 
@@ -325,8 +333,8 @@ DexLootCard < UIWidget
     anchors.right: chance.left
     anchors.top: parent.top
     margin-left: 10
-    margin-top: 8
-    font: noto-bold-11px
+    margin-top: 6
+    font: poppins-semibold-13px
     color: #ffffff
     phantom: true
 
@@ -335,8 +343,8 @@ DexLootCard < UIWidget
     anchors.left: name.left
     anchors.right: name.right
     anchors.top: name.bottom
-    margin-top: 2
-    font: noto-11px
+    margin-top: 1
+    font: poppins-12px
     color: #8ea3bf
     phantom: true
 
@@ -345,10 +353,10 @@ DexLootCard < UIWidget
     anchors.right: parent.right
     anchors.top: parent.top
     margin-right: 10
-    margin-top: 8
+    margin-top: 6
     width: 90
     text-align: right
-    font: noto-bold-11px
+    font: poppins-semibold-13px
     color: #7ee07e
     phantom: true
 
@@ -356,10 +364,10 @@ DexLootCard < UIWidget
     id: rarity
     anchors.right: chance.right
     anchors.top: chance.bottom
-    margin-top: 2
+    margin-top: 1
     width: 90
     text-align: right
-    font: noto-11px
+    font: poppins-12px
     color: #8ea3bf
     phantom: true
 
@@ -382,40 +390,6 @@ DexLootCard < UIWidget
       width: 2
       background-color: #7ee07e
       phantom: true
-
-DexLocationRow < UIWidget
-  height: 44
-  image-source: /game_pokedex/images/card
-  image-border: 8
-
-  Label
-    id: town
-    anchors.left: parent.left
-    anchors.right: showButton.left
-    anchors.top: parent.top
-    margin-left: 12
-    margin-top: 7
-    font: noto-bold-11px
-    color: #ffffff
-    phantom: true
-
-  Label
-    id: detail
-    anchors.left: town.left
-    anchors.right: town.right
-    anchors.top: town.bottom
-    margin-top: 2
-    font: noto-11px
-    color: #8ea3bf
-    phantom: true
-
-  DexButton
-    id: showButton
-    width: 96
-    anchors.right: parent.right
-    anchors.verticalCenter: parent.verticalCenter
-    margin-right: 8
-    text: Ver en mapa
 
 DexScroll < ScrollablePanel
   anchors.top: tabLine.bottom
@@ -461,7 +435,7 @@ UIWindow
     anchors.left: titleIcon.right
     anchors.verticalCenter: titleIcon.verticalCenter
     margin-left: 8
-    font: sans-bold-16px
+    font: poppins-bold-16px
     color: #ffffff
     text: PokeDex
     text-auto-resize: true
@@ -472,7 +446,7 @@ UIWindow
     anchors.left: title.right
     anchors.verticalCenter: titleIcon.verticalCenter
     margin-left: 14
-    font: noto-11px
+    font: poppins-12px
     color: #8ea3bf
     text-auto-resize: true
     phantom: true
@@ -517,12 +491,13 @@ UIWindow
     margin-left: 14
     width: 244
     height: 24
+    font: poppins-12px
 
   Label
     id: searchHint
     anchors.fill: searchEdit
-    text-offset: 6 5
-    font: noto-11px
+    text-offset: 6 4
+    font: poppins-12px
     color: #6c7a8d
     text: Buscar por nombre o numero...
     phantom: true
@@ -580,20 +555,28 @@ UIWindow
 
     UICreature
       id: headerCreature
-      size: 136 136
+      size: 128 128
       anchors.left: parent.left
       anchors.verticalCenter: parent.verticalCenter
-      margin-left: 14
+      margin-left: 18
+      phantom: true
+
+    UIWidget
+      id: headerImage
+      size: 128 128
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 18
       phantom: true
 
     Label
       id: bigNumber
-      anchors.right: mapButton.left
-      anchors.top: parent.top
-      margin-right: 18
-      margin-top: 16
-      font: sans-bold-16px
-      color: #ffffff40
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-right: 16
+      margin-bottom: 4
+      font: poppins-bold-52px
+      color: #ffffff1e
       text-auto-resize: true
       phantom: true
 
@@ -601,9 +584,9 @@ UIWindow
       id: nameLabel
       anchors.left: headerCreature.right
       anchors.top: parent.top
-      margin-left: 14
-      margin-top: 18
-      font: sans-bold-16px
+      margin-left: 16
+      margin-top: 12
+      font: poppins-bold-26px
       color: #ffffff
       text-auto-resize: true
       phantom: true
@@ -612,7 +595,7 @@ UIWindow
       id: type1
       anchors.left: nameLabel.left
       anchors.top: nameLabel.bottom
-      margin-top: 10
+      margin-top: 6
 
     DexChip
       id: type2
@@ -640,7 +623,7 @@ UIWindow
       anchors.top: type1.bottom
       margin-top: 10
       margin-right: 12
-      font: noto-11px
+      font: poppins-12px
       color: #dfe8f3
       phantom: true
 
@@ -651,7 +634,7 @@ UIWindow
       anchors.top: worldLabel.bottom
       margin-top: 4
       margin-right: 12
-      font: noto-11px
+      font: poppins-12px
       color: #a9b8cc
       phantom: true
 
@@ -708,13 +691,6 @@ UIWindow
     text: Botin
     @onClick: modules.game_pokedex.showTab('loot')
 
-  DexTab
-    id: tabLocation
-    anchors.top: tabInfo.top
-    anchors.left: tabLoot.right
-    text: Localizacion
-    @onClick: modules.game_pokedex.showTab('location')
-
   UIWidget
     id: tabLine
     anchors.top: tabInfo.bottom
@@ -733,7 +709,7 @@ UIWindow
     text-align: center
     text-wrap: true
     text-auto-resize: true
-    font: noto-11px
+    font: poppins-12px
     color: #6c7a8d
     text: Elige un pokemon de la lista o usa la pokedex (tecla E) sobre un pokemon.
     phantom: true
@@ -758,10 +734,3 @@ UIWindow
 
   DexScrollBar
     id: lootScrollBar
-
-  DexScroll
-    id: locationPanel
-    vertical-scrollbar: locationScrollBar
-
-  DexScrollBar
-    id: locationScrollBar

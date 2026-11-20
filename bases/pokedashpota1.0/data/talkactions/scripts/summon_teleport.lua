@@ -53,6 +53,11 @@ function onSay(player, words, param)
 		return false
 	end
 
+	if not player:hasDiscoveredTown(town:getId()) then
+		player:sendCancelMessage("Aun no has descubierto " .. town:getName() .. ". Tienes que ir primero.")
+		return false
+	end
+
 	if town:getId() > 49 then
 		if player:getStorageValue(quests.cathemAll.prizes[1].uid) < 2 then
 			player:sendCancelMessage("Sorry, not possible. You must finish catch'em all quest before teleport to this city.")

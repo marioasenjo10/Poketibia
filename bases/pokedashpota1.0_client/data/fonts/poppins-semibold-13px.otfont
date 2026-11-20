@@ -1,0 +1,8 @@
+Font
+  name: poppins-semibold-13px
+  texture: poppins-semibold-13px
+  height: 17
+  glyph-size: 21 18
+  y-offset: 0
+  spacing: 0 0
+  space-width: 3

@@ -1,6 +1,6 @@
 -- Pokedex estilo PKA: lista con todos los pokemon (pokeball en los capturados) y ficha con
--- cabecera por tipo, boton shiny, boton de localizacion (mapa grande con marcas), y pestanas
--- Info (evoluciones, habilidades, estadisticas, efectividad), Ataques, Botin y Localizacion.
+-- cabecera por tipo, boton shiny, lupa (mapa grande con marcas), y pestanas
+-- Info (evoluciones, habilidades, estadisticas, efectividad), Ataques y Botin.
 -- Los datos los manda el servidor por el opcode 62 (data/lib/core/pokedex.lua).
 
 local OPCODE_POKEDEX = 62
@@ -97,6 +97,31 @@ local function iconFor(name)
   local path = '/game_pokemonbar/bar_icon/' .. name:lower() .. '.png'
   if g_resources.fileExists(path) then return path end
   return nil
+end
+
+-- retrato grande generado en casa (comandos-casa.ps1, bloque [11])
+local function portraitFor(look)
+  if not look or look <= 0 then return nil end
+  local path = '/game_pokedex/portraits/' .. look .. '.png'
+  if g_resources.fileExists(path) then return path end
+  return nil
+end
+
+-- muestra el retrato si existe y si no el pokemon dibujado por el cliente
+local function setPortrait(image, creature, look)
+  local portrait = portraitFor(look)
+  if portrait then
+    image:setImageSource(portrait)
+    image:show()
+    creature:hide()
+  elseif look and look > 0 then
+    image:hide()
+    creature:setOutfit({ type = look })
+    creature:show()
+  else
+    image:hide()
+    creature:hide()
+  end
 end
 
 -- los opcodes cliente->servidor no llegan: se pide con una talkaction que no sale en el chat.
@@ -309,9 +334,9 @@ end
 
 -- ===================== Ficha =====================
 
-local PANELS = { info = 'infoPanel', moves = 'movesPanel', loot = 'lootPanel', location = 'locationPanel' }
-local SCROLLS = { info = 'infoScrollBar', moves = 'movesScrollBar', loot = 'lootScrollBar', location = 'locationScrollBar' }
-local TABS = { info = 'tabInfo', moves = 'tabMoves', loot = 'tabLoot', location = 'tabLocation' }
+local PANELS = { info = 'infoPanel', moves = 'movesPanel', loot = 'lootPanel' }
+local SCROLLS = { info = 'infoScrollBar', moves = 'movesScrollBar', loot = 'lootScrollBar' }
+local TABS = { info = 'tabInfo', moves = 'tabMoves', loot = 'tabLoot' }
 
 function clearInfo()
   current = nil
@@ -377,14 +402,14 @@ function loadInfo(buffer)
   child('headerCard'):show()
   -- cada seccion por separado: si una falla, las demas se siguen viendo
   local errors = {}
-  for _, builder in ipairs({ buildHeader, buildInfoPanel, buildMovesPanel, buildLootPanel, buildLocationPanel }) do
+  for _, builder in ipairs({ buildHeader, buildInfoPanel, buildMovesPanel, buildLootPanel }) do
     local ok, err = pcall(builder, info)
     if not ok then table.insert(errors, tostring(err)) end
   end
   child('tabMoves'):setText('Ataques (' .. #info.moves .. ')')
   child('tabLoot'):setText('Botin (' .. #info.loot .. ')')
-  child('tabLocation'):setText(info.isShiny and 'Localizacion (?)' or ('Localizacion (' .. #info.locations .. ')'))
   for _, tab in pairs(TABS) do child(tab):show() end
+  if not PANELS[currentTab] then currentTab = 'info' end
   showTab(currentTab)
   focusRow(info.number)
   for _, err in ipairs(errors) do
@@ -398,13 +423,7 @@ function buildHeader(info)
   child('gradient'):setImageColor(color)
   child('stripe'):setBackgroundColor(color)
 
-  local creature = child('headerCreature')
-  if info.look > 0 then
-    creature:setOutfit({ type = info.look })
-    creature:show()
-  else
-    creature:hide()
-  end
+  setPortrait(child('headerImage'), child('headerCreature'), info.look)
   child('nameLabel'):setText(info.name)
   child('bigNumber'):setText(dexLabel(info.number))
   setChip(child('type1'), typeInfo[1], color)
@@ -429,20 +448,20 @@ function buildHeader(info)
     world = 'Capturado por ' .. info.owners .. ' entrenadores'
   end
   if info.isShiny then
-    world = world .. '   |   ' .. (info.fromBase and 'Aparece al azar en lugar de su forma normal' or 'No aparece salvaje')
+    world = world .. '   |   ' .. (info.fromBase and 'Sale al azar en vez de su forma normal' or 'No aparece salvaje')
   elseif info.worldCount > 0 then
     world = world .. '   |   ' .. info.worldCount .. ' puntos de aparicion'
   else
     world = world .. '   |   No aparece salvaje'
   end
-  child('worldLabel'):setText(world .. '   |   ' .. (info.registered and 'Registrado en tu pokedex' or 'Sin registrar'))
+  child('worldLabel'):setText(world)
 
   local catchChance = tonumber(info.stats[10]) or 0
-  local catchText = 'Capturados: ' .. info.catches .. '    Intentos: ' .. info.tries
+  local catchText = (info.registered and 'Registrado' or 'Sin registrar') .. '   |   Capturados: ' .. info.catches .. '   |   Intentos: ' .. info.tries
   if catchChance > 0 then
-    catchText = catchText .. '    Captura con pokeball: ' .. string.format('%.1f', math.min(100, catchChance * 100 / 300)) .. '%'
+    catchText = catchText .. '   |   Captura: ' .. string.format('%.1f', math.min(100, catchChance * 100 / 300)) .. '%'
   else
-    catchText = catchText .. '    No se puede capturar'
+    catchText = catchText .. '   |   No se puede capturar'
   end
   child('catchLabel'):setText(catchText)
 
@@ -538,9 +557,7 @@ function buildInfoPanel(info)
       cell:getChildById('arrow'):setVisible(i > 1)
       local card = cell:getChildById('card')
       card:setOn(stage.name:lower() == info.name:lower())
-      if stage.look > 0 then
-        card:getChildById('creature'):setOutfit({ type = stage.look })
-      end
+      setPortrait(card:getChildById('image'), card:getChildById('creature'), stage.look)
       card:getChildById('name'):setText(stage.name)
       local levelText = ''
       if stage.depth > 0 then
@@ -618,9 +635,9 @@ function buildInfoPanel(info)
         chip:setText(TYPES[t][1])
         chip:setImageColor(TYPES[t][2])
       end
-      local height = gridHeight(#list, 5, 20, 6)
+      local height = gridHeight(#list, 6, 20, 6)
       chipsWidget:setHeight(height)
-      row:setHeight(height)
+      row:setHeight(height + 22)
     end
   end
 end
@@ -714,41 +731,11 @@ local function locationPositions(info)
   return all
 end
 
-function buildLocationPanel(info)
-  local panel = child('locationPanel')
-  panel:destroyChildren()
-  addSection(panel, 'LOCALIZACION')
-  if info.isShiny then
-    addText(panel, 'No se puede ver la localizacion de los shiny.', '#ffd84a')
-    addText(panel, info.fromBase and 'Aparecen al azar, en lugar de su forma normal, en cualquier sitio donde sale ' .. info.name:sub(7) .. '.'
-      or 'No aparece en estado salvaje (evolucion, evento, misiones...).', '#8ea3bf')
-    return
-  end
-  if #info.locations == 0 then
-    addText(panel, 'No aparece en estado salvaje (evolucion, evento, misiones...).', '#8ea3bf')
-    return
-  end
-  if info.fromBase then
-    addText(panel, 'Los shiny aparecen al azar en lugar de su forma normal, en estas zonas:', '#ffd84a')
-  end
-  local all = locationPositions(info)
-  local allButton = g_ui.createWidget('DexButton', panel)
-  allButton:setText('Ver todas las zonas en el mapa')
-  allButton.onClick = function() showAllOnMap() end
-
-  for i, loc in ipairs(info.locations) do
-    local row = g_ui.createWidget('DexLocationRow', panel)
-    row:getChildById('town'):setText(loc.town ~= '' and ('Cerca de ' .. loc.town) or ('Zona ' .. i))
-    row:getChildById('detail'):setText(loc.count .. ' en la zona   |   ' .. loc.x .. ', ' .. loc.y .. '   |   ' .. floorText(loc.z))
-    row:getChildById('showButton').onClick = function() showOnMap({ all[i] }) end
-  end
-end
-
 function showOnMap(positions)
   local minimap = modules.game_minimap
   if not minimap or not minimap.showPositions or not current or #positions == 0 then return end
   hide()
-  minimap.showPositions(positions, current.name, iconFor(current.name))
+  minimap.showPositions(positions, current.name, iconFor(current.name) or portraitFor(current.look))
 end
 
 function showAllOnMap()

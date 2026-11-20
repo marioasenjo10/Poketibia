@@ -1,0 +1,8 @@
+Font
+  name: poppins-12px
+  texture: poppins-12px
+  height: 16
+  glyph-size: 20 17
+  y-offset: 0
+  spacing: 0 0
+  space-width: 3

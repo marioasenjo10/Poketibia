@@ -44,6 +44,7 @@ function onLogin(player)
 	player:refreshPokemonBar({}, {})
 
 	-- Nombres de las ciudades para el mapa grande del cliente
+	player:checkTownDiscovery()
 	player:sendTownList()
 
 	-- Check fly

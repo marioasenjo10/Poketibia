@@ -3,6 +3,7 @@
 	<globalevent type="startup" name="ServerStartup" script="startup.lua" />
 	<globalevent type="record" name="PlayerRecord" script="record.lua" />
 	<globalevent name="Server Save" interval="3600000" script="serversave.lua" />
+	<globalevent name="Town Discovery" interval="2000" script="towndiscovery.lua" />
 	<globalevent name="Bag Event" time="17:00:00" script="bagevent.lua" />
 	<globalevent name="Bag Event 2" time="17:30:00" script="bagevent.lua" />
 	<globalevent name="Bag Event 3" time="18:00:00" script="bagevent.lua" />

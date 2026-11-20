@@ -365,3 +365,23 @@ Start-Job {
 git add bases/pokedashpota1.0_client/modules/game_minimap/world.otmm
 git commit -q -m "Mapa entero para el mapa grande (world.otmm)"
 git push
+
+# ---------------------------------------------------------------------
+# [11] Retratos de los pokemon para la pokedex (imagen grande y nitida)
+#      Dibuja cada pokemon del servidor desde el Tibia.dat/spr y lo guarda en
+#      modules\game_pokedex\portraits\<looktype>.png. Repetir si anades pokemon.
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+Start-Job {
+    Set-Location 'C:\Develop\Poketibia-project'
+    $t = (Resolve-Path 'tools\pokeassets').Path
+    Add-Type -Path "$t\Otb.cs","$t\Things.cs","$t\Portraits.cs" -ReferencedAssemblies System.Drawing
+    [Portraits]::Run((Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path,
+                     (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.spr').Path,
+                     (Resolve-Path 'bases\pokedashpota1.0\data\monster').Path,
+                     (Join-Path (Get-Location) 'bases\pokedashpota1.0_client\modules\game_pokedex\portraits'))
+} | Receive-Job -Wait -AutoRemoveJob
+git add bases/pokedashpota1.0_client/modules/game_pokedex/portraits
+git commit -q -m "Retratos de los pokemon para la pokedex"
+git push

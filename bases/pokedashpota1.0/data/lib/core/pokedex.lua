@@ -465,11 +465,52 @@ function Player.openPokedex(self, number)
 	end
 end
 
+-- Ciudades descubiertas: solo te puedes teletransportar a las que ya has visitado
+TOWN_DISCOVERED_STORAGE = 72000 -- + id de la ciudad
+local TOWN_DISCOVER_RANGE = 35
+local townCache
+
+local function townsWithTemple()
+	if not townCache then
+		townCache = {}
+		for _, town in ipairs(Game.getTowns()) do
+			townCache[#townCache + 1] = { id = town:getId(), name = town:getName(), pos = town:getTemplePosition() }
+		end
+	end
+	return townCache
+end
+
+function Player.hasDiscoveredTown(self, townId)
+	if self:getGroup():getAccess() then
+		return true
+	end
+	local home = self:getTown()
+	if home and home:getId() == townId then
+		return true
+	end
+	return self:getStorageValue(TOWN_DISCOVERED_STORAGE + townId) == 1
+end
+
+-- se llama cada pocos segundos (globalevents/scripts/towndiscovery.lua) y al entrar
+function Player.checkTownDiscovery(self)
+	local pos = self:getPosition()
+	for _, t in ipairs(townsWithTemple()) do
+		if math.abs(t.pos.z - pos.z) <= 1 and math.abs(t.pos.x - pos.x) <= TOWN_DISCOVER_RANGE
+				and math.abs(t.pos.y - pos.y) <= TOWN_DISCOVER_RANGE
+				and self:getStorageValue(TOWN_DISCOVERED_STORAGE + t.id) ~= 1 then
+			self:setStorageValue(TOWN_DISCOVERED_STORAGE + t.id, 1)
+			self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Has descubierto " .. t.name .. ". Ya puedes teletransportarte aqui desde el mapa.")
+			self:sendTownList()
+		end
+	end
+end
+
 function Player.sendTownList(self)
 	local parts = {}
 	for _, town in ipairs(Game.getTowns()) do
 		local pos = town:getTemplePosition()
-		parts[#parts + 1] = clean(town:getName()) .. ":" .. pos.x .. ":" .. pos.y .. ":" .. pos.z
+		local discovered = self:hasDiscoveredTown(town:getId()) and 1 or 0
+		parts[#parts + 1] = clean(town:getName()) .. ":" .. pos.x .. ":" .. pos.y .. ":" .. pos.z .. ":" .. discovered
 	end
 	self:sendExtendedOpcode(OPCODE_TOWNS, table.concat(parts, ";"))
 end

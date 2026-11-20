@@ -216,21 +216,58 @@ function clearTownLabels()
   townLabels = {}
 end
 
+local TOWN_FONT = 'poppins-semibold-13px'
+local TOWN_COLOR = '#ffffff'
+local TOWN_COLOR_HIDDEN = '#9aa3b2'
+local TOWN_COLOR_HOVER = '#ffd84a'
+
+local function townText(parent, text, color, offsetX, offsetY)
+  local label = g_ui.createWidget('UIWidget', parent)
+  label:fill('parent')
+  label:setFont(TOWN_FONT)
+  label:setText(text)
+  label:setColor(color)
+  label:setTextAlign(AlignLeftCenter)
+  label:setTextOffset({ x = offsetX, y = offsetY })
+  label:setPhantom(true)
+  return label
+end
+
+-- chincheta + nombre con sombra (sin caja), blanco si la has descubierto y apagado si no
+local function createTownLabel(name, discovered)
+  local widget = g_ui.createWidget('UIWidget')
+  widget:setFocusable(false)
+  local pin = g_ui.createWidget('UIWidget', widget)
+  pin:setSize({ width = 16, height = 22 })
+  pin:addAnchor(AnchorLeft, 'parent', AnchorLeft)
+  pin:addAnchor(AnchorTop, 'parent', AnchorTop)
+  pin:setImageSource(discovered and '/game_pokedex/images/pin' or '/game_pokedex/images/pin_off')
+  pin:setPhantom(true)
+  townText(widget, name, '#000000c0', 20, 1)
+  local text = townText(widget, name, discovered and TOWN_COLOR or TOWN_COLOR_HIDDEN, 19, 0)
+  widget:setSize({ width = 19 + text:getTextSize().width + 3, height = 22 })
+  if not discovered then
+    widget:setOpacity(0.8)
+  end
+  widget.onHoverChange = function(_, hovered)
+    text:setColor(hovered and TOWN_COLOR_HOVER or (discovered and TOWN_COLOR or TOWN_COLOR_HIDDEN))
+  end
+  return widget
+end
+
 function onTownsOpcode(protocol, opcode, buffer)
   clearTownLabels()
   for entry in buffer:gmatch('[^;]+') do
-    local name, x, y, z = entry:match('^(.-):(%d+):(%d+):(%d+)$')
+    local name, x, y, z, flag = entry:match('^(.-):(%d+):(%d+):(%d+):?(%d*)$')
     if name and name ~= '' then
-      local label = g_ui.createWidget('UIButton')
-      label:setFont('verdana-11px-rounded')
-      label:setText(name)
-      label:setColor('#ffffff')
-      label:setBackgroundColor('#000000aa')
-      label:setTextAutoResize(true)
-      label:setFocusable(false)
-      label:setTooltip(name .. '\nClic: teletransportarse (necesitas un pokemon con Teleport, como Abra o Alakazam)')
-      label.onClick = function(widget) askTeleport(name, widget) end
-      label.onHoverChange = function(widget, hovered) widget:setColor(hovered and '#ffd84a' or '#ffffff') end
+      local discovered = flag ~= '0'
+      local label = createTownLabel(name, discovered)
+      if discovered then
+        label:setTooltip(name .. '\nClic: teletransportarse (necesitas un pokemon con Teleport, como Abra o Alakazam)')
+      else
+        label:setTooltip(name .. '\nAun no has descubierto esta ciudad')
+      end
+      label.onClick = function(widget) askTeleport(name, widget, discovered) end
       minimapWidget:addAlternativeWidget(label, { x = tonumber(x), y = tonumber(y) - 4, z = tonumber(z) }, -100)
       table.insert(townLabels, label)
       if fullmapView then
@@ -242,7 +279,11 @@ function onTownsOpcode(protocol, opcode, buffer)
   updateOverlayFloors()
 end
 
-function askTeleport(townName, widget)
+function askTeleport(townName, widget, discovered)
+  if discovered == false then
+    modules.game_textmessage.displayFailureMessage('Aun no has descubierto ' .. townName .. '. Ve primero para poder teletransportarte.')
+    return
+  end
   local menu = g_ui.createWidget('PopupMenu')
   menu:setGameMenu(true)
   menu:addOption('Teletransportarse a ' .. townName, function()
@@ -281,7 +322,8 @@ function clearPokedexFlags()
   pokedexFlags = {}
 end
 
--- positions = { {x=, y=, z=, text=}, ... }; icon = imagen del pokemon (o nil); centra el mapa en la primera
+-- positions = { {x=, y=, z=, text=}, ... }; icon = imagen del pokemon (o nil)
+-- centra el mapa en la zona mas cercana al jugador (mejor en su mismo piso)
 function showPositions(positions, title, icon)
   if #positions == 0 then return end
   if not fullmapView then
@@ -296,14 +338,25 @@ function showPositions(positions, title, icon)
     local image = g_ui.createWidget('UIWidget', marker)
     image:setSize({ width = 24, height = 24 })
     image:centerIn('parent')
-    image:setImageSource(icon or '/images/game/minimap/flag9')
+    image:setImageSource(icon or '/game_pokedex/images/pokeball_big')
     image:setPhantom(true)
     marker.pos = { x = p.x, y = p.y, z = p.z }
     minimapWidget:addChild(marker)
     minimapWidget:centerInPosition(marker, marker.pos)
     table.insert(pokedexFlags, marker)
   end
-  local first = positions[1]
-  minimapWidget:setCameraPosition({ x = first.x, y = first.y, z = first.z })
+  local best = positions[1]
+  local player = g_game.getLocalPlayer()
+  local me = player and player:getPosition()
+  if me then
+    local bestScore
+    for _, p in ipairs(positions) do
+      local score = math.max(math.abs(p.x - me.x), math.abs(p.y - me.y)) + math.abs(p.z - me.z) * 300
+      if not bestScore or score < bestScore then
+        best, bestScore = p, score
+      end
+    end
+  end
+  minimapWidget:setCameraPosition({ x = best.x, y = best.y, z = best.z })
   updateOverlayFloors()
 end
