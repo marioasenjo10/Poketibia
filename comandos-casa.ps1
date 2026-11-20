@@ -425,3 +425,28 @@ Copy-Item $exe 'analisis\pokedashpota_win64.bin' -Force
 git add analisis/pokedashpota_win64.bin
 git commit -q -m "Copia del exe del servidor para analisis"
 git push
+
+# ---------------------------------------------------------------------
+# [14] Quitar el " [nivel]" del nombre de todos los pokemon (parche al
+#      .exe del servidor). CIERRA EL SERVIDOR ANTES.
+#      Parte de la copia original (.orig) y cambia 2 bytes: el
+#      "si nivel > 0, pon [nivel]" pasa a "pon siempre el nombre normal".
+#      Para deshacerlo: Copy-Item "$exe.orig" $exe -Force
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+$exe = 'bases\pokedashpota1.0\pokedashpota_win64.exe'
+$b = [IO.File]::ReadAllBytes((Resolve-Path "$exe.orig"))
+$h = [BitConverter]::ToString([Security.Cryptography.SHA256]::Create().ComputeHash($b)) -replace '-'
+$off = 0x1AEBA6
+if ($h -ne '7E1210A242D2164D2D756F9586736CB0F5938BD9B0F9ECCFB881A930DCD98333' -or
+    $b[$off] -ne 0x0F -or $b[$off + 1] -ne 0x84) {
+    Write-Host 'El .orig no es el exe esperado. No se toca nada.' -ForegroundColor Red
+} else {
+    $b[$off] = 0x90; $b[$off + 1] = 0xE9
+    [IO.File]::WriteAllBytes((Join-Path (Get-Location) $exe), $b)
+    Write-Host 'Parche aplicado. Arranca el servidor.' -ForegroundColor Green
+    git rm -q analisis/pokedashpota_win64.bin
+    git commit -q -m "Quitar copia de analisis del exe"
+    git push
+}
