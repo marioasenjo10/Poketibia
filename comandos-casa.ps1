@@ -443,31 +443,19 @@ if ($h -ne '7E1210A242D2164D2D756F9586736CB0F5938BD9B0F9ECCFB881A930DCD98333' -o
     $b[$off] -ne 0x0F -or $b[$off + 1] -ne 0x84) {
     Write-Host 'El .orig no es el exe esperado. No se toca nada.' -ForegroundColor Red
 } else {
-    $b[$off] = 0x90; $b[$off + 1] = 0xE9
-    [IO.File]::WriteAllBytes((Join-Path (Get-Location) $exe), $b)
-    Write-Host 'Parche aplicado. Arranca el servidor.' -ForegroundColor Green
-    git rm -q analisis/pokedashpota_win64.bin
-    git commit -q -m "Quitar copia de analisis del exe"
-    git push
+    # cerrar el servidor si sigue abierto (si no, Windows no deja escribir el .exe)
+    Get-Process pokedashpota_win64 -ErrorAction SilentlyContinue | Stop-Process -Force
+    Get-Process pokedashpota_win64 -ErrorAction SilentlyContinue | Wait-Process -Timeout 15
+    try {
+        $b[$off] = 0x90; $b[$off + 1] = 0xE9
+        [IO.File]::WriteAllBytes((Join-Path (Get-Location) $exe), $b)
+        Write-Host 'Parche aplicado. Arranca el servidor.' -ForegroundColor Green
+        if (Test-Path analisis\pokedashpota_win64.bin) {
+            git rm -q analisis/pokedashpota_win64.bin
+            git commit -q -m "Quitar copia de analisis del exe"
+            git push
+        }
+    } catch {
+        Write-Host "No se pudo escribir el .exe: $($_.Exception.Message)" -ForegroundColor Red
+    }
 }
-
-
-PS C:\Develop\Poketibia-project> if ($h -ne '7E1210A242D2164D2D756F9586736CB0F5938BD9B0F9ECCFB881A930DCD98333' -or
->>     $b[$off] -ne 0x0F -or $b[$off + 1] -ne 0x84) {
->>     Write-Host 'El .orig no es el exe esperado. No se toca nada.' -ForegroundColor Red
->> } else {
->>     $b[$off] = 0x90; $b[$off + 1] = 0xE9
->>     [IO.File]::WriteAllBytes((Join-Path (Get-Location) $exe), $b)
->>     Write-Host 'Parche aplicado. Arranca el servidor.' -ForegroundColor Green
->>     git rm -q analisis/pokedashpota_win64.bin
->>     git commit -q -m "Quitar copia de analisis del exe"
->>     git push
->> }
-Excepción al llamar a "WriteAllBytes" con los argumentos "2": "El proceso no puede obtener acceso al archivo 
-'C:\Develop\Poketibia-project\bases\pokedashpota1.0\pokedashpota_win64.exe' porque está siendo utilizado en otro proceso."
-En línea: 6 Carácter: 5
-+     [IO.File]::WriteAllBytes((Join-Path (Get-Location) $exe), $b)
-+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
-    + FullyQualifiedErrorId : IOException
- 
