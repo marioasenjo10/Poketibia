@@ -93,7 +93,9 @@ local ignoreEnterUp = false
 
 local function bindWasd(bind)
   local gameInterface = modules.game_interface
-  local keys = { W = North, D = East, S = South, A = West, E = NorthEast, Q = NorthWest, C = SouthEast, Z = SouthWest }
+  -- la E queda libre para la pokedex (hotkey)
+  local keys = { W = North, D = East, S = South, A = West, Q = NorthWest, C = SouthEast, Z = SouthWest }
+  gameInterface.unbindWalkKey('E')
   for key, dir in pairs(keys) do
     gameInterface.unbindWalkKey(key)
     if bind then gameInterface.bindWalkKey(key, dir) end
@@ -114,6 +116,22 @@ local function closeWasdChat()
     return true
   end
   return false
+end
+
+-- true si una tecla de letra (por ejemplo la E de la pokedex) se puede usar como atajo:
+-- modo WASD activo, chat cerrado y sin ningun cuadro de texto con el foco
+function areLetterKeysFree()
+  if not wasdMode or wasdChatOpen then return false end
+  local widget = rootWidget
+  while widget do
+    local focused = widget:getFocusedChild()
+    if not focused then break end
+    widget = focused
+  end
+  if widget and widget ~= rootWidget and widget:getClassName() == 'UITextEdit' and widget:isVisible() then
+    return false
+  end
+  return true
 end
 
 local function onEnterUp()

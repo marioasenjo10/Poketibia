@@ -35,6 +35,16 @@ function init()
 
   minimapWindow:setup()
 
+  -- marcas de la pokedex y ciudades: solo se ven en su piso
+  minimapWidget.onCameraPositionChange = function(widget, cameraPos, oldPos)
+    UIMinimap.onCameraPositionChange(widget, cameraPos, oldPos)
+    updateOverlayFloors()
+  end
+  minimapWidget.onZoomChange = function(widget, zoom)
+    UIMinimap.onZoomChange(widget, zoom)
+    updateOverlayFloors()
+  end
+
   connect(g_game, {
     onGameStart = online,
     onGameEnd = offline,
@@ -187,6 +197,7 @@ function toggleFullMap()
   if not fullmapView then
     clearPokedexFlags()
   end
+  updateOverlayFloors()
 end
 
 function closeFullMap()
@@ -210,19 +221,51 @@ function onTownsOpcode(protocol, opcode, buffer)
   for entry in buffer:gmatch('[^;]+') do
     local name, x, y, z = entry:match('^(.-):(%d+):(%d+):(%d+)$')
     if name and name ~= '' then
-      local label = g_ui.createWidget('Label')
+      local label = g_ui.createWidget('UIButton')
       label:setFont('verdana-11px-rounded')
       label:setText(name)
       label:setColor('#ffffff')
       label:setBackgroundColor('#000000aa')
       label:setTextAutoResize(true)
-      label:setPhantom(true)
+      label:setFocusable(false)
+      label:setTooltip(name .. '\nClic: teletransportarse (necesitas un pokemon con Teleport, como Abra o Alakazam)')
+      label.onClick = function(widget) askTeleport(name, widget) end
+      label.onHoverChange = function(widget, hovered) widget:setColor(hovered and '#ffd84a' or '#ffffff') end
       minimapWidget:addAlternativeWidget(label, { x = tonumber(x), y = tonumber(y) - 4, z = tonumber(z) }, -100)
       table.insert(townLabels, label)
       if fullmapView then
         minimapWidget:insertChild(1, label)
         minimapWidget:centerInPosition(label, label.pos)
       end
+    end
+  end
+  updateOverlayFloors()
+end
+
+function askTeleport(townName, widget)
+  local menu = g_ui.createWidget('PopupMenu')
+  menu:setGameMenu(true)
+  menu:addOption('Teletransportarse a ' .. townName, function()
+    g_game.talk('!teleport ' .. townName)
+    closeFullMap()
+  end)
+  menu:display(g_window.getMousePosition())
+end
+
+-- muestra cada marca/ciudad solo en su piso (el mapa no las oculta solo)
+function updateOverlayFloors()
+  if not minimapWidget then return end
+  local z = minimapWidget:getCameraPosition().z
+  local zoom = minimapWidget:getZoom()
+  for _, label in ipairs(townLabels) do
+    if label.pos then
+      local zoomOk = (not label.minZoom or label.minZoom >= zoom) and (label.maxZoom or 0) <= zoom
+      label:setVisible(zoomOk and label.pos.z == z)
+    end
+  end
+  for _, marker in ipairs(pokedexFlags) do
+    if not marker:isDestroyed() and marker.pos then
+      marker:setVisible(marker.pos.z == z)
     end
   end
 end
@@ -238,23 +281,29 @@ function clearPokedexFlags()
   pokedexFlags = {}
 end
 
--- positions = { {x=, y=, z=, text=}, ... }; centra el mapa en la primera
-function showPositions(positions, title)
+-- positions = { {x=, y=, z=, text=}, ... }; icon = imagen del pokemon (o nil); centra el mapa en la primera
+function showPositions(positions, title, icon)
   if #positions == 0 then return end
   if not fullmapView then
     toggleFullMap()
   end
   clearPokedexFlags()
   for _, p in ipairs(positions) do
-    local pos = { x = p.x, y = p.y, z = p.z }
-    if not minimapWidget:getFlag(pos) then
-      minimapWidget:addFlag(pos, 9, p.text or title, true)
-      local flag = minimapWidget:getFlag(pos)
-      if flag then
-        table.insert(pokedexFlags, flag)
-      end
-    end
+    local marker = g_ui.createWidget('UIWidget')
+    marker:setSize({ width = 30, height = 30 })
+    marker:setImageSource('/game_pokedex/images/marker')
+    marker:setTooltip(p.text or title)
+    local image = g_ui.createWidget('UIWidget', marker)
+    image:setSize({ width = 24, height = 24 })
+    image:centerIn('parent')
+    image:setImageSource(icon or '/images/game/minimap/flag9')
+    image:setPhantom(true)
+    marker.pos = { x = p.x, y = p.y, z = p.z }
+    minimapWidget:addChild(marker)
+    minimapWidget:centerInPosition(marker, marker.pos)
+    table.insert(pokedexFlags, marker)
   end
   local first = positions[1]
   minimapWidget:setCameraPosition({ x = first.x, y = first.y, z = first.z })
+  updateOverlayFloors()
 end

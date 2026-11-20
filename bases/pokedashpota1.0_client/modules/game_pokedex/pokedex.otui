@@ -1,103 +1,321 @@
-PokedexRow < Label
-  height: 18
-  font: noto-11px
-  text-offset: 6 2
+DexListRow < UIWidget
+  height: 26
   focusable: true
-  color: #dde5f0
   background-color: alpha
 
-  $on:
-    color: #5c6b80
+  $hover:
+    background-color: #17253a
 
   $focus:
-    background-color: #2e4a6e
-    color: #ffffff
+    background-color: #22406a
 
-PokedexSection < Label
-  height: 15
-  font: noto-bold-11px
-  color: #ffd84a
-  margin-top: 6
+  UIWidget
+    id: ball
+    size: 14 14
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 6
+    image-source: /game_pokedex/images/pokeball
+    phantom: true
 
-PokedexText < Label
-  font: noto-11px
-  color: #dde5f0
-  text-wrap: true
-  text-auto-resize: true
+  Label
+    id: number
+    anchors.left: ball.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 6
+    width: 36
+    font: noto-bold-11px
+    color: #5d6f88
+    phantom: true
 
-PokedexTab < UIButton
-  size: 120 24
-  image-source: /game_pokemonmoves/images/button
-  image-border: 6
-  font: noto-bold-11px
-  color: #9fb3cc
-  focusable: false
+  Label
+    id: name
+    anchors.left: number.right
+    anchors.right: dot.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 2
+    margin-right: 6
+    font: noto-11px
+    color: #8b9ab0
+    phantom: true
 
-  $hover:
-    image-source: /game_pokemonmoves/images/button_hover
-    color: #ffffff
+  UIWidget
+    id: dot
+    size: 7 7
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    image-source: /game_pokedex/images/dot
+    image-color: #33425a
+    phantom: true
 
-  $on:
-    image-source: /game_pokemonmoves/images/button_hover
-    color: #ffd84a
-
-PokedexTypeBadge < Label
-  size: 70 16
+DexChip < Label
+  height: 20
+  image-source: /game_pokedex/images/chip
+  image-border: 8
   font: noto-bold-11px
   color: #ffffff
   text-align: center
   phantom: true
 
-PokedexStat < UIWidget
+DexTab < UIButton
+  size: 120 32
+  font: noto-bold-11px
+  color: #7f93ad
+  background-color: alpha
+  focusable: false
+
+  $hover:
+    color: #ffffff
+    background-color: #142135
+
+  $on:
+    color: #ffffff
+    background-color: #17263c
+    border-width-bottom: 2
+    border-color-bottom: #3d8fe0
+
+DexSection < Label
   height: 16
+  margin-top: 4
+  font: noto-bold-11px
+  color: #8ea3bf
+
+DexText < Label
+  font: noto-11px
+  color: #c9d4e3
+  text-wrap: true
+  text-auto-resize: true
+
+DexButton < UIButton
+  height: 26
+  image-source: /game_pokedex/images/card
+  image-border: 8
+  font: noto-bold-11px
+  color: #dfe8f3
+  focusable: false
+
+  $hover:
+    image-source: /game_pokedex/images/card_hover
+    color: #ffffff
+
+DexFlow < UIWidget
+  height: 20
+  phantom: true
+  layout:
+    type: grid
+    cell-size: 96 20
+    cell-spacing: 6
+    flow: true
+
+DexEvoGrid < UIWidget
+  height: 116
+  layout:
+    type: grid
+    cell-size: 126 116
+    cell-spacing: 4
+    flow: true
+
+DexEvoCell < UIWidget
+  size: 126 116
+
+  UIWidget
+    id: arrow
+    size: 16 16
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    image-source: /game_pokedex/images/arrow
+    phantom: true
+
+  UIButton
+    id: card
+    size: 100 116
+    anchors.right: parent.right
+    anchors.top: parent.top
+    image-source: /game_pokedex/images/card
+    image-border: 8
+    focusable: false
+
+    $hover:
+      image-source: /game_pokedex/images/card_hover
+
+    $on:
+      image-source: /game_pokedex/images/card_active
+
+    UICreature
+      id: creature
+      size: 64 64
+      anchors.top: parent.top
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 4
+      phantom: true
+
+    Label
+      id: name
+      anchors.top: creature.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-left: 4
+      margin-right: 4
+      text-align: center
+      font: noto-bold-11px
+      color: #ffffff
+      phantom: true
+
+    Label
+      id: level
+      anchors.top: name.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 2
+      text-align: center
+      font: noto-11px
+      color: #8ea3bf
+      phantom: true
+
+DexStatGrid < UIWidget
+  height: 40
+  layout:
+    type: grid
+    cell-size: 144 40
+    cell-spacing: 6
+    flow: true
+
+DexStat < UIWidget
+  size: 144 40
+  image-source: /game_pokedex/images/card
+  image-border: 8
 
   Label
     id: name
+    anchors.top: parent.top
     anchors.left: parent.left
-    anchors.verticalCenter: parent.verticalCenter
-    width: 120
+    anchors.right: parent.right
+    margin-top: 5
+    margin-left: 10
     font: noto-11px
-    color: #9fb3cc
+    color: #8ea3bf
     phantom: true
 
   Label
     id: value
-    anchors.left: name.right
+    anchors.top: name.bottom
+    anchors.left: name.left
     anchors.right: parent.right
-    anchors.verticalCenter: parent.verticalCenter
+    margin-top: 1
     font: noto-bold-11px
     color: #ffffff
     phantom: true
 
-PokedexMoveIcon < UIWidget
-  size: 36 36
-  image-source: /game_pokemonmoves/images/slot
-  image-border: 7
+DexEffRow < UIWidget
+  height: 20
 
-  UIWidget
-    id: icon
-    size: 30 30
-    anchors.centerIn: parent
+  Label
+    id: label
+    anchors.left: parent.left
+    anchors.top: parent.top
+    width: 130
+    height: 20
+    font: noto-bold-11px
+    text-offset: 0 3
     phantom: true
 
-PokedexMoves < UIWidget
-  height: 36
+  DexFlow
+    id: chips
+    anchors.left: label.right
+    anchors.right: parent.right
+    anchors.top: parent.top
+    layout:
+      type: grid
+      cell-size: 80 20
+      cell-spacing: 6
+      flow: true
+
+DexMoveRow < UIWidget
+  height: 52
+  image-source: /game_pokedex/images/card
+  image-border: 8
+
+  UIWidget
+    id: slot
+    size: 40 40
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 6
+    image-source: /game_pokemonmoves/images/slot
+    image-border: 7
+    phantom: true
+
+    UIWidget
+      id: icon
+      size: 32 32
+      anchors.centerIn: parent
+      phantom: true
+
+  Label
+    id: cooldown
+    anchors.right: slot.right
+    anchors.bottom: slot.bottom
+    font: verdana-11px-rounded
+    color: #ffffff
+    background-color: #000000b0
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: name
+    anchors.left: slot.right
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 8
+    font: noto-bold-11px
+    color: #ffffff
+    text-auto-resize: true
+    phantom: true
+
+  DexChip
+    id: kind
+    anchors.left: name.right
+    anchors.verticalCenter: name.verticalCenter
+    margin-left: 8
+    height: 16
+
+  Label
+    id: description
+    anchors.left: name.left
+    anchors.right: element.left
+    anchors.top: name.bottom
+    margin-top: 4
+    margin-right: 8
+    font: noto-11px
+    color: #8ea3bf
+    phantom: true
+
+  DexChip
+    id: element
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+
+DexLootGrid < UIWidget
+  height: 56
   layout:
     type: grid
-    cell-size: 36 36
-    cell-spacing: 4
+    cell-size: 292 58
+    cell-spacing: 8
     flow: true
 
-PokedexLootRow < UIWidget
-  height: 40
-  image-source: /game_pokemonmoves/images/box
+DexLootCard < UIWidget
+  size: 292 58
+  image-source: /game_pokedex/images/card
   image-border: 8
 
   Item
     id: item
     anchors.left: parent.left
     anchors.verticalCenter: parent.verticalCenter
-    margin-left: 4
+    margin-left: 8
     virtual: true
     phantom: true
 
@@ -106,8 +324,8 @@ PokedexLootRow < UIWidget
     anchors.left: item.right
     anchors.right: chance.left
     anchors.top: parent.top
-    margin-left: 8
-    margin-top: 6
+    margin-left: 10
+    margin-top: 8
     font: noto-bold-11px
     color: #ffffff
     phantom: true
@@ -117,25 +335,57 @@ PokedexLootRow < UIWidget
     anchors.left: name.left
     anchors.right: name.right
     anchors.top: name.bottom
-    margin-top: 1
+    margin-top: 2
     font: noto-11px
-    color: #9fb3cc
+    color: #8ea3bf
     phantom: true
 
   Label
     id: chance
     anchors.right: parent.right
-    anchors.verticalCenter: parent.verticalCenter
+    anchors.top: parent.top
     margin-right: 10
-    width: 70
+    margin-top: 8
+    width: 90
     text-align: right
     font: noto-bold-11px
     color: #7ee07e
     phantom: true
 
-PokedexLocationRow < UIWidget
-  height: 40
-  image-source: /game_pokemonmoves/images/box
+  Label
+    id: rarity
+    anchors.right: chance.right
+    anchors.top: chance.bottom
+    margin-top: 2
+    width: 90
+    text-align: right
+    font: noto-11px
+    color: #8ea3bf
+    phantom: true
+
+  UIWidget
+    id: barBack
+    anchors.left: name.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-right: 10
+    margin-bottom: 7
+    height: 4
+    background-color: #24334b
+    phantom: true
+
+    UIWidget
+      id: bar
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 2
+      background-color: #7ee07e
+      phantom: true
+
+DexLocationRow < UIWidget
+  height: 44
+  image-source: /game_pokedex/images/card
   image-border: 8
 
   Label
@@ -143,8 +393,8 @@ PokedexLocationRow < UIWidget
     anchors.left: parent.left
     anchors.right: showButton.left
     anchors.top: parent.top
-    margin-left: 10
-    margin-top: 6
+    margin-left: 12
+    margin-top: 7
     font: noto-bold-11px
     color: #ffffff
     phantom: true
@@ -154,86 +404,104 @@ PokedexLocationRow < UIWidget
     anchors.left: town.left
     anchors.right: town.right
     anchors.top: town.bottom
-    margin-top: 1
+    margin-top: 2
     font: noto-11px
-    color: #9fb3cc
+    color: #8ea3bf
     phantom: true
 
-  UIButton
+  DexButton
     id: showButton
-    size: 100 24
+    width: 96
     anchors.right: parent.right
     anchors.verticalCenter: parent.verticalCenter
     margin-right: 8
-    image-source: /game_pokemonmoves/images/button
-    image-border: 6
-    font: noto-bold-11px
-    color: #e6edf6
     text: Ver en mapa
-    focusable: false
 
-    $hover:
-      image-source: /game_pokemonmoves/images/button_hover
-      color: #ffffff
-
-PokedexScroll < ScrollablePanel
-  anchors.top: tabInfo.bottom
+DexScroll < ScrollablePanel
+  anchors.top: tabLine.bottom
   anchors.bottom: parent.bottom
-  anchors.left: headerBox.left
-  anchors.right: headerBox.right
-  margin-top: 8
+  anchors.left: headerCard.left
+  anchors.right: headerCard.right
+  margin-top: 10
   margin-bottom: 14
-  margin-right: 14
+  margin-right: 16
   layout:
     type: verticalBox
-    spacing: 4
+    spacing: 8
 
-PokedexScrollBar < VerticalScrollBar
-  anchors.top: tabInfo.bottom
+DexScrollBar < VerticalScrollBar
+  anchors.top: tabLine.bottom
   anchors.bottom: parent.bottom
-  anchors.right: headerBox.right
-  margin-top: 8
+  anchors.right: headerCard.right
+  margin-top: 10
   margin-bottom: 14
-  step: 20
+  step: 24
   pixels-scroll: true
 
 UIWindow
   id: pokedexWindow
-  size: 640 460
+  size: 900 600
   anchors.centerIn: parent
-  image-source: /game_pokemonmoves/images/window
+  image-source: /game_pokedex/images/panel
   image-border: 10
   @onEscape: modules.game_pokedex.hide()
 
-  Label
-    id: title
+  UIWidget
+    id: titleIcon
+    size: 22 22
     anchors.top: parent.top
     anchors.left: parent.left
     margin-top: 12
     margin-left: 14
-    font: noto-bold-14px
+    image-source: /game_pokedex/images/pokeball_big
+    phantom: true
+
+  Label
+    id: title
+    anchors.left: titleIcon.right
+    anchors.verticalCenter: titleIcon.verticalCenter
+    margin-left: 8
+    font: sans-bold-16px
     color: #ffffff
-    text: Pokedex
+    text: PokeDex
     text-auto-resize: true
     phantom: true
 
   Label
-    id: seenLabel
+    id: caughtLabel
     anchors.left: title.right
-    anchors.verticalCenter: title.verticalCenter
-    margin-left: 12
+    anchors.verticalCenter: titleIcon.verticalCenter
+    margin-left: 14
     font: noto-11px
-    color: #9fb3cc
+    color: #8ea3bf
     text-auto-resize: true
     phantom: true
+
+  UIWidget
+    id: progressBack
+    anchors.left: caughtLabel.right
+    anchors.verticalCenter: titleIcon.verticalCenter
+    margin-left: 10
+    size: 180 6
+    background-color: #1d2a3e
+    phantom: true
+
+    UIWidget
+      id: progressFill
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      width: 0
+      background-color: #3d8fe0
+      phantom: true
 
   UIButton
     id: closeButton
     size: 16 16
     anchors.top: parent.top
     anchors.right: parent.right
-    margin-top: 14
-    margin-right: 14
+    margin-top: 15
+    margin-right: 16
     image-source: /game_pokemonmoves/images/close
     focusable: false
     @onClick: modules.game_pokedex.hide()
@@ -243,19 +511,20 @@ UIWindow
 
   TextEdit
     id: searchEdit
-    anchors.top: title.bottom
+    anchors.top: titleIcon.bottom
     anchors.left: parent.left
-    margin-top: 10
-    margin-left: 12
-    width: 190
+    margin-top: 12
+    margin-left: 14
+    width: 244
+    height: 24
 
   Label
     id: searchHint
     anchors.fill: searchEdit
-    text-offset: 6 4
+    text-offset: 6 5
     font: noto-11px
-    color: #8a8a8a
-    text: Buscar...
+    color: #6c7a8d
+    text: Buscar por nombre o numero...
     phantom: true
 
   TextList
@@ -263,11 +532,11 @@ UIWindow
     anchors.top: searchEdit.bottom
     anchors.bottom: parent.bottom
     anchors.left: searchEdit.left
-    width: 176
-    margin-top: 6
+    width: 232
+    margin-top: 8
     margin-bottom: 14
-    background-color: #0f1724
-    border-color: #2e3d52
+    background-color: #0b1220
+    border-width: 0
     focusable: false
     vertical-scrollbar: dexListScrollBar
 
@@ -276,128 +545,223 @@ UIWindow
     anchors.top: dexList.top
     anchors.bottom: dexList.bottom
     anchors.left: dexList.right
-    step: 18
+    step: 26
     pixels-scroll: true
 
   UIWidget
-    id: headerBox
+    id: headerCard
     anchors.top: searchEdit.top
     anchors.left: dexListScrollBar.right
     anchors.right: parent.right
-    margin-left: 10
-    margin-right: 12
-    height: 88
-    image-source: /game_pokemonmoves/images/box
+    margin-left: 14
+    margin-right: 14
+    height: 158
+    image-source: /game_pokedex/images/card
     image-border: 8
-    phantom: true
 
-  UICreature
-    id: creature
-    size: 72 72
-    anchors.left: headerBox.left
-    anchors.verticalCenter: headerBox.verticalCenter
-    margin-left: 8
-    phantom: true
+    UIWidget
+      id: gradient
+      anchors.fill: parent
+      margin: 1
+      image-source: /game_pokedex/images/gradient
+      image-color: #3d8fe0
+      phantom: true
 
-  Label
-    id: nameLabel
-    anchors.left: creature.right
-    anchors.top: headerBox.top
-    margin-left: 10
+    UIWidget
+      id: stripe
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
+      margin-top: 8
+      margin-bottom: 8
+      width: 4
+      background-color: #3d8fe0
+      phantom: true
+
+    UICreature
+      id: headerCreature
+      size: 136 136
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-left: 14
+      phantom: true
+
+    Label
+      id: bigNumber
+      anchors.right: mapButton.left
+      anchors.top: parent.top
+      margin-right: 18
+      margin-top: 16
+      font: sans-bold-16px
+      color: #ffffff40
+      text-auto-resize: true
+      phantom: true
+
+    Label
+      id: nameLabel
+      anchors.left: headerCreature.right
+      anchors.top: parent.top
+      margin-left: 14
+      margin-top: 18
+      font: sans-bold-16px
+      color: #ffffff
+      text-auto-resize: true
+      phantom: true
+
+    DexChip
+      id: type1
+      anchors.left: nameLabel.left
+      anchors.top: nameLabel.bottom
+      margin-top: 10
+
+    DexChip
+      id: type2
+      anchors.left: type1.right
+      anchors.top: type1.top
+      margin-left: 6
+
+    DexChip
+      id: levelChip
+      anchors.left: type2.right
+      anchors.top: type1.top
+      margin-left: 6
+      image-color: #2b3b55
+
+    DexChip
+      id: specialChip
+      anchors.left: levelChip.right
+      anchors.top: type1.top
+      margin-left: 6
+
+    Label
+      id: worldLabel
+      anchors.left: nameLabel.left
+      anchors.right: parent.right
+      anchors.top: type1.bottom
+      margin-top: 10
+      margin-right: 12
+      font: noto-11px
+      color: #dfe8f3
+      phantom: true
+
+    Label
+      id: catchLabel
+      anchors.left: nameLabel.left
+      anchors.right: parent.right
+      anchors.top: worldLabel.bottom
+      margin-top: 4
+      margin-right: 12
+      font: noto-11px
+      color: #a9b8cc
+      phantom: true
+
+    UIButton
+      id: shinyButton
+      size: 32 32
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 10
+      image-source: /game_pokedex/images/shiny
+      focusable: false
+      @onClick: modules.game_pokedex.toggleShiny()
+
+      $hover:
+        image-source: /game_pokedex/images/shiny_hover
+
+      $on:
+        image-source: /game_pokedex/images/shiny_on
+
+    UIButton
+      id: mapButton
+      size: 32 32
+      anchors.top: shinyButton.top
+      anchors.right: shinyButton.left
+      margin-right: 6
+      image-source: /game_pokedex/images/search
+      focusable: false
+      tooltip: Ver donde aparece en el mapa
+      @onClick: modules.game_pokedex.showAllOnMap()
+
+      $hover:
+        image-source: /game_pokedex/images/search_hover
+
+  DexTab
+    id: tabInfo
+    anchors.top: headerCard.bottom
+    anchors.left: headerCard.left
     margin-top: 10
-    font: noto-bold-14px
-    color: #ffffff
-    text-auto-resize: true
-    phantom: true
+    text: Info
+    @onClick: modules.game_pokedex.showTab('info')
 
-  Label
-    id: numberLabel
-    anchors.left: nameLabel.right
-    anchors.verticalCenter: nameLabel.verticalCenter
-    margin-left: 8
-    font: noto-11px
-    color: #9fb3cc
-    text-auto-resize: true
-    phantom: true
+  DexTab
+    id: tabMoves
+    anchors.top: tabInfo.top
+    anchors.left: tabInfo.right
+    text: Ataques
+    @onClick: modules.game_pokedex.showTab('moves')
 
-  PokedexTypeBadge
-    id: type1
-    anchors.left: nameLabel.left
-    anchors.top: nameLabel.bottom
-    margin-top: 6
+  DexTab
+    id: tabLoot
+    anchors.top: tabInfo.top
+    anchors.left: tabMoves.right
+    text: Botin
+    @onClick: modules.game_pokedex.showTab('loot')
 
-  PokedexTypeBadge
-    id: type2
-    anchors.left: type1.right
-    anchors.top: type1.top
-    margin-left: 6
+  DexTab
+    id: tabLocation
+    anchors.top: tabInfo.top
+    anchors.left: tabLoot.right
+    text: Localizacion
+    @onClick: modules.game_pokedex.showTab('location')
 
-  Label
-    id: catchLabel
-    anchors.left: nameLabel.left
-    anchors.right: headerBox.right
-    anchors.top: type1.bottom
-    margin-top: 6
-    margin-right: 10
-    font: noto-11px
-    color: #9fb3cc
+  UIWidget
+    id: tabLine
+    anchors.top: tabInfo.bottom
+    anchors.left: headerCard.left
+    anchors.right: headerCard.right
+    height: 1
+    background-color: #26354f
     phantom: true
 
   Label
     id: emptyLabel
-    anchors.left: headerBox.left
-    anchors.right: headerBox.right
-    anchors.top: headerBox.bottom
-    margin-top: 80
+    anchors.left: headerCard.left
+    anchors.right: headerCard.right
+    anchors.top: tabLine.bottom
+    margin-top: 60
     text-align: center
     text-wrap: true
     text-auto-resize: true
     font: noto-11px
     color: #6c7a8d
-    text: Elige un pokemon de la lista o usa la pokedex sobre un pokemon salvaje.
+    text: Elige un pokemon de la lista o usa la pokedex (tecla E) sobre un pokemon.
     phantom: true
 
-  PokedexTab
-    id: tabInfo
-    anchors.top: headerBox.bottom
-    anchors.left: headerBox.left
-    margin-top: 8
-    text: Informacion
-    @onClick: modules.game_pokedex.showTab('info')
-
-  PokedexTab
-    id: tabLoot
-    anchors.top: tabInfo.top
-    anchors.left: tabInfo.right
-    margin-left: 6
-    text: Botin
-    @onClick: modules.game_pokedex.showTab('loot')
-
-  PokedexTab
-    id: tabLocation
-    anchors.top: tabInfo.top
-    anchors.left: tabLoot.right
-    margin-left: 6
-    text: Localizacion
-    @onClick: modules.game_pokedex.showTab('location')
-
-  PokedexScroll
+  DexScroll
     id: infoPanel
     vertical-scrollbar: infoScrollBar
 
-  PokedexScrollBar
+  DexScrollBar
     id: infoScrollBar
 
-  PokedexScroll
+  DexScroll
+    id: movesPanel
+    vertical-scrollbar: movesScrollBar
+
+  DexScrollBar
+    id: movesScrollBar
+
+  DexScroll
     id: lootPanel
     vertical-scrollbar: lootScrollBar
 
-  PokedexScrollBar
+  DexScrollBar
     id: lootScrollBar
 
-  PokedexScroll
+  DexScroll
     id: locationPanel
     vertical-scrollbar: locationScrollBar
 
-  PokedexScrollBar
+  DexScrollBar
     id: locationScrollBar

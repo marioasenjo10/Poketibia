@@ -182,7 +182,26 @@ function load(forceDefaults)
     loadDefautComboKeys()
   end
 
+  addPokedexHotkey()
+
   hotkeysManagerLoaded = true
+end
+
+-- La primera vez de cada personaje se anade la tecla E = usar pokedex (con mira:
+-- sobre ti abre la lista, sobre un pokemon abre su ficha). Luego se puede cambiar en Ctrl+K.
+local POKEDEX_CLIENT_ID = 3150
+function addPokedexHotkey()
+  if not g_game.isOnline() then return end
+  local key = ((G.host or '') .. '_' .. g_game.getCharacterName()):gsub('[^%w]', '_')
+  local done = g_settings.getNode('pokedex_hotkey') or {}
+  if done[key] then return end
+  done[key] = true
+  g_settings.setNode('pokedex_hotkey', done)
+  if currentHotkeys:getChildById('E') then return end
+  local settings = { autoSend = false, itemId = POKEDEX_CLIENT_ID, useType = HOTKEY_MANAGER_USEWITH }
+  addKeyCombo('E', settings)
+  hotkeyList['E'] = settings
+  save()
 end
 
 function unload()
@@ -393,6 +412,12 @@ function doKeyCombo(keyCombo)
   if not g_game.isOnline() then return end
   local hotKey = hotkeyList[keyCombo]
   if not hotKey then return end
+
+  -- teclas de una letra (E, R...): solo si no se esta escribiendo (modo WASD y chat cerrado)
+  if #keyCombo == 1 and modules.game_console and modules.game_console.areLetterKeysFree
+     and not modules.game_console.areLetterKeysFree() then
+    return
+  end
 
   if g_clock.millis() - lastHotkeyTime < modules.client_options.getOption('hotkeyDelay') then
     return

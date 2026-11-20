@@ -128,6 +128,12 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 
+	-- con OTClient: sobre ti (o el suelo) se abre la pokedex con la lista
+	if player:isUsingOtClient() and (target == item or not target:isCreature() or not target:isMonster()) then
+		player:sendPokedexList()
+		return true
+	end
+
 	if target ~= item and target:isCreature() ~= true then return false end
 
 	if target:isCreature() then -- check if it is on dex or add to dex
@@ -163,7 +169,8 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			end
 		else -- open status of monster
 			getPlayerPosition(player):sendMagicEffect(300)
-			if player:isUsingOtClient() and not target:getMaster() then
+			if player:isUsingOtClient() then
+				-- la misma ventana de la pokedex, abierta en este pokemon (salvaje o con dueno)
 				player:sendPokedexInfo(monsterNumber)
 				return true
 			end

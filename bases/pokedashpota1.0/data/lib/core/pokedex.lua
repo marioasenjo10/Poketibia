@@ -1,15 +1,19 @@
 -- Pokedex estilo PKA: ventana propia en el cliente (modulo game_pokedex) por el opcode 62.
 -- Cliente -> servidor: "list" (lista de la dex) o "info:<numero>" (ficha de un pokemon).
 -- Servidor -> cliente:
---   L|vistos|total|num[:nombre];num[:nombre];...            (sin nombre = no registrado)
+--   L|capturados|total|num:nombre:flags;...   (flags: 1 registrado, 2 capturado, 4 shiny capturado)
 --   I|num|nombre|looktype|tipo1|tipo2|stats|ataques|evoluciones|habilidades|botin|localizaciones|capturas|extra
+--   E|texto del error
+-- Los mensajes largos se trocean (el servidor no manda textos de mas de 8192 bytes):
+-- "+" delante = trozo intermedio, "=" delante = ultimo trozo.
 -- Ademas, al entrar se mandan las ciudades por el opcode 63 (nombres en el mapa grande): nombre:x:y:z;...
 
 OPCODE_POKEDEX = 62
 OPCODE_TOWNS = 63
 
-local LOCATION_RADIUS = 40   -- spawns a menos de esta distancia cuentan como la misma zona
-local MAX_LOCATIONS = 15
+local LOCATION_RADIUS = 24   -- spawns a menos de esta distancia cuentan como la misma zona
+local MAX_LOCATIONS = 40
+local CHUNK_SIZE = 4000
 
 local function clean(s)
 	return (tostring(s or ""):gsub("[|;:]", " "))
@@ -53,6 +57,11 @@ local function formatChance(pct)
 	return "<0.01"
 end
 
+local function clientIdOf(itemType)
+	local ok, id = pcall(function() return itemType:getClientId() end)
+	return ok and tonumber(id) or 0
+end
+
 local function getPokedexLoot(name)
 	local key = name:lower()
 	if lootCache[key] then
@@ -72,7 +81,7 @@ local function getPokedexLoot(name)
 				local chance = tonumber(attrs:match('chance="(%d+)"')) or 100000
 				local countMax = tonumber(attrs:match('countmax="(%d+)"')) or 1
 				table.insert(list, {
-					clientId = itemType:getClientId(),
+					clientId = clientIdOf(itemType),
 					name = itemType:getName(),
 					count = countMax > 1 and ("1-" .. countMax) or "1",
 					chance = chance * rate / 1000,
@@ -85,10 +94,10 @@ local function getPokedexLoot(name)
 		local itemType = ItemType(shinyEvo.id)
 		if itemType:getId() ~= 0 then
 			table.insert(list, {
-				clientId = itemType:getClientId(),
+				clientId = clientIdOf(itemType),
 				name = itemType:getName(),
 				count = "1",
-				chance = shinyEvoTierChance[shinyEvo.tier] or 0,
+				chance = tonumber(shinyEvoTierChance and shinyEvoTierChance[shinyEvo.tier]) or 0,
 			})
 		end
 	end
@@ -97,6 +106,7 @@ local function getPokedexLoot(name)
 	for i = 1, #list do
 		local loot = list[i]
 		parts[#parts + 1] = loot.clientId .. ":" .. clean(loot.name) .. ":" .. loot.count .. ":" .. formatChance(loot.chance)
+			.. ":" .. string.format("%.4f", math.min(100, loot.chance))
 	end
 	lootCache[key] = table.concat(parts, ";")
 	return lootCache[key]
@@ -158,7 +168,7 @@ local function getPokedexLocations(name)
 		fromBase = points ~= nil
 	end
 	if not points then
-		return "", false
+		return "", false, 0
 	end
 	local zones = {}
 	for _, p in ipairs(points) do
@@ -184,7 +194,7 @@ local function getPokedexLocations(name)
 		local pos = {x = math.floor(zone.sumX / zone.count + 0.5), y = math.floor(zone.sumY / zone.count + 0.5), z = zone.z}
 		parts[#parts + 1] = pos.x .. ":" .. pos.y .. ":" .. pos.z .. ":" .. zone.count .. ":" .. clean(nearestTown(pos))
 	end
-	return table.concat(parts, ";"), fromBase
+	return table.concat(parts, ";"), fromBase, #points
 end
 
 -- ===================== Mensajes =====================
@@ -202,41 +212,163 @@ function Player.hasDexEntry(self, number)
 	return self:getStorageValue(baseStorageDex + number) ~= -1
 end
 
-function Player.sendPokedexList(self)
-	local parts = {}
-	local seen, total = 0, 0
-	for _, number in ipairs(dexNumbers()) do
-		local registered = self:hasDexEntry(number)
-		local isShiny = number > 2000 and number <= 3000
-		if not isShiny or registered then
-			if not isShiny then
-				total = total + 1
-			end
-			if registered then
-				if not isShiny then
-					seen = seen + 1
+-- manda un mensaje largo en trozos (el cliente los junta)
+local function sendDexMessage(player, message)
+	local len = #message
+	if len <= CHUNK_SIZE then
+		player:sendExtendedOpcode(OPCODE_POKEDEX, message)
+		return
+	end
+	local pos = 1
+	while pos <= len do
+		local piece = message:sub(pos, pos + CHUNK_SIZE - 1)
+		pos = pos + CHUNK_SIZE
+		player:sendExtendedOpcode(OPCODE_POKEDEX, (pos <= len and "+" or "=") .. piece)
+	end
+end
+
+-- ejecuta fn protegida: si falla, el jugador ve el error (y sale en la consola del servidor)
+local function runSafe(player, what, fn, ...)
+	local ok, result = pcall(fn, ...)
+	if not ok then
+		local err = tostring(result)
+		print("[Pokedex] Error en " .. what .. ": " .. err)
+		player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "[Pokedex] Error en " .. what .. ": " .. err)
+		player:sendExtendedOpcode(OPCODE_POKEDEX, "E|" .. clean(err):sub(1, 500))
+		return false
+	end
+	return result
+end
+
+local function isShinyName(name)
+	return name:sub(1, 6):lower() == "shiny "
+end
+
+-- numero con el que se guardan intentos/capturas (el mismo que usa catch.lua)
+local speciesNumbers = {}
+local function getSpeciesNumber(number)
+	if speciesNumbers[number] == nil then
+		local name = monstersTable[number]
+		local monsterType = name and MonsterType(name)
+		speciesNumbers[number] = monsterType and monsterType:getNumber() or false
+	end
+	return speciesNumbers[number]
+end
+
+local function getCatches(player, number)
+	local species = getSpeciesNumber(number)
+	if not species then
+		return 0
+	end
+	return math.max(0, player:getStorageValue(baseStorageCatches + species))
+end
+
+-- ===================== Cadena evolutiva =====================
+
+local evoParent
+
+local function buildEvoParents()
+	evoParent = {}
+	for _, name in pairs(monstersTable or {}) do
+		local monsterType = MonsterType(name)
+		if monsterType then
+			for _, evolution in ipairs(monsterType:getEvolutionList()) do
+				if evolution.name and evolution.name ~= "" then
+					local key = evolution.name:lower()
+					local old = evoParent[key]
+					-- mejor un padre del mismo tipo (shiny con shiny, normal con normal)
+					if not old or (isShinyName(old.name) ~= isShinyName(evolution.name) and isShinyName(name) == isShinyName(evolution.name)) then
+						evoParent[key] = {name = name}
+					end
 				end
-				parts[#parts + 1] = number .. ":" .. clean(monstersTable[number])
-			else
-				parts[#parts + 1] = tostring(number)
 			end
 		end
 	end
-	self:sendExtendedOpcode(OPCODE_POKEDEX, "L|" .. seen .. "|" .. total .. "|" .. table.concat(parts, ";"))
 end
 
-function Player.sendPokedexInfo(self, number)
+local function getEvolutionChain(name)
+	if not evoParent then
+		buildEvoParents()
+	end
+	local shiny = isShinyName(name)
+	local root, guard = name, 0
+	while evoParent[root:lower()] and guard < 6 do
+		root = evoParent[root:lower()].name
+		guard = guard + 1
+	end
+	local out, visited = {}, {}
+	local function add(stageName, depth, level, item, count)
+		local key = stageName:lower()
+		if visited[key] or #out >= 16 then
+			return
+		end
+		visited[key] = true
+		local monsterType = MonsterType(stageName)
+		if not monsterType then
+			return
+		end
+		local okName, displayName = pcall(monsterType.getName, monsterType)
+		if not okName or not displayName or displayName == "" then
+			displayName = stageName
+		end
+		out[#out + 1] = clean(displayName) .. ":" .. monsterType:getOutfit().lookType .. ":" .. (level or 0) .. ":"
+			.. clean(item) .. ":" .. (count or 0) .. ":" .. monsterType:dexEntry() .. ":" .. depth
+		for _, evolution in ipairs(monsterType:getEvolutionList()) do
+			if evolution.name and evolution.name ~= "" and isShinyName(evolution.name) == shiny then
+				local itemName, itemCount = evolution.itemName, evolution.count
+				-- los shiny evolucionan con el objeto que suelta su evolucion (no con piedras)
+				local shinyEvo = shinyEvoByTarget and shinyEvoByTarget[evolution.name]
+				if shinyEvo then
+					itemName, itemCount = ItemType(shinyEvo.id):getName(), 1
+				end
+				add(evolution.name, depth + 1, evolution.level, itemName, itemCount)
+			end
+		end
+	end
+	add(root, 0, 0, "", 0)
+	return table.concat(out, ";")
+end
+
+-- ===================== Lista =====================
+
+local function buildPokedexList(player)
+	local parts = {}
+	local caught, total = 0, 0
+	for _, number in ipairs(dexNumbers()) do
+		if number <= 2000 or number > 3000 then
+			total = total + 1
+			local flags = 0
+			if player:hasDexEntry(number) then
+				flags = flags + 1
+			end
+			if getCatches(player, number) > 0 then
+				flags = flags + 2
+				caught = caught + 1
+			end
+			if number <= 1000 and monstersTable[number + 2000] and getCatches(player, number + 2000) > 0 then
+				flags = flags + 4
+			end
+			parts[#parts + 1] = number .. ":" .. clean(monstersTable[number]) .. ":" .. flags
+		end
+	end
+	return "L|" .. caught .. "|" .. total .. "|" .. table.concat(parts, ";")
+end
+
+function Player.sendPokedexList(self)
+	local message = runSafe(self, "la lista", buildPokedexList, self)
+	if message then
+		sendDexMessage(self, message)
+	end
+end
+
+local function buildPokedexInfo(player, number)
 	local name = monstersTable and monstersTable[number]
 	if not name then
-		return false
-	end
-	if not self:hasDexEntry(number) and not self:getGroup():getAccess() then
-		self:sendCancelMessage("You have not registered this pokemon in your pokedex yet.")
-		return false
+		return nil
 	end
 	local monsterType = MonsterType(name)
 	if not monsterType then
-		return false
+		return nil
 	end
 
 	local stats = {
@@ -244,31 +376,15 @@ function Player.sendPokedexInfo(self, number)
 		monsterType:getMoveMagicDefenseBase(), monsterType:getDefense(), monsterType:getBaseSpeed(),
 		monsterType:getMinLevel(), monsterType:getMaxLevel(), monsterType:getExperience(), monsterType:catchChance(),
 	}
+	for i = 1, 10 do
+		stats[i] = math.floor(tonumber(stats[i]) or 0)
+	end
 
 	local moves = {}
 	for _, move in ipairs(monsterType:getMoveList()) do
 		local info = getMoveInfo(move.name)
-		moves[#moves + 1] = clean(move.name) .. ":" .. math.floor((move.speed or 0) / 1000) .. ":" .. clean(info.element)
+		moves[#moves + 1] = clean(move.name) .. ":" .. math.floor((tonumber(move.speed) or 0) / 1000) .. ":" .. clean(info.element)
 			.. ":" .. clean(info.category) .. ":" .. clean(info.effect) .. ":" .. (moveNeedsTarget(move) and 1 or 0)
-	end
-
-	local evolutions = {}
-	local added = {}
-	for _, evolution in ipairs(monsterType:getEvolutionList()) do
-		if evolution.name and evolution.name ~= "" then
-			-- los shiny evolucionan con el objeto que suelta su evolucion (no con piedras)
-			local shinyEvo = shinyEvoByTarget and shinyEvoByTarget[evolution.name]
-			if shinyEvo then
-				if not added[evolution.name] then
-					added[evolution.name] = true
-					evolutions[#evolutions + 1] = clean(evolution.name) .. ":" .. (evolution.level or 0) .. ":" .. (evolution.chance or 0)
-						.. ":" .. clean(ItemType(shinyEvo.id):getName()) .. ":1"
-				end
-			else
-				evolutions[#evolutions + 1] = clean(evolution.name) .. ":" .. (evolution.level or 0) .. ":" .. (evolution.chance or 0)
-					.. ":" .. clean(evolution.itemName) .. ":" .. (evolution.count or 0)
-			end
-		end
 	end
 
 	local race, race2 = monsterType:getRaceName(), monsterType:getRace2Name()
@@ -282,18 +398,28 @@ function Player.sendPokedexInfo(self, number)
 	if race == "ground" or race2 == "ground" then abilities[#abilities + 1] = "Dig" end
 	if name == "Ditto" or name == "Shiny Ditto" then abilities[#abilities + 1] = "Transform" end
 
-	local locations, fromBase = getPokedexLocations(name)
+	local locations, fromBase, worldCount = getPokedexLocations(name)
 	local dexNumber = monsterType:getNumber()
-	local tries = math.max(0, self:getStorageValue(baseStorageTries + dexNumber))
-	local catches = math.max(0, self:getStorageValue(baseStorageCatches + dexNumber))
-	local extra = (monsterType:isLegendary() and 1 or 0) .. ":" .. (fromBase and 1 or 0)
+	local tries = math.max(0, player:getStorageValue(baseStorageTries + dexNumber))
+	local catches = math.max(0, player:getStorageValue(baseStorageCatches + dexNumber))
+	local shinyNumber = (number <= 1000 and monstersTable[number + 2000]) and (number + 2000) or 0
+	local baseNumber = (number > 2000 and number <= 3000 and monstersTable[number - 2000]) and (number - 2000) or 0
+	local extra = (monsterType:isLegendary() and 1 or 0) .. ":" .. (fromBase and 1 or 0) .. ":" .. shinyNumber .. ":" .. worldCount
+		.. ":" .. (player:hasDexEntry(number) and 1 or 0) .. ":" .. baseNumber
 
-	local message = table.concat({
+	return table.concat({
 		"I", number, clean(name), monsterType:getOutfit().lookType, clean(race), clean(race2 ~= "none" and race2 or ""),
-		table.concat(stats, ","), table.concat(moves, ";"), table.concat(evolutions, ";"), table.concat(abilities, ","),
+		table.concat(stats, ","), table.concat(moves, ";"), getEvolutionChain(name), table.concat(abilities, ","),
 		getPokedexLoot(name), locations, tries .. ":" .. catches, extra,
 	}, "|")
-	self:sendExtendedOpcode(OPCODE_POKEDEX, message)
+end
+
+function Player.sendPokedexInfo(self, number)
+	local message = runSafe(self, "la ficha " .. tostring(number), buildPokedexInfo, self, number)
+	if not message then
+		return false
+	end
+	sendDexMessage(self, message)
 	return true
 end
 
@@ -310,9 +436,9 @@ end
 local lastRequest = {}
 
 function onPokedexOpcode(player, buffer)
-	local now = os.mtime and os.mtime() or os.time() * 1000
+	local now = os.mtime and os.mtime() or os.clock() * 1000
 	local last = lastRequest[player:getId()] or 0
-	if now - last < 150 then
+	if now - last < 80 then
 		return
 	end
 	lastRequest[player:getId()] = now
