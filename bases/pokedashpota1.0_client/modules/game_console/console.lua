@@ -177,7 +177,10 @@ function init()
     onGameEnd = offline
   })
 
-  consolePanel = g_ui.loadUI('console', modules.game_interface.getBottomPanel())
+  -- el chat va encima del mapa (esquina inferior izquierda); el panel inferior antiguo ya no se usa
+  consolePanel = g_ui.loadUI('console', modules.game_interface.getRootPanel())
+  consolePanel:addAnchor(AnchorLeft, 'gameMapPanel', AnchorLeft)
+  consolePanel:addAnchor(AnchorBottom, 'gameMapPanel', AnchorBottom)
   consoleTextEdit = consolePanel:getChildById('consoleTextEdit')
   consoleContentPanel = consolePanel:getChildById('consoleContentPanel')
   consoleTabBar = consolePanel:getChildById('consoleTabBar')

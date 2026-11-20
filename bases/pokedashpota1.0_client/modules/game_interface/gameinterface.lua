@@ -915,7 +915,7 @@ function setupViewMode(mode)
   if currentViewMode == 2 then
     gameMapPanel:addAnchor(AnchorLeft, 'gameLeftPanel', AnchorRight)
     gameMapPanel:addAnchor(AnchorRight, 'gameRightPanel', AnchorLeft)
-    gameMapPanel:addAnchor(AnchorBottom, 'gameBottomPanel', AnchorTop)
+    gameMapPanel:addAnchor(AnchorBottom, 'parent', AnchorBottom)
     gameRootPanel:addAnchor(AnchorTop, 'topMenu', AnchorBottom)
     gameLeftPanel:setOn(modules.client_options.getOption('showLeftPanel'))
     gameLeftPanel:setImageColor('white')

@@ -55,16 +55,16 @@ ConsoleTabBarButton < MoveableTabBarButton
   height: 28
   padding: 15
 
+// se coloca sobre la esquina inferior izquierda del mapa desde console.lua
 Panel
   id: consolePanel
-  anchors.left: parent.left
-  anchors.bottom: parent.bottom
   width: 420
   height: 320
   margin-left: 6
   margin-bottom: 6
-  image-source: /images/ui/panel_bottom
-  image-border: 4
+  background-color: #101216d0
+  border-width: 1
+  border-color: #000000
 
   CheckBox
     id: toggleChat

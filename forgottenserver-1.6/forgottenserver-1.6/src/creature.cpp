@@ -22,6 +22,62 @@ extern Game g_game;
 extern CreatureEvents* g_creatureEvents;
 extern Events* g_events;
 
+namespace {
+
+// el summon se trae junto a su dueno cuando sale de la pantalla (o cambia de piso)
+bool isSummonOffScreen(const Position& masterPos, const Position& summonPos)
+{
+	return masterPos.z != summonPos.z || masterPos.getDistanceX(summonPos) > 6 || masterPos.getDistanceY(summonPos) > 4;
+}
+
+void bringSummonToMaster(uint32_t masterId, uint32_t summonId, Position preferred)
+{
+	Creature* master = g_game.getCreatureByID(masterId);
+	Creature* summon = g_game.getCreatureByID(summonId);
+	if (!master || !summon || master->isRemoved() || summon->isRemoved() || summon->getMaster() != master) {
+		return;
+	}
+
+	const Position masterPos = master->getPosition();
+	const Position summonPos = summon->getPosition();
+	if (!isSummonOffScreen(masterPos, summonPos)) {
+		return;
+	}
+
+	// primero la casilla de la que acaba de salir el dueno, luego las de alrededor
+	std::vector<Position> candidates;
+	if (preferred.z == masterPos.z && masterPos.getDistanceX(preferred) <= 1 && masterPos.getDistanceY(preferred) <= 1) {
+		candidates.push_back(preferred);
+	}
+	for (int32_t dx = -1; dx <= 1; ++dx) {
+		for (int32_t dy = -1; dy <= 1; ++dy) {
+			if (dx != 0 || dy != 0) {
+				candidates.emplace_back(static_cast<uint16_t>(masterPos.x + dx), static_cast<uint16_t>(masterPos.y + dy),
+				                        masterPos.z);
+			}
+		}
+	}
+
+	for (const Position& pos : candidates) {
+		Tile* tile = g_game.map.getTile(pos);
+		if (!tile || tile->queryAdd(0, *summon, 1, 0) != RETURNVALUE_NOERROR) {
+			continue;
+		}
+		if (g_game.internalTeleport(summon, pos, false) == RETURNVALUE_NOERROR) {
+			g_game.addMagicEffect(pos, CONST_ME_TELEPORT);
+			return;
+		}
+	}
+
+	// sin sitio libre: solo se quita si esta muy lejos (como antes)
+	if (masterPos.getDistanceZ(summonPos) > 2 ||
+	    std::max(masterPos.getDistanceX(summonPos), masterPos.getDistanceY(summonPos)) > 30) {
+		g_game.removeCreature(summon, true);
+	}
+}
+
+} // namespace
+
 Creature::Creature() { onIdleStatus(); }
 
 Creature::~Creature()
@@ -500,18 +556,12 @@ void Creature::onCreatureMove(Creature* creature, const Tile* newTile, const Pos
 			stopEventWalk();
 		}
 
-		if (!summons.empty()) {
-			// check if any of our summons is out of range (+/- 2 floors or 30 tiles away)
-			std::forward_list<Creature*> despawnList;
-			for (Creature* summon : summons) {
-				const Position& pos = summon->getPosition();
-				if (newPos.getDistanceZ(pos) > 2 || std::max(newPos.getDistanceX(pos), newPos.getDistanceY(pos)) > 10) {
-					despawnList.push_front(summon);
-				}
-			}
-
-			for (Creature* despawnCreature : despawnList) {
-				g_game.removeCreature(despawnCreature, true);
+		// summons fuera de la pantalla: se teletransportan junto al dueno (tras terminar este movimiento)
+		for (Creature* summon : summons) {
+			if (isSummonOffScreen(newPos, summon->getPosition())) {
+				g_dispatcher.addTask([masterId = getID(), summonId = summon->getID(), preferred = oldPos]() {
+					bringSummonToMaster(masterId, summonId, preferred);
+				});
 			}
 		}
 
