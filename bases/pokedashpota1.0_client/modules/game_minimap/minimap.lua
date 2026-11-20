@@ -9,8 +9,14 @@ oldPos = nil
 
 OPCODE_TOWNS = 63
 WORLD_MAP_FILE = '/game_minimap/world.otmm'  -- mapa entero generado en casa (comandos-casa.ps1)
+WORLD_CHUNKS_DIR = '/game_minimap/world/'    -- mapa grande suavizado en trozos (tools/pokeassets/Minimap.cs)
+WORLD_CHUNKS_MIN_SCALE = 2                   -- con menos zoom no se notan los cuadraditos
 townLabels = {}
 pokedexFlags = {}
+worldChunks = {}
+worldChunkCount = 0
+local worldIndex = nil
+local worldChunkSize = 255
 
 function init()
   minimapButton = modules.client_topmenu.addRightGameToggleButton('minimapButton', 
@@ -21,6 +27,7 @@ function init()
   minimapWindow:setContentMinimumHeight(64)
 
   minimapWidget = minimapWindow:recursiveGetChildById('minimap')
+  minimapWidget:setClipping(true)
 
   local gameRootPanel = modules.game_interface.getRootPanel()
   g_keyboard.bindKeyPress('Alt+Left', function() minimapWidget:move(1,0) end, gameRootPanel)
@@ -85,6 +92,7 @@ function terminate()
   ProtocolGame.unregisterExtendedOpcode(OPCODE_TOWNS)
   clearPokedexFlags()
   clearTownLabels()
+  clearWorldChunks()
 
   minimapWindow:destroy()
   minimapButton:destroy()
@@ -271,7 +279,7 @@ function onTownsOpcode(protocol, opcode, buffer)
       minimapWidget:addAlternativeWidget(label, { x = tonumber(x), y = tonumber(y) - 4, z = tonumber(z) }, -100)
       table.insert(townLabels, label)
       if fullmapView then
-        minimapWidget:insertChild(1, label)
+        minimapWidget:insertChild(worldChunkCount + 1, label)
         minimapWidget:centerInPosition(label, label.pos)
       end
     end
@@ -309,6 +317,93 @@ function updateOverlayFloors()
       marker:setVisible(marker.pos.z == z)
     end
   end
+  updateWorldChunks()
+end
+
+-- ===== Mapa grande suavizado (estilo PKA): imagenes encima del minimapa de cuadraditos =====
+
+local function loadWorldIndex()
+  worldIndex = {}
+  local ok, contents = pcall(g_resources.readFileContents, WORLD_CHUNKS_DIR .. 'index.txt')
+  if not ok or not contents then return end
+  for line in contents:gmatch('[^\r\n]+') do
+    local size = line:match('^size (%d+)')
+    if size then
+      worldChunkSize = tonumber(size)
+    else
+      local z, x0, y0 = line:match('^(%d+) (%d+) (%d+)')
+      if z then
+        worldIndex[z .. '_' .. x0 .. '_' .. y0] = { z = tonumber(z), x = tonumber(x0), y = tonumber(y0) }
+      end
+    end
+  end
+end
+
+function clearWorldChunks()
+  local had = worldChunkCount > 0
+  for _, chunk in pairs(worldChunks) do
+    chunk:destroy()
+  end
+  worldChunks = {}
+  worldChunkCount = 0
+  if had then
+    g_textures.clearCache() -- las imagenes son grandes: no dejarlas en memoria
+  end
+end
+
+-- crea solo los trozos que se ven en pantalla (piso actual) y quita los demas
+function updateWorldChunks()
+  local scale = minimapWidget:getScale()
+  if not fullmapView or scale < WORLD_CHUNKS_MIN_SCALE then
+    clearWorldChunks()
+    return
+  end
+  if not worldIndex then
+    loadWorldIndex()
+  end
+  local cam = minimapWidget:getCameraPosition()
+  local size = minimapWidget:getSize()
+  local n = worldChunkSize
+  local halfW, halfH = size.width / 2 / scale + 1, size.height / 2 / scale + 1
+  local cx0, cx1 = math.floor((cam.x - halfW) / n), math.floor((cam.x + halfW) / n)
+  local cy0, cy1 = math.floor((cam.y - halfH) / n), math.floor((cam.y + halfH) / n)
+  local wanted = {}
+  for cx = cx0, cx1 do
+    for cy = cy0, cy1 do
+      local key = cam.z .. '_' .. (cx * n) .. '_' .. (cy * n)
+      if worldIndex[key] then
+        wanted[key] = worldIndex[key]
+      end
+    end
+  end
+  for key, chunk in pairs(worldChunks) do
+    if not wanted[key] then
+      chunk:destroy()
+      worldChunks[key] = nil
+      worldChunkCount = worldChunkCount - 1
+    end
+  end
+  local pixels = math.ceil(n * scale)
+  for key, info in pairs(wanted) do
+    local chunk = worldChunks[key]
+    if not chunk then
+      chunk = g_ui.createWidget('UIWidget')
+      chunk:setPhantom(true)
+      chunk:setFocusable(false)
+      chunk:setImageSource(WORLD_CHUNKS_DIR .. key)
+      chunk.pos = { x = info.x + math.floor(n / 2), y = info.y + math.floor(n / 2), z = info.z }
+      minimapWidget:insertChild(1, chunk)
+      worldChunks[key] = chunk
+      worldChunkCount = worldChunkCount + 1
+    end
+    if chunk:getWidth() ~= pixels then
+      chunk:setSize({ width = pixels, height = pixels })
+      minimapWidget:centerInPosition(chunk, chunk.pos)
+    elseif not chunk.centered then
+      minimapWidget:centerInPosition(chunk, chunk.pos)
+    end
+    chunk.centered = true
+  end
 end
 
 -- ===== Zonas de la pokedex en el mapa grande =====
@@ -323,7 +418,9 @@ function clearPokedexFlags()
 end
 
 -- positions = { {x=, y=, z=, text=}, ... }; icon = imagen del pokemon (o nil)
--- centra el mapa en la zona mas cercana al jugador (mejor en su mismo piso)
+-- centra el mapa en la zona mas cercana al jugador, mejor en el piso 0 (superficie: se ven las ciudades)
+local SURFACE_FLOOR = 7
+
 function showPositions(positions, title, icon)
   if #positions == 0 then return end
   if not fullmapView then
@@ -345,12 +442,21 @@ function showPositions(positions, title, icon)
     minimapWidget:centerInPosition(marker, marker.pos)
     table.insert(pokedexFlags, marker)
   end
-  local best = positions[1]
+  local candidates = {}
+  for _, p in ipairs(positions) do
+    if p.z == SURFACE_FLOOR then
+      table.insert(candidates, p)
+    end
+  end
+  if #candidates == 0 then
+    candidates = positions
+  end
+  local best = candidates[1]
   local player = g_game.getLocalPlayer()
   local me = player and player:getPosition()
   if me then
     local bestScore
-    for _, p in ipairs(positions) do
+    for _, p in ipairs(candidates) do
       local score = math.max(math.abs(p.x - me.x), math.abs(p.y - me.y)) + math.abs(p.z - me.z) * 300
       if not bestScore or score < bestScore then
         best, bestScore = p, score

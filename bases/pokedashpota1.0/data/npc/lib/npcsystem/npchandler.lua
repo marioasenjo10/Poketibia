@@ -440,7 +440,7 @@ if NpcHandler == nil then
 
 		if next(self.shopItems) == nil then
 			if not self:isFocused(cid) then
-				self:greet(cid, "hi")
+				self:greet(cid, NPC_CLICK_WORD)
 			end
 			self.talkStart[cid] = os.time()
 			return

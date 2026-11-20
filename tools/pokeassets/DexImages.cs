@@ -129,14 +129,29 @@ public static class DexImages
 
     static void Gradient(string dir, string name)
     {
-        int w = 256, h = 16;
+        // esquinas izquierdas redondeadas (radio 6, dentro del borde de card.png); usar con image-border 8 por la izquierda
+        int w = 256, h = 32;
+        const float rad = 6f;
+        const int ss = 4;
         using (Bitmap b = NewBitmap(w, h))
         {
             for (int x = 0; x < w; x++)
             {
                 double t = 1.0 - x / (double)(w - 1);
-                int a = (int)(190 * Math.Pow(t, 1.4));
-                for (int y = 0; y < h; y++) b.SetPixel(x, y, Color.FromArgb(a, 255, 255, 255));
+                double a = 190 * Math.Pow(t, 1.4);
+                for (int y = 0; y < h; y++)
+                {
+                    int inside = 0;
+                    for (int sy = 0; sy < ss; sy++)
+                        for (int sx = 0; sx < ss; sx++)
+                        {
+                            float px = x + (sx + 0.5f) / ss, py = y + (sy + 0.5f) / ss;
+                            float cy = py < rad ? rad : (py > h - rad ? h - rad : py);
+                            float dx = px < rad ? rad - px : 0, dy = py - cy;
+                            if (dx * dx + dy * dy <= rad * rad) inside++;
+                        }
+                    b.SetPixel(x, y, Color.FromArgb((int)(a * inside / (ss * ss)), 255, 255, 255));
+                }
             }
             Save(b, dir, name);
         }

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 using System.Text;
 
 // Genera el minimapa del mundo entero (formato .otmm de OTClient) a partir del mapa del servidor (.otbm),
@@ -57,6 +60,14 @@ public static class WorldMap
 
 	public static string Run(string otbmPath, string otbPath, string datPath, string outPath)
 	{
+		var log = Load(otbmPath, otbPath, datPath);
+		WriteOtmm(outPath);
+		log.AppendLine("Guardado: " + outPath + " (" + new FileInfo(outPath).Length / 1024 + " KB)");
+		return log.ToString();
+	}
+
+	static StringBuilder Load(string otbmPath, string otbPath, string datPath)
+	{
 		var log = new StringBuilder();
 		dat = Dat.Load(datPath);
 		log.AppendLine(string.Format("Tibia.dat OK: {0} items", dat.ItemCount));
@@ -83,11 +94,9 @@ public static class WorldMap
 		}
 		if (b[p++] != NODE_END) throw new Exception("OTBM: fin de nodo raiz esperado en " + (p - 1));
 
-		WriteOtmm(outPath);
 		log.AppendLine(string.Format("Casillas: {0}, bloques: {1}, items sin dibujo: {2}", tileCount, blocks.Count, unknownItems));
 		log.Append(towns.ToString());
-		log.AppendLine("Guardado: " + outPath + " (" + new FileInfo(outPath).Length / 1024 + " KB)");
-		return log.ToString();
+		return log;
 	}
 
 	// salta los hijos del nodo actual y su NODE_END
@@ -246,5 +255,209 @@ public static class WorldMap
 		uint adler = (s << 16) | a;
 		ms.WriteByte((byte)(adler >> 24)); ms.WriteByte((byte)(adler >> 16)); ms.WriteByte((byte)(adler >> 8)); ms.WriteByte((byte)adler);
 		return ms.ToArray();
+	}
+
+	// ===== Mapa grande suavizado (bordes redondeados en vez de cuadraditos, mismos colores) =====
+	// Uso: [WorldMap]::RunSmooth(otbm, items.otb, Tibia.dat, carpetaSalida)
+	// Crea <z>_<x>_<y>.png (CHUNK x CHUNK casillas, OUT_PX pixeles por casilla) e index.txt.
+	const int CHUNK = 255;   // impar: el cliente centra la imagen en la casilla del medio
+	const int SUPER = 8;     // se dibuja a 8 px por casilla, se redondea y se reduce a la mitad (antialias)
+	const int OUT_PX = 4;
+	const int RADIUS2 = 18;  // radio del redondeo (en pixeles a 8 px por casilla, al cuadrado)
+	const int REACH = 4;     // parte entera del radio (menor que SUPER)
+
+	static int[] offX, offY;
+	static readonly int[] counts = new int[256];
+	static readonly int[] palette = BuildPalette();
+
+	static int[] BuildPalette()
+	{
+		var pal = new int[256];
+		for (int c = 0; c < 256; c++)
+		{
+			int r = 0, g = 0, bl = 0;
+			if (c > 0 && c < 216) { r = c / 36 % 6 * 51; g = c / 6 % 6 * 51; bl = c % 6 * 51; }
+			pal[c] = (r << 16) | (g << 8) | bl;
+		}
+		return pal;
+	}
+
+	public static string RunSmooth(string otbmPath, string otbPath, string datPath, string outDir)
+	{
+		var log = Load(otbmPath, otbPath, datPath);
+		log.Append(WriteChunks(outDir));
+		return log.ToString();
+	}
+
+	// lo mismo pero leyendo un .otmm ya generado (world.otmm del cliente): no hace falta el mapa del servidor
+	public static string RunSmoothFromOtmm(string otmmPath, string outDir)
+	{
+		var data = File.ReadAllBytes(otmmPath);
+		if (BitConverter.ToUInt32(data, 0) != 0x4D4D544Fu) throw new Exception("no es un archivo OTMM");
+		blocks = new Dictionary<long, byte[]>();
+		int q = BitConverter.ToUInt16(data, 4);
+		while (true)
+		{
+			int x = BitConverter.ToUInt16(data, q), y = BitConverter.ToUInt16(data, q + 2), z = data[q + 4];
+			if (x == 65535 && y == 65535 && z == 255) break;
+			int len = BitConverter.ToUInt16(data, q + 5);
+			q += 7;
+			var raw = new byte[BLOCK * BLOCK * 3];
+			using (var ms = new MemoryStream(data, q + 2, len - 6))
+			using (var ds = new DeflateStream(ms, CompressionMode.Decompress))
+			{
+				int read = 0, n;
+				while (read < raw.Length && (n = ds.Read(raw, read, raw.Length - read)) > 0) read += n;
+			}
+			blocks[(long)z * 0x100000000L + (long)(x / BLOCK) * 0x10000L + (y / BLOCK)] = raw;
+			q += len;
+		}
+		return "Bloques leidos: " + blocks.Count + Environment.NewLine + WriteChunks(outDir);
+	}
+
+	static string WriteChunks(string outDir)
+	{
+		var ox = new List<int>();
+		var oy = new List<int>();
+		for (int dy = -REACH; dy <= REACH; dy++)
+			for (int dx = -REACH; dx <= REACH; dx++)
+				if (dx * dx + dy * dy <= RADIUS2) { ox.Add(dx); oy.Add(dy); }
+		offX = ox.ToArray();
+		offY = oy.ToArray();
+
+		Directory.CreateDirectory(outDir);
+		foreach (var old in Directory.GetFiles(outDir, "*.png")) File.Delete(old);
+		var chunks = new SortedSet<long>();
+		foreach (var key in blocks.Keys)
+		{
+			int z = (int)(key >> 32), bx = (int)((key >> 16) & 0xFFFF), by = (int)(key & 0xFFFF);
+			for (int cx = bx * BLOCK / CHUNK; cx <= (bx * BLOCK + BLOCK - 1) / CHUNK; cx++)
+				for (int cy = by * BLOCK / CHUNK; cy <= (by * BLOCK + BLOCK - 1) / CHUNK; cy++)
+					chunks.Add((long)z * 0x100000000L + (long)cx * 0x10000L + cy);
+		}
+		var index = new StringBuilder();
+		index.AppendLine("size " + CHUNK);
+		int written = 0;
+		long bytes = 0;
+		foreach (var key in chunks)
+		{
+			int z = (int)(key >> 32), cx = (int)((key >> 16) & 0xFFFF), cy = (int)(key & 0xFFFF);
+			int x0 = cx * CHUNK, y0 = cy * CHUNK;
+			string file = Path.Combine(outDir, z + "_" + x0 + "_" + y0 + ".png");
+			if (!RenderChunk(z, x0, y0, file)) continue;
+			index.AppendLine(z + " " + x0 + " " + y0);
+			bytes += new FileInfo(file).Length;
+			written++;
+		}
+		File.WriteAllText(Path.Combine(outDir, "index.txt"), index.ToString());
+		return string.Format("Mapa suavizado: {0} imagenes ({1} MB) en {2}", written, bytes / (1024 * 1024), outDir);
+	}
+
+	static byte ColorAt(int x, int y, int z)
+	{
+		if (x < 0 || y < 0) return 255;
+		byte[] block;
+		long key = (long)z * 0x100000000L + (long)(x / BLOCK) * 0x10000L + (y / BLOCK);
+		if (!blocks.TryGetValue(key, out block)) return 255;
+		int idx = ((y % BLOCK) * BLOCK + (x % BLOCK)) * 3;
+		if ((block[idx] & FLAG_SEEN) == 0) return 255;
+		return block[idx + 1];
+	}
+
+	static bool RenderChunk(int z, int x0, int y0, string path)
+	{
+		const int pad = 2;
+		int tiles = CHUNK + pad * 2;
+		var colors = new byte[tiles * tiles];
+		bool any = false;
+		for (int ty = 0; ty < tiles; ty++)
+		{
+			for (int tx = 0; tx < tiles; tx++)
+			{
+				byte c = ColorAt(x0 - pad + tx, y0 - pad + ty, z);
+				colors[ty * tiles + tx] = c;
+				if (c != 255 && tx >= pad && ty >= pad && tx < tiles - pad && ty < tiles - pad) any = true;
+			}
+		}
+		if (!any) return false;
+
+		// Scale2x tres veces (x8): convierte escalones en diagonales sin borrar arboles ni caminos finos
+		byte[] fine = colors;
+		int w = tiles;
+		for (int pass = 0; pass < 3; pass++) { fine = Scale2x(fine, w); w *= 2; }
+
+		int size = CHUNK * OUT_PX, ratio = SUPER / OUT_PX, area = ratio * ratio;
+		var argb = new int[size * size];
+		for (int y = 0; y < size; y++)
+		{
+			for (int x = 0; x < size; x++)
+			{
+				int r = 0, g = 0, bl = 0;
+				for (int sy = 0; sy < ratio; sy++)
+				{
+					for (int sx = 0; sx < ratio; sx++)
+					{
+						int rgb = palette[Mode(colors, tiles, fine, w, pad * SUPER + x * ratio + sx, pad * SUPER + y * ratio + sy)];
+						r += (rgb >> 16) & 255; g += (rgb >> 8) & 255; bl += rgb & 255;
+					}
+				}
+				argb[y * size + x] = unchecked((int)0xFF000000) | ((r / area) << 16) | ((g / area) << 8) | (bl / area);
+			}
+		}
+		using (var bmp = new Bitmap(size, size, PixelFormat.Format32bppArgb))
+		{
+			var data = bmp.LockBits(new Rectangle(0, 0, size, size), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+			for (int y = 0; y < size; y++) Marshal.Copy(argb, y * size, data.Scan0 + y * data.Stride, size);
+			bmp.UnlockBits(data);
+			bmp.Save(path, ImageFormat.Png);
+		}
+		return true;
+	}
+
+	static byte[] Scale2x(byte[] src, int w)
+	{
+		int w2 = w * 2;
+		var dst = new byte[w2 * w2];
+		for (int y = 0; y < w; y++)
+		{
+			for (int x = 0; x < w; x++)
+			{
+				byte p = src[y * w + x];
+				byte a = y > 0 ? src[(y - 1) * w + x] : p;
+				byte d = y < w - 1 ? src[(y + 1) * w + x] : p;
+				byte c = x > 0 ? src[y * w + x - 1] : p;
+				byte b = x < w - 1 ? src[y * w + x + 1] : p;
+				int o = (y * 2) * w2 + x * 2;
+				dst[o] = (c == a && c != d && a != b) ? a : p;
+				dst[o + 1] = (a == b && a != c && b != d) ? b : p;
+				dst[o + w2] = (d == c && d != b && c != a) ? c : p;
+				dst[o + w2 + 1] = (b == d && b != a && d != c) ? d : p;
+			}
+		}
+		return dst;
+	}
+
+	// color que mas se repite en un circulo alrededor del pixel (sobre la imagen x8): redondea esquinas
+	static byte Mode(byte[] colors, int tiles, byte[] fine, int w, int sx, int sy)
+	{
+		int tx = sx / SUPER, ty = sy / SUPER;
+		byte center = colors[ty * tiles + tx];
+		bool uniform = true;
+		for (int dy = -1; dy <= 1 && uniform; dy++)
+			for (int dx = -1; dx <= 1; dx++)
+				if (colors[(ty + dy) * tiles + tx + dx] != center) { uniform = false; break; }
+		if (uniform) return center;
+		center = fine[sy * w + sx];
+		byte best = center;
+		int bestCount = 0;
+		for (int i = 0; i < offX.Length; i++)
+		{
+			byte c = fine[(sy + offY[i]) * w + sx + offX[i]];
+			int n = ++counts[c];
+			if (n > bestCount || (n == bestCount && c == center)) { best = c; bestCount = n; }
+		}
+		for (int i = 0; i < offX.Length; i++)
+			counts[fine[(sy + offY[i]) * w + sx + offX[i]]] = 0;
+		return best;
 	}
 }

@@ -361,9 +361,12 @@ Start-Job {
                     (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path,
                     (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path,
                     (Join-Path (Get-Location) 'bases\pokedashpota1.0_client\modules\game_minimap\world.otmm'))
+    # version suavizada (bordes redondeados) que se ve al hacer zoom en el mapa grande
+    [WorldMap]::RunSmoothFromOtmm((Join-Path (Get-Location) 'bases\pokedashpota1.0_client\modules\game_minimap\world.otmm'),
+                                  (Join-Path (Get-Location) 'bases\pokedashpota1.0_client\modules\game_minimap\world'))
 } | Receive-Job -Wait -AutoRemoveJob
-git add bases/pokedashpota1.0_client/modules/game_minimap/world.otmm
-git commit -q -m "Mapa entero para el mapa grande (world.otmm)"
+git add -A bases/pokedashpota1.0_client/modules/game_minimap/world.otmm bases/pokedashpota1.0_client/modules/game_minimap/world
+git commit -q -m "Mapa entero para el mapa grande (world.otmm + suavizado)"
 git push
 
 # ---------------------------------------------------------------------

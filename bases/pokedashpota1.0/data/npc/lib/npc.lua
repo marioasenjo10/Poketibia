@@ -4,6 +4,34 @@ dofile('data/npc/lib/npcsystem/customModules.lua')
 
 isPlayerPremiumCallback = Player.isPremium
 
+-- Cura al jugador, a su pokemon fuera y a todas sus pokebolas (enfermeras).
+function npcHealPlayer(player)
+	local playerHealth = player:getHealth()
+	local playerMaxHealth = player:getMaxHealth()
+	if playerHealth < playerMaxHealth then
+		player:addHealth(playerMaxHealth - playerHealth)
+	end
+
+	if hasSummons(player) then
+		local summon = player:getSummons()[1]
+		summon:addHealth(-summon:getHealth() + summon:getMaxHealth())
+	end
+
+	local pokeballs = player:getPokeballs()
+	for i = 1, #pokeballs do
+		local ball = pokeballs[i]
+		local ballId = ball:getId()
+		local ballKey = getBallKey(ballId)
+		ball:setSpecialAttribute("pokeHealth", 100000)
+		local isBallBeingUsed = ball:getSpecialAttribute("isBeingUsed")
+		if ballId == balls[ballKey].usedOff and isBallBeingUsed ~= 1 then
+			ball:transform(balls[ballKey].usedOn)
+		end
+	end
+	player:sendTextMessage(MESSAGE_STATUS_SMALL, 'Your pokemon have been healed.')
+	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+end
+
 function msgcontains(message, keyword)
 	local message, keyword = message:lower(), keyword:lower()
 	if message == keyword then

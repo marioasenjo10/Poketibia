@@ -539,18 +539,10 @@ UIWindow
       anchors.fill: parent
       margin: 1
       image-source: /game_pokedex/images/gradient
+      image-border-left: 8
+      image-border-top: 8
+      image-border-bottom: 8
       image-color: #3d8fe0
-      phantom: true
-
-    UIWidget
-      id: stripe
-      anchors.left: parent.left
-      anchors.top: parent.top
-      anchors.bottom: parent.bottom
-      margin-top: 8
-      margin-bottom: 8
-      width: 4
-      background-color: #3d8fe0
       phantom: true
 
     UICreature

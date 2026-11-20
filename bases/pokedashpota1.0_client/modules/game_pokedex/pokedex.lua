@@ -421,7 +421,6 @@ function buildHeader(info)
   local typeInfo = TYPES[info.race] or { titleCase(info.race), '#3d8fe0' }
   local color = typeInfo[2]
   child('gradient'):setImageColor(color)
-  child('stripe'):setBackgroundColor(color)
 
   setPortrait(child('headerImage'), child('headerCreature'), info.look)
   child('nameLabel'):setText(info.name)
