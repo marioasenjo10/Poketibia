@@ -456,7 +456,9 @@ function buildHeader(info)
     world = 'Capturado por ' .. info.owners .. ' entrenadores'
   end
   if info.isShiny then
-    world = world .. '   |   ' .. (info.fromBase and 'Sale al azar en vez de su forma normal' or 'No aparece salvaje')
+    if not info.fromBase then
+      world = world .. '   |   No aparece salvaje'
+    end
   elseif info.worldCount <= 0 then
     world = world .. '   |   No aparece salvaje'
   end
