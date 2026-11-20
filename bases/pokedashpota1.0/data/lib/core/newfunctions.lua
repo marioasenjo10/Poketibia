@@ -1879,60 +1879,33 @@ end
 
 
 function Monster.getTotalSpeed(self)
-	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		local total = monsterType:getBaseSpeed()
-		-- pokemon de jugador: un poco mas lento que el entrenador (85%-100% segun su velocidad base)
+	if self:isPokemon() then
 		local master = self:getMaster()
 		if master and master:isPlayer() then
-			local factor = 0.9 + math.max(-0.05, math.min(0.1, (total - 180) / 1000))
-			total = math.floor(master:getBaseSpeed() * factor)
+			local masterSpeed = master:getSpeed()
+			if masterSpeed <= 0 then
+				masterSpeed = master:getBaseSpeed()
+			end
+			return math.floor(masterSpeed * 0.9)
 		end
-		local vitamins = self:getUsedVitaminsNumber("speed")
-		if vitamins > 0 then
-			total = total + math.floor(monsterType:getBaseSpeed() * vitamins / maxVitamins * vitaminStatusBuff)
-		end
-		return total
-	elseif self:isMonster() then
-		return monsterType:getBaseSpeed()
 	end
-	return 0
+	local monsterType = MonsterType(self:getName())
+	return monsterType and monsterType:getBaseSpeed() or 220
 end
 
 function Monster.getTotalSpeedPlayerContribution(self)
-	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		return math.floor(monsterType:getBaseSpeed() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	end
 	return 0
 end
 
 function Monster.getTotalSpeedSummonLevelContribution(self)
-	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		return math.floor(monsterType:getBaseSpeed() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	elseif self:isMonster() then
-		return math.floor(monsterType:getBaseSpeed() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	end
 	return 0
 end
 
 function Monster.getTotalSpeedSummonBoostContribution(self)
-	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		return math.floor(monsterType:getBaseSpeed() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)))
-	end
 	return 0
 end
 
 function Monster.getTotalSpeedVitaminContribution(self)
-	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		local vitamins = self:getUsedVitaminsNumber("speed")
-		if vitamins > 0 then
-			return math.floor(monsterType:getBaseSpeed() * vitamins / maxVitamins * vitaminStatusBuff)
-		end
-	end
 	return 0
 end
 
@@ -3519,14 +3492,4 @@ function Monster:increaseStatus(statusName)
 		end		
 	end
 	return false
-end
-
-function Player:getCatchRemainNumber(table)
-	local catchRemain = 0
-	for i = 1, #table do
-		if self:getStorageValue(baseStorageCatches + table[i]) <= 0 then
-			catchRemain = catchRemain + 1
-		end
-	end
-	return catchRemain
 end

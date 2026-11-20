@@ -49,6 +49,9 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	if statusToBeIncreased == "pokeLevel" then
 		player:sendCancelMessage("Pokemon do not have levels. Their power depends on your trainer level.")
+	elseif statusToBeIncreased == "speed" then
+		player:sendCancelMessage("Los Pokemon no tienen velocidad como estadistica.")
+		return true
 	else
 		if target:increaseUsedVitaminsNumber() then
 			player:say(target:getName() .. ", take this!", TALKTYPE_SAY)

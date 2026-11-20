@@ -607,7 +607,7 @@ function buildInfoPanel(info)
   local s = info.stats
   local stats = {
     { 'Vida', s[1] }, { 'Ataque', s[2] }, { 'Ataque especial', s[3] }, { 'Defensa especial', s[4] },
-    { 'Defensa', s[5] }, { 'Velocidad', s[6] }, { 'Experiencia', s[9] },
+    { 'Defensa', s[5] }, { 'Experiencia', s[9] },
   }
   local statGrid = g_ui.createWidget('DexStatGrid', panel)
   for _, st in ipairs(stats) do

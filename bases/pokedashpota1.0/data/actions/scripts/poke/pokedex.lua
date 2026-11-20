@@ -22,7 +22,6 @@ function Monster.getSummonStatus(self)
 			.. "\nMagic Attack: \t" .. self:getTotalMagicAttack() 
 			.. "\nMagic Defense: \t" .. self:getTotalMagicDefense() 
 			.. "\nArmor: \t" .. self:getTotalDefense() 
-			.. "\nSpeed: \t" .. self:getTotalSpeed()
 	local moveList = monsterType:getMoveList()
 	if #moveList >= 1 then
 		output = output .. "\n\nMoves:" .. "\n"
