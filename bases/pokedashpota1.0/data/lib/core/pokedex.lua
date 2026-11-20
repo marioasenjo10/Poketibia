@@ -543,9 +543,6 @@ local function townsWithTemple()
 end
 
 function Player.hasDiscoveredTown(self, townId)
-	if self:getGroup():getAccess() then
-		return true
-	end
 	local home = self:getTown()
 	if home and home:getId() == townId then
 		return true

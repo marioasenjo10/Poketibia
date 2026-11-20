@@ -195,10 +195,11 @@ function toggleFullMap()
     minimapWidget:setAlternativeWidgetsVisible(false)
   end
 
+  -- al abrir o cerrar el mapa grande, siempre centrado en el jugador y en su planta
   local zoom = oldZoom or 0
-  local pos = oldPos or minimapWidget:getCameraPosition()
+  local player = g_game.getLocalPlayer()
+  local pos = player and player:getPosition() or minimapWidget:getCameraPosition()
   oldZoom = minimapWidget:getZoom()
-  oldPos = minimapWidget:getCameraPosition()
   minimapWidget:setZoom(zoom)
   minimapWidget:setCameraPosition(pos)
 
