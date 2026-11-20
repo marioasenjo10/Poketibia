@@ -29,10 +29,11 @@ function init()
   g_keyboard.bindKeyDown('Ctrl+I', toggle)
 
   inventoryButton = modules.client_topmenu.addRightGameToggleButton('inventoryButton', tr('Inventory') .. ' (Ctrl+I)', '/images/topbuttons/inventory', toggle)
-  inventoryButton:setOn(true)
+  inventoryButton:setOn(false)
 
   inventoryWindow = g_ui.loadUI('inventory', modules.game_interface.getMapPanel())
   inventoryPanel = inventoryWindow
+  inventoryWindow:show()
 
   refresh()
 end
@@ -74,12 +75,14 @@ function refresh()
 end
 
 function toggle()
-  if inventoryButton:isOn() then
-    inventoryWindow:hide()
-    inventoryButton:setOn(false)
+  local player = g_game.getLocalPlayer()
+  if not player then return end
+
+  local backpack = player:getInventoryItem(InventorySlotBack)
+  if backpack then
+    g_game.open(backpack)
   else
-    inventoryWindow:show()
-    inventoryButton:setOn(true)
+    modules.game_textmessage.displayStatusMessage(tr('No tienes ninguna mochila equipada'))
   end
 end
 

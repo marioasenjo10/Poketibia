@@ -30,5 +30,9 @@ function onLogin(player)
 		player:addItem(27646, 20)
 		player:addItem(27645, 20)
 	end
+	-- mochila PKA permanente
+	if not player:getSlotItem(CONST_SLOT_BACKPACK) then
+		player:addItem(ITEM_BAG, 1, false, CONST_SLOT_BACKPACK)
+	end
 	return true
 end

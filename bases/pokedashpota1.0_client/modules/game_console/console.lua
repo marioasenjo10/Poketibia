@@ -105,6 +105,7 @@ local function bindWasd(bind)
 end
 
 local function showChat(show)
+  consolePanel:setVisible(show)
   consoleTextEdit:setVisible(show)
   consoleTextEdit:setText("")
   if show then consoleTextEdit:focus() end

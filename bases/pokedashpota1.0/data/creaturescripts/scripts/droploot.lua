@@ -22,11 +22,13 @@ function onDeath(player, corpse, killer, mostDamage, unjustified, mostDamage_unj
 		end
 	else
 		for i = CONST_SLOT_HEAD, CONST_SLOT_AMMO do
-			local item = player:getSlotItem(i)
-			if item then
-				if isInArray({SKULL_RED, SKULL_BLACK}, player:getSkull()) or math.random(item:isContainer() and 100 or 1000) <= player:getLossPercent() then
-					if not item:moveTo(corpse) then
-						item:remove()
+			if i ~= CONST_SLOT_BACKPACK then
+				local item = player:getSlotItem(i)
+				if item then
+					if isInArray({SKULL_RED, SKULL_BLACK}, player:getSkull()) or math.random(item:isContainer() and 100 or 1000) <= player:getLossPercent() then
+						if not item:moveTo(corpse) then
+							item:remove()
+						end
 					end
 				end
 			end

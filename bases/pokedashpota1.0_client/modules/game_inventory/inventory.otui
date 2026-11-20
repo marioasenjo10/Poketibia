@@ -104,19 +104,14 @@ UIWidget
 
   InfoSlot
   OrderSlot
-  LegSlot
-  BackSlot
-  FingerSlot
-  NeckSlot
-  FeetSlot
 
-  HeadSlot
+  LegSlot
     visible: false
-  BodySlot
+  BackSlot
     visible: false
-  AmmoSlot
+  FingerSlot
     visible: false
-  LeftSlot
+  NeckSlot
     visible: false
-  RightSlot
+  FeetSlot
     visible: false
