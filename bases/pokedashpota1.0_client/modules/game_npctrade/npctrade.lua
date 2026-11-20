@@ -77,6 +77,11 @@ function init()
 
   cancelNextRelease = false
 
+  -- el peso no importa: sin peso, sin capacidad y siempre se ignora la capacidad
+  setShowWeight(false)
+  setShowYourCapacity(false)
+  ignoreCapacity:setChecked(true)
+
   if g_game.isOnline() then
     playerFreeCapacity = g_game.getLocalPlayer():getFreeCapacity()
   end
@@ -162,7 +167,7 @@ function onTradeTypeChange(radioTabs, selected, deselected)
 
   local currentTradeType = getCurrentTradeType()
   buyWithBackpack:setVisible(currentTradeType == BUY)
-  ignoreCapacity:setVisible(currentTradeType == BUY)
+  ignoreCapacity:setVisible(false)
   ignoreEquipped:setVisible(currentTradeType == SELL)
   showAllItems:setVisible(currentTradeType == SELL)
   sellAllButton:setVisible(currentTradeType == SELL)

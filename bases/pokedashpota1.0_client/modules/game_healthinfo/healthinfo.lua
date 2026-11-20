@@ -124,8 +124,9 @@ function onLevelChange(localPlayer, value, percent)
 end
 
 
+-- el peso no importa en este servidor: no se muestra la capacidad
 function onFreeCapacityChange(player, freeCapacity)
-  capLabel:setText(tr('Cap') .. ': ' .. freeCapacity)
+  if capLabel then capLabel:setVisible(false) end
 end
 
 function onStatesChange(localPlayer, now, old)

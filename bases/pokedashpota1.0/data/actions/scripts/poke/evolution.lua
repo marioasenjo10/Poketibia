@@ -52,6 +52,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 						player:sendTextMessage(MESSAGE_STATUS_SMALL, "Shiny pokemon do not evolve with stones. You need the rare item dropped by a wild " .. evolutionName .. ".")
 						return true
 					end
+					local requiredLevel = getPokemonRequiredLevel(evolutionName)
+					if player:getLevel() < requiredLevel then
+						player:sendCancelMessage("Necesitas nivel " .. requiredLevel .. " para evolucionar a " .. evolutionName .. ".")
+						return true
+					end
 					local isAncient = false
 					if item:getName() == "unique ancient stone" then
 						if player:getStorageValue(storageEvolutionAncient) > 0 then

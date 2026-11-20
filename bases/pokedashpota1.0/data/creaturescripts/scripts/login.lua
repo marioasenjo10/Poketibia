@@ -47,6 +47,11 @@ function onLogin(player)
 	player:convertCoinsToBank()
 	player:sendBankBalance()
 
+	-- el peso no importa: capacidad practicamente infinita
+	if player.setCapacity then
+		player:setCapacity(100000000)
+	end
+
 	-- Nombres de las ciudades para el mapa grande del cliente
 	player:checkTownDiscovery()
 	player:sendTownList()

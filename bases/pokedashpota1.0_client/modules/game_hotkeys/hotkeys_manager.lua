@@ -187,21 +187,27 @@ function load(forceDefaults)
   hotkeysManagerLoaded = true
 end
 
--- La primera vez de cada personaje se anade la tecla E = usar pokedex (con mira:
--- sobre ti abre la lista, sobre un pokemon abre su ficha). Luego se puede cambiar en Ctrl+K.
+-- La primera vez de cada personaje se anaden las teclas E = usar pokedex (con mira:
+-- sobre ti abre la lista, sobre un pokemon abre su ficha) y Q = order. Luego se pueden cambiar en Ctrl+K.
 local POKEDEX_CLIENT_ID = 3150
-function addPokedexHotkey()
-  if not g_game.isOnline() then return end
+local ORDER_CLIENT_ID = 3157
+local function addDefaultItemHotkey(settingsNode, keyCombo, clientId)
   local key = ((G.host or '') .. '_' .. g_game.getCharacterName()):gsub('[^%w]', '_')
-  local done = g_settings.getNode('pokedex_hotkey') or {}
+  local done = g_settings.getNode(settingsNode) or {}
   if done[key] then return end
   done[key] = true
-  g_settings.setNode('pokedex_hotkey', done)
-  if currentHotkeys:getChildById('E') then return end
-  local settings = { autoSend = false, itemId = POKEDEX_CLIENT_ID, useType = HOTKEY_MANAGER_USEWITH }
-  addKeyCombo('E', settings)
-  hotkeyList['E'] = settings
+  g_settings.setNode(settingsNode, done)
+  if currentHotkeys:getChildById(keyCombo) then return end
+  local settings = { autoSend = false, itemId = clientId, useType = HOTKEY_MANAGER_USEWITH }
+  addKeyCombo(keyCombo, settings)
+  hotkeyList[keyCombo] = settings
   save()
+end
+
+function addPokedexHotkey()
+  if not g_game.isOnline() then return end
+  addDefaultItemHotkey('pokedex_hotkey', 'E', POKEDEX_CLIENT_ID)
+  addDefaultItemHotkey('order_hotkey', 'Q', ORDER_CLIENT_ID)
 end
 
 function unload()

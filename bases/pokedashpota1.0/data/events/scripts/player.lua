@@ -4,6 +4,8 @@ end
 
 function Player:onLook(thing, position, distance)
 	local description = "You see " .. thing:getDescription(distance)
+	-- el peso no importa en este servidor: se quita del texto
+	description = description:gsub("\n?It weighs [%d%.,]+ oz%.", ""):gsub("\n?They weigh [%d%.,]+ oz%.", "")
 	if not thing:isItem() and isSummon(thing) then
 		local master = thing:getMaster()
 		if master:isPlayer() then

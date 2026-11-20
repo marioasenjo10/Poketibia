@@ -45,6 +45,12 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 
+	local requiredLevel = getPokemonRequiredLevel(entry.target)
+	if player:getLevel() < requiredLevel then
+		player:sendCancelMessage("Necesitas nivel " .. requiredLevel .. " para evolucionar a " .. entry.target .. ".")
+		return true
+	end
+
 	item:remove(1)
 	doEvolveSummon(summon:getId(), entry.target, false)
 	return true

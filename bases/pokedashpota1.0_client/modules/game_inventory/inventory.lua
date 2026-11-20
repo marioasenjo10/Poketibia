@@ -31,21 +31,10 @@ function init()
   inventoryButton = modules.client_topmenu.addRightGameToggleButton('inventoryButton', tr('Inventory') .. ' (Ctrl+I)', '/images/topbuttons/inventory', toggle)
   inventoryButton:setOn(true)
 
-  inventoryWindow = g_ui.loadUI('inventory', modules.game_interface.getRightPanel())
-  inventoryWindow:disableResize()
-  inventoryPanel = inventoryWindow:getChildById('contentsPanel')
-
-  purseButton = inventoryPanel:getChildById('purseButton')
-  local function purseFunction()
-    local purse = g_game.getLocalPlayer():getInventoryItem(InventorySlotPurse)
-    if purse then
-      g_game.use(purse)
-    end
-  end
---  purseButton.onClick = purseFunction
+  inventoryWindow = g_ui.loadUI('inventory', modules.game_interface.getMapPanel())
+  inventoryPanel = inventoryWindow
 
   refresh()
-  inventoryWindow:setup()
 end
 
 function terminate()
@@ -86,10 +75,10 @@ end
 
 function toggle()
   if inventoryButton:isOn() then
-    inventoryWindow:close()
+    inventoryWindow:hide()
     inventoryButton:setOn(false)
   else
-    inventoryWindow:open()
+    inventoryWindow:show()
     inventoryButton:setOn(true)
   end
 end
@@ -110,6 +99,7 @@ function onInventoryChange(player, slot, item, oldItem)
   end
 
   local itemWidget = inventoryPanel:getChildById('slot' .. slot)
+  if not itemWidget then return end
   if item then
     itemWidget:setStyle('InventoryItem')
     itemWidget:setItem(item)

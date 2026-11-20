@@ -164,6 +164,14 @@ function init()
   dexButton = modules.client_topmenu.addRightGameToggleButton('pokedexButton', 'Pokedex (E / Ctrl+D)',
     '/images/topbuttons/spelllist', toggle)
   dexButton:setOn(false)
+  -- mismo icono que el objeto pokedex del inventario (client id 3150)
+  dexButton:setIconColor('#00000000')
+  local dexIcon = g_ui.createWidget('UIItem', dexButton)
+  dexIcon:setItemId(3150)
+  dexIcon:setVirtual(true)
+  dexIcon:setPhantom(true)
+  dexIcon:fill('parent')
+  dexIcon:setMargin(1)
 
   child('searchEdit').onTextChange = function(widget, text) filterList(text) end
 
@@ -449,18 +457,14 @@ function buildHeader(info)
   end
   if info.isShiny then
     world = world .. '   |   ' .. (info.fromBase and 'Sale al azar en vez de su forma normal' or 'No aparece salvaje')
-  elseif info.worldCount > 0 then
-    world = world .. '   |   ' .. info.worldCount .. ' puntos de aparicion'
-  else
+  elseif info.worldCount <= 0 then
     world = world .. '   |   No aparece salvaje'
   end
   child('worldLabel'):setText(world)
 
   local catchChance = tonumber(info.stats[10]) or 0
   local catchText = (info.registered and 'Registrado' or 'Sin registrar') .. '   |   Capturados: ' .. info.catches .. '   |   Intentos: ' .. info.tries
-  if catchChance > 0 then
-    catchText = catchText .. '   |   Captura: ' .. string.format('%.1f', math.min(100, catchChance * 100 / 300)) .. '%'
-  else
+  if catchChance <= 0 then
     catchText = catchText .. '   |   No se puede capturar'
   end
   child('catchLabel'):setText(catchText)

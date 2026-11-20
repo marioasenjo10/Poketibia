@@ -1882,6 +1882,12 @@ function Monster.getTotalSpeed(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
 		local total = monsterType:getBaseSpeed()
+		-- pokemon de jugador: un poco mas lento que el entrenador (85%-100% segun su velocidad base)
+		local master = self:getMaster()
+		if master and master:isPlayer() then
+			local factor = 0.9 + math.max(-0.05, math.min(0.1, (total - 180) / 1000))
+			total = math.floor(master:getBaseSpeed() * factor)
+		end
 		local vitamins = self:getUsedVitaminsNumber("speed")
 		if vitamins > 0 then
 			total = total + math.floor(monsterType:getBaseSpeed() * vitamins / maxVitamins * vitaminStatusBuff)

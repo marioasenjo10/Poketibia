@@ -86,6 +86,7 @@ MiniWindow
     SkillButton
       id: capacity
       height: 15
+      visible: false
       SkillNameLabel
         !text: tr('Capacity')
       SkillValueLabel

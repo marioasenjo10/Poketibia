@@ -86,81 +86,37 @@ OrderSlot < InventoryItem
   $on:
     image-source: /images/game/slots/right-hand-blessed
 
-MiniWindow
+// barra de objetos (pokedex, order, rope, badges...) abajo del mapa, encima del chat
+UIWidget
   id: inventoryWindow
-  !text: tr('Inventory')
-  icon: /images/topbuttons/inventory
-  height: 140
-  @onClose: modules.game_inventory.onMiniWindowClose()
-  &save: true
+  anchors.bottom: parent.bottom
+  anchors.horizontalCenter: parent.horizontalCenter
+  margin-bottom: 6
+  height: 44
+  padding: 4
+  background-color: #101216d0
+  border-width: 1
+  border-color: #8e2020
+  layout:
+    type: horizontalBox
+    spacing: 4
+    fit-children: true
 
-  MiniWindowContents
-    OrderSlot
-      anchors.top: parent.top
-      anchors.horizontalCenter: parent.horizontalCenter
-      margin-top: 3
+  InfoSlot
+  OrderSlot
+  LegSlot
+  BackSlot
+  FingerSlot
+  NeckSlot
+  FeetSlot
 
-    LegSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: true
-
-    BackSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-
-    HeadSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: false
-
-    BodySlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: false
-
-    InfoSlot
-      anchors.top: parent.top
-      anchors.right: slot1.left
-      margin-top: 3
-      margin-right: 5
-
-    FingerSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: true
-
-    AmmoSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: false
-
-    LeftSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: false
-
-    NeckSlot
-      anchors.top: parent.top
-      anchors.left: slot1.right
-      margin-top: 3
-      margin-left: 5
-
-    FeetSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: true
-
-    RightSlot
-      anchors.top: prev.bottom
-      anchors.horizontalCenter: prev.horizontalCenter
-      margin-top: 3
-      visible: false
+  HeadSlot
+    visible: false
+  BodySlot
+    visible: false
+  AmmoSlot
+    visible: false
+  LeftSlot
+    visible: false
+  RightSlot
+    visible: false
