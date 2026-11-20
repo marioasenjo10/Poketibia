@@ -340,5 +340,14 @@ function Monster:onSpawn(position, startup, artificial)
 --			end
 --		end
 	end
+	-- sin nivel: la vida de un salvaje depende de su etapa evolutiva (Monster.getPowerLevel).
+	-- Los summons y pokemon de NPC la vuelven a fijar al crearlos.
+	if MonsterType(self:getName()):dexEntry() > 0 then
+		local maxHealth = self:getTotalHealth()
+		if maxHealth > 0 then
+			self:setMaxHealth(maxHealth)
+			self:setHealth(maxHealth)
+		end
+	end
 	return true
 end

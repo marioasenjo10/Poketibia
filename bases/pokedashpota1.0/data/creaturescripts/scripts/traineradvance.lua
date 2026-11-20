@@ -1,6 +1,6 @@
 -- Estilo Poke Alliance: al subir de nivel el entrenador, su pokemon se hace mas fuerte al momento
 function onAdvance(player, skill, oldLevel, newLevel)
-	if skill ~= SKILL_LEVEL or not trainerLevelScaling or not hasSummons(player) then
+	if skill ~= SKILL_LEVEL or not hasSummons(player) then
 		return true
 	end
 	local summon = player:getSummon()

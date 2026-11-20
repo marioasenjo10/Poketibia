@@ -48,17 +48,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	end
 
 	if statusToBeIncreased == "pokeLevel" then
-		if trainerLevelScaling then
-			player:sendCancelMessage("Pokemon do not have levels. Their power depends on your trainer level.")
-		elseif target:getLevel() >= summonMaxLevel then
-			player:sendCancelMessage("Sorry, not possible to feed this Pokemon anymore.")
-		else
-			player:say(target:getName() .. ", take this!", TALKTYPE_SAY)
-			target:say("Hmm", TALKTYPE_SAY)
-			target:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			target:increaseStatus(statusToBeIncreased)
-			item:remove(1)
-		end
+		player:sendCancelMessage("Pokemon do not have levels. Their power depends on your trainer level.")
 	else
 		if target:increaseUsedVitaminsNumber() then
 			player:say(target:getName() .. ", take this!", TALKTYPE_SAY)

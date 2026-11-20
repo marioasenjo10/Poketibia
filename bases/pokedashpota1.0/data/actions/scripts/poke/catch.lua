@@ -78,7 +78,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local monsterNumber = monsterType:getNumber()
 	local storageCatch = baseStorageCatches + monsterNumber
 	local storageTry = baseStorageTries + monsterNumber
-	local level = targetCorpse:getSpecialAttribute("corpseLevel") or initialLevel
 	doSendDistanceShoot(playerPos, toPosition, balls[ballKey].missile)
 	item:remove(1)
 	targetCorpse:remove()
@@ -90,9 +89,9 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if math.random(1, 300) <= chance then -- caught
 		-- check how many pokeballs the player has
 		if player:getSlotItem(CONST_SLOT_BACKPACK) and player:getSlotItem(CONST_SLOT_BACKPACK):getEmptySlots() >= 1 and player:getFreeCapacity() >= 1 then -- add to backpack
-			addEvent(doAddPokeball, delayMessage, player:getId(), name, level, initialBoost, ballKey, false, delayMessage)
+			addEvent(doAddPokeball, delayMessage, player:getId(), name, initialBoost, ballKey, false, delayMessage)
 		else -- send to cp
-			local addPokeball = doAddPokeball(player:getId(), name, level, initialBoost, ballKey, true, delayMessage + 4000)
+			local addPokeball = doAddPokeball(player:getId(), name, initialBoost, ballKey, true, delayMessage + 4000)
 			if not addPokeball then
 				print("ERROR! Player " .. player:getName() .. " lost pokemon " .. name .. "! addPokeball false")
 			end

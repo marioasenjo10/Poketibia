@@ -348,12 +348,61 @@ local function getEvolutionChain(name)
 				if shinyEvo then
 					itemName, itemCount = ItemType(shinyEvo.id):getName(), 1
 				end
-				add(evolution.name, depth + 1, evolution.level, itemName, itemCount)
+				add(evolution.name, depth + 1, 0, itemName, itemCount)
 			end
 		end
 	end
 	add(root, 0, 0, "", 0)
 	return table.concat(out, ";")
+end
+
+-- ===================== Nivel requerido (estilo PKA) =====================
+
+local requiredLevelCache = {}
+
+-- nivel de entrenador para usar el pokemon: base 0, etapa media 40, final 80 (shiny +20)
+function getPokemonRequiredLevel(name)
+	if not name or name == "" then
+		return 0
+	end
+	local key = name:lower()
+	if requiredLevelCache[key] then
+		return requiredLevelCache[key]
+	end
+	if not monstersTable then
+		buildDex()
+	end
+	if not evoParent then
+		buildEvoParents()
+	end
+	local shiny = isShinyName(name)
+	-- la etapa se mira en la especie normal (no todos los shiny tienen su cadena completa)
+	local species = shiny and name:sub(7) or name
+	if not MonsterType(species) then
+		species = name
+	end
+	local monsterType = MonsterType(species)
+	local level = pokemonStageLevels.final
+	if monsterType then
+		local speciesShiny = isShinyName(species)
+		local evolves = false
+		for _, evolution in ipairs(monsterType:getEvolutionList()) do
+			if evolution.name and evolution.name ~= "" and isShinyName(evolution.name) == speciesShiny then
+				evolves = true
+				break
+			end
+		end
+		if evolves then
+			local parent = evoParent[species:lower()]
+			local hasParent = parent and isShinyName(parent.name) == speciesShiny and not babyPokemon[parent.name:lower():gsub("^shiny ", "")]
+			level = hasParent and pokemonStageLevels.middle or pokemonStageLevels.base
+		end
+	end
+	if shiny then
+		level = level + shinyExtraLevel
+	end
+	requiredLevelCache[key] = level
+	return level
 end
 
 -- ===================== Lista =====================
@@ -398,10 +447,12 @@ local function buildPokedexInfo(player, number)
 		return nil
 	end
 
+	-- 7 y 8: nivel de entrenador necesario para usarlo (los pokemon no tienen nivel)
+	local requiredLevel = getPokemonRequiredLevel(name)
 	local stats = {
 		monsterType:getMaxHealth(), monsterType:getMeleeDamage(), monsterType:getMoveMagicAttackBase(),
 		monsterType:getMoveMagicDefenseBase(), monsterType:getDefense(), monsterType:getBaseSpeed(),
-		monsterType:getMinLevel(), monsterType:getMaxLevel(), monsterType:getExperience(), monsterType:catchChance(),
+		requiredLevel, requiredLevel, monsterType:getExperience(), monsterType:catchChance(),
 	}
 	for i = 1, 10 do
 		stats[i] = math.floor(tonumber(stats[i]) or 0)

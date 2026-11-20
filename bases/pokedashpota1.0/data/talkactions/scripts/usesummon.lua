@@ -14,7 +14,7 @@ function onSay(player, words, param)
 		return false
 	end
 
-	if player:canReleaseSummon(ball:getSummonLevel(), ball:getSummonBoost(), ball:getSummonOwner()) then
+	if player:canReleaseSummon(ball:getSummonName(), ball:getSummonOwner()) then
 		if hasSummons(player) then
 			local usingBall = player:getUsingBall()
 			if not usingBall then

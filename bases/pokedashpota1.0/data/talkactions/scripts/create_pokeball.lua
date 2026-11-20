@@ -15,10 +15,9 @@ return false
 end
 
 name = firstToUpper(name)
-local level = tonumber(split[2]) or 1
-local boost = tonumber(split[3]) or 0
+local boost = tonumber(split[2]) or 0
 
-doAddPokeball(player:getId(), name, level, boost, getBallKey(balls.ultraball.usedOn), false, 0)
+doAddPokeball(player:getId(), name, boost, getBallKey(balls.ultraball.usedOn), false, 0)
 player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 return true
 end

@@ -429,9 +429,10 @@ function buildHeader(info)
   local type2 = TYPES[info.race2]
   setChip(child('type2'), type2 and type2[1] or (info.race2 ~= '' and titleCase(info.race2) or nil), type2 and type2[2])
 
-  local minLevel, maxLevel = tonumber(info.stats[7]) or 0, tonumber(info.stats[8]) or 0
-  local levelText = minLevel == maxLevel and ('NIVEL ' .. minLevel) or ('NIVEL ' .. minLevel .. '-' .. maxLevel)
+  local req = tonumber(info.stats[7]) or 0
+  local levelText = req > 0 and ('NIVEL ' .. req) or 'TODO NIVEL'
   setChip(child('levelChip'), levelText, '#2b3b55')
+  child('levelChip'):setTooltip('Nivel de entrenador necesario para usarlo')
   if info.legendary then
     setChip(child('specialChip'), 'LEGENDARIO', '#b8860b')
   elseif info.isShiny then
@@ -571,7 +572,7 @@ function buildInfoPanel(info)
       card:getChildById('level'):setText(levelText)
       local tip = { stage.name }
       if stage.depth > 0 and stage.level > 0 then table.insert(tip, 'Evoluciona al nivel ' .. stage.level) end
-      if stage.item ~= '' then table.insert(tip, 'o usando ' .. math.max(1, stage.count) .. 'x ' .. titleCase(stage.item)) end
+      if stage.item ~= '' then table.insert(tip, 'Usando ' .. math.max(1, stage.count) .. 'x ' .. titleCase(stage.item)) end
       card:setTooltip(table.concat(tip, '\n'))
       if stage.number > 0 then
         card.onClick = function() requestInfo(stage.number) end

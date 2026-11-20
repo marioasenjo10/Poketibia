@@ -17,15 +17,22 @@ legendaryIndex = {144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 37
 arenaLastPlayerId = 0
 
 damageMultiplierMoves = {areawaves = 2.75, singletargetweak = 2.0, singletarget = 3.5, singletargetstrong = 4.0, areatarget = 3.0, frontlinear = 5.0, frontarea = 4.0, passive = 3.0, ultimate = 6.0}
-summonLevelDamageBuff = 0.008 -- buff due to summon's level
-playerLevelDamageBuff = 0.0005 -- buff due to player's level
+summonLevelDamageBuff = 0.008 -- buff por nivel de fuerza de salvajes y pokemon de NPC
 summonBoostDamageBuff = 0.008 -- buff due to summon's boost
 summonLoveDamageBuff = 0.0002 -- buff due to summon's love
--- Estilo Poke Alliance: los pokemon de los jugadores no tienen nivel propio (no ganan exp
--- ni suben de nivel, evolucionan con piedras). Su fuerza (dano, vida, defensa, velocidad)
--- depende del nivel del entrenador. Los pokemon salvajes siguen usando su nivel.
-trainerLevelScaling = true
-trainerLevelDamageBuff = 0.008 -- buff por nivel del entrenador (lo mismo que daba antes cada nivel del pokemon)
+-- Estilo Poke Alliance: los pokemon no tienen nivel (no ganan exp ni suben de nivel,
+-- evolucionan con piedras). La fuerza de un pokemon de jugador (dano, vida, defensa,
+-- velocidad) depende del nivel del entrenador + boost.
+trainerLevelDamageBuff = 0.008 -- buff por nivel del entrenador
+-- Nivel de entrenador necesario para usar un pokemon segun su etapa evolutiva
+-- (los que no evolucionan, como Snorlax o Heracross, cuentan como etapa final).
+-- Los salvajes usan este mismo valor como nivel de fuerza: un Charizard salvaje
+-- pega como el Charizard de un entrenador nivel 80.
+pokemonStageLevels = {base = 0, middle = 40, final = 80}
+shinyExtraLevel = 20
+-- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
+babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
+	smoochum = true, elekid = true, magby = true, azurill = true, wynaut = true}
 vitaminStatusBuff = 1.2
 hunterDamageBuff = 1.1
 blockerHealthBuff = 1.25
@@ -1465,11 +1472,12 @@ end
 function getNeededExp(level) return (50 * (level * level * level - 6 * level * level + 17 * level - 12) / 3) end
 
 function statusGainFormula(playerLevel, summonLevel, summonBoost, pokeLove)
-	-- playerLevel > 0 solo para pokemon de jugadores (los salvajes pasan 0)
-	if trainerLevelScaling and playerLevel and playerLevel > 0 then
+	-- pokemon de jugador (playerLevel > 0): su fuerza depende del nivel del entrenador
+	if playerLevel and playerLevel > 0 then
 		return (1.0 + playerLevel * trainerLevelDamageBuff + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
 	end
-	return (1.0 + summonLevel * summonLevelDamageBuff + playerLevel * playerLevelDamageBuff + summonBoost * summonBoostDamageBuff + pokeLove * summonLoveDamageBuff)
+	-- salvajes y pokemon de NPC: summonLevel es su nivel de fuerza (Monster.getPowerLevel)
+	return (1.0 + (summonLevel or 0) * summonLevelDamageBuff + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
 end
 
 function damageFormula(playerLevel, summonLevel, summonBoost, pokeLove)
@@ -1502,7 +1510,7 @@ function Monster.getTotalHealth(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getLevel(), 0, 0))
+		return math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
 	end
 	return 0
 end
@@ -1589,7 +1597,7 @@ function Monster.getTotalMeleeAttack(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(aveMelee * statusGainFormula(0, self:getLevel(), 0, 0))	
+		return math.floor(aveMelee * statusGainFormula(0, self:getPowerLevel(), 0, 0))
 	end
 	return 0
 end
@@ -1699,7 +1707,7 @@ function Monster.getTotalMagicAttack(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getLevel(), 0, 0))
+		return math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
 	end
 	return 0
 end
@@ -1761,7 +1769,7 @@ function Monster.getTotalDefense(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getDefense() * statusGainFormula(0, self:getLevel(), 0, 0))
+		return math.floor(monsterType:getDefense() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
 	end
 	return 0
 end
@@ -1814,7 +1822,7 @@ function Monster.getTotalMagicDefense(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getLevel(), 0, 0))
+		return math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
 	end
 	return 0
 end
@@ -1878,7 +1886,7 @@ function Monster.getTotalSpeed(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getBaseSpeed() * statusGainFormula(0, self:getLevel(), 0, 0))
+		return math.floor(monsterType:getBaseSpeed() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
 	end
 	return 0
 end
@@ -2038,18 +2046,6 @@ function Player.getSummonNameFromBall(self)
 		end
 	end
 	return "unamed"
-end
-
-function Player.getSummonLevelFromBall(self)
---	local item = self:getSlotItem(CONST_SLOT_AMMO)
-	local item = self:getUsingBall()
-	if item then
-		local pokeLevel = item:getSpecialAttribute("pokeLevel")
-		if pokeLevel ~= nil then			
-			return pokeLevel
-		end
-	end
-	return 1
 end
 
 function Player.getSummonBoostFromBall(self)
@@ -2239,19 +2235,17 @@ function Player.disableAutoLoot(self)
 	return false
 end
 
-function Monster.getSummonLevel(self)
-	if self:isPokemon() then
-		local master = self:getMaster()
---		local item = master:getSlotItem(CONST_SLOT_AMMO)
-		local item = master:getUsingBall()
-		local pokeLevel = item:getSpecialAttribute("pokeLevel")
-		if pokeLevel ~= nil then			
-			return pokeLevel
-		end
-	elseif isMonster(self) then
-		return self:getLevel()
+-- Los pokemon no tienen nivel: su fuerza es el nivel del entrenador (pokemon de jugador),
+-- el nivel con el que lo creo el NPC (lideres de gimnasio...) o el de su etapa (salvajes).
+function Monster.getPowerLevel(self)
+	local master = self:getMaster()
+	if master then
+		return master:isPlayer() and master:getLevel() or self:getLevel()
 	end
-	return 1
+	if MonsterType(self:getName()):dexEntry() <= 0 then
+		return self:getLevel() -- monstruos que no son pokemon
+	end
+	return getPokemonRequiredLevel(self:getName())
 end
 
 function Monster.getSummonBoost(self)
@@ -2539,14 +2533,14 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		return true
 	end	
 
-	local summonLevel = ball:getSpecialAttribute("pokeLevel")
 	local summonBoost = ball:getSpecialAttribute("pokeBoost") or 0
 
 	local newPos = player:getClosestFreePosition(pos, 2) or pos
 	if newPos.x == 0 then
 		newPos = pos
 	end
-	local monster = Game.createMonster(name, newPos, true, true, summonLevel, summonBoost)
+	-- el pokemon no tiene nivel propio: se crea con el nivel del entrenador
+	local monster = Game.createMonster(name, newPos, true, true, player:getLevel(), summonBoost)
 
 	if monster ~= nil then
 		if message then
@@ -2745,7 +2739,7 @@ function doEvolveSummon(cid, evolutionName, ancient)
 --		end
 
 		local baseHealth = MonsterType(evolutionName):getMaxHealth()
-		local newMaxHealth = math.floor(baseHealth * statusGainFormula(master:getLevel(), item:getSpecialAttribute("pokeLevel"), item:getSpecialAttribute("pokeBoost"), item:getSpecialAttribute("pokeLove") or 0))
+		local newMaxHealth = math.floor(baseHealth * statusGainFormula(master:getLevel(), 0, item:getSpecialAttribute("pokeBoost") or 0, item:getSpecialAttribute("pokeLove") or 0))
 		summon:setMaxHealth(newMaxHealth)
 		summon:setHealth(newMaxHealth)
 
@@ -2805,7 +2799,7 @@ function Item.isPokeball(self)
 	return false
 end
 
-function doAddPokeball(cid, name, level, boost, ballKey, dp, msg)
+function doAddPokeball(cid, name, boost, ballKey, dp, msg)
 	local player = Player(cid)
 	if player then
 		name = firstToUpper(name)
@@ -2837,11 +2831,9 @@ function doAddPokeball(cid, name, level, boost, ballKey, dp, msg)
 		end
 		if addBall then
 			local baseHealth = monsterType:getMaxHealth()
-			local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), level, boost, 0))
+			local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, boost, 0))
 			addBall:setSpecialAttribute("pokeName", name)
-			addBall:setSpecialAttribute("pokeLevel", level)
 			addBall:setSpecialAttribute("pokeBoost", boost)
-			addBall:setSpecialAttribute("pokeExperience", getNeededExp(level))
 			addBall:setSpecialAttribute("pokeMaxHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeHealth", maxHealth)
 			addBall:setSpecialAttribute("pokeLove", 0)
@@ -3239,8 +3231,8 @@ function Player:giveQuestPrize(uid, ignore)
 								if self:getFreeCapacity() >= 1 and container and container:getEmptySlots() > 0 then
 									dp = 0
 								end
-								doAddPokeball(self:getId(), value.prizes[j].pokes[i].name, value.prizes[j].pokes[i].level, value.prizes[j].pokes[i].boost, getBallKey(balls.ultraball.usedOn), dp, 0)
-								local msg = 'You have found: ' .. value.prizes[j].pokes[i].name .. ', level ' .. value.prizes[j].pokes[i].level ..', boost ' .. value.prizes[j].pokes[i].boost .. '.'
+								doAddPokeball(self:getId(), value.prizes[j].pokes[i].name, value.prizes[j].pokes[i].boost, getBallKey(balls.ultraball.usedOn), dp, 0)
+								local msg = 'You have found: ' .. value.prizes[j].pokes[i].name .. ', boost ' .. value.prizes[j].pokes[i].boost .. '.'
 								if dp == 1 then
 									msg = msg .. " It was sent do CP because you do not have enough capacity."
 								end
@@ -3406,13 +3398,13 @@ function Player:isSummonBlocked()
 end
 
 
-function Player:canReleaseSummon(pokeLevel, pokeBoost, ownerName)
+function Player:canReleaseSummon(pokeName, ownerName)
 
 	-- to fix ball bug
-	if not pokeLevel then return false end
+	if not pokeName then return false end
 
 	local playerLevel = self:getLevel()
-	local minimumLevel = math.floor((pokeLevel + pokeBoost)/1.5)
+	local minimumLevel = getPokemonRequiredLevel(pokeName)
 
 	if playerLevel < minimumLevel then
 		self:sendCancelMessage("Sorry, not possible. You need level " .. minimumLevel .. " to use this pokemon.")
@@ -3431,10 +3423,6 @@ function Player:canReleaseSummon(pokeLevel, pokeBoost, ownerName)
 	end
 
 	return true
-end
-
-function Item:getSummonLevel()
-	return self:getSpecialAttribute("pokeLevel")
 end
 
 function Item:getSummonName()
@@ -3519,12 +3507,6 @@ function Monster:increaseStatus(statusName)
 			local total = item:getSpecialAttribute(statusName)
 			if not total or total < 0 then total = 0 end
 			item:setSpecialAttribute(statusName, total + 1)
-			if statusName == "pokeLevel" then
-				item:setSpecialAttribute("pokeExperience", getNeededExp(total + 1))
-				doRemoveSummon(master:getId(), false, nil, false)
-				item:setSpecialAttribute("isBeingUsed", 1)
-				doReleaseSummon(master:getId(), self:getPosition(), false, false)
-			end
 			return true
 		end		
 	end

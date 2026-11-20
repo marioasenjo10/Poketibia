@@ -15,7 +15,7 @@ function Monster.getSummonStatus(self)
 	if race2 ~= "none" then
 		raceName = raceName .. "/" .. race2
 	end
-	output = output .. "\nRace: \t" .. raceName .. "\nLevel: \t" .. self:getLevel() .. "\nBoost: \t+" .. self:getBoost() .. "\nLove: \t" .. self:getLove()
+	output = output .. "\nRace: \t" .. raceName .. "\nRequired level: \t" .. getPokemonRequiredLevel(self:getName()) .. "\nBoost: \t+" .. self:getBoost() .. "\nLove: \t" .. self:getLove()
 	output = output .. "\n\nStats:\n"
 	output = output .. "\nHealth: \t" .. self:getTotalHealth() 
 			.. "\nAttack: \t" .. self:getTotalMeleeAttack() 
@@ -42,9 +42,9 @@ function Monster.getSummonStatus(self)
 			local evolution = evolutionList[i]
 			local evolutionName = evolution.name
 			if evolutionName ~= "" then
-				output = output .. "\nEvolves to " .. evolutionName .. " at level " .. evolution.level .. " with probability of " .. evolution.chance .. " percent "
+				output = output .. "\nEvolves to " .. evolutionName
 				if evolution.itemName then
-					output = output .. "or by using " .. evolution.count .. " " .. evolution.itemName
+					output = output .. " by using " .. evolution.count .. " " .. evolution.itemName
 				end
 			end
 		end

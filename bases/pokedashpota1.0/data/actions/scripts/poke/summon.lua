@@ -10,7 +10,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		item:transform(balls[ballKey].usedOn)
 	else
 		if item:getTopParent() == player then
-			if player:canReleaseSummon(item:getSummonLevel(), item:getSummonBoost(), item:getSummonOwner()) then
+			if player:canReleaseSummon(item:getSummonName(), item:getSummonOwner()) then
 				item:transform(balls[ballKey].usedOff)
 				item:setSpecialAttribute("isBeingUsed", 1)
 				doReleaseSummon(player:getId(), player:getPosition(), balls[ballKey].effectRelease, true, balls[ballKey].missile)

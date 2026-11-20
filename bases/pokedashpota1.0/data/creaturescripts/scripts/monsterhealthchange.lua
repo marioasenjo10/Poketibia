@@ -66,14 +66,14 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	local summonLove
 
 	if attacker:getMaster() and attacker:getMaster():isNpc() then
-		masterLevel = trainerLevelScaling and 0 or 100
+		masterLevel = 0
 		summonLevel = attacker:getLevel()
 		summonBoost = 0
 		summonLove = 0
 	else
-		-- los salvajes no tienen entrenador: 0 para que se use su propio nivel
+		-- los salvajes no tienen entrenador: 0 para que se use su nivel de fuerza (etapa evolutiva)
 		masterLevel = attacker:isPokemon() and attacker:getMasterLevel() or 0
-		summonLevel = attacker:getLevel()
+		summonLevel = attacker:getPowerLevel()
 		summonBoost = attacker:getBoost()
 		summonLove = attacker:getLove()
 	end

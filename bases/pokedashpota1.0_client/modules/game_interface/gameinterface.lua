@@ -74,18 +74,15 @@ end
 function bindKeys()
   gameRootPanel:setAutoRepeatDelay(200)
 
+  -- sin teclas de diagonal: se anda en diagonal pulsando dos direcciones a la vez (arriba+izquierda...)
   bindWalkKey('Up', North)
   bindWalkKey('Right', East)
   bindWalkKey('Down', South)
   bindWalkKey('Left', West)
   bindWalkKey('Numpad8', North)
-  bindWalkKey('Numpad9', NorthEast)
   bindWalkKey('Numpad6', East)
-  bindWalkKey('Numpad3', SouthEast)
   bindWalkKey('Numpad2', South)
-  bindWalkKey('Numpad1', SouthWest)
   bindWalkKey('Numpad4', West)
-  bindWalkKey('Numpad7', NorthWest)
 
   bindTurnKey('Ctrl+Up', North)
   bindTurnKey('Ctrl+Right', East)
@@ -319,7 +316,7 @@ function changeWalkDir(dir, pop)
   end
 
   smartWalkDir = smartWalkDirs[1]
-  if modules.client_options.getOption('smartWalk') and #smartWalkDirs > 1 then
+  if #smartWalkDirs > 1 then
     for _,d in pairs(smartWalkDirs) do
       if (smartWalkDir == North and d == West) or (smartWalkDir == West and d == North) then
         smartWalkDir = NorthWest

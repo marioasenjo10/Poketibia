@@ -9,18 +9,15 @@ function Player:onLook(thing, position, distance)
 		if master:isPlayer() then
 			local item = master:getUsingBall()
 			local pokeName = item:getSpecialAttribute("pokeName")
-			local pokeLevel = item:getSpecialAttribute("pokeLevel")
 			local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
 			local pokeLove = item:getSpecialAttribute("pokeLove") or 0
-			if pokeName ~= nil and pokeLevel ~= nil then			
-				local levelStr = trainerLevelScaling and ("Trainer level: " .. master:getLevel()) or ("Level: " .. pokeLevel)
-				description = string.format("%s\nIt belongs to %s. %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), levelStr, pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
+			if pokeName ~= nil then
+				description = string.format("%s\nIt belongs to %s. Trainer level: %s. Boost: +%s. Health: %s. Attack: %s. Magic Attack: %s. Magic Defense: %s. Armor: %s. Speed: %s.\n Love: %s.", description, master:getName(), master:getLevel(), pokeBoost, thing:getTotalHealth(), thing:getTotalMeleeAttack(), thing:getTotalMagicAttack(), thing:getTotalMagicDefense(), thing:getTotalDefense(), thing:getTotalSpeed(), pokeLove)
 			end
 		end
 	end
 	if thing:isItem() and thing:isPokeball() then
 		local pokeName = thing:getSpecialAttribute("pokeName")
-		local pokeLevel = thing:getSpecialAttribute("pokeLevel")
 		local pokeBoost = thing:getSpecialAttribute("pokeBoost") or 0
 		local pokeLove = thing:getSpecialAttribute("pokeLove") or 0
 		local ownerName = thing:getSpecialAttribute("owner")
@@ -32,9 +29,8 @@ function Player:onLook(thing, position, distance)
 		if pokeHealth <= 0 then
 			healthStr = "It is fainted."
 		end
-		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
-			local levelStr = trainerLevelScaling and ("Required level: " .. math.floor((pokeLevel + pokeBoost) / 1.5)) or ("Level: " .. pokeLevel)
-			description = string.format("%s\nIt contains a %s. %s. Boost: +%s. %s", description, pokeName, levelStr, pokeBoost, healthStr)
+		if pokeName ~= nil and healthStr ~= nil then
+			description = string.format("%s\nIt contains a %s. Required level: %s. Boost: +%s. %s", description, pokeName, getPokemonRequiredLevel(pokeName), pokeBoost, healthStr)
 		end
 	end
 	if thing:isPlayer() and thing ~= self then
@@ -106,15 +102,8 @@ function Player:onLookInBattleList(creature, distance)
 	local description = "You see " .. creature:getDescription(distance)
 	if isSummon(creature) then
 		local master = creature:getMaster()
---		local item = master:getSlotItem(CONST_SLOT_AMMO)
---		local pokeName = item:getSpecialAttribute("pokeName")
---		local pokeLevel = item:getSpecialAttribute("pokeLevel")
-		local pokeName = master:getName()
-		local pokeLevel = creature:getLevel()
-		if pokeName ~= nil and pokeLevel ~= nil then			
-			local levelStr = (trainerLevelScaling and master:isPlayer()) and ("Trainer level: " .. master:getLevel()) or ("Level: " .. pokeLevel)
-			description = string.format("%s\nIt belongs to %s. %s.", description, master:getName(), levelStr)
-		end
+		local levelStr = master:isPlayer() and (" Trainer level: " .. master:getLevel() .. ".") or ""
+		description = string.format("%s\nIt belongs to %s.%s", description, master:getName(), levelStr)
 	end
 	if self:getGroup():getAccess() then
 		local str = "%s\nHealth: %d / %d"
@@ -140,7 +129,6 @@ function Player:onLookInTrade(partner, item, distance)
 	local description = "You see " .. item:getDescription(distance)
 	if item:isPokeball() then
 		local pokeName = item:getSpecialAttribute("pokeName")
-		local pokeLevel = item:getSpecialAttribute("pokeLevel")
 		local pokeBoost = item:getSpecialAttribute("pokeBoost") or 0
 		local pokeLove = item:getSpecialAttribute("pokeLove") or 0
 		local pokeHealth = tonumber(item:getSpecialAttribute("pokeHealth"))
@@ -148,9 +136,8 @@ function Player:onLookInTrade(partner, item, distance)
 		if pokeHealth <= 0 then
 			healthStr = "It is fainted."
 		end
-		if pokeName ~= nil and pokeLevel ~= nil and healthStr ~= nil then			
-			local levelStr = trainerLevelScaling and ("Required level: " .. math.floor((pokeLevel + pokeBoost) / 1.5)) or ("Level: " .. pokeLevel)
-			description = string.format("%s\nIt contains a %s. %s. Boost: +%s. Love: +%s. %s", description, pokeName, levelStr, pokeBoost, pokeLove, healthStr)
+		if pokeName ~= nil and healthStr ~= nil then
+			description = string.format("%s\nIt contains a %s. Required level: %s. Boost: +%s. Love: +%s. %s", description, pokeName, getPokemonRequiredLevel(pokeName), pokeBoost, pokeLove, healthStr)
 		end
 	end
 	self:sendTextMessage(MESSAGE_INFO_DESCR, description)
@@ -314,8 +301,6 @@ local function useStamina(player)
 end
 
 function Player:onGainExperience(source, exp, rawExp)
-	local multiplier = 3 -- how many times more exp than players a monster will get
-
 	if not source then
 		return exp
 	end
@@ -352,80 +337,6 @@ function Player:onGainExperience(source, exp, rawExp)
 		exp = exp * explorerExperienceBuff
 	end
 
-	if hasSummons(self) and not trainerLevelScaling then
-		local creature = self:getSummon()
---		local item = self:getSlotItem(CONST_SLOT_AMMO)
-		local item = self:getUsingBall()
-		if item and item:isPokeball() then
-			local level = item:getSpecialAttribute("pokeLevel") or 1
-			if level >= summonMaxLevel then
-				return exp
-			end
-			local givenExp = exp * multiplier
-			if vocation:getName() == "Explorer" then
-				givenExp = math.floor(givenExp / explorerExperienceBuff)
-			end
-			local summonPos = creature:getPosition()
-			local pokeExp = item:getSpecialAttribute("pokeExperience") or 0
-			local nextLevel = level + 1
-			local newExp = pokeExp + givenExp
-			item:setSpecialAttribute("pokeExperience", newExp)
-			if givenExp > 0 then 
-				summonPos:sendAnimatedNumber(MESSAGE_EXPERIENCE_OTHERS, "Your summon gained " .. givenExp .. " experience points.", givenExp, TEXTCOLOR_WHITE_EXP)
-			end
-			if newExp > getNeededExp(nextLevel)  then				
-				item:setSpecialAttribute("pokeLevel", nextLevel)
-				local love = item:getSpecialAttribute("pokeLove") or 0
-				local newMaxHealth = creature:getTotalHealth()
-				creature:setMaxHealth(newMaxHealth)
-				creature:changeSpeed(-creature:getSpeed() + creature:getTotalSpeed())			
-				creature:setHealth(newMaxHealth)
-				summonPos:sendMagicEffect(CONST_ME_HEARTS)
-				
-				if MonsterType(source:getName()):isLegendary() then 
-					love = love + 3
-				elseif level < source:getLevel() then
-					love = love + 2					
-				else
-					love = love + 1
-				end
-
-				item:setSpecialAttribute("pokeLove", love)
-				doRemoveSummon(self:getId(), false, nil, false)
-				item:setSpecialAttribute("isBeingUsed", 1)
-				local cid = doReleaseSummon(self:getId(), summonPos, false, false)
-
-				if not cid then
-					print("WARNING! Creature " .. creature:getName() .. ", level " .. nextLevel .. " from player " .. self:getName() .. " with problems on change level.")
-				end
-
-				local summonName = creature:getName()
-				local monsterType = MonsterType(summonName)
-				local statusGain = statusGainFormula(0, nextLevel, 0, 0) - statusGainFormula(0, level, 0, 0)
-				self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Congratulations! Your pokemon evolved to level " .. nextLevel .. ".\nStatus bonus:\nHealth: " .. monsterType:getMaxHealth() * statusGain .. "\nAttack: " .. monsterType:getMeleeDamage() * statusGain .. "\nMagic Attack: " .. monsterType:getMoveMagicAttackBase() * statusGain .. "\nMagic Defense: " .. monsterType:getMoveMagicDefenseBase() * statusGain .. "\nDefense: " .. monsterType:getDefense() * statusGain .. "\nSpeed: " .. monsterType:getBaseSpeed() * statusGain)
-				self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your pokemon gained " .. love .. " love points.")
-
-				local dittoTime = item:getSpecialAttribute("dittoTime")
-				if not dittoTime then
-					local evolutionList = monsterType:getEvolutionList()				
-					if #evolutionList >= 1 and not creature:isEvolving() then				
-						for i = 1, #evolutionList do					
-							local evolution = evolutionList[i]
-							local evolutionName = evolution.name
-							if evolutionName ~= "" then
-								local evolutionLevel = evolution.level
-								if nextLevel >= evolution.level and math.random(1, 100) <= evolution.chance then
-									doEvolveSummon(cid, evolutionName)
-								end
-							end
-						end
-					end
-				end
-			else
-				self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your summon gained " .. givenExp .. " experience points. Needs " .. getNeededExp(nextLevel) - newExp .. " to level " .. nextLevel .. ".")
-			end
-		end
-	end
 	return exp
 end
 

@@ -93,9 +93,11 @@ local ignoreEnterUp = false
 
 local function bindWasd(bind)
   local gameInterface = modules.game_interface
-  -- la E queda libre para la pokedex (hotkey)
-  local keys = { W = North, D = East, S = South, A = West, Q = NorthWest, C = SouthEast, Z = SouthWest }
-  gameInterface.unbindWalkKey('E')
+  -- la E queda libre para la pokedex (hotkey); Q, Z y C tambien (diagonal = dos teclas a la vez)
+  local keys = { W = North, D = East, S = South, A = West }
+  for _, key in ipairs({ 'E', 'Q', 'Z', 'C' }) do
+    gameInterface.unbindWalkKey(key)
+  end
   for key, dir in pairs(keys) do
     gameInterface.unbindWalkKey(key)
     if bind then gameInterface.bindWalkKey(key, dir) end

@@ -40,7 +40,6 @@ function creatureSayCallback(cid, type, msg)
 					end
 
 					local boost = ball:getSpecialAttribute("pokeBoost") or 0
-					local level = ball:getSpecialAttribute("pokeLevel")
 					local rawPrice = math.abs(( monsterType:getHealth()/10 + monsterType:getBaseSpeed()/2 + monsterType:getMeleeDamage(self) + monsterType:getDefense() +
 monsterType:getMoveMagicAttackBase() + monsterType:getMoveMagicDefenseBase())* priceLinearSlope - priceLinearIntercept)
 					if rawPrice < 500 then
@@ -51,7 +50,7 @@ monsterType:getMoveMagicAttackBase() + monsterType:getMoveMagicDefenseBase())* p
 						price = 5 * math.floor(rawPrice/1.5) + boost * 1000
 					end
 					if ball:remove() then
-						selfSay('Take ' .. price .. ' by your ' .. name .. ' level ' .. level .. ' boost ' .. boost .. '. Thanks!', cid)
+						selfSay('Take ' .. price .. ' by your ' .. name .. ' boost ' .. boost .. '. Thanks!', cid)
 						player:addMoney(price)
 						player:refreshPokemonBar({}, {})
 					end
