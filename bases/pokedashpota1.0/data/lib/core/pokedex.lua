@@ -360,7 +360,17 @@ end
 
 local requiredLevelCache = {}
 
--- nivel de entrenador para usar el pokemon: base 0, etapa media 40, final 80 (shiny +20)
+-- preevolucion que cuenta como etapa (misma "shinyness" y que no sea un bebe)
+local function stageParent(species, speciesShiny)
+	local parent = evoParent[species:lower()]
+	if parent and isShinyName(parent.name) == speciesShiny and not babyPokemon[parent.name:lower():gsub("^shiny ", "")] then
+		return parent.name
+	end
+	return nil
+end
+
+-- nivel de entrenador para usar el pokemon: base 0, etapa media 40,
+-- final de linea de 2 etapas 50, final 80 (shiny +20)
 function getPokemonRequiredLevel(name)
 	if not name or name == "" then
 		return 0
@@ -392,10 +402,11 @@ function getPokemonRequiredLevel(name)
 				break
 			end
 		end
+		local parent = stageParent(species, speciesShiny)
 		if evolves then
-			local parent = evoParent[species:lower()]
-			local hasParent = parent and isShinyName(parent.name) == speciesShiny and not babyPokemon[parent.name:lower():gsub("^shiny ", "")]
-			level = hasParent and pokemonStageLevels.middle or pokemonStageLevels.base
+			level = parent and pokemonStageLevels.middle or pokemonStageLevels.base
+		elseif parent and not stageParent(parent, speciesShiny) then
+			level = pokemonStageLevels.twoStageFinal
 		end
 	end
 	if shiny then

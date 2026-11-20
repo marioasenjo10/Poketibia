@@ -28,7 +28,8 @@ trainerLevelDamageBuff = 0.008 -- buff por nivel del entrenador
 -- (los que no evolucionan, como Snorlax o Heracross, cuentan como etapa final).
 -- Los salvajes usan este mismo valor como nivel de fuerza: un Charizard salvaje
 -- pega como el Charizard de un entrenador nivel 80.
-pokemonStageLevels = {base = 0, middle = 40, final = 80}
+-- twoStageFinal: final de una linea de solo 2 etapas (Raichu, Slowbro, Rapidash...).
+pokemonStageLevels = {base = 0, middle = 40, twoStageFinal = 50, final = 80}
 shinyExtraLevel = 20
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
