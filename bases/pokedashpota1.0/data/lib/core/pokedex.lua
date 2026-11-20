@@ -263,6 +263,34 @@ local function getCatches(player, number)
 	return math.max(0, player:getStorageValue(baseStorageCatches + species))
 end
 
+-- cuantos entrenadores lo han capturado (BD + jugadores conectados), cache de 60 s
+local ownersCache = {}
+local function countOwners(species)
+	local cached = ownersCache[species]
+	if cached and os.time() - cached.time < 60 then
+		return cached.count
+	end
+	local key = math.floor(baseStorageCatches + species)
+	local owners = {}
+	local resultId = db.storeQuery("SELECT `player_id` FROM `player_storage` WHERE `key` = " .. key .. " AND `value` > 0")
+	if resultId then
+		repeat
+			owners[result.getDataInt(resultId, "player_id")] = true
+		until not result.next(resultId)
+		result.free(resultId)
+	end
+	-- los conectados pueden tener capturas aun sin guardar en la BD
+	for _, online in ipairs(Game.getPlayers()) do
+		owners[online:getGuid()] = online:getStorageValue(key) > 0 or nil
+	end
+	local count = 0
+	for _ in pairs(owners) do
+		count = count + 1
+	end
+	ownersCache[species] = {time = os.time(), count = count}
+	return count
+end
+
 -- ===================== Cadena evolutiva =====================
 
 local evoParent
@@ -405,7 +433,7 @@ local function buildPokedexInfo(player, number)
 	local shinyNumber = (number <= 1000 and monstersTable[number + 2000]) and (number + 2000) or 0
 	local baseNumber = (number > 2000 and number <= 3000 and monstersTable[number - 2000]) and (number - 2000) or 0
 	local extra = (monsterType:isLegendary() and 1 or 0) .. ":" .. (fromBase and 1 or 0) .. ":" .. shinyNumber .. ":" .. worldCount
-		.. ":" .. (player:hasDexEntry(number) and 1 or 0) .. ":" .. baseNumber
+		.. ":" .. (player:hasDexEntry(number) and 1 or 0) .. ":" .. baseNumber .. ":" .. countOwners(dexNumber)
 
 	return table.concat({
 		"I", number, clean(name), monsterType:getOutfit().lookType, clean(race), clean(race2 ~= "none" and race2 or ""),

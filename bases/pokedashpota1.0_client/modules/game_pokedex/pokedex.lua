@@ -372,6 +372,7 @@ local function parseInfo(buffer)
   info.worldCount = tonumber(extra[4]) or 0
   info.registered = extra[5] == '1'
   info.baseNumber = tonumber(extra[6]) or 0
+  info.owners = tonumber(extra[7]) or 0
   info.isShiny = info.number > 2000 and info.number <= 3000
   return info
 end
@@ -383,17 +384,21 @@ function loadInfo(buffer)
 
   child('emptyLabel'):hide()
   child('headerCard'):show()
-  buildHeader(info)
-  buildInfoPanel(info)
-  buildMovesPanel(info)
-  buildLootPanel(info)
-  buildLocationPanel(info)
+  -- cada seccion por separado: si una falla, las demas se siguen viendo
+  local errors = {}
+  for _, builder in ipairs({ buildHeader, buildInfoPanel, buildMovesPanel, buildLootPanel, buildLocationPanel }) do
+    local ok, err = pcall(builder, info)
+    if not ok then table.insert(errors, tostring(err)) end
+  end
   child('tabMoves'):setText('Ataques (' .. #info.moves .. ')')
   child('tabLoot'):setText('Botin (' .. #info.loot .. ')')
   child('tabLocation'):setText('Localizacion (' .. #info.locations .. ')')
   for _, tab in pairs(TABS) do child(tab):show() end
   showTab(currentTab)
   focusRow(info.number)
+  for _, err in ipairs(errors) do
+    g_logger.error('[Pokedex] ' .. err)
+  end
 end
 
 function buildHeader(info)
@@ -427,11 +432,16 @@ function buildHeader(info)
   end
 
   local world
-  if info.worldCount > 0 then
-    world = info.worldCount .. ' en el mundo'
-    if info.fromBase then world = 'Aparece al azar en lugar de su forma normal (' .. info.worldCount .. ' sitios)' end
+  if info.owners == 1 then
+    world = 'Capturado por 1 entrenador'
   else
-    world = 'No aparece salvaje (evolucion, eventos, misiones...)'
+    world = 'Capturado por ' .. info.owners .. ' entrenadores'
+  end
+  if info.worldCount > 0 then
+    world = world .. '   |   ' .. info.worldCount .. ' puntos de aparicion'
+    if info.fromBase then world = world .. ' (al azar, en lugar de su forma normal)' end
+  else
+    world = world .. '   |   No aparece salvaje'
   end
   child('worldLabel'):setText(world .. '   |   ' .. (info.registered and 'Registrado en tu pokedex' or 'Sin registrar'))
 
@@ -635,7 +645,7 @@ function buildMovesPanel(info)
     local row = g_ui.createWidget('DexMoveRow', panel)
     local path = '/game_pokemonmoves/moves_icon/' .. move.name:lower() .. '_on.png'
     if g_resources.fileExists(path) then
-      row:getChildById('icon'):setImageSource(path)
+      row:getChildById('slot'):getChildById('icon'):setImageSource(path)
     end
     row:getChildById('cooldown'):setText(' ' .. move.cooldown .. 's ')
     row:getChildById('name'):setText('m' .. i .. '  ' .. titleCase(move.name))
