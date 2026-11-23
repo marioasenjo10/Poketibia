@@ -5,6 +5,16 @@ local rightButtonsPanel
 local leftGameButtonsPanel
 local rightGameButtonsPanel
 
+local allowedGameButtons = {
+  inventoryButton = true,
+  pokedexButton = true,
+  questLogButton = true,
+  minimapButton = true,
+  vipListButton = true,
+  optionsButton = true,
+  logoutButton = true,
+}
+
 -- private functions
 local function addButton(id, description, icon, callback, panel, toggle, front)
   local class
@@ -152,6 +162,14 @@ end
 function showGameButtons()
   leftGameButtonsPanel:show()
   rightGameButtonsPanel:show()
+  for _, panel in ipairs({ leftButtonsPanel, rightButtonsPanel, leftGameButtonsPanel, rightGameButtonsPanel }) do
+    for i = 1, panel:getChildCount() do
+      local button = panel:getChildByIndex(i)
+      if button and not allowedGameButtons[button:getId()] then
+        button:hide()
+      end
+    end
+  end
 end
 
 function hideGameButtons()
