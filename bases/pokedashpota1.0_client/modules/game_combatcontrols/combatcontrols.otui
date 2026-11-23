@@ -14,7 +14,8 @@ CombatBox < UICheckBox
 StanceBox < UICheckBox
   size: 44 44
   opacity: 0.85
-  anchors.verticalCenter: parent.verticalCenter
+  anchors.top: parent.top
+  margin-top: 2
   $hover:
     opacity: 1
 
@@ -36,16 +37,26 @@ FightDefensiveBox < StanceBox
   $checked:
     image-source: /images/game/combatmodes/defensive_on
     opacity: 1
-ChaseModeBox < CombatBox
-  image-source: /images/game/combatmodes/chasemode
-SafeFightBox < CombatBox
-  image-source: /images/game/combatmodes/safefight
+ChaseModeBox < StanceBox
+  size: 30 30
+  tooltip: Perseguir al objetivo
+  image-source: /images/game/combatmodes/chase
+  $checked:
+    image-source: /images/game/combatmodes/chase_on
+    opacity: 1
+SafeFightBox < StanceBox
+  size: 30 30
+  tooltip: Permitir atacar a jugadores (PvP)
+  image-source: /images/game/combatmodes/pvp
+  $checked:
+    image-source: /images/game/combatmodes/pvp_on
+    opacity: 1
 
 MiniWindow
   id: combatControlsWindow
   !text: 'Estado de combate'
   icon: /images/topmenu/combat
-  height: 78
+  height: 116
   &save: true
   @onClose: modules.game_combatcontrols.onMiniWindowClose()
 
@@ -63,7 +74,13 @@ MiniWindow
       margin-left: 14
     ChaseModeBox
       id: chaseModeBox
-      visible: false
+      anchors.top: fightBalancedBox.bottom
+      anchors.right: parent.horizontalCenter
+      margin-top: 6
+      margin-right: 8
     SafeFightBox
       id: safeFightBox
-      visible: false
+      anchors.top: fightBalancedBox.bottom
+      anchors.left: parent.horizontalCenter
+      margin-top: 6
+      margin-left: 8
