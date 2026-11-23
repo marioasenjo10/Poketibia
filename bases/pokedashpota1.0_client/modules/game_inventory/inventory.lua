@@ -53,7 +53,7 @@ end
 
 function toggleAdventurerStyle(hasBlessing)
   for slot = InventorySlotFirst, InventorySlotLast do
-    local itemWidget = inventoryPanel:getChildById('slot' .. slot)
+    local itemWidget = inventoryPanel:recursiveGetChildById('slot' .. slot)
     if itemWidget then
       itemWidget:setOn(hasBlessing)
     end
@@ -105,8 +105,17 @@ function onInventoryChange(player, slot, item, oldItem)
     return
   end
 
-  local itemWidget = inventoryPanel:getChildById('slot' .. slot)
+  local itemWidget = inventoryPanel:recursiveGetChildById('slot' .. slot)
   if not itemWidget then return end
+
+  -- casillas de la barra de abajo: el icono tapa el objeto; sin objeto, el icono se atenua
+  local icon = itemWidget:getChildById('icon')
+  if icon then
+    itemWidget:setItem(item)
+    icon:setOpacity(item and 1 or 0.35)
+    return
+  end
+
   if item then
     itemWidget:setStyle('InventoryItem')
     itemWidget:setItem(item)

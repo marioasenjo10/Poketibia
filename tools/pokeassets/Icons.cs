@@ -11,15 +11,24 @@ using System.Drawing.Imaging;
 //                   [Icons]::Extract(lamina, salida, x0, y0, x1, y1, tamano)
 public static class Icons
 {
+	static int maxBlue = 215;
+
 	static bool IsBackground(Color c)
 	{
 		if (c.A < 40) return true;
 		// azul marino del fondo de la casilla y lineas claras del borde de la casilla
-		return c.R < 100 && c.B > c.R + 35 && c.B > c.G + 10 && c.B < 215 && c.G < 150;
+		return c.R < 100 && c.B > c.R + 35 && c.B > c.G + 10 && c.B < maxBlue && c.G < 150;
 	}
 
 	public static string Extract(string sheet, string output, int x0, int y0, int x1, int y1, int size)
 	{
+		return Extract(sheet, output, x0, y0, x1, y1, size, 215);
+	}
+
+	// blueLimit: azul maximo que cuenta como fondo (bajarlo si el propio icono es azul)
+	public static string Extract(string sheet, string output, int x0, int y0, int x1, int y1, int size, int blueLimit)
+	{
+		maxBlue = blueLimit;
 		using (var src = new Bitmap(sheet))
 		{
 			int w = x1 - x0 + 1, h = y1 - y0 + 1;
