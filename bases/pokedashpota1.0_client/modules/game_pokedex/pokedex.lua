@@ -596,10 +596,18 @@ function buildInfoPanel(info)
     grid:setHeight(gridHeight(#info.chain, 4, 116, 4))
 
     if #items > 0 then
-      addSection(panel, 'PIEDRA / OBJETO DE EVOLUCION')
+      addSection(panel, 'OBJETOS DE EVOLUCION')
+      local grid = g_ui.createWidget('DexEvoItemGrid', panel)
       for _, it in ipairs(items) do
-        addText(panel, it.item .. (it.count > 1 and (' x' .. it.count) or '') .. '  ->  ' .. it.stage, '#ffd84a')
+        local card = g_ui.createWidget('DexEvoItemCard', grid)
+        local itemId = evolutionItemId(it.item)
+        if itemId > 0 then card:getChildById('item'):setItemId(itemId) end
+        card:getChildById('name'):setText(it.item)
+        card:getChildById('count'):setText('x' .. it.count)
+        card:getChildById('stage'):setText(it.stage)
+        card:setTooltip(it.count .. 'x ' .. it.item .. '\nEvolucion: ' .. it.stage)
       end
+      grid:setHeight(gridHeight(#items, 3, 58, 8))
     end
   end
 
@@ -612,21 +620,6 @@ function buildInfoPanel(info)
     for _, a in ipairs(info.abilities) do table.insert(chips, { a, '#2f5d8a' }) end
     addChips(panel, chips)
   end
-
-  -- estadisticas
-  addSection(panel, 'ESTADISTICAS BASE')
-  local s = info.stats
-  local stats = {
-    { 'Vida', s[1] }, { 'Ataque', s[2] }, { 'Ataque especial', s[3] }, { 'Defensa especial', s[4] },
-    { 'Defensa', s[5] }, { 'Experiencia', s[9] },
-  }
-  local statGrid = g_ui.createWidget('DexStatGrid', panel)
-  for _, st in ipairs(stats) do
-    local w = g_ui.createWidget('DexStat', statGrid)
-    w:getChildById('name'):setText(st[1])
-    w:getChildById('value'):setText(st[2] or '?')
-  end
-  statGrid:setHeight(gridHeight(#stats, 4, 40, 6))
 
   -- efectividad
   addSection(panel, 'EFECTIVIDAD - DANO RECIBIDO')
@@ -768,4 +761,19 @@ function showAllOnMap()
     return
   end
   showOnMap(locationPositions(current))
+end
+
+local function evolutionItemId(name)
+  local ids = {
+    ['leaf stone'] = 26731, ['boost stone'] = 26723, ['water stone'] = 26736,
+    ['venom stone'] = 26735, ['thunder stone'] = 26734, ['rock stone'] = 26733,
+    ['punch stone'] = 26732, ['fire stone'] = 26728, ['ice stone'] = 26730,
+    ['cocoon stone'] = 26724, ['unique ancient stone'] = 26749,
+    ['crystal stone'] = 26725, ['darkness stone'] = 26726,
+    ['earth stone'] = 26742, ['enigma stone'] = 26727, ['heart stone'] = 26729,
+    ['metal coat'] = 26747, ['sun stone'] = 26748, ['feather stone'] = 26743,
+    ["king's rock stone"] = 26746, ['dragon stone'] = 26744,
+    ['evolution rune'] = 2291,
+  }
+  return ids[name:lower()] or 0
 end

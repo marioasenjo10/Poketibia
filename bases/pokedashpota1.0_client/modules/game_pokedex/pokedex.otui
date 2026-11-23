@@ -731,3 +731,58 @@ UIWindow
 
   DexScrollBar
     id: lootScrollBar
+
+DexEvoItemGrid < UIWidget
+  height: 58
+  layout:
+    type: grid
+    cell-size: 292 58
+    cell-spacing: 8
+    flow: true
+
+DexEvoItemCard < UIWidget
+  size: 292 58
+  image-source: /game_pokedex/images/card
+  image-border: 5
+
+  Item
+    id: item
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    virtual: true
+    phantom: true
+
+  Label
+    id: name
+    anchors.left: item.right
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 7
+    margin-right: 46
+    font: poppins-semibold-12px
+    color: #ffffff
+    text-wrap: true
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: count
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    font: poppins-semibold-13px
+    color: #ffd84a
+    phantom: true
+
+  Label
+    id: stage
+    anchors.left: name.left
+    anchors.right: count.left
+    anchors.bottom: parent.bottom
+    margin-bottom: 7
+    margin-right: 8
+    font: poppins-11px
+    color: #8ea3bf
+    phantom: true
