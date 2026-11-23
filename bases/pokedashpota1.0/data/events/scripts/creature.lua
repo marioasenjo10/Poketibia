@@ -1,3 +1,9 @@
+local SLEEP_POWDER_STORAGE = 65055
+
+function isCreatureSleeping(creature)
+	return creature and creature:getStorageValue(SLEEP_POWDER_STORAGE) > os.time()
+end
+
 function Creature:onChangeOutfit(outfit)
 	if self:isPlayer() then
 		if self:isOnEvent() then
@@ -12,6 +18,9 @@ function Creature:onAreaCombat(tile, isAggressive)
 end
 
 function Creature:onTargetCombat(target)
+	if isCreatureSleeping(self) or isCreatureSleeping(target) then
+		return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE
+	end
 	if self ~= nil then
 		if self:isPlayer() and target:isMonster() then
 			if isSummon(target) and target:getMaster():isNpc() and not self:isDuelingWithNpc() then
