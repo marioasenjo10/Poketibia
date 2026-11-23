@@ -8,7 +8,8 @@ using System.Text.RegularExpressions;
 
 // Retratos de los pokemon para la pokedex del cliente (modules/game_pokedex/portraits/<looktype>.png).
 // Dibuja el outfit mirando al sur, recorta lo transparente, lo agranda con Scale2x (bordes suaves
-// sin emborronar el pixel art) y lo deja centrado en un PNG de 128x128.
+// sin emborronar el pixel art) y lo deja centrado en un PNG de 128x128. Los outfits 1x1 se
+// ajustan a una caja de 96px para que los pokemon pequeños no se vean artificialmente ampliados.
 // Uso (PowerShell): Add-Type -Path Otb.cs,Things.cs,Portraits.cs -ReferencedAssemblies System.Drawing
 //                   [Portraits]::Run(dat, spr, carpetaMonster, carpetaSalida)
 
@@ -45,7 +46,7 @@ public static class Portraits
 					img = bigger;
 				}
 				using (img)
-				using (var final = Fit(img))
+				using (var final = Fit(img, t.Width <= 1 && t.Height <= 1 ? 96 : Size))
 				{
 					final.Save(Path.Combine(outDir, look + ".png"), ImageFormat.Png);
 				}
@@ -127,18 +128,18 @@ public static class Portraits
 		return dst;
 	}
 
-	// centrado en un cuadrado de Size x Size, ajustado al lado mas largo
-	static Bitmap Fit(Bitmap src)
+	// centrado en un cuadrado de 128x128, ajustado al maximo de fitSize
+	static Bitmap Fit(Bitmap src, int fitSize)
 	{
-		double scale = (double)Size / Math.Max(src.Width, src.Height);
+		double scale = (double)fitSize / Math.Max(src.Width, src.Height);
 		int w = Math.Max(1, (int)Math.Round(src.Width * scale));
 		int h = Math.Max(1, (int)Math.Round(src.Height * scale));
 		var dst = new Bitmap(Size, Size, PixelFormat.Format32bppArgb);
 		using (var g = Graphics.FromImage(dst))
 		using (var attrs = new ImageAttributes())
 		{
-			g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-			g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			g.InterpolationMode = InterpolationMode.NearestNeighbor;
+			g.PixelOffsetMode = PixelOffsetMode.Half;
 			g.CompositingQuality = CompositingQuality.HighQuality;
 			attrs.SetWrapMode(WrapMode.TileFlipXY);
 			var rect = new Rectangle((Size - w) / 2, (Size - h) / 2, w, h);
