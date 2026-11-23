@@ -85,12 +85,13 @@ public static class UiSkin
 				using (var pen = new Pen(border, borderWidth))
 					g.DrawPath(pen, path);
 			}
-			// brillo interior arriba
+			// brillo interior arriba: solo en las esquinas de arriba (dentro del image-border), si llega
+			// a la zona central que se estira se ve como una raya a media altura
 			var inner = new RectangleF(r.X + borderWidth + 1, r.Y + borderWidth + 1, r.Width - 2 * borderWidth - 2, r.Height - 2 * borderWidth - 2);
 			using (var path = Round(inner, Math.Max(2, radius - borderWidth - 1)))
 			using (var pen = new Pen(Color.FromArgb(45, 255, 255, 255), 1))
 			{
-				g.SetClip(new RectangleF(0, 0, w, inner.Y + inner.Height / 2));
+				g.SetClip(new RectangleF(0, 0, w, halo + radius));
 				g.DrawPath(pen, path);
 				g.ResetClip();
 			}
