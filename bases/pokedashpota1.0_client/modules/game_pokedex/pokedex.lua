@@ -607,7 +607,7 @@ function buildInfoPanel(info)
         card:getChildById('stage'):setText(it.stage)
         card:setTooltip(it.count .. 'x ' .. it.item .. '\nEvolucion: ' .. it.stage)
       end
-      grid:setHeight(gridHeight(#items, 3, 58, 8))
+      grid:setHeight(gridHeight(#items, 2, 58, 8))
     end
   end
 
