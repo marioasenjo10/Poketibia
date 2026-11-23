@@ -459,3 +459,22 @@ if ($h -ne '7E1210A242D2164D2D756F9586736CB0F5938BD9B0F9ECCFB881A930DCD98333' -o
         Write-Host "No se pudo escribir el .exe: $($_.Exception.Message)" -ForegroundColor Red
     }
 }
+
+# ---------------------------------------------------------------------
+# [15] Ilustraciones planas oficiales en la PokeDex (normales y shinys)
+#      Descarga desde PokeAPI el artwork oficial de normales y shinys.
+#      Guarda: modules\game_pokedex\artwork\<nombre>.png
+#      Si falta una imagen, la PokeDex usa el retrato del paso [11].
+# ---------------------------------------------------------------------
+Set-Location 'C:\Develop\Poketibia-project'
+git pull
+Start-Job {
+    Set-Location 'C:\Develop\Poketibia-project'
+    $t = (Resolve-Path 'tools\pokeassets').Path
+    Add-Type -Path "$t\Artwork.cs" -ReferencedAssemblies System.Drawing
+    [Artwork]::Run((Resolve-Path 'bases\pokedashpota1.0\data\monster').Path,
+                   (Join-Path (Get-Location) 'bases\pokedashpota1.0_client\modules\game_pokedex\artwork'))
+} | Receive-Job -Wait -AutoRemoveJob
+git add bases/pokedashpota1.0_client/modules/game_pokedex/artwork
+git commit -q -m "Ilustraciones oficiales normales y shiny de la PokeDex"
+git push

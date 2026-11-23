@@ -107,9 +107,18 @@ local function portraitFor(look)
   return nil
 end
 
--- muestra el retrato si existe y si no el pokemon dibujado por el cliente
-local function setPortrait(image, creature, look)
-  local portrait = portraitFor(look)
+-- ilustracion plana descargada en casa (comandos-casa.ps1, bloque [15])
+local function artworkFor(name)
+  if not name or name == '' then return nil end
+  local path = '/game_pokedex/artwork/' .. name:lower() .. '.png'
+  if g_resources.fileExists(path) then return path end
+  return nil
+end
+
+-- muestra la ilustracion plana si existe; despues el retrato del juego; si no existe ninguno, el outfit
+local function setPortrait(image, creature, look, name)
+  local portrait = artworkFor(name)
+  if not portrait then portrait = portraitFor(look) end
   if portrait then
     image:setImageSource(portrait)
     image:show()
@@ -430,7 +439,7 @@ function buildHeader(info)
   local color = typeInfo[2]
   child('gradient'):setImageColor(color)
 
-  setPortrait(child('headerImage'), child('headerCreature'), info.look)
+  setPortrait(child('headerImage'), child('headerCreature'), info.look, info.name)
   child('nameLabel'):setText(info.name)
   child('bigNumber'):setText(dexLabel(info.number))
   setChip(child('type1'), typeInfo[1], color)
@@ -563,7 +572,7 @@ function buildInfoPanel(info)
       cell:getChildById('arrow'):setVisible(i > 1)
       local card = cell:getChildById('card')
       card:setOn(stage.name:lower() == info.name:lower())
-      setPortrait(card:getChildById('image'), card:getChildById('creature'), stage.look)
+      setPortrait(card:getChildById('image'), card:getChildById('creature'), stage.look, stage.name)
       card:getChildById('name'):setText(stage.name)
       local levelText = ''
       if stage.depth > 0 then
