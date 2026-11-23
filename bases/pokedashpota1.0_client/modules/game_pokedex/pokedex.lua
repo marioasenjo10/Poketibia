@@ -560,6 +560,22 @@ function buildInfoPanel(info)
   local panel = child('infoPanel')
   panel:destroyChildren()
 
+  local summary = g_ui.createWidget('DexSummaryGrid', panel)
+  local req = tonumber(info.stats[7]) or 0
+  local summaryItems = {
+    { 'NIVEL', req > 0 and ('Nv. ' .. req) or 'Todos', '#8ea3bf' },
+    { 'TIPO', titleCase(info.race) .. (info.race2 ~= '' and (' / ' .. titleCase(info.race2)) or ''), '#8ed0ff' },
+    { 'CAPTURAS', tostring(info.catches), '#7ee07e' },
+    { 'INTENTOS', tostring(info.tries), '#ffd84a' },
+  }
+  for _, item in ipairs(summaryItems) do
+    local card = g_ui.createWidget('DexSummaryCard', summary)
+    card:getChildById('title'):setText(item[1])
+    card:getChildById('value'):setText(item[2])
+    card:getChildById('value'):setColor(item[3])
+  end
+  summary:setHeight(70)
+
   -- evoluciones
   addSection(panel, 'EVOLUCIONES')
   if #info.chain <= 1 then
