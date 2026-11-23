@@ -67,7 +67,7 @@ local function getBallMaxHealth(player, ball)
 	if baseHealth <= 0 then
 		return 0
 	end
-	return math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, boost, love))
+	return math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, boost, love) * getPokemonShinyStatMultiplier(name))
 end
 
 local function applyBallHealingTick(playerId, token)

@@ -13,7 +13,7 @@ function onLogin(player)
 --		player:addItem(1987, 1):addItem(2674, 1)
 		local monsterType = MonsterType(name)
 		local baseHealth = monsterType:getMaxHealth()
-		local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, 0, 0))
+		local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, 0, 0) * getPokemonShinyStatMultiplier(name))
 		if not player:getSlotItem(CONST_SLOT_BACKPACK) then
 			player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
 		end

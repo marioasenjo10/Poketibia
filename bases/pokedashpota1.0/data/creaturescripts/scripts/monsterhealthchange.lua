@@ -54,7 +54,9 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		return 0, primaryType, 0, secondaryType
 	end
 	if creature:isPlayer() or attacker:isPlayer() then
-		if primaryDamage then primaryDamage = math.floor(primaryDamage * 0.08) end
+		local shinyMultiplier = attacker:isMonster() and getPokemonShinyStatMultiplier(attacker:getName()) or 1.0
+		if primaryDamage then primaryDamage = math.floor(primaryDamage * shinyMultiplier * 0.08) end
+		if secondaryDamage then secondaryDamage = math.floor(secondaryDamage * shinyMultiplier) end
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
 
@@ -74,7 +76,7 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		summonBoost = 0
 		summonLove = 0
 	else
-		-- los salvajes no tienen entrenador: 0 para que se use su nivel de fuerza (etapa evolutiva)
+		-- Los salvajes usan stats base de especie; solo los pokemon de jugador escalan por entrenador.
 		masterLevel = attacker:isPokemon() and attacker:getMasterLevel() or 0
 		summonLevel = attacker:getPowerLevel()
 		summonBoost = attacker:getBoost()
@@ -82,6 +84,9 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	end
 
 	local formulaDamage = damageFormula(masterLevel, summonLevel, summonBoost, summonLove)
+	if attacker:isPokemon() or attacker:getName():sub(1, 6):lower() == "shiny " then
+		formulaDamage = formulaDamage * getPokemonShinyStatMultiplier(attacker:getName())
+	end
 	localDamageMultiplier = localDamageMultiplier * formulaDamage
 
 	if secondaryTypeName == "physical" then

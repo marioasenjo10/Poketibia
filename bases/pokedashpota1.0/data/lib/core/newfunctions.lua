@@ -18,9 +18,10 @@ legendaryIndex = {144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 37
 arenaLastPlayerId = 0
 
 damageMultiplierMoves = {areawaves = 2.75, singletargetweak = 2.0, singletarget = 3.5, singletargetstrong = 4.0, areatarget = 3.0, frontlinear = 5.0, frontarea = 4.0, passive = 3.0, ultimate = 6.0}
-summonLevelDamageBuff = 0.008 -- buff por nivel de fuerza de salvajes y pokemon de NPC
+summonLevelDamageBuff = 0.008 -- buff por nivel configurado de pokemon de NPC
 summonBoostDamageBuff = 0.008 -- buff due to summon's boost
 summonLoveDamageBuff = 0.0002 -- buff due to summon's love
+shinyStatMultiplier = 1.25 -- shiny pokemon have 25% stronger stats than their own base stats
 -- Estilo Poke Alliance: los pokemon no tienen nivel (no ganan exp ni suben de nivel,
 -- evolucionan con piedras). La fuerza de un pokemon de jugador (dano, vida, defensa,
 -- velocidad) depende del nivel del entrenador + boost.
@@ -48,6 +49,34 @@ baseStorageTries = 61000
 baseStorageCatches = 64000
 baseStorageDex = 67000
 baseStorageMove = 45000
+baseStorageShinyCatchPity = 5000000 -- failed catch count per shiny species
+
+-- Target cumulative catch chance without buffs, using the local Ultra Ball
+-- (chanceMultiplier 1.4) as the reference. The per-attempt chance increases
+-- linearly with consecutive failed attempts against that exact shiny form.
+shinyCatchPityTiers = {
+	T1 = {attempts = 450, chance = 0.50},
+	T2 = {attempts = 200, chance = 0.60},
+	T3 = {attempts = 150, chance = 0.60},
+	T4 = {attempts = 120, chance = 0.60},
+	T5 = {attempts = 100, chance = 0.60},
+	T6 = {attempts = 70, chance = 0.60},
+	T7 = {attempts = 50, chance = 0.60},
+	["Super Rare"] = {attempts = 900, chance = 0.50},
+	["Ultra Rare"] = {attempts = 1800, chance = 0.50},
+	Legendary = {attempts = 3600, chance = 0.50}
+}
+
+-- Fixed catch chance for normal Pokemon by PKA tier, calibrated to local Ultra Ball x1.4.
+normalCatchTierRates = {
+	T1 = 0.0001, -- 0.01% per ball
+	T2 = 0.001, -- 0.1% per ball
+	T3 = 0.01, -- 1% per ball
+	T4 = 0.05, -- 5% per ball
+	T5 = 0.20, -- 20% per ball
+	T6 = 0.50, -- 50% per ball
+	T7 = 0.75 -- 75% per ball
+}
 
 storageRide = 5000
 storageFly = 5001
@@ -1473,12 +1502,20 @@ end
 
 function getNeededExp(level) return (50 * (level * level * level - 6 * level * level + 17 * level - 12) / 3) end
 
+function getPokemonShinyStatMultiplier(name)
+	return type(name) == "string" and name:sub(1, 6):lower() == "shiny " and shinyStatMultiplier or 1.0
+end
+
+local function getShinyStatMultiplier(monster)
+	return getPokemonShinyStatMultiplier(monster:getName())
+end
+
 function statusGainFormula(playerLevel, summonLevel, summonBoost, pokeLove)
 	-- pokemon de jugador (playerLevel > 0): su fuerza depende del nivel del entrenador
 	if playerLevel and playerLevel > 0 then
 		return (1.0 + playerLevel * trainerLevelDamageBuff + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
 	end
-	-- salvajes y pokemon de NPC: summonLevel es su nivel de fuerza (Monster.getPowerLevel)
+	-- Pokemon salvajes usan stats base de especie; summonLevel solo aplica a equipos NPC.
 	return (1.0 + (summonLevel or 0) * summonLevelDamageBuff + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
 end
 
@@ -1502,17 +1539,18 @@ end
 function Monster.getTotalHealth(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then
-		local total = math.floor(monsterType:getMaxHealth() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		local shinyMultiplier = getShinyStatMultiplier(self)
+		local total = math.floor(monsterType:getMaxHealth() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * shinyMultiplier)
 		if self:getMaster():getVocation():getName() == "Blocker" then
-			total = total * blockerHealthBuff
+			total = total + math.floor(total * (blockerHealthBuff - 1.0))
 		end
 		local vitamins = self:getUsedVitaminsNumber("hp")
 		if vitamins > 0 then
-			total = total + math.floor(monsterType:getMaxHealth() * vitamins / maxVitamins * vitaminStatusBuff)
+			total = total + math.floor(monsterType:getMaxHealth() * vitamins / maxVitamins * vitaminStatusBuff * shinyMultiplier)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
+		return math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getPowerLevel(), 0, 0) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1530,17 +1568,15 @@ end
 function Monster.getTotalHealthPlayerContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getMaxHealth() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getMaxHealth() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
 
 function Monster.getTotalHealthSummonLevelContribution(self)
 	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		return math.floor(monsterType:getMaxHealth() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	elseif self:isMonster() then
-		return math.floor(monsterType:getMaxHealth() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))	
+	if self:isMonster() and not self:isPokemon() then
+		return math.floor(monsterType:getMaxHealth() * (statusGainFormula(0, self:getPowerLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
 	end	
 	return 0
 end
@@ -1548,7 +1584,7 @@ end
 function Monster.getTotalHealthSummonBoostContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getMaxHealth() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getMaxHealth() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1558,7 +1594,7 @@ function Monster.getTotalHealthSummonVitaminContribution(self)
 	if self:isPokemon() then 
 		local vitamins = self:getUsedVitaminsNumber("hp")
 		if vitamins > 0 then
-			return math.floor(monsterType:getMaxHealth() * vitamins / maxVitamins * vitaminStatusBuff)
+			return math.floor(monsterType:getMaxHealth() * vitamins / maxVitamins * vitaminStatusBuff * getShinyStatMultiplier(self))
 		end
 	end
 	return 0
@@ -1589,17 +1625,18 @@ function Monster.getTotalMeleeAttack(self)
 	end
 	local aveMelee = (minMelee + maxMelee) / 2
 	if self:isPokemon() then 
-		local total = math.floor(aveMelee * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		local shinyMultiplier = getShinyStatMultiplier(self)
+		local total = math.floor(aveMelee * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * shinyMultiplier)
 		if self:getMaster():getVocation():getName() == "Hunter" then
-			total = total * hunterDamageBuff
+			total = total + math.floor(total * (hunterDamageBuff - 1.0))
 		end
 		local vitamins = self:getUsedVitaminsNumber("attack")
 		if vitamins > 0 then
-			total = total + math.floor(aveMelee * vitamins / maxVitamins * vitaminStatusBuff)
+			total = total + math.floor(aveMelee * vitamins / maxVitamins * vitaminStatusBuff * shinyMultiplier)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(aveMelee * statusGainFormula(0, self:getPowerLevel(), 0, 0))
+		return math.floor(aveMelee * statusGainFormula(0, self:getPowerLevel(), 0, 0) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1616,7 +1653,7 @@ function Monster.getTotalMeleeAttackPlayerContribution(self)
 	end
 	local aveMelee = (minMelee + maxMelee) / 2
 	if self:isPokemon() then 
-		return math.floor(aveMelee * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(aveMelee * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1632,10 +1669,8 @@ function Monster.getTotalMeleeAttackSummonLevelContribution(self)
 		end
 	end
 	local aveMelee = (minMelee + maxMelee) / 2
-	if self:isPokemon() then 
-		return math.floor(aveMelee * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	elseif self:isMonster() then
-		return math.floor(aveMelee * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
+	if self:isMonster() and not self:isPokemon() then
+		return math.floor(aveMelee * (statusGainFormula(0, self:getPowerLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
 	end
 	return 0
 end
@@ -1652,7 +1687,7 @@ function Monster.getTotalMeleeAttackSummonBoostContribution(self)
 	end
 	local aveMelee = (minMelee + maxMelee) / 2
 	if self:isPokemon() then 
-		return math.floor(aveMelee * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(aveMelee * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1670,7 +1705,7 @@ function Monster.getTotalMeleeAttackVocationContribution(self)
 	local aveMelee = (minMelee + maxMelee) / 2
 	if self:isPokemon() then 
 		if self:getMaster():getVocation():getName() == "Hunter" then
-			return math.floor(aveMelee * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * (hunterDamageBuff - 1.0))
+			return math.floor(aveMelee * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * (hunterDamageBuff - 1.0) * getShinyStatMultiplier(self))
 		end
 	end
 	return 0
@@ -1690,7 +1725,7 @@ function Monster.getTotalMeleeAttackVitaminContribution(self)
 	if self:isPokemon() then
 		local vitamins = self:getUsedVitaminsNumber("attack")
 		if vitamins > 0 then
-			return math.floor(aveMelee * vitamins / maxVitamins * vitaminStatusBuff)
+			return math.floor(aveMelee * vitamins / maxVitamins * vitaminStatusBuff * getShinyStatMultiplier(self))
 		end
 	end
 	return 0
@@ -1699,17 +1734,18 @@ end
 function Monster.getTotalMagicAttack(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then
-		local total = math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		local shinyMultiplier = getShinyStatMultiplier(self)
+		local total = math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * shinyMultiplier)
 		if self:getMaster():getVocation():getName() == "Hunter" then
-			total = total * hunterDamageBuff
+			total = total + math.floor(total * (hunterDamageBuff - 1.0))
 		end
 		local vitamins = self:getUsedVitaminsNumber("magicAttack")
 		if vitamins > 0 then
-			total = total + math.floor(monsterType:getMoveMagicAttackBase() * vitamins / maxVitamins * vitaminStatusBuff)
+			total = total + math.floor(monsterType:getMoveMagicAttackBase() * vitamins / maxVitamins * vitaminStatusBuff * shinyMultiplier)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
+		return math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(0, self:getPowerLevel(), 0, 0) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1718,7 +1754,7 @@ function Monster.getTotalMagicAttackVocationContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then
 		if self:getMaster():getVocation():getName() == "Hunter" then
-			return math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * (hunterDamageBuff - 1.0))
+			return math.floor(monsterType:getMoveMagicAttackBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * (hunterDamageBuff - 1.0) * getShinyStatMultiplier(self))
 		end
 	end
 	return 0
@@ -1727,17 +1763,15 @@ end
 function Monster.getTotalMagicAttackPlayerContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getMoveMagicAttackBase() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getMoveMagicAttackBase() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
 
 function Monster.getTotalMagicAttackSummonLevelContribution(self)
 	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		return math.floor(monsterType:getMoveMagicAttackBase() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicAttackBase() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
+	if self:isMonster() and not self:isPokemon() then
+		return math.floor(monsterType:getMoveMagicAttackBase() * (statusGainFormula(0, self:getPowerLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
 	end
 	return 0
 end
@@ -1745,7 +1779,7 @@ end
 function Monster.getTotalMagicAttackSummonBoostContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getMoveMagicAttackBase() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getMoveMagicAttackBase() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1755,7 +1789,7 @@ function Monster.getTotalMagicAttackVitaminContribution(self)
 	if self:isPokemon() then 
 		local vitamins = self:getUsedVitaminsNumber("magicAttack")
 		if vitamins > 0 then
-			return math.floor(monsterType:getMoveMagicAttackBase() * vitamins / maxVitamins * vitaminStatusBuff)
+			return math.floor(monsterType:getMoveMagicAttackBase() * vitamins / maxVitamins * vitaminStatusBuff * getShinyStatMultiplier(self))
 		end
 	end
 	return 0
@@ -1764,14 +1798,15 @@ end
 function Monster.getTotalDefense(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then
-		local total = math.floor(monsterType:getDefense() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		local shinyMultiplier = getShinyStatMultiplier(self)
+		local total = math.floor(monsterType:getDefense() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * shinyMultiplier)
 		local vitamins = self:getUsedVitaminsNumber("defense")
 		if vitamins > 0 then
-			total = total + math.floor(monsterType:getDefense() * vitamins / maxVitamins * vitaminStatusBuff)
+			total = total + math.floor(monsterType:getDefense() * vitamins / maxVitamins * vitaminStatusBuff * shinyMultiplier)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getDefense() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
+		return math.floor(monsterType:getDefense() * statusGainFormula(0, self:getPowerLevel(), 0, 0) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1779,17 +1814,15 @@ end
 function Monster.getTotalDefensePlayerContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getDefense() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getDefense() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
 
 function Monster.getTotalDefenseSummonLevelContribution(self)
 	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		return math.floor(monsterType:getDefense() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	elseif self:isMonster() then
-		return math.floor(monsterType:getDefense() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
+	if self:isMonster() and not self:isPokemon() then
+		return math.floor(monsterType:getDefense() * (statusGainFormula(0, self:getPowerLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
 	end
 	return 0
 end
@@ -1797,7 +1830,7 @@ end
 function Monster.getTotalDefenseSummonBoostContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getDefense() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getDefense() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1807,7 +1840,7 @@ function Monster.getTotalDefenseVitaminContribution(self)
 	if self:isPokemon() then 
 		local vitamins = self:getUsedVitaminsNumber("defense")
 		if vitamins > 0 then
-			return math.floor(monsterType:getDefense() * vitamins / maxVitamins * vitaminStatusBuff)
+			return math.floor(monsterType:getDefense() * vitamins / maxVitamins * vitaminStatusBuff * getShinyStatMultiplier(self))
 		end
 	end
 	return 0
@@ -1817,14 +1850,15 @@ end
 function Monster.getTotalMagicDefense(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		local total = math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()))
+		local shinyMultiplier = getShinyStatMultiplier(self)
+		local total = math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(self:getMaster():getLevel(), self:getLevel(), self:getBoost(), self:getLove()) * shinyMultiplier)
 		local vitamins = self:getUsedVitaminsNumber("magicDefense")
 		if vitamins > 0 then
-			total = total + math.floor(monsterType:getMoveMagicDefenseBase() * vitamins / maxVitamins * vitaminStatusBuff)
+			total = total + math.floor(monsterType:getMoveMagicDefenseBase() * vitamins / maxVitamins * vitaminStatusBuff * shinyMultiplier)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getPowerLevel(), 0, 0))
+		return math.floor(monsterType:getMoveMagicDefenseBase() * statusGainFormula(0, self:getPowerLevel(), 0, 0) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1832,17 +1866,15 @@ end
 function Monster.getTotalMagicDefensePlayerContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getMoveMagicDefenseBase() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getMoveMagicDefenseBase() * (statusGainFormula(self:getMaster():getLevel(), 0, 0, 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
 
 function Monster.getTotalMagicDefenseSummonLevelContribution(self)
 	local monsterType = MonsterType(self:getName())
-	if self:isPokemon() then 
-		return math.floor(monsterType:getMoveMagicDefenseBase() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
-	elseif self:isMonster() then
-		return math.floor(monsterType:getMoveMagicDefenseBase() * (statusGainFormula(0, self:getLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
+	if self:isMonster() and not self:isPokemon() then
+		return math.floor(monsterType:getMoveMagicDefenseBase() * (statusGainFormula(0, self:getPowerLevel(), 0, 0) - statusGainFormula(0, 0, 0, 0)))
 	end
 	return 0
 end
@@ -1850,7 +1882,7 @@ end
 function Monster.getTotalMagicDefenseSummonBoostContribution(self)
 	local monsterType = MonsterType(self:getName())
 	if self:isPokemon() then 
-		return math.floor(monsterType:getMoveMagicDefenseBase() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)))
+		return math.floor(monsterType:getMoveMagicDefenseBase() * (statusGainFormula(0, 0, self:getBoost(), 0) - statusGainFormula(0, 0, 0, 0)) * getShinyStatMultiplier(self))
 	end
 	return 0
 end
@@ -1862,7 +1894,7 @@ function Monster.getTotalMagicDefenseVitaminContribution(self)
 	if self:isPokemon() then 
 		local vitamins = self:getUsedVitaminsNumber("magicDefense")
 		if vitamins > 0 then
-			return math.floor(monsterType:getMoveMagicDefenseBase() * vitamins / maxVitamins * vitaminStatusBuff)
+			return math.floor(monsterType:getMoveMagicDefenseBase() * vitamins / maxVitamins * vitaminStatusBuff * getShinyStatMultiplier(self))
 		end
 	end
 	return 0
@@ -1886,11 +1918,11 @@ function Monster.getTotalSpeed(self)
 			if masterSpeed <= 0 then
 				masterSpeed = master:getBaseSpeed()
 			end
-			return math.floor(masterSpeed * 0.9)
+			return math.floor(masterSpeed * 0.9 * getShinyStatMultiplier(self))
 		end
 	end
 	local monsterType = MonsterType(self:getName())
-	return monsterType and monsterType:getBaseSpeed() or 220
+	return monsterType and math.floor(monsterType:getBaseSpeed() * getShinyStatMultiplier(self)) or 220
 end
 
 function Monster.getTotalSpeedPlayerContribution(self)
@@ -2216,8 +2248,8 @@ function Player.disableAutoLoot(self)
 	return false
 end
 
--- Los pokemon no tienen nivel: su fuerza es el nivel del entrenador (pokemon de jugador),
--- el nivel con el que lo creo el NPC (lideres de gimnasio...) o el de su etapa (salvajes).
+-- Pokemon de jugador escalan con el entrenador; los de NPC conservan el nivel configurado.
+-- Los salvajes usan sus stats base de especie, sin escalado por nivel o etapa.
 function Monster.getPowerLevel(self)
 	local master = self:getMaster()
 	if master then
@@ -2226,7 +2258,7 @@ function Monster.getPowerLevel(self)
 	if MonsterType(self:getName()):dexEntry() <= 0 then
 		return self:getLevel() -- monstruos que no son pokemon
 	end
-	return getPokemonRequiredLevel(self:getName())
+	return 0
 end
 
 function Monster.getSummonBoost(self)
@@ -2727,7 +2759,7 @@ function doEvolveSummon(cid, evolutionName, ancient)
 --		end
 
 		local baseHealth = MonsterType(evolutionName):getMaxHealth()
-		local newMaxHealth = math.floor(baseHealth * statusGainFormula(master:getLevel(), 0, item:getSpecialAttribute("pokeBoost") or 0, item:getSpecialAttribute("pokeLove") or 0))
+		local newMaxHealth = math.floor(baseHealth * statusGainFormula(master:getLevel(), 0, item:getSpecialAttribute("pokeBoost") or 0, item:getSpecialAttribute("pokeLove") or 0) * getPokemonShinyStatMultiplier(evolutionName))
 		summon:setMaxHealth(newMaxHealth)
 		summon:setHealth(newMaxHealth)
 
@@ -2819,7 +2851,7 @@ function doAddPokeball(cid, name, boost, ballKey, dp, msg)
 		end
 		if addBall then
 			local baseHealth = monsterType:getMaxHealth()
-			local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, boost, 0))
+			local maxHealth = math.floor(baseHealth * statusGainFormula(player:getLevel(), 0, boost, 0) * getPokemonShinyStatMultiplier(name))
 			addBall:setSpecialAttribute("pokeName", name)
 			addBall:setSpecialAttribute("pokeBoost", boost)
 			addBall:setSpecialAttribute("pokeMaxHealth", maxHealth)
