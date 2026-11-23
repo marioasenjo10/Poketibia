@@ -37,7 +37,11 @@
 	<action itemid="2267" script="poke/revive.lua" allowfaruse="1" />
 	<action itemid="27645" script="poke/revive.lua" allowfaruse="1" />
 	<action itemid="2273" script="poke/healrune.lua" allowfaruse="1" />
-	<action itemid="27646" script="poke/healrune.lua" allowfaruse="1" />
+	<action itemid="27641" script="poke/potion.lua" allowfaruse="1" />
+	<action itemid="27642" script="poke/potion.lua" allowfaruse="1" />
+	<action itemid="27643" script="poke/potion.lua" allowfaruse="1" />
+	<action itemid="27646" script="poke/potion.lua" allowfaruse="1" />
+	<action itemid="27647" script="poke/potion.lua" allowfaruse="1" />
 	<action itemid="2325" script="poke/summon.lua" />
 	<action itemid="26661" script="poke/summon.lua" />
 	<action itemid="26672" script="poke/summon.lua" />

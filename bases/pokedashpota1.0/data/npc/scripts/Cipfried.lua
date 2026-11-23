@@ -9,25 +9,25 @@ function onThink()				npcHandler:onThink()					end
 
 local voices = {
 	{ text = 'Feeling lost, my child? Ask me for hints or help!' },
-	{ text = 'Come to me if you need healing!' },
+	{ text = 'Eat food to recover your health!' },
 	{ text = 'Welcome to the temple of Rookgaard!' },
 	{ text = 'Don\'t despair! Help is near!' }
 }
 npcHandler:addModule(VoiceModule:new(voices))
 
 -- Greeting and Farewell
-keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = 'Hello, |PLAYERNAME|! You are looking really bad. Let me heal your wounds. It\'s my job after all.'},
+keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = 'Hello, |PLAYERNAME|! Eat food to recover your health. I can still cure poison.'},
 	function(player) return player:getHealth() < 65 or player:getCondition(CONDITION_POISON) ~= nil end,
 	function(player)
-		local health = player:getHealth()
-		if health < 65 then player:addHealth(65 - health) end
-		player:removeCondition(CONDITION_POISON)
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+		if player:getCondition(CONDITION_POISON) then
+			player:removeCondition(CONDITION_POISON)
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+		end
 	end
 )
 keywordHandler:addAliasKeyword({'hello'})
 
-keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = 'Hello, |PLAYERNAME|! I\'ll {heal} you if you are injured or poisoned. Feel free to ask me for {help} or general {hints}.'}, function(player) return player:getSex() == PLAYERSEX_FEMALE end)
+keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = 'Hello, |PLAYERNAME|! Eat food to recover health; I can cure poison. Ask me for {help} or {hints}.'}, function(player) return player:getSex() == PLAYERSEX_FEMALE end)
 keywordHandler:addAliasKeyword({'hello'})
 
 keywordHandler:addFarewellKeyword({'bye'}, {npcHandler = npcHandler, text = 'Farewell, |PLAYERNAME|!'})
@@ -36,7 +36,7 @@ keywordHandler:addAliasKeyword({'farewell'})
 -- Basic keywords
 keywordHandler:addKeyword({'hint'}, StdModule.rookgaardHints, {npcHandler = npcHandler})
 keywordHandler:addKeyword({'name'}, StdModule.say, {npcHandler = npcHandler, text = 'My name is Cipfried.'})
-keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'Me? Oh, I\'m just a humble {monk}. Ask me if you need {help} or {healing}.'})
+keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'Me? Oh, I\'m just a humble {monk}. Ask me if you need {help} or a cure for poison.'})
 keywordHandler:addKeyword({'time'}, StdModule.say, {npcHandler = npcHandler, text = 'Now it is |TIME|, my child.'})
 keywordHandler:addKeyword({'monk'}, StdModule.say, {npcHandler = npcHandler, text = 'I have sacrificed my life to serve the good gods of {Tibia} and to help newcomers in this world.'})
 keywordHandler:addKeyword({'bank'}, StdModule.say, {npcHandler = npcHandler, text = 'You can deposit your money at the bank. That way you won\'t lose it if you get {killed}. The bank is just under the academy and to the right.'})
@@ -46,7 +46,7 @@ keywordHandler:addKeyword({'help'}, StdModule.say, {npcHandler = npcHandler, tex
 keywordHandler:addKeyword({'citizen'}, StdModule.say, {npcHandler = npcHandler, text = 'Only a few people live in our village, most of them are {merchants}. You can either ask them for a {trade} or about various other topics, like the names of other citizens, their {job} or Tibia in general.'})
 keywordHandler:addKeyword({'trade'}, StdModule.say, {npcHandler = npcHandler, text = 'I don\'t have any goods for trade, but if you ask one of the {merchants}, he or she will gladly show you what you can buy or sell.'})
 keywordHandler:addKeyword({'rat'}, StdModule.say, {npcHandler = npcHandler, text = 'A single rat doesn\'t pose a grave danger to you, but be careful not to get cornered by many of them. They could still {kill} you.'})
-keywordHandler:addKeyword({'spider'}, StdModule.say, {npcHandler = npcHandler, text = 'If you face spiders, beware of the {poisonous} ones. If you are poisoned, you will constantly lose health. Come to me and I\'ll heal you from poison.'})
+keywordHandler:addKeyword({'spider'}, StdModule.say, {npcHandler = npcHandler, text = 'If you face spiders, beware of the {poisonous} ones. If you are poisoned, you will constantly lose health. I can cure poison; eat food to recover health.'})
 keywordHandler:addKeyword({'kill'}, StdModule.say, {npcHandler = npcHandler, text = 'If you get killed, you will revive in this temple. However, you will lose experience and also equipment, which can be quite painful. Take good care of yourself!'})
 keywordHandler:addKeyword({'poison'}, StdModule.say, {npcHandler = npcHandler, text = 'Poison is very dangerous! Don\'t ever drink green liquids, they are poisonous and will make you lose health!'})
 keywordHandler:addKeyword({'vocation'}, StdModule.say, {npcHandler = npcHandler, text = 'There are four vocations in Tibia: {knight}, {sorcerer}, {paladin} or {druid}. Each vocation has its unique special abilities.'})
@@ -62,7 +62,7 @@ keywordHandler:addKeyword({'weapon'}, StdModule.say, {npcHandler = npcHandler, t
 keywordHandler:addKeyword({'food'}, StdModule.say, {npcHandler = npcHandler, text = 'Food is very important for your health. If you are hurt in a fight with a {monster}, select \'Use\' on food such as cheese, ham or meat to eat it. This will slowly refill your health.'})
 keywordHandler:addKeyword({'premium'}, StdModule.say, {npcHandler = npcHandler, text = 'As a premium adventurer, you are an official tax payer and thus privileged in many ways. For example, you can travel by {ship} and get better deals from {merchants}.'})
 keywordHandler:addKeyword({'ship'}, StdModule.say, {npcHandler = npcHandler, text = {'Ships are a comfortable way of travelling to distant cities. At any harbour, you can board the ship and ask its captain where he sails to.', 'Travelling by ship will cost you some gold, though, so be sure to have money with you.'}})
-keywordHandler:addKeyword({'potion'}, StdModule.say, {npcHandler = npcHandler, text = 'Potions will come in handy once you are in a fight deep in a dungeon. If you aren\'t in immediate danger, you can simply eat {food} to regain health, though.'})
+keywordHandler:addKeyword({'potion'}, StdModule.say, {npcHandler = npcHandler, text = 'Pokémon potions are for Pokémon. To recover your own health, eat {food}.'})
 keywordHandler:addKeyword({'academy'}, StdModule.say, {npcHandler = npcHandler, text = 'The academy is just north of here. You can learn helpful things there from {Seymour}, if you wish to!'})
 keywordHandler:addKeyword({'king'}, StdModule.say, {npcHandler = npcHandler, text = 'Well, King Tibianus of course. The island of {Rookgaard} belongs to his kingdom.'})
 keywordHandler:addKeyword({'rookgaard'}, StdModule.say, {npcHandler = npcHandler, text = 'The {gods} have chosen this isle as the point of arrival for newborn souls. The {citizens} will help you if you ask them.'})
@@ -92,20 +92,11 @@ keywordHandler:addAliasKeyword({'explore'})
 keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You are poisoned. I will help you.'},
 	function(player) return player:getCondition(CONDITION_POISON) ~= nil end,
 	function(player)
-		local health = player:getHealth()
-		if health < 65 then player:addHealth(65 - health) end
 		player:removeCondition(CONDITION_POISON)
 		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 	end
 )
-keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'Let me heal your wounds.'},
-	function(player) return player:getHealth() < 185 end,
-	function(player)
-		local health = player:getHealth()
-		if health < 185 then player:addHealth(185 - health) end
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-	end
-)
+keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'Eat food or visit a nurse to restore your health.'}, function(player) return player:getHealth() < 185 end)
 keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You aren\'t looking really bad, |PLAYERNAME|. I can only help in cases of real emergencies. Raise your health simply by eating food.'})
 
 -- Names

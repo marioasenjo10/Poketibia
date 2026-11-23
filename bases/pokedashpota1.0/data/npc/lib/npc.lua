@@ -4,7 +4,7 @@ dofile('data/npc/lib/npcsystem/customModules.lua')
 
 isPlayerPremiumCallback = Player.isPremium
 
--- Cura al jugador, a su pokemon fuera y a todas sus pokebolas (enfermeras).
+-- Cura al jugador, al Pokemon invocado y a las Pokeballs.
 function npcHealPlayer(player)
 	local playerHealth = player:getHealth()
 	local playerMaxHealth = player:getMaxHealth()
@@ -28,7 +28,7 @@ function npcHealPlayer(player)
 			ball:transform(balls[ballKey].usedOn)
 		end
 	end
-	local window = ModalWindow(1001, "Pokemon Center", "Your pokemon have been healed!")
+	local window = ModalWindow(1001, "Pokemon Center", "You and your pokemon have been healed!")
 	window:addButton(1, "Ok")
 	window:setDefaultEnterButton(1)
 	window:setDefaultEscapeButton(1)

@@ -13,6 +13,10 @@ end
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 
 function onCastSpell(creature, variant)
+	if creature:isPlayer() then
+		creature:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
+		return false
+	end
 	creature:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 	return combat:execute(creature, variant)
 end

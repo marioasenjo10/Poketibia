@@ -11,6 +11,14 @@ local antidotePot = 8474
 local greatEmptyPot = 7635
 local strongEmptyPot = 7634
 local emptyPot = 7636
+local healthPotions = {
+	[smallHealthPot] = true,
+	[healthPot] = true,
+	[strongHealthPot] = true,
+	[greatHealthPot] = true,
+	[ultimateHealthPot] = true,
+	[greatSpiritPot] = true
+}
 
 local antidote = Combat()
 antidote:setParameter(COMBAT_PARAM_TYPE, COMBAT_HEALING)
@@ -25,6 +33,11 @@ exhaust:setParameter(CONDITION_PARAM_TICKS, (configManager.getNumber(configKeys.
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if target == nil or not target:isPlayer() then
+		return true
+	end
+
+	if healthPotions[item:getId()] then
+		player:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
 		return true
 	end
 

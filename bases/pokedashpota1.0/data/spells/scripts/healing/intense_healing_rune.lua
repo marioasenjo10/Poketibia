@@ -5,6 +5,12 @@ combat:setParameter(COMBAT_PARAM_DISPEL, CONDITION_PARALYZE)
 combat:setParameter(COMBAT_PARAM_TARGETCASTERORTOPMOST, true)
 combat:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
 
+function onTargetCreature(creature, target)
+	return target:isPokemon()
+end
+
+combat:setCallback(CALLBACK_PARAM_TARGETCREATURE, "onTargetCreature")
+
 function onGetFormulaValues(player, level, maglevel)
 	local min = (level / 5) + (maglevel * 3.2) + 20
 	local max = (level / 5) + (maglevel * 5.4) + 40

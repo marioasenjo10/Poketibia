@@ -50,6 +50,9 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	if not attacker then
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
+	if creature:isPlayer() and attacker:isMonster() and not attacker:getMaster() and #creature:getSummons() > 0 then
+		return 0, primaryType, 0, secondaryType
+	end
 	if creature:isPlayer() or attacker:isPlayer() then
 		if primaryDamage then primaryDamage = math.floor(primaryDamage * 0.08) end
 		return primaryDamage, primaryType, secondaryDamage, secondaryType

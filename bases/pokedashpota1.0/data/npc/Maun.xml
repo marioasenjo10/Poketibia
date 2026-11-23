@@ -26,10 +26,7 @@
 		fireball rune,2302,30;
 		fishing rod,2580,150;
 		flaming arrow,7840,5;
-		great health potion,7591,190;
 		great mana potion,7590,120;
-		great spirit potion,8472,190;
-		health potion,7618,45;
 		holy missile rune,2295,16;
 		icicle rune,2271,30;
 		machete,2420,35;
@@ -52,13 +49,11 @@
 		soulfire rune,2308,46;
 		spear,2389,9;
 		Stone Shower Rune,2288,37;
-		strong health potion,7588,100;
 		strong mana potion,7589,80;
 		tarsal arrow,15648,6;
 		throwing star,2399,42;
 		Thunderstorm Rune,2315,37;
 		torch,2050,2;
-		ultimate health potion,8473,310;
 		vortex bolt,15649,6;
 		watch,2036,20;
 		Wild Growth Rune,2269,160;

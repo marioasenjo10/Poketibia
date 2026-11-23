@@ -17,7 +17,6 @@ shopModule:addBuyableItem({'empty ultraball'}, 26688, 12, 1, 'empty ultraball')
 
 --shopModule:addBuyableItem({'antidote potion'}, 8474, 5, 1, 'antidote potion')
 
-shopModule:addBuyableItem({'ultimate potion'}, 27646, 6, 1, 'ultimate potion')
 shopModule:addBuyableItem({'revive'}, 27645, 10, 1, 'revive')
 
 

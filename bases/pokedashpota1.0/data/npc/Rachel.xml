@@ -17,10 +17,7 @@
 			fire field rune,2301,28;
 			fire wall rune,2303,61;
 			great fireball rune,2304,45;
-			great health potion,7591,190;
 			great mana potion,7590,120;
-			great spirit potion,8472,190;
-			health potion,7618,45;
 			heavy magic missile rune,2311,12;
 			intense healing rune,2265,95;
 			light magic missile rune,2287,4;
@@ -32,12 +29,10 @@
 			snakebite rod,2182,500;
 			spellbook,2175,150;
 			stalagmite rune,2292,12;
-			strong health potion,7588,100;
 			strong mana potion,7589,80;
 			sudden death rune,2268,108;
 			terra rod,2181,10000;
 			ultimate healing rune,2273,175;
-			ultimate health potion,8473,310;
 			wand of cosmic energy,2189,10000;
 			wand of decay,2188,5000;
 			wand of dragonbreath,2191,1000;

@@ -74,7 +74,7 @@ keywordHandler:addKeyword({'al', 'dee'}, StdModule.say, {npcHandler = npcHandler
 keywordHandler:addKeyword({'amber'}, StdModule.say, {npcHandler = npcHandler, text = 'She\'s pretty indeed! I wonder if she likes bearded men.'})
 keywordHandler:addKeyword({'billy'}, StdModule.say, {npcHandler = npcHandler, text = 'Gotta love that name.'})
 keywordHandler:addKeyword({'willie'}, StdModule.say, {npcHandler = npcHandler, text = 'Don\'t listen to this old wannabe, I\'m the best cook around.'})
-keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He never leaves the temple. He spends his time caring for those who newly arrive here. You can ask him for a heal if you are badly injured or poisoned.'})
+keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He never leaves the temple. He spends his time caring for those who newly arrive here. He can cure poison; eat food to recover your health.'})
 keywordHandler:addKeyword({'dixi'}, StdModule.say, {npcHandler = npcHandler, text = 'That\'s {Obi\'s} granddaughter. She helps him out by selling {armors} and {shields}. I think she\'ll be a beauty when she\'s grown up.'})
 keywordHandler:addKeyword({'hyacinth'}, StdModule.say, {npcHandler = npcHandler, text = 'I never see that guy around.'})
 keywordHandler:addKeyword({'lee\'delle'}, StdModule.say, {npcHandler = npcHandler, text = 'Her shop is super-duper exclusive. If you\'re a premium adventurer, check it out in the western part of town. Lotsa nice offers there.'})
@@ -86,13 +86,13 @@ keywordHandler:addKeyword({'tom'}, StdModule.say, {npcHandler = npcHandler, text
 keywordHandler:addKeyword({'dallheim'}, StdModule.say, {npcHandler = npcHandler, text = 'He is one of the king\'s best men and here to protect us.'})
 keywordHandler:addAliasKeyword({'zerbrus'})
 
--- Health Potion Quest
+-- Pan quest reward
 local panKeyword = keywordHandler:addKeyword({'pan'}, StdModule.say, {npcHandler = npcHandler, text = 'Have you found a pan for me?'})
-	panKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'A pan! At last! Take this in case you eat something my cousin has cooked.', reset = true},
+	panKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'A pan! At last! Take this fish to recover some health when you are hungry.', reset = true},
 			function(player) return player:getItemCount(2563) > 0 end,
 			function(player)
 				player:removeItem(2563, 1)
-				player:addItem(8704, 1)
+				player:addItem(2667, 1)
 			end
 	)
 	panKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'Hey! You don\'t have one!', reset = true})

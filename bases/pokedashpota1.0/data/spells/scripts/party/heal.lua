@@ -13,6 +13,10 @@ condition:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
 local baseMana = 120
 
 function onCastSpell(creature, variant, isHotkey)
+	if creature:isPlayer() then
+		creature:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
+		return false
+	end
 	local position = creature:getPosition()
 	local party = creature:getParty()
 	if not party then

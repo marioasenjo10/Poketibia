@@ -22494,8 +22494,8 @@
 		<attribute key="description" value="This is Budrik's old mining helmet." />
 		<attribute key="slotType" value="head" />
 	</item>
-	<item id="7498" article="a" name="package of potions">
-		<attribute key="description" value="It contains 5 health and 5 mana potions." />
+	<item id="7498" article="a" name="package of supplies">
+		<attribute key="description" value="A package of supplies." />
 		<attribute key="weight" value="3600" />
 	</item>
 	<item id="7499" article="a" name="cigar">

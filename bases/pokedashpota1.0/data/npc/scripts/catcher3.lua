@@ -50,13 +50,6 @@ function creatureSayCallback(cid, type, msg)
 
 
 		local player = Player(cid)
-		local playerHealth = player:getHealth()
-		local playerMaxHealth = player:getMaxHealth()
-
-		if playerHealth < playerMaxHealth then
-			player:addHealth(playerMaxHealth - playerHealth)
-		end
-		
 		if hasSummons(player) then
 			doRemoveSummon(cid)
 		end

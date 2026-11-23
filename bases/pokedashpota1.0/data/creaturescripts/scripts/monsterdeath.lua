@@ -1,4 +1,15 @@
+local conditionsToClear = {
+	CONDITION_POISON,
+	CONDITION_PARALYZE,
+	CONDITION_SLEEP,
+	CONDITION_DRUNK
+}
+
 function onDeath(creature, corpse, killer, mostDamageKiller, unjustified, mostDamageUnjustified)
+	for _, condition in ipairs(conditionsToClear) do
+		creature:removeCondition(condition)
+	end
+
     local player = creature:getMaster()
     if player then
 	local item = player:getUsingBall()

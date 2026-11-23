@@ -30,7 +30,7 @@ end
 addMissionKeyword('First of all, you have to find a way to enter the Isle of the Kings and get some holy water from the White Raven Monastery.', 1)
 addMissionKeyword('Have you heard about the unholy graveyard north of Edron? Go there and spill some holy water on every grave. Once you are done, come back to me.', 2, 3)
 addMissionKeyword('I feel that the spirits have not come to a rest yet. There must still be some graves left to sanctify.', 3)
-addMissionKeyword('I appreciate your help. May Banor be always on your side. Here, your reward is this package which contains five mana and five health potions.', 4, 5, true)
+addMissionKeyword('I appreciate your help. May Banor be always on your side. Here, your reward is this package of supplies.', 4, 5, true)
 
 keywordHandler:addKeyword({'mission'}, StdModule.say, {npcHandler = npcHandler, text = 'Your mission here on Tibia is to be polite and friendly. The gods will reward you, I promise!'})
 
@@ -88,12 +88,10 @@ addHealKeyword('You are burning. Let me quench those flames.', CONDITION_FIRE, C
 addHealKeyword('You are poisoned. Let me soothe your pain.', CONDITION_POISON, CONST_ME_MAGIC_RED)
 addHealKeyword('You are electrified, my child. Let me help you to stop trembling.', CONDITION_ENERGY, CONST_ME_MAGIC_GREEN)
 
-keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You are hurt, my child. I will heal your wounds.'},
+keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'Eat food or visit a nurse to restore your health.'},
 	function(player) return player:getHealth() < 40 end,
 	function(player)
-		local health = player:getHealth()
-		if health < 40 then player:addHealth(40 - health) end
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+		player:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
 	end
 )
 keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You aren\'t looking that bad. Sorry, I can\'t help you. But if you are looking for additional protection you should go on the {pilgrimage} of ashes or get the protection of the {twist of fate} here.'})
@@ -120,8 +118,8 @@ keywordHandler:addAliasKeyword({'spark'})
 keywordHandler:addKeyword({'solitude'}, StdModule.say, {npcHandler = npcHandler, text = 'Talk to the hermit Eremo on the isle of Cormaya about this blessing.'})
 keywordHandler:addAliasKeyword({'wisdom'})
 
-npcHandler:setMessage(MESSAGE_GREET, 'Welcome, young |PLAYERNAME|! If you are heavily wounded or poisoned, I can {heal} you for free.')
-npcHandler:setMessage(MESSAGE_WALKAWAY, 'Remember: If you are heavily wounded or poisoned, I can heal you for free.')
+npcHandler:setMessage(MESSAGE_GREET, 'Welcome, young |PLAYERNAME|! Eat food to recover your health. I can help with some conditions.')
+npcHandler:setMessage(MESSAGE_WALKAWAY, 'Remember: Eat food to recover your health.')
 npcHandler:setMessage(MESSAGE_FAREWELL, 'May the gods bless you, |PLAYERNAME|!')
 
 npcHandler:addModule(FocusModule:new())

@@ -48,12 +48,10 @@ addHealKeyword('You are burning. Let me quench those flames.', CONDITION_FIRE, C
 addHealKeyword('You are poisoned. Let me soothe your pain.', CONDITION_POISON, CONST_ME_MAGIC_RED)
 addHealKeyword('You are electrified, my child. Let me help you to stop trembling.', CONDITION_ENERGY, CONST_ME_MAGIC_GREEN)
 
-keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You are hurt, my child. I will heal your wounds.'},
+keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'Eat food or visit a nurse to restore your health.'},
 	function(player) return player:getHealth() < 40 end,
 	function(player)
-		local health = player:getHealth()
-		if health < 40 then player:addHealth(40 - health) end
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+		player:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
 	end
 )
 keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You aren\'t looking that bad. Sorry, I can\'t help you. But if you are looking for additional protection you should go on the {pilgrimage} of ashes or get the protection of the {twist of fate} here.'})
@@ -80,7 +78,7 @@ keywordHandler:addAliasKeyword({'spark'})
 keywordHandler:addKeyword({'solitude'}, StdModule.say, {npcHandler = npcHandler, text = 'Talk to the hermit Eremo on the isle of Cormaya about this blessing.'})
 keywordHandler:addAliasKeyword({'wisdom'})
 
-npcHandler:setMessage(MESSAGE_GREET, 'Welcome, this is the {Gray Beach temple}, |PLAYERNAME|. Whether you are wounded, poisoned - or wait, don\'t tell me - yes, this is probably a case of being more emotionally hurt, I will do my best to {heal} you.')
+npcHandler:setMessage(MESSAGE_GREET, 'Welcome, this is the {Gray Beach temple}, |PLAYERNAME|. I can treat some conditions, but only food can restore your health.')
 npcHandler:setMessage(MESSAGE_WALKAWAY, 'Only the best for you.')
 npcHandler:setMessage(MESSAGE_FAREWELL, 'Goodbye then, |PLAYERNAME|!')
 

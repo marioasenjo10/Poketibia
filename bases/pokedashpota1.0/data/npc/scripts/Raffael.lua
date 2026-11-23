@@ -12,7 +12,7 @@ function onThink()		npcHandler:onThink()		end
 
 local voices = {
 	{ text = "Get your shovels, ropes and torches here!" },
-	{ text = "Do you need health potions, young knight? All the potions you could wish for are here!" },
+	{ text = "Eat food to recover your health; Mark sells potions for Pokémon!" },
 	{ text = "Aaaaaall basic equipment for your adventure at Raffael's!" },
 	{ text = "If you don't want to spend your money, I can also deposit it on your bank account for you. Or even better, withdraw it so you can shop!" },
 	{ text = "Lost in the dark and out of mana to cast a light spell? Buy a torch now!" },

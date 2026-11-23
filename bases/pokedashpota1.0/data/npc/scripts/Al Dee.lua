@@ -50,7 +50,7 @@ keywordHandler:addKeyword({'potion'}, StdModule.say, {npcHandler = npcHandler, t
 keywordHandler:addKeyword({'food'}, StdModule.say, {npcHandler = npcHandler, text = 'Hmm, the best address to look for food might be {Willie} or {Billy}. {Norma} also has some snacks for sale.'})
 keywordHandler:addKeyword({'bank'}, StdModule.say, {npcHandler = npcHandler, text = 'A bank is quite useful. You can deposit your money safely there. This way you don\'t have to carry it around with you all the time. You could also invest your money in my {wares}!'})
 keywordHandler:addKeyword({'academy'}, StdModule.say, {npcHandler = npcHandler, text = 'The big building in the centre of Rookgaard. They have a library, a training centre, a {bank} and the room of the {oracle}. {Seymour} is the teacher there.'})
-keywordHandler:addKeyword({'temple'}, StdModule.say, {npcHandler = npcHandler, text = 'The monk {Cipfried} takes care of our temple. He can heal you if you\'re badly injured or poisoned.'})
+keywordHandler:addKeyword({'temple'}, StdModule.say, {npcHandler = npcHandler, text = 'The monk {Cipfried} takes care of our temple. He can cure poison; eat food to recover your health.'})
 keywordHandler:addKeyword({'premium'}, StdModule.say, {npcHandler = npcHandler, text = 'As a premium adventurer you have many advantages. You really should check them out!'})
 keywordHandler:addKeyword({'citizen'}, StdModule.say, {npcHandler = npcHandler, text = 'If you tell me the name of a citizen, I\'ll tell you what I know about him or her.'})
 keywordHandler:addKeyword({'merchant'}, StdModule.say, {npcHandler = npcHandler, text = 'To view the offers of a merchant, simply talk to him or her and ask for a {trade}. They will gladly show you their offers and also the things they buy from you.'})
@@ -64,7 +64,7 @@ keywordHandler:addAliasKeyword({'rope'})
 keywordHandler:addAliasKeyword({'backpack'})
 
 -- Names
-keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He is just an old monk. However, he can heal you if you are badly injured or poisoned.'})
+keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He is just an old monk. However, he can cure poison; eat food to recover your health.'})
 keywordHandler:addKeyword({'zirella'}, StdModule.say, {npcHandler = npcHandler, text = 'Poor old woman, her son {Tom} never visits her.'})
 keywordHandler:addKeyword({'santiago'}, StdModule.say, {npcHandler = npcHandler, text = 'He dedicated his life to welcome newcomers to this island.'})
 keywordHandler:addKeyword({'loui'}, StdModule.say, {npcHandler = npcHandler, text = 'No idea who that is.'})

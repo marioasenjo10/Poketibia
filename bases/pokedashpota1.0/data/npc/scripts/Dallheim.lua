@@ -17,13 +17,13 @@ local voices = {
 npcHandler:addModule(VoiceModule:new(voices))
 
 -- Greeting and Farewell
-keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = 'Greetings, |PLAYERNAME|! You\'re looking really bad. Let me heal your wounds.'},
+keywordHandler:addGreetKeyword({'hi'}, {npcHandler = npcHandler, text = 'Greetings, |PLAYERNAME|! Eat food to recover your health. I can still cure poison.'},
 	function(player) return player:getHealth() < 65 or player:getCondition(CONDITION_POISON) ~= nil end,
 	function(player)
-		local health = player:getHealth()
-		if health < 65 then player:addHealth(65 - health) end
-		player:removeCondition(CONDITION_POISON)
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+		if player:getCondition(CONDITION_POISON) then
+			player:removeCondition(CONDITION_POISON)
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+		end
 	end
 )
 keywordHandler:addAliasKeyword({'hello'})
@@ -81,7 +81,7 @@ keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text
 keywordHandler:addKeyword({'time'}, StdModule.say, {npcHandler = npcHandler, text = 'My duty is eternal. Time is of no importance.'})
 keywordHandler:addKeyword({'bank'}, StdModule.say, {npcHandler = npcHandler, text = 'Before you fight monsters, deposit your money there. If you die, you won\'t lose it if it\'s save in the bank.'})
 keywordHandler:addKeyword({'how', 'are', 'you'}, StdModule.say, {npcHandler = npcHandler, text = 'Fine.'})
-keywordHandler:addKeyword({'help'}, StdModule.say, {npcHandler = npcHandler, text = 'I have to stay here, sorry. But I can heal you if you are wounded. I have also valuable information about {monsters}.'})
+keywordHandler:addKeyword({'help'}, StdModule.say, {npcHandler = npcHandler, text = 'I have to stay here, sorry. Eat food to recover your health. I also have valuable information about {monsters}.'})
 keywordHandler:addKeyword({'information'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m an expert concerning the wildlife and {monsters} on this island.'})
 keywordHandler:addKeyword({'citizen'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'ll protect all citizens alike. That is my {job} and duty.'})
 keywordHandler:addKeyword({'rat'}, StdModule.say, {npcHandler = npcHandler, text = 'Did you know that rats are among the most dangerous animals in whole Tibia? Each day, they kill many people who are overestimating their powers. Don\'t be one of them!'})
@@ -135,7 +135,7 @@ keywordHandler:addKeyword({'santiago'}, StdModule.say, {npcHandler = npcHandler,
 keywordHandler:addKeyword({'zirella'}, StdModule.say, {npcHandler = npcHandler, text = 'Nice old lady.'})
 keywordHandler:addKeyword({'al', 'dee'}, StdModule.say, {npcHandler = npcHandler, text = 'He has been on this island as long as me.'})
 keywordHandler:addKeyword({'amber'}, StdModule.say, {npcHandler = npcHandler, text = 'I don\'t trust her.'})
-keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He guards the temple and can heal you if you are badly injured or poisoned, just like me.'})
+keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He guards the temple and can cure poison. Eat food to recover health.'})
 keywordHandler:addKeyword({'dixi'}, StdModule.say, {npcHandler = npcHandler, text = 'She\'s {Obi\'s} granddaughter and deals with {armors} and {shields}. Her shop is south west of town, close to the temple.'})
 keywordHandler:addKeyword({'hyacinth'}, StdModule.say, {npcHandler = npcHandler, text = 'Strange fellow, hides somewhere in the mountains of the isle.'})
 keywordHandler:addKeyword({'lee\'delle'}, StdModule.say, {npcHandler = npcHandler, text = 'Her shop is on the {premium} side of town. Best offers around.'})
@@ -153,20 +153,11 @@ keywordHandler:addAliasKeyword({'willie'})
 keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You are poisoned. I will help you.'},
 	function(player) return player:getCondition(CONDITION_POISON) ~= nil end,
 	function(player)
-		local health = player:getHealth()
-		if health < 65 then player:addHealth(65 - health) end
 		player:removeCondition(CONDITION_POISON)
 		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 	end
 )
-keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You are looking really bad. Let me heal your wounds.'},
-	function(player) return player:getHealth() < 65 end,
-	function(player)
-		local health = player:getHealth()
-		if health < 65 then player:addHealth(65 - health) end
-		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-	end
-)
+keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'Eat food or visit a nurse to restore your health.'}, function(player) return player:getHealth() < 65 end)
 keywordHandler:addKeyword({'heal'}, StdModule.say, {npcHandler = npcHandler, text = 'You aren\'t looking really bad. Eat some food to regain strength.'})
 
 npcHandler:setMessage(MESSAGE_WALKAWAY, 'Hm.')

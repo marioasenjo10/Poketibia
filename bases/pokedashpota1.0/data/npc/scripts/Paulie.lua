@@ -319,7 +319,7 @@ keywordHandler:addKeyword({'lily'}, StdModule.say, {npcHandler = npcHandler, tex
 keywordHandler:addKeyword({'lee\'delle'}, StdModule.say, {npcHandler = npcHandler, text = 'Her shop is on the {premium} side of town. She has really good offers.'})
 keywordHandler:addKeyword({'hyacinth'}, StdModule.say, {npcHandler = npcHandler, text = 'Hm, I\'ve never seen him. He\'s supposed to be a druid.'})
 keywordHandler:addKeyword({'dixi'}, StdModule.say, {npcHandler = npcHandler, text = 'She\'s {Obi\'s} granddaughter and deals with {armors} and {shields}. Her shop is southwest of town, close to the {temple}.'})
-keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He guards the temple and can heal you if you are badly injured or poisoned.'})
+keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'He guards the temple and can cure poison. Eat food to recover your health.'})
 
 npcHandler:setMessage(MESSAGE_GREET, 'Welcome |PLAYERNAME|! Here, you can {deposit} or {withdraw} your money from your bank account and {change} gold. I can also explain the {functions} of your bank account to you.')
 npcHandler:setMessage(MESSAGE_FAREWELL, 'Good bye, and remember: entrusting us with your gold is the safest way of storing it!')

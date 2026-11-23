@@ -11,8 +11,12 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 
-	if not (target:isPokemon() or target:isPlayer()) then 
-		return false 
+	if target:isPlayer() then
+		player:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
+		return true
+	end
+	if not target:isPokemon() then
+		return false
 	end
 
 	if target:isPokemon() and target:getMaster():isDuelingWithNpc() then

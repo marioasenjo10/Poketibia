@@ -30,7 +30,7 @@ function onLogin(player)
 			print("WARNING! Player " .. player:getName() .. " without initial pokeball.")
 		end
 		player:addItem(26662, 100)
-		player:addItem(27646, 20)
+		player:addItem(27642, 20)
 	end
 	-- mochila PKA permanente
 	if not player:getSlotItem(CONST_SLOT_BACKPACK) then

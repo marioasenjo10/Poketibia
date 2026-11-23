@@ -36,20 +36,14 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler.topic[cid] = 2
 		elseif npcHandler.topic[cid] == 3 then
 			if player:removeItem(2177, 1) then
-				npcHandler:say('Thank you! Take this ring. If you ever need a healing, come, bring the scroll, and ask me to {heal}.', cid)
+				npcHandler:say('Thank you! Take this ring. Remember, only food can restore your health.', cid)
 				player:addItem(2168, 1)
 			else
 				npcHandler:say('Sorry, but you have none.', cid)
 			end
 			npcHandler.topic[cid] = 0
 		elseif npcHandler.topic[cid] == 4 then
-			if player:removeItem(2168, 1) then
-				npcHandler:say('So be healed!', cid)
-				player:addHealth(player:getMaxHealth())
-				Npc():getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			else
-				npcHandler:say('Sorry, you are not worthy!', cid)
-			end
+			npcHandler:say('Eat food or visit a nurse to restore your health.', cid)
 			npcHandler.topic[cid] = 0
 		elseif npcHandler.topic[cid] == 5 then
 			player:setStorageValue(Storage.secretService.Quest, 1)

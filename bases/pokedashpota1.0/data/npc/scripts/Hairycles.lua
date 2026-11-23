@@ -11,7 +11,7 @@ local function greetCallback(cid)
 	if Player(cid):getStorageValue(Storage.TheApeCity.Questline) < 12 then
 		npcHandler:setMessage(MESSAGE_GREET, 'Oh! Hello! Hello! Did not notice! So {busy}.')
 	else
-		npcHandler:setMessage(MESSAGE_GREET, 'Be greeted, friend of the ape people. If you want to {trade}, just ask for my offers. If you are injured, ask for healing.')
+		npcHandler:setMessage(MESSAGE_GREET, 'Be greeted, friend of the ape people. If you want to {trade}, just ask for my offers. Eat food to recover your health.')
 	end
 	return true
 end
@@ -193,10 +193,7 @@ local function creatureSayCallback(cid, type, msg)
 
 	elseif msgcontains(msg, 'heal') then
 		if questProgress > 11 then
-			if player:getHealth() < 50 then
-				player:addHealth(50 - player:getHealth())
-				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			elseif player:getCondition(CONDITION_FIRE) then
+			if player:getCondition(CONDITION_FIRE) then
 				player:removeCondition(CONDITION_FIRE)
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 			elseif player:getCondition(CONDITION_POISON) then

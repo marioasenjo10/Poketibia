@@ -30,6 +30,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		if item.type == 0 then
 			player:sendTextMessage(MESSAGE_STATUS_SMALL, "It is empty.")
 		elseif target == player then
+			if item.type == 10 then
+				player:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
+				return true
+			end
 			item:transform(item:getId(), 0)
 			if item.type == 3 or item.type == 15 then
 				player:addCondition(drunk)
@@ -37,9 +41,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				player:addCondition(poison)
 			elseif item.type == 7 then
 				player:addMana(math.random(50, 150))
-				fromPosition:sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			elseif item.type == 10 then
-				player:addHealth(60)
 				fromPosition:sendMagicEffect(CONST_ME_MAGIC_BLUE)
 			end
 			for i = 0, #fluidType do

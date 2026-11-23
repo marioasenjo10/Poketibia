@@ -2648,7 +2648,14 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 			for j = 1, #targetList do
 				if targetList[j] == summon then
 					attacker:removeTarget(summon)
-					attacker:setIdle()
+					if not attacker:getMaster() and attacker:isOpponent(player) then
+						attacker:addTarget(player, true)
+						if not attacker:selectTarget(player) then
+							attacker:searchTarget()
+						end
+					else
+						attacker:searchTarget()
+					end
 				end
 			end
 		end

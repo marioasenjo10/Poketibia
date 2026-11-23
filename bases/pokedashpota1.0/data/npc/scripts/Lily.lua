@@ -8,7 +8,7 @@ function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)
 function onThink()				npcHandler:onThink()					end
 
 local voices = {
-	{ text = 'Are you injured or poisoned? Get your potions here! All natural, no artificial ingredients!' },
+	{ text = 'Are you poisoned? Get an antidote potion here! All natural, no artificial ingredients!' },
 	{ text = 'Hey you, over there! Let\'s have a little chat, shall we?' },
 	{ text = 'Oh, just in case you are looking for the marketplace and dungeons, just follow the path to the east.' },
 	{ text = 'Anyone got some cookies for me?' },
@@ -30,22 +30,22 @@ keywordHandler:addAliasKeyword({'information'})
 keywordHandler:addKeyword({'hint'}, StdModule.rookgaardHints, {npcHandler = npcHandler})
 keywordHandler:addKeyword({'equip'}, StdModule.say, {npcHandler = npcHandler, text = 'You definitely need a good {weapon}, an {armor} and a {shield}. Also, you should never leave for a {dungeon} without {rope}, {shovel} and {torch}.'})
 keywordHandler:addKeyword({'how', 'are', 'you'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m in tune with myself and with nature. Thank you.'})
-keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m a {druid}, bound to the spirit of nature. My {potions} will help you if you feel bad. I also buy {blueberries} and {cookies}. Just ask me for a {trade}.'})
+keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m a {druid}, bound to the spirit of nature. My antidote {potions} can cure poison. I also buy {blueberries} and {cookies}. Just ask me for a {trade}.'})
 keywordHandler:addKeyword({'name'}, StdModule.say, {npcHandler = npcHandler, text = 'My name is Lily, like the flower. It also stands for purity, just like my {potions} are!'})
 keywordHandler:addKeyword({'time'}, StdModule.say, {npcHandler = npcHandler, text = 'It\'s about |TIME|. But does it really matter? Don\'t rush yourself and enjoy all these little moments.'})
 keywordHandler:addKeyword({'bank'}, StdModule.say, {npcHandler = npcHandler, text = 'It\'s wise to store most of your gold at the bank below the academy. It\'s safer that way.'})
 keywordHandler:addKeyword({'citizen'}, StdModule.say, {npcHandler = npcHandler, text = 'If you tell me the name of a citizen, I\'ll tell you what I know about him or her.'})
-keywordHandler:addKeyword({'antidote'}, StdModule.say, {npcHandler = npcHandler, text = 'Antidote potions will cure {poisoning}. They also have a lovely {blueberry} taste. You only need them when you get poisoned deep down in a dungeon, else just go to the {temple} for a free heal!'})
+keywordHandler:addKeyword({'antidote'}, StdModule.say, {npcHandler = npcHandler, text = 'Antidote potions will cure {poisoning}. They also have a lovely {blueberry} taste. You only need them when you get poisoned deep down in a dungeon; eat food to recover your health.'})
 keywordHandler:addKeyword({'poisoning'}, StdModule.say, {npcHandler = npcHandler, text = 'Some creatures like snakes or poison spiders can poison you. That will diminish your health over a certain amount of time, so be careful when dealing with those creatures!'})
 keywordHandler:addKeyword({'druid'}, StdModule.say, {npcHandler = npcHandler, text = 'Being a druid is a wonderful profession. You control the forces of nature and can heal others.'})
 keywordHandler:addKeyword({'shop'}, StdModule.say, {npcHandler = npcHandler, text = 'There are many shops around here which are owned by local {citizens}.'})
-keywordHandler:addKeyword({'temple'}, StdModule.say, {npcHandler = npcHandler, text = 'The temple is just to the right. You can get a healing for free there if you are badly injured or poisoned.'})
+keywordHandler:addKeyword({'temple'}, StdModule.say, {npcHandler = npcHandler, text = 'The temple is just to the right. You can get poison cured there; eat food to recover your health.'})
 keywordHandler:addKeyword({'tibia'}, StdModule.say, {npcHandler = npcHandler, text = 'Tibia is our beautiful world, created by the gods. Being a {druid}, I\'m a worshipper of {Crunor}.'})
 keywordHandler:addKeyword({'crunor'}, StdModule.say, {npcHandler = npcHandler, text = 'Crunor is the great lord of trees and the creator of all plants. Despite what some people believe, he didn\'t create the {monsters}, though.'})
 keywordHandler:addKeyword({'food'}, StdModule.say, {npcHandler = npcHandler, text = 'Oh, I\'m sorry honey, I don\'t sell food. If you are hungry, visit one of the farmers {Billy} and {Willie}. I buy {blueberries} and {cookies}, though.'})
 keywordHandler:addKeyword({'premium'}, StdModule.say, {npcHandler = npcHandler, text = {'If you purchase premium time for your account, this opens up a lot of possibilities. ...', 'For example, you will be able to travel off the mainland, ride a mount and benefit from offline training as well as having more outfits and magic spells to choose from.'}})
-keywordHandler:addKeyword({'potion'}, StdModule.say, {npcHandler = npcHandler, text = 'I can offer you homemade {antidote} potions and small {health} potions. Ask me for a {trade} if you like to see them.'})
-keywordHandler:addKeyword({'health'}, StdModule.say, {npcHandler = npcHandler, text = 'Health potions will heal you for about 75 hit points. It can\'t hurt to carry one with you, just in case.'})
+keywordHandler:addKeyword({'potion'}, StdModule.say, {npcHandler = npcHandler, text = 'I can offer you homemade {antidote} potions. Pokémon potions are sold by Mark.'})
+keywordHandler:addKeyword({'health'}, StdModule.say, {npcHandler = npcHandler, text = 'Eat food to recover your health. Pokémon potions are for Pokémon.'})
 keywordHandler:addKeyword({'king'}, StdModule.say, {npcHandler = npcHandler, text = 'I think Tibia would be a better place without authorities who lead others to war. Can\'t we just all live in peace?'})
 keywordHandler:addKeyword({'academy'}, StdModule.say, {npcHandler = npcHandler, text = 'The academy is the big stone building in the town centre. If you\'re ready to leave Rookgaard, go there to see the {oracle}.'})
 keywordHandler:addKeyword({'rookgaard'}, StdModule.say, {npcHandler = npcHandler, text = 'Well, in this village and its surroundings you can {train} your skills until you are level 8. Then you should see the {oracle} and head to the {main} continent.'})
@@ -104,9 +104,9 @@ keywordHandler:addKeyword({'santiago'}, StdModule.say, {npcHandler = npcHandler,
 keywordHandler:addKeyword({'zirella'}, StdModule.say, {npcHandler = npcHandler, text = 'That poor old woman. I wish I could help her.'})
 keywordHandler:addKeyword({'al', 'dee'}, StdModule.say, {npcHandler = npcHandler, text = 'Best tool shop in town, if you ask me.'})
 keywordHandler:addKeyword({'amber'}, StdModule.say, {npcHandler = npcHandler, text = 'I heard that she\'s recovering below the academy. She has been on an exciting expedition. I haven\'t talked to her yet, though.'})
-keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'Visiting Cipfried in the {temple} is a good idea if you are injured or poisoned. He can heal you.'})
+keywordHandler:addKeyword({'cipfried'}, StdModule.say, {npcHandler = npcHandler, text = 'Visiting Cipfried in the {temple} is a good idea if you are poisoned. Eat food to recover your health.'})
 keywordHandler:addKeyword({'dixi'}, StdModule.say, {npcHandler = npcHandler, text = 'She\'s {Obi}\'s granddaughter and deals with {armors} and {shields}, just upstairs from Obi\'s shop.'})
-keywordHandler:addKeyword({'hyacinth'}, StdModule.say, {npcHandler = npcHandler, text = 'Hyacinth also sells small health potions. He lives outside the village, in a hidden place.'})
+keywordHandler:addKeyword({'hyacinth'}, StdModule.say, {npcHandler = npcHandler, text = 'Hyacinth lives outside the village, in a hidden place.'})
 keywordHandler:addKeyword({'lee\'delle'}, StdModule.say, {npcHandler = npcHandler, text = 'If you are a {premium} adventurer, you should check out {Lee\'Delle\'s} shop. She lives in the western part of town, just across the bridge.'})
 keywordHandler:addKeyword({'lily'}, StdModule.say, {npcHandler = npcHandler, text = 'Yes?'})
 keywordHandler:addKeyword({'oracle'}, StdModule.say, {npcHandler = npcHandler, text = 'You can find the oracle on the top floor of the {academy}, just above {Seymour}. Go there when you are level 8 to reach more areas of {Tibia}.'})

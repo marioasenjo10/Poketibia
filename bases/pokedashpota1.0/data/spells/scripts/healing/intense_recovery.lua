@@ -11,5 +11,9 @@ condition:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
 combat:setCondition(condition)
 
 function onCastSpell(creature, variant)
+	if creature:isPlayer() then
+		creature:sendCancelMessage("Players can recover health by eating or visiting a nurse.")
+		return false
+	end
 	return combat:execute(creature, variant)
 end
