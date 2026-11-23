@@ -324,7 +324,7 @@ local function getEvolutionChain(name)
 		guard = guard + 1
 	end
 	local out, visited = {}, {}
-	local function add(stageName, depth, level, item, count)
+	local function add(stageName, depth, level, item, count, itemClientId)
 		local key = stageName:lower()
 		if visited[key] or #out >= 16 then
 			return
@@ -339,20 +339,28 @@ local function getEvolutionChain(name)
 			displayName = stageName
 		end
 		out[#out + 1] = clean(displayName) .. ":" .. monsterType:getOutfit().lookType .. ":" .. (level or 0) .. ":"
-			.. clean(item) .. ":" .. (count or 0) .. ":" .. monsterType:dexEntry() .. ":" .. depth
+			.. clean(item) .. ":" .. (count or 0) .. ":" .. monsterType:dexEntry() .. ":" .. depth .. ":" .. (itemClientId or 0)
 		for _, evolution in ipairs(monsterType:getEvolutionList()) do
 			if evolution.name and evolution.name ~= "" and isShinyName(evolution.name) == shiny then
 				local itemName, itemCount = evolution.itemName, evolution.count
+				local itemType = nil
 				-- los shiny evolucionan con el objeto que suelta su evolucion (no con piedras)
 				local shinyEvo = shinyEvoByTarget and shinyEvoByTarget[evolution.name]
 				if shinyEvo then
-					itemName, itemCount = ItemType(shinyEvo.id):getName(), 1
+					itemType = ItemType(shinyEvo.id)
+					itemName, itemCount = itemType:getName(), 1
+				elseif itemName and itemName ~= "" then
+					local ok, byName = pcall(ItemType, itemName)
+					if ok and byName and byName:getId() ~= 0 then
+						itemType = byName
+					end
 				end
-				add(evolution.name, depth + 1, 0, itemName, itemCount)
+				-- id de cliente para que la pokedex dibuje el objeto (piedra, etc.)
+				add(evolution.name, depth + 1, 0, itemName, itemCount, itemType and clientIdOf(itemType) or 0)
 			end
 		end
 	end
-	add(root, 0, 0, "", 0)
+	add(root, 0, 0, "", 0, 0)
 	return table.concat(out, ";")
 end
 

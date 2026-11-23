@@ -5,15 +5,18 @@ local rightButtonsPanel
 local leftGameButtonsPanel
 local rightGameButtonsPanel
 
-local allowedGameButtons = {
-  inventoryButton = true,
-  pokedexButton = true,
-  questLogButton = true,
-  minimapButton = true,
-  vipListButton = true,
-  optionsButton = true,
-  logoutButton = true,
+-- barra limpia en partida: solo estos botones y en este orden
+local gameButtonOrder = {
+  'inventoryButton', 'pokedexButton', 'questLogButton', 'worldMapButton',
+  'skillsButton', 'vipListButton', 'optionsButton', 'logoutButton',
 }
+local allowedGameButtons = {}
+for _, id in ipairs(gameButtonOrder) do allowedGameButtons[id] = true end
+-- botones que fuera de partida viven en el panel izquierdo
+local leftPanelButtons = { optionsButton = true, logoutButton = true }
+-- botones que nunca se muestran (el sonido se cambia en Ajustes)
+local neverShownButtons = { audioButton = true }
+local hiddenByMenu = {}
 
 -- private functions
 local function addButton(id, description, icon, callback, panel, toggle, front)
@@ -41,6 +44,12 @@ local function addButton(id, description, icon, callback, panel, toggle, front)
       callback()
       return true
     end
+  end
+  if neverShownButtons[id] then
+    button:hide()
+  elseif g_game.isOnline() and not allowedGameButtons[id] then
+    button:hide()
+    hiddenByMenu[button] = true
   end
   return button
 end
@@ -159,14 +168,32 @@ function addRightGameToggleButton(id, description, icon, callback, front)
   return addButton(id, description, icon, callback, rightGameButtonsPanel, true, front)
 end
 
+local function moveButton(button, panel, index)
+  local parent = button:getParent()
+  if parent then parent:removeChild(button) end
+  if index then
+    panel:insertChild(index, button)
+  else
+    panel:addChild(button)
+  end
+end
+
 function showGameButtons()
   leftGameButtonsPanel:show()
   rightGameButtonsPanel:show()
+  -- todos los botones elegidos juntos y en orden en el panel derecho
+  for _, id in ipairs(gameButtonOrder) do
+    local button = topMenu:recursiveGetChildById(id)
+    if button then
+      moveButton(button, rightGameButtonsPanel)
+      button:show()
+    end
+  end
   for _, panel in ipairs({ leftButtonsPanel, rightButtonsPanel, leftGameButtonsPanel, rightGameButtonsPanel }) do
-    for i = 1, panel:getChildCount() do
-      local button = panel:getChildByIndex(i)
-      if button and not allowedGameButtons[button:getId()] then
+    for _, button in ipairs(panel:getChildren()) do
+      if not allowedGameButtons[button:getId()] and button:isVisible() then
         button:hide()
+        hiddenByMenu[button] = true
       end
     end
   end
@@ -175,6 +202,19 @@ end
 function hideGameButtons()
   leftGameButtonsPanel:hide()
   rightGameButtonsPanel:hide()
+  -- ajustes y salir vuelven a la izquierda para la pantalla de login
+  for _, id in ipairs({ 'optionsButton', 'logoutButton' }) do
+    local button = rightGameButtonsPanel:getChildById(id)
+    if button and leftPanelButtons[id] then
+      moveButton(button, leftButtonsPanel, 1)
+    end
+  end
+  for button in pairs(hiddenByMenu) do
+    if not button:isDestroyed() and not neverShownButtons[button:getId()] then
+      button:show()
+    end
+  end
+  hiddenByMenu = {}
 end
 
 function getButton(id)

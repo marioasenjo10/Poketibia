@@ -22,6 +22,8 @@ function init()
   minimapButton = modules.client_topmenu.addRightGameToggleButton('minimapButton', 
     tr('Minimap') .. ' (Ctrl+M)', '/images/topbuttons/minimap', toggle)
   minimapButton:setOn(true)
+  worldMapButton = modules.client_topmenu.addRightGameButton('worldMapButton', 'Mapa (Ctrl+Tab)',
+    '/images/topmenu/map', toggleFullMap)
 
   minimapWindow = g_ui.loadUI('minimap', modules.game_interface.getRightPanel())
   minimapWindow:setContentMinimumHeight(64)
@@ -96,6 +98,7 @@ function terminate()
 
   minimapWindow:destroy()
   minimapButton:destroy()
+  worldMapButton:destroy()
 end
 
 function toggle()

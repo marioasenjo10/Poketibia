@@ -25,7 +25,7 @@ function init()
     onGameEnd = offline
   })
 
-  skillsButton = modules.client_topmenu.addRightGameToggleButton('skillsButton', tr('Skills') .. ' (Ctrl+S)', '/images/topbuttons/skills', toggle)
+  skillsButton = modules.client_topmenu.addRightGameToggleButton('skillsButton', 'Estado del entrenador (Ctrl+S)', '/images/topmenu/skills', toggle)
   skillsButton:setOn(true)
   skillsWindow = g_ui.loadUI('skills', modules.game_interface.getRightPanel())
 

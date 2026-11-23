@@ -55,7 +55,7 @@ function init()
   connect(gameLeftPanel, { onVisibilityChange = onLeftPanelVisibilityChange })
 
   logoutButton = modules.client_topmenu.addLeftButton('logoutButton', tr('Exit'),
-    '/images/topbuttons/logout', tryLogout, true)
+    '/images/topmenu/logout', tryLogout, true)
 
   showTopMenuButton = gameMapPanel:getChildById('showTopMenuButton')
   showTopMenuButton.onClick = function()

@@ -28,7 +28,7 @@ function init()
 
   g_keyboard.bindKeyDown('Ctrl+I', toggle)
 
-  inventoryButton = modules.client_topmenu.addRightGameToggleButton('inventoryButton', tr('Inventory') .. ' (Ctrl+I)', '/images/topbuttons/inventory', toggle)
+  inventoryButton = modules.client_topmenu.addRightGameToggleButton('inventoryButton', tr('Inventory') .. ' (Ctrl+I)', '/images/topmenu/inventory', toggle)
   inventoryButton:setOn(false)
 
   inventoryWindow = g_ui.loadUI('inventory', modules.game_interface.getMapPanel())

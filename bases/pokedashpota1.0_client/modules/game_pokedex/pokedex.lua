@@ -171,16 +171,8 @@ function init()
   window:hide()
 
   dexButton = modules.client_topmenu.addRightGameToggleButton('pokedexButton', 'Pokedex (E / Ctrl+D)',
-    '/images/topbuttons/spelllist', toggle)
+    '/images/topmenu/pokedex', toggle)
   dexButton:setOn(false)
-  -- mismo icono que el objeto pokedex del inventario (client id 3150)
-  dexButton:setIconColor('#00000000')
-  local dexIcon = g_ui.createWidget('UIItem', dexButton)
-  dexIcon:setItemId(3150)
-  dexIcon:setVirtual(true)
-  dexIcon:setPhantom(true)
-  dexIcon:fill('parent')
-  dexIcon:setMargin(1)
 
   child('searchEdit').onTextChange = function(widget, text) filterList(text) end
 
@@ -384,7 +376,8 @@ local function parseInfo(buffer)
   for _, e in ipairs(split(p[9], ';')) do
     local f = split(e, ':')
     table.insert(info.chain, { name = f[1] or '?', look = tonumber(f[2]) or 0, level = tonumber(f[3]) or 0,
-      item = f[4] or '', count = tonumber(f[5]) or 0, number = tonumber(f[6]) or 0, depth = tonumber(f[7]) or 0 })
+      item = f[4] or '', count = tonumber(f[5]) or 0, number = tonumber(f[6]) or 0, depth = tonumber(f[7]) or 0,
+      itemId = tonumber(f[8]) or 0 })
   end
   for _, l in ipairs(split(p[11], ';')) do
     local f = split(l, ':')
@@ -556,33 +549,46 @@ local function damageTaken(attacker, race, race2)
   return 1
 end
 
+-- alto de una caja (DexBox): relleno (10 arriba y abajo) + titulo + contenido, con 6 px entre hijos
+local BOX_SPACING = 6
+local BOX_PADDING = 20
+local function fitBox(box)
+  local height = BOX_PADDING
+  for i, widget in ipairs(box:getChildren()) do
+    height = height + widget:getHeight() + (i > 1 and BOX_SPACING or 0)
+  end
+  box:setHeight(height)
+  return height
+end
+
+local function newBox(panel, title)
+  local box = g_ui.createWidget('DexBox', panel)
+  box:getChildById('title'):setText(title)
+  return box
+end
+
+local function addNote(parent, text)
+  local label = g_ui.createWidget('DexNote', parent)
+  label:setText(text)
+  return label
+end
+
 function buildInfoPanel(info)
   local panel = child('infoPanel')
   panel:destroyChildren()
 
-  local summary = g_ui.createWidget('DexSummaryGrid', panel)
-  local req = tonumber(info.stats[7]) or 0
-  local summaryItems = {
-    { 'NIVEL', req > 0 and ('Nv. ' .. req) or 'Todos', '#8ea3bf' },
-    { 'TIPO', titleCase(info.race) .. (info.race2 ~= '' and (' / ' .. titleCase(info.race2)) or ''), '#8ed0ff' },
-    { 'CAPTURAS', tostring(info.catches), '#7ee07e' },
-    { 'INTENTOS', tostring(info.tries), '#ffd84a' },
-  }
-  for _, item in ipairs(summaryItems) do
-    local card = g_ui.createWidget('DexSummaryCard', summary)
-    card:getChildById('title'):setText(item[1])
-    card:getChildById('value'):setText(item[2])
-    card:getChildById('value'):setColor(item[3])
-  end
-  summary:setHeight(70)
+  -- evoluciones (izquierda) y objetos para evolucionar (derecha)
+  local row = g_ui.createWidget('DexEvoRow', panel)
+  local evoBox = row:getChildById('evoBox')
+  local itemBox = row:getChildById('itemBox')
+  evoBox:getChildById('title'):setText('EVOLUCIONES')
+  itemBox:getChildById('title'):setText('OBJETO DE EVOLUCION')
 
-  -- evoluciones
-  addSection(panel, 'EVOLUCIONES')
+  local items = {}
   if #info.chain <= 1 then
-    addText(panel, 'Este pokemon no tiene evoluciones.', '#a8a8a8')
+    addNote(evoBox, 'Este pokemon no tiene evoluciones.')
   else
-    local grid = g_ui.createWidget('DexEvoGrid', panel)
-    local items = {}
+    local grid = g_ui.createWidget('DexEvoGrid', evoBox)
     for i, stage in ipairs(info.chain) do
       local cell = g_ui.createWidget('DexEvoCell', grid)
       cell:getChildById('arrow'):setVisible(i > 1)
@@ -590,15 +596,19 @@ function buildInfoPanel(info)
       card:setOn(stage.name:lower() == info.name:lower())
       setPortrait(card:getChildById('image'), card:getChildById('creature'), stage.look, stage.name)
       card:getChildById('name'):setText(stage.name)
-      local levelText = ''
+      local levelText = 'Base'
       if stage.depth > 0 then
         levelText = stage.level > 0 and ('Nv ' .. stage.level) or ''
         if stage.item ~= '' then
           levelText = levelText ~= '' and (levelText .. ' o objeto') or titleCase(stage.item)
-          table.insert(items, { stage = stage.name, item = titleCase(stage.item), count = math.max(1, stage.count) })
+          table.insert(items, { stage = stage.name, item = titleCase(stage.item), count = math.max(1, stage.count),
+            itemId = stage.itemId })
+          if stage.itemId > 0 then
+            local icon = card:getChildById('itemIcon')
+            icon:setItemId(stage.itemId)
+            icon:show()
+          end
         end
-      else
-        levelText = 'Base'
       end
       card:getChildById('level'):setText(levelText)
       local tip = { stage.name }
@@ -609,36 +619,39 @@ function buildInfoPanel(info)
         card.onClick = function() requestInfo(stage.number) end
       end
     end
-    grid:setHeight(gridHeight(#info.chain, 4, 116, 4))
-
-    if #items > 0 then
-      addSection(panel, 'OBJETOS DE EVOLUCION')
-      local grid = g_ui.createWidget('DexEvoItemGrid', panel)
-      for _, it in ipairs(items) do
-        local card = g_ui.createWidget('DexEvoItemCard', grid)
-        local itemId = evolutionItemId(it.item)
-        if itemId > 0 then card:getChildById('item'):setItemId(itemId) end
-        card:getChildById('name'):setText(it.item)
-        card:getChildById('count'):setText('x' .. it.count)
-        card:getChildById('stage'):setText(it.stage)
-        card:setTooltip(it.count .. 'x ' .. it.item .. '\nEvolucion: ' .. it.stage)
-      end
-      grid:setHeight(gridHeight(#items, 2, 58, 8))
-    end
+    grid:setHeight(gridHeight(#info.chain, 3, 116, 4))
   end
 
+  if #items == 0 then
+    addNote(itemBox, #info.chain <= 1 and '-' or 'No necesita objetos.')
+  else
+    for _, it in ipairs(items) do
+      local itemRow = g_ui.createWidget('DexEvoItemRow', itemBox)
+      if it.itemId > 0 then itemRow:getChildById('item'):setItemId(it.itemId) end
+      itemRow:getChildById('name'):setText(it.item)
+      itemRow:getChildById('count'):setText('x' .. it.count)
+      itemRow:getChildById('stage'):setText('Para ' .. it.stage)
+      itemRow:setTooltip(it.count .. 'x ' .. it.item .. '\nEvoluciona a ' .. it.stage)
+    end
+  end
+  local rowHeight = math.max(fitBox(evoBox), fitBox(itemBox))
+  evoBox:setHeight(rowHeight)
+  itemBox:setHeight(rowHeight)
+  row:setHeight(rowHeight)
+
   -- habilidades de campo
-  addSection(panel, 'HABILIDADES DE CAMPO')
+  local abilityBox = newBox(panel, 'HABILIDADES DE CAMPO')
   if #info.abilities == 0 then
-    addText(panel, 'Ninguna.', '#a8a8a8')
+    addNote(abilityBox, 'Ninguna.')
   else
     local chips = {}
     for _, a in ipairs(info.abilities) do table.insert(chips, { a, '#2f5d8a' }) end
-    addChips(panel, chips)
+    addChips(abilityBox, chips)
   end
+  fitBox(abilityBox)
 
   -- efectividad
-  addSection(panel, 'EFECTIVIDAD - DANO RECIBIDO')
+  local effBox = newBox(panel, 'EFECTIVIDAD - DANO RECIBIDO')
   local groups = { [1.5] = {}, [1] = {}, [0.67] = {} }
   for _, t in ipairs(TYPE_ORDER) do
     table.insert(groups[damageTaken(t, info.race, info.race2)], t)
@@ -649,11 +662,11 @@ function buildInfoPanel(info)
   for _, g in ipairs(labels) do
     local list = groups[g[1]]
     if #list > 0 then
-      local row = g_ui.createWidget('DexEffRow', panel)
-      local label = row:getChildById('label')
+      local effRow = g_ui.createWidget('DexEffRow', effBox)
+      local label = effRow:getChildById('label')
       label:setText(g[2])
       label:setColor(g[3])
-      local chipsWidget = row:getChildById('chips')
+      local chipsWidget = effRow:getChildById('chips')
       for _, t in ipairs(list) do
         local chip = g_ui.createWidget('DexChip', chipsWidget)
         chip:setText(TYPES[t][1])
@@ -661,9 +674,10 @@ function buildInfoPanel(info)
       end
       local height = gridHeight(#list, 6, 20, 6)
       chipsWidget:setHeight(height)
-      row:setHeight(height + 22)
+      effRow:setHeight(height + 22)
     end
   end
+  fitBox(effBox)
 end
 
 function buildMovesPanel(info)
@@ -779,17 +793,3 @@ function showAllOnMap()
   showOnMap(locationPositions(current))
 end
 
-local function evolutionItemId(name)
-  local ids = {
-    ['leaf stone'] = 26731, ['boost stone'] = 26723, ['water stone'] = 26736,
-    ['venom stone'] = 26735, ['thunder stone'] = 26734, ['rock stone'] = 26733,
-    ['punch stone'] = 26732, ['fire stone'] = 26728, ['ice stone'] = 26730,
-    ['cocoon stone'] = 26724, ['unique ancient stone'] = 26749,
-    ['crystal stone'] = 26725, ['darkness stone'] = 26726,
-    ['earth stone'] = 26742, ['enigma stone'] = 26727, ['heart stone'] = 26729,
-    ['metal coat'] = 26747, ['sun stone'] = 26748, ['feather stone'] = 26743,
-    ["king's rock stone"] = 26746, ['dragon stone'] = 26744,
-    ['evolution rune'] = 2291,
-  }
-  return ids[name:lower()] or 0
-end
