@@ -69,6 +69,7 @@ function init()
   rightGameButtonsPanel = topMenu:getChildById('rightGameButtonsPanel')
   pingLabel = topMenu:getChildById('pingLabel')
   fpsLabel = topMenu:getChildById('fpsLabel')
+  rightGameButtonsPanel.onGeometryChange = fitTopMenu
 
   g_keyboard.bindKeyDown('Ctrl+Shift+T', toggle)
 
@@ -86,8 +87,37 @@ function terminate()
   topMenu:destroy()
 end
 
+-- en partida la barra no ocupa todo el ancho: es una pastilla a la derecha solo con los iconos
+function fitTopMenu()
+  if g_game.isOnline() and topMenu then
+    topMenu:setWidth(rightGameButtonsPanel:getWidth())
+  end
+end
+
+local function setCompact(compact)
+  rightGameButtonsPanel:breakAnchors()
+  rightGameButtonsPanel:addAnchor(AnchorTop, 'parent', AnchorTop)
+  rightGameButtonsPanel:addAnchor(AnchorBottom, 'parent', AnchorBottom)
+  topMenu:breakAnchors()
+  topMenu:addAnchor(AnchorTop, 'parent', AnchorTop)
+  topMenu:addAnchor(AnchorRight, 'parent', AnchorRight)
+  if compact then
+    leftButtonsPanel:hide()
+    leftGameButtonsPanel:hide()
+    rightButtonsPanel:hide()
+    rightGameButtonsPanel:addAnchor(AnchorRight, 'parent', AnchorRight)
+    fitTopMenu()
+  else
+    leftButtonsPanel:show()
+    rightButtonsPanel:show()
+    rightGameButtonsPanel:addAnchor(AnchorRight, 'rightButtonsPanel', AnchorLeft)
+    topMenu:addAnchor(AnchorLeft, 'parent', AnchorLeft)
+  end
+end
+
 function online()
   showGameButtons()
+  setCompact(true)
 
   addEvent(function()
     if modules.client_options.getOption('showPing') and (g_game.getFeature(GameClientPing) or g_game.getFeature(GameExtendedClientPing)) then
@@ -100,6 +130,7 @@ end
 
 function offline()
   hideGameButtons()
+  setCompact(false)
   pingLabel:hide()
 end
 

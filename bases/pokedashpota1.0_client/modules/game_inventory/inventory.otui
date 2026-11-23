@@ -87,29 +87,50 @@ OrderSlot < InventoryItem
     image-source: /images/game/slots/right-hand-blessed
 
 // casilla de la barra de abajo: el objeto real sigue debajo (para usarlo / arrastrarlo),
-// pero se tapa con el icono nuevo
+// pero lo tapa la casilla con el icono nuevo. El icono y la tecla los pone inventory.lua
 BarCell < UIWidget
-  size: 58 58
+  size: 60 74
 
-BarSlotFrame < UIWidget
-  id: icon
-  anchors.fill: parent
-  phantom: true
-  background-color: #0e2546
-  border-width: 1
-  border-color: #3b82d6
+BarSlot < UIItem
+  size: 52 52
+  padding: 12
+  anchors.top: parent.top
+  anchors.horizontalCenter: parent.horizontalCenter
 
-BarSlotImage < UIWidget
-  size: 32 32
-  anchors.centerIn: parent
-  phantom: true
+  UIWidget
+    id: icon
+    anchors.fill: parent
+    phantom: true
+    image-source: /images/bottombar/cell
+    image-border: 12
+
+    UIWidget
+      id: img
+      size: 36 36
+      anchors.centerIn: parent
+      phantom: true
+
+  Label
+    id: key
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: -3
+    margin-bottom: -3
+    image-source: /images/bottombar/keycap
+    image-border: 5
+    padding: 1 5 4 5
+    text-auto-resize: true
+    font: noto-bold-11px
+    color: #1b2230
+    phantom: true
+    visible: false
 
 BarLabel < Label
   anchors.bottom: parent.bottom
   anchors.left: parent.left
   anchors.right: parent.right
-  height: 14
-  font: verdana-11px-rounded
+  height: 16
+  font: poppins-semibold-11px
   color: #ffffff
   text-align: center
   phantom: true
@@ -119,69 +140,48 @@ UIWidget
   id: inventoryWindow
   anchors.bottom: parent.bottom
   anchors.horizontalCenter: parent.horizontalCenter
-  margin-bottom: 6
-  height: 70
-  padding: 6 8
-  background-color: #0a1a33e6
-  border-width: 2
-  border-color: #2b8ce6
+  margin-bottom: 4
+  height: 94
+  padding: 10 14
+  image-source: /images/bottombar/bar
+  image-border: 18
   layout:
     type: horizontalBox
     spacing: 6
     fit-children: true
 
   BarCell
-    InfoSlot
-      size: 40 40
-      anchors.top: parent.top
-      anchors.horizontalCenter: parent.horizontalCenter
-      BarSlotFrame
-        BarSlotImage
-          image-source: /images/bottombar/pokedex
+    BarSlot
+      id: slot12
+      &position: {x=65535, y=12, z=0}
     BarLabel
       text: POKEDEX
 
   BarCell
-    OrderSlot
-      size: 40 40
-      anchors.top: parent.top
-      anchors.horizontalCenter: parent.horizontalCenter
-      BarSlotFrame
-        BarSlotImage
-          image-source: /images/bottombar/order
+    BarSlot
+      id: slot11
+      &position: {x=65535, y=11, z=0}
     BarLabel
       text: ORDER
 
   BarCell
-    FingerSlot
-      size: 40 40
-      anchors.top: parent.top
-      anchors.horizontalCenter: parent.horizontalCenter
-      BarSlotFrame
-        BarSlotImage
-          image-source: /images/bottombar/rope
+    BarSlot
+      id: slot9
+      &position: {x=65535, y=9, z=0}
     BarLabel
       text: ROPE
 
   BarCell
-    NeckSlot
-      size: 40 40
-      anchors.top: parent.top
-      anchors.horizontalCenter: parent.horizontalCenter
-      BarSlotFrame
-        BarSlotImage
-          image-source: /images/bottombar/rod
+    BarSlot
+      id: slot2
+      &position: {x=65535, y=2, z=0}
     BarLabel
       text: ROD
 
   BarCell
-    FeetSlot
-      size: 40 40
-      anchors.top: parent.top
-      anchors.horizontalCenter: parent.horizontalCenter
-      BarSlotFrame
-        BarSlotImage
-          image-source: /images/bottombar/badges
+    BarSlot
+      id: slot8
+      &position: {x=65535, y=8, z=0}
     BarLabel
       text: BADGES
 

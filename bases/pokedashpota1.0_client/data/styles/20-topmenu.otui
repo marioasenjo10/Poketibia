@@ -1,30 +1,33 @@
+// fondo invisible en reposo; al pasar el raton, pulsar o tener la ventana abierta sale un brillo
+// redondeado y el icono crece un poco (todas las propiedades tienen valor base para que se restauren)
 TopButton < UIButton
   size: 38 38
+  icon-size: 30 30
+  icon-offset: 4 4
   icon-color: #ffffffff
   background-color: alpha
+  image-source: /images/topmenu/hover
+  image-color: #ffffff00
 
   $hover !disabled:
-    background-color: #ffffff1c
-
-  $pressed:
-    background-color: #ffffff30
+    image-color: #ffffffff
+    icon-size: 34 34
+    icon-offset: 2 2
 
   $on:
-    background-color: #c6282850
+    image-source: /images/topmenu/on
+    image-color: #ffffffff
+
+  $pressed:
+    image-source: /images/topmenu/pressed
+    image-color: #ffffffff
+    icon-size: 28 28
+    icon-offset: 5 5
 
   $disabled:
     icon-color: #ffffff44
 
-TopToggleButton < UIButton
-  size: 38 38
-  icon-color: #ffffffff
-  background-color: alpha
-
-  $hover:
-    background-color: #ffffff1c
-
-  $on:
-    background-color: #c6282850
+TopToggleButton < TopButton
 
 TopMenuButtonsPanel < Panel
   layout:
@@ -35,8 +38,8 @@ TopMenuButtonsPanel < Panel
 
 TopMenuPanel < Panel
   height: 46
-  image-source: /images/ui/panel_top
-  image-repeated: true
+  image-source: /images/topmenu/pill
+  image-border: 16
   focusable: false
 
 TopMenuFrameCounterLabel < Label
@@ -44,6 +47,8 @@ TopMenuFrameCounterLabel < Label
   color: white
   margin-top: 4
   margin-left: 5
+  phantom: true
 
 TopMenuPingLabel < Label
   font: verdana-11px-rounded
+  phantom: true

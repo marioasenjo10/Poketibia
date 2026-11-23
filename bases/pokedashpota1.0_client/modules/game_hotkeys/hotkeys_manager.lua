@@ -185,23 +185,31 @@ function load(forceDefaults)
   addPokedexHotkey()
 
   hotkeysManagerLoaded = true
+  refreshInventoryKeys()
 end
 
 -- La primera vez de cada personaje se anaden las teclas E = usar pokedex (con mira:
 -- sobre ti abre la lista, sobre un pokemon abre su ficha) y Q = order. Luego se pueden cambiar en Ctrl+K.
+-- La barra de abajo (game_inventory) usa esta misma funcion para R = rope, Z = rod y B = badges.
 local POKEDEX_CLIENT_ID = 3150
 local ORDER_CLIENT_ID = 3157
-local function addDefaultItemHotkey(settingsNode, keyCombo, clientId)
+function addDefaultItemHotkey(settingsNode, keyCombo, clientId, plainUse)
   local key = ((G.host or '') .. '_' .. g_game.getCharacterName()):gsub('[^%w]', '_')
   local done = g_settings.getNode(settingsNode) or {}
   if done[key] then return end
   done[key] = true
   g_settings.setNode(settingsNode, done)
   if currentHotkeys:getChildById(keyCombo) then return end
-  local settings = { autoSend = false, itemId = clientId, useType = HOTKEY_MANAGER_USEWITH }
+  local settings = { autoSend = false, itemId = clientId, useType = (not plainUse) and HOTKEY_MANAGER_USEWITH or HOTKEY_MANAGER_USE }
   addKeyCombo(keyCombo, settings)
   hotkeyList[keyCombo] = settings
   save()
+end
+
+function refreshInventoryKeys()
+  if modules.game_inventory and modules.game_inventory.refreshBarKeys then
+    modules.game_inventory.refreshBarKeys()
+  end
 end
 
 function addPokedexHotkey()
@@ -211,6 +219,7 @@ function addPokedexHotkey()
 end
 
 function unload()
+  hotkeysManagerLoaded = false
   for keyCombo,callback in pairs(boundCombosCallback) do
     g_keyboard.unbindKeyPress(keyCombo, callback)
   end
@@ -269,6 +278,7 @@ function save()
   if modules.game_pokemonmoves and modules.game_pokemonmoves.refreshKeyLabels then
     modules.game_pokemonmoves.refreshKeyLabels()
   end
+  refreshInventoryKeys()
 end
 
 function loadDefautComboKeys()

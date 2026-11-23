@@ -3,6 +3,9 @@ TopMenuPanel
   anchors.top: parent.top
   anchors.left: parent.left
   anchors.right: parent.right
+  margin-top: 4
+  margin-left: 6
+  margin-right: 6
 
   TopMenuButtonsPanel
     id: leftButtonsPanel
