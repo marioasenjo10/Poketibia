@@ -113,14 +113,14 @@ BarSlot < UIItem
   Label
     id: key
     anchors.left: parent.left
-    anchors.bottom: parent.bottom
-    margin-left: -3
-    margin-bottom: -3
+    anchors.top: parent.top
+    margin-left: -6
+    margin-top: -6
     image-source: /images/bottombar/keycap
     image-border: 5
-    padding: 1 5 4 5
+    padding: 0 4 3 4
     text-auto-resize: true
-    font: noto-bold-11px
+    font: noto-bold-9px
     color: #1b2230
     phantom: true
     visible: false

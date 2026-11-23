@@ -45,55 +45,6 @@ public static class UiSkin
 		using (bmp) bmp.Save(Path.Combine(dir, name + ".png"), ImageFormat.Png);
 	}
 
-	// Botones redondos de perseguir y PvP con el mismo estilo plano que ofensivo/equilibrado/defensivo:
-	// normal = circulo de color con simbolo blanco; pulsado = color oscuro, anillo claro y simbolo crema.
-	public static string Stances(string imagesDir)
-	{
-		string dir = Path.Combine(imagesDir, "game", "combatmodes");
-		Directory.CreateDirectory(dir);
-		Save(Stance(Color.FromArgb(142, 91, 217), false, Chevrons), dir, "chase");
-		Save(Stance(Color.FromArgb(91, 51, 148), true, Chevrons), dir, "chase_on");
-		Save(Stance(Color.FromArgb(63, 174, 106), false, Swords), dir, "pvp");
-		Save(Stance(Color.FromArgb(35, 112, 63), true, Swords), dir, "pvp_on");
-		return "ok";
-	}
-
-	static Bitmap Stance(Color fill, bool pressed, Action<Graphics, Color> symbol)
-	{
-		var bmp = new Bitmap(64, 64, PixelFormat.Format32bppArgb);
-		using (var g = Canvas(bmp))
-		{
-			using (var b = new SolidBrush(fill)) g.FillEllipse(b, 1, 1, 62, 62);
-			if (pressed)
-				using (var p = new Pen(Color.FromArgb(110, 255, 255, 255), 2)) g.DrawEllipse(p, 6, 6, 52, 52);
-			symbol(g, pressed ? Color.FromArgb(242, 238, 230) : Color.White);
-		}
-		return bmp;
-	}
-
-	static void Chevrons(Graphics g, Color c)
-	{
-		using (var p = new Pen(c, 6) { StartCap = LineCap.Round, EndCap = LineCap.Round, LineJoin = LineJoin.Round })
-		{
-			g.DrawLines(p, new[] { new PointF(18, 19), new PointF(30, 32), new PointF(18, 45) });
-			g.DrawLines(p, new[] { new PointF(33, 19), new PointF(45, 32), new PointF(33, 45) });
-		}
-	}
-
-	static void Swords(Graphics g, Color c)
-	{
-		using (var blade = new Pen(c, 5) { StartCap = LineCap.Triangle, EndCap = LineCap.Round })
-		using (var hilt = new Pen(c, 4) { StartCap = LineCap.Round, EndCap = LineCap.Round })
-		{
-			g.DrawLine(blade, 46, 17, 21, 42);
-			g.DrawLine(blade, 18, 17, 43, 42);
-			g.DrawLine(hilt, 16, 38, 25, 47);
-			g.DrawLine(hilt, 48, 38, 39, 47);
-			g.DrawLine(hilt, 21, 42, 17, 46);
-			g.DrawLine(hilt, 43, 42, 47, 46);
-		}
-	}
-
 	static GraphicsPath Round(RectangleF r, float radius)
 	{
 		float d = radius * 2;

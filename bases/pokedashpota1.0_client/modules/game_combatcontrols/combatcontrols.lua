@@ -3,8 +3,6 @@ combatControlsWindow = nil
 fightOffensiveBox = nil
 fightBalancedBox = nil
 fightDefensiveBox = nil
-chaseModeButton = nil
-safeFightButton = nil
 fightModeRadioGroup = nil
 
 function init()
@@ -16,8 +14,6 @@ function init()
   fightOffensiveBox = combatControlsWindow:recursiveGetChildById('fightOffensiveBox')
   fightBalancedBox = combatControlsWindow:recursiveGetChildById('fightBalancedBox')
   fightDefensiveBox = combatControlsWindow:recursiveGetChildById('fightDefensiveBox')
-  chaseModeButton = combatControlsWindow:recursiveGetChildById('chaseModeBox')
-  safeFightButton = combatControlsWindow:recursiveGetChildById('safeFightBox')
 
   fightModeRadioGroup = UIRadioGroup.create()
   fightModeRadioGroup:addWidget(fightOffensiveBox)
@@ -25,8 +21,6 @@ function init()
   fightModeRadioGroup:addWidget(fightDefensiveBox)
 
   connect(fightModeRadioGroup, { onSelectionChange = onSetFightMode })
-  connect(chaseModeButton, { onCheckChange = onSetChaseMode })
-  connect(safeFightButton, { onCheckChange = onSetSafeFight })
   connect(g_game, {
     onGameStart = online,
     onGameEnd = offline,
@@ -73,12 +67,6 @@ function update()
   else
     fightModeRadioGroup:selectWidget(fightDefensiveBox)
   end
-
-  local chaseMode = g_game.getChaseMode()
-  chaseModeButton:setChecked(chaseMode == ChaseOpponent)
-
-  local safeFight = g_game.isSafeFight()
-  safeFightButton:setChecked(not safeFight)
 end
 
 function check()
@@ -99,10 +87,11 @@ function online()
     if not table.empty(lastCombatControls) then
       if lastCombatControls[char] then
         g_game.setFightMode(lastCombatControls[char].fightMode)
-        g_game.setChaseMode(lastCombatControls[char].chaseMode)
-        g_game.setSafeFight(lastCombatControls[char].safeFight)
       end
     end
+    -- sin PvP y sin perseguir (el pokemon ya persigue al objetivo)
+    g_game.setChaseMode(DontChase)
+    g_game.setSafeFight(true)
   end
 
   update()
@@ -118,9 +107,7 @@ function offline()
   if player then
     local char = g_game.getCharacterName()
     lastCombatControls[char] = {
-      fightMode = g_game.getFightMode(),
-      chaseMode = g_game.getChaseMode(),
-      safeFight = g_game.isSafeFight()
+      fightMode = g_game.getFightMode()
     }
 
     -- save last combat control settings
@@ -150,20 +137,6 @@ function onSetFightMode(self, selectedFightButton)
     fightMode = FightDefensive
   end
   g_game.setFightMode(fightMode)
-end
-
-function onSetChaseMode(self, checked)
-  local chaseMode
-  if checked then
-    chaseMode = ChaseOpponent
-  else
-    chaseMode = DontChase
-  end
-  g_game.setChaseMode(chaseMode)
-end
-
-function onSetSafeFight(self, checked)
-  g_game.setSafeFight(not checked)
 end
 
 function onMiniWindowClose()
