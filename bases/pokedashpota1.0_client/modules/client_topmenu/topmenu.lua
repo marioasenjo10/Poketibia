@@ -8,7 +8,7 @@ local rightGameButtonsPanel
 -- barra limpia en partida: solo estos botones y en este orden
 local gameButtonOrder = {
   'inventoryButton', 'pokedexButton', 'questLogButton', 'worldMapButton',
-  'skillsButton', 'vipListButton', 'optionsButton', 'logoutButton',
+  'skillsButton', 'combatControlsButton', 'vipListButton', 'optionsButton', 'logoutButton',
 }
 local allowedGameButtons = {}
 for _, id in ipairs(gameButtonOrder) do allowedGameButtons[id] = true end

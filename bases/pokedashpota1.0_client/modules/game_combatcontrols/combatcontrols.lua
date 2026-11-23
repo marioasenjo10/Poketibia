@@ -8,7 +8,7 @@ safeFightButton = nil
 fightModeRadioGroup = nil
 
 function init()
-  combatControlsButton = modules.client_topmenu.addRightGameToggleButton('combatControlsButton', tr('Combat Controls'), '/images/topbuttons/combatcontrols', toggle)
+  combatControlsButton = modules.client_topmenu.addRightGameToggleButton('combatControlsButton', 'Estado de combate', '/images/topmenu/combat', toggle)
   combatControlsButton:setOn(true)
   combatControlsWindow = g_ui.loadUI('combatcontrols', modules.game_interface.getRightPanel())
   combatControlsWindow:disableResize()

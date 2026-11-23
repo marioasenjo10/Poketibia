@@ -11,12 +11,31 @@ CombatBox < UICheckBox
   $checked:
     image-clip: 0 20 20 20
 
-FightOffensiveBox < CombatBox
-  image-source: /images/game/combatmodes/fightoffensive
-FightBalancedBox < CombatBox
-  image-source: /images/game/combatmodes/fightbalanced
-FightDefensiveBox < CombatBox
-  image-source: /images/game/combatmodes/fightdefensive
+StanceBox < UICheckBox
+  size: 44 44
+  opacity: 0.85
+  anchors.verticalCenter: parent.verticalCenter
+  $hover:
+    opacity: 1
+
+FightOffensiveBox < StanceBox
+  tooltip: Ofensivo
+  image-source: /images/game/combatmodes/offensive
+  $checked:
+    image-source: /images/game/combatmodes/offensive_on
+    opacity: 1
+FightBalancedBox < StanceBox
+  tooltip: Equilibrado
+  image-source: /images/game/combatmodes/balanced
+  $checked:
+    image-source: /images/game/combatmodes/balanced_on
+    opacity: 1
+FightDefensiveBox < StanceBox
+  tooltip: Defensivo
+  image-source: /images/game/combatmodes/defensive
+  $checked:
+    image-source: /images/game/combatmodes/defensive_on
+    opacity: 1
 ChaseModeBox < CombatBox
   image-source: /images/game/combatmodes/chasemode
 SafeFightBox < CombatBox
@@ -24,30 +43,27 @@ SafeFightBox < CombatBox
 
 MiniWindow
   id: combatControlsWindow
-  !text: tr('Combat Controls')
-  icon: /images/topbuttons/combatcontrols
-  height: 48
+  !text: 'Estado de combate'
+  icon: /images/topmenu/combat
+  height: 78
   &save: true
   @onClose: modules.game_combatcontrols.onMiniWindowClose()
 
   MiniWindowContents
-    FightOffensiveBox
-      id: fightOffensiveBox
-      anchors.left: parent.left
-      anchors.verticalCenter: parent.verticalCenter
     FightBalancedBox
       id: fightBalancedBox
-      anchors.left: prev.right
-      anchors.verticalCenter: parent.verticalCenter
+      anchors.horizontalCenter: parent.horizontalCenter
+    FightOffensiveBox
+      id: fightOffensiveBox
+      anchors.right: fightBalancedBox.left
+      margin-right: 14
     FightDefensiveBox
       id: fightDefensiveBox
-      anchors.left: prev.right
-      anchors.verticalCenter: parent.verticalCenter
+      anchors.left: fightBalancedBox.right
+      margin-left: 14
     ChaseModeBox
       id: chaseModeBox
-      anchors.right: next.left
-      anchors.verticalCenter: parent.verticalCenter
+      visible: false
     SafeFightBox
       id: safeFightBox
-      anchors.right: parent.right
-      anchors.verticalCenter: parent.verticalCenter
+      visible: false

@@ -124,4 +124,55 @@ public static class Icons
 			return string.Format("{0}x{1} en ({2},{3})", bw, bh, x0 + minX, y0 + minY);
 		}
 	}
+
+	// Recorta un icono redondo sobre fondo blanco o transparente: busca el circulo dentro de la zona, lo recorta con
+	// una mascara circular suave y lo centra en un lienzo de lado 2*boxRadius (asi iconos de distinto
+	// radio mantienen su tamano relativo) escalado a 'size'.
+	public static string Circle(string sheet, string output, int x0, int y0, int x1, int y1, int boxRadius, int size)
+	{
+		using (var src = new Bitmap(sheet))
+		{
+			int minX = int.MaxValue, minY = int.MaxValue, maxX = -1, maxY = -1;
+			for (int y = y0; y <= y1; y++)
+				for (int x = x0; x <= x1; x++)
+				{
+					var c = src.GetPixel(x, y);
+					if (c.A < 128 || (c.R > 235 && c.G > 235 && c.B > 235)) continue;
+					if (x < minX) minX = x;
+					if (y < minY) minY = y;
+					if (x > maxX) maxX = x;
+					if (y > maxY) maxY = y;
+				}
+			if (maxX < 0) return "vacio";
+
+			double cx = (minX + maxX) / 2.0, cy = (minY + maxY) / 2.0;
+			double r = Math.Min(maxX - minX, maxY - minY) / 2.0 - 1.0;
+			int side = boxRadius * 2;
+			int ox = (int)Math.Round(cx) - boxRadius, oy = (int)Math.Round(cy) - boxRadius;
+			using (var region = new Bitmap(side, side, PixelFormat.Format32bppArgb))
+			{
+				for (int y = 0; y < side; y++)
+					for (int x = 0; x < side; x++)
+					{
+						int sx = ox + x, sy = oy + y;
+						double d = Math.Sqrt((sx - cx) * (sx - cx) + (sy - cy) * (sy - cy));
+						double a = Math.Max(0, Math.Min(1, r - d + 0.5));
+						if (a <= 0 || sx < 0 || sy < 0 || sx >= src.Width || sy >= src.Height) { region.SetPixel(x, y, Color.Transparent); continue; }
+						var c = src.GetPixel(sx, sy);
+						region.SetPixel(x, y, Color.FromArgb((int)(a * c.A), c.R, c.G, c.B));
+					}
+				using (var dst = new Bitmap(size, size, PixelFormat.Format32bppArgb))
+				using (var g = Graphics.FromImage(dst))
+				{
+					g.Clear(Color.Transparent);
+					g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+					g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+					g.CompositingQuality = CompositingQuality.HighQuality;
+					g.DrawImage(region, new Rectangle(0, 0, size, size), 0, 0, side, side, GraphicsUnit.Pixel);
+					dst.Save(output, ImageFormat.Png);
+				}
+			}
+			return string.Format("circulo r={0:0.#} en ({1:0.#},{2:0.#})", r, cx, cy);
+		}
+	}
 }
