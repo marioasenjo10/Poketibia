@@ -11,7 +11,7 @@ HotkeyListLabel < UILabel
 MainWindow
   id: hotkeysWindow
   !text: tr('Hotkeys')
-  size: 340 470
+  size: 340 495
 
   @onEnter: modules.game_hotkeys.ok()
   @onEscape: modules.game_hotkeys.cancel()
@@ -156,6 +156,17 @@ MainWindow
   ButtonBox
     id: useOnTarget
     !text: tr('Use on target')
+    width: 128
+    enabled: false
+    anchors.left: prev.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    checked: false
+    margin-top: 2
+
+  ButtonBox
+    id: useOnPokemon
+    !text: tr('Use on your Pokémon')
     width: 128
     enabled: false
     anchors.left: prev.left

@@ -3,6 +3,15 @@ HOTKEY_MANAGER_USEONSELF = 1
 HOTKEY_MANAGER_USEONTARGET = 2
 HOTKEY_MANAGER_USEWITH = 3
 HOTKEY_MANAGER_USEATCURSOR = 4
+HOTKEY_MANAGER_USEONPOKEMON = 5
+
+local pokemonPotionItems = {
+    [27641] = true,
+    [27642] = true,
+    [27643] = true,
+    [27646] = true,
+    [27647] = true
+}
 
 HOTKEY_ACTION_TOGGLE_WASD = 1
 HOTKEY_ACTION_ATTACK_NEXT = 2
@@ -30,6 +39,7 @@ HotkeyColors = {
     itemUseSelf = '#00FF00',
     itemUseTarget = '#FF0000',
     itemUseWith = '#F5B325',
+    itemUsePokemon = '#80D8FF',
     action = '#F97ACD'
 }
 
@@ -49,6 +59,7 @@ selectObjectButton = nil
 clearObjectButton = nil
 useOnSelf = nil
 useOnTarget = nil
+useOnPokemon = nil
 useWith = nil
 useAtCursor = nil
 defaultComboKeys = nil
@@ -89,12 +100,14 @@ function init()
     clearObjectButton = hotkeysWindow:getChildById('clearObjectButton')
     useOnSelf = hotkeysWindow:getChildById('useOnSelf')
     useOnTarget = hotkeysWindow:getChildById('useOnTarget')
+    useOnPokemon = hotkeysWindow:getChildById('useOnPokemon')
     useWith = hotkeysWindow:getChildById('useWith')
     useAtCursor = hotkeysWindow:getChildById('useAtCursor')
 
     useRadioGroup = UIRadioGroup.create()
     useRadioGroup:addWidget(useOnSelf)
     useRadioGroup:addWidget(useOnTarget)
+    useRadioGroup:addWidget(useOnPokemon)
     useRadioGroup:addWidget(useWith)
     useRadioGroup:addWidget(useAtCursor)
     useRadioGroup.onSelectionChange = function(self, selected)
@@ -160,6 +173,7 @@ function terminate()
     itemPreview = nil
     useOnSelf = nil
     useOnTarget = nil
+    useOnPokemon = nil
     useWith = nil
     useAtCursor = nil
     currentHotkeys = nil
@@ -554,6 +568,21 @@ function toggleChaseMode()
     g_game.setChaseMode(nextMode)
 end
 
+local function getOwnSummon()
+    local localPlayer = g_game.getLocalPlayer()
+    if not localPlayer then
+        return nil
+    end
+
+    local spectators = g_map.getSpectators(localPlayer:getPosition(), false) or {}
+    for _, creature in ipairs(spectators) do
+        if creature:getType() == CreatureTypeSummonOwn then
+            return creature
+        end
+    end
+    return nil
+end
+
 function executeHotkeyItem(action, itemId, subType)
     local function get_use_thing_under_cursor()
         local mapPanel = modules.game_interface and modules.game_interface.getMapPanel and modules.game_interface.getMapPanel()
@@ -608,6 +637,20 @@ function executeHotkeyItem(action, itemId, subType)
             end
         else
             g_game.useInventoryItemWith(itemId, g_game.getLocalPlayer())
+        end
+    elseif action == HOTKEY_MANAGER_USEONPOKEMON then
+        local summon = getOwnSummon()
+        if not summon then
+            modules.game_textmessage.displayStatusMessage(tr('You need to have a Pokémon summoned.'))
+            return
+        end
+        if g_game.getClientVersion() < 780 or subType then
+            local item = g_game.findPlayerItem(itemId, subType or -1)
+            if item then
+                g_game.useWith(item, summon)
+            end
+        else
+            g_game.useInventoryItemWith(itemId, summon)
         end
     elseif action == HOTKEY_MANAGER_USEONTARGET then
         local attackingCreature = g_game.getAttackingCreature()
@@ -682,6 +725,9 @@ function updateHotkeyLabel(hotkeyLabel)
     elseif hotkeyLabel.useType == HOTKEY_MANAGER_USEONTARGET then
         hotkeyLabel:setText(tr('%s: (use object on target)', hotkeyLabel.keyCombo))
         hotkeyLabel:setColor(HotkeyColors.itemUseTarget)
+    elseif hotkeyLabel.useType == HOTKEY_MANAGER_USEONPOKEMON then
+        hotkeyLabel:setText(tr('%s: (use object on your Pokémon)', hotkeyLabel.keyCombo))
+        hotkeyLabel:setColor(HotkeyColors.itemUsePokemon)
     elseif hotkeyLabel.useType == HOTKEY_MANAGER_USEWITH then
         hotkeyLabel:setText(tr('%s: (use object with crosshair)', hotkeyLabel.keyCombo))
         hotkeyLabel:setColor(HotkeyColors.itemUseWith)
@@ -735,12 +781,19 @@ function updateHotkeyForm(reset, dontUpdateCombo)
             if currentItemPreview:getItem():isMultiUse() then
                 useOnSelf:enable()
                 useOnTarget:enable()
+                if pokemonPotionItems[currentHotkeyLabel.itemId] then
+                    useOnPokemon:enable()
+                else
+                    useOnPokemon:disable()
+                end
                 useWith:enable()
                 useAtCursor:enable()
                 if currentHotkeyLabel.useType == HOTKEY_MANAGER_USEONSELF then
                     useRadioGroup:selectWidget(useOnSelf)
                 elseif currentHotkeyLabel.useType == HOTKEY_MANAGER_USEONTARGET then
                     useRadioGroup:selectWidget(useOnTarget)
+                elseif currentHotkeyLabel.useType == HOTKEY_MANAGER_USEONPOKEMON then
+                    useRadioGroup:selectWidget(useOnPokemon)
                 elseif currentHotkeyLabel.useType == HOTKEY_MANAGER_USEWITH then
                     useRadioGroup:selectWidget(useWith)
                 elseif currentHotkeyLabel.useType == HOTKEY_MANAGER_USEATCURSOR then
@@ -749,6 +802,7 @@ function updateHotkeyForm(reset, dontUpdateCombo)
             else
                 useOnSelf:disable()
                 useOnTarget:disable()
+                useOnPokemon:disable()
                 useWith:disable()
                 useAtCursor:disable()
                 useRadioGroup:clearSelected()
@@ -766,6 +820,7 @@ function updateHotkeyForm(reset, dontUpdateCombo)
             selectObjectButton:disable()
             useOnSelf:disable()
             useOnTarget:disable()
+            useOnPokemon:disable()
             useWith:disable()
             useAtCursor:disable()
             useRadioGroup:clearSelected()
@@ -778,6 +833,7 @@ function updateHotkeyForm(reset, dontUpdateCombo)
             hotkeyActionCombo:enable()
             useOnSelf:disable()
             useOnTarget:disable()
+            useOnPokemon:disable()
             useWith:disable()
             useAtCursor:disable()
             useRadioGroup:clearSelected()
@@ -806,6 +862,7 @@ function updateHotkeyForm(reset, dontUpdateCombo)
         clearObjectButton:disable()
         useOnSelf:disable()
         useOnTarget:disable()
+        useOnPokemon:disable()
         useWith:disable()
         useAtCursor:disable()
         hotkeyText:clearText()
@@ -866,6 +923,8 @@ function onChangeUseType(useTypeWidget)
         currentHotkeyLabel.useType = HOTKEY_MANAGER_USEONSELF
     elseif useTypeWidget == useOnTarget then
         currentHotkeyLabel.useType = HOTKEY_MANAGER_USEONTARGET
+    elseif useTypeWidget == useOnPokemon then
+        currentHotkeyLabel.useType = HOTKEY_MANAGER_USEONPOKEMON
     elseif useTypeWidget == useWith then
         currentHotkeyLabel.useType = HOTKEY_MANAGER_USEWITH
     elseif useTypeWidget == useAtCursor then

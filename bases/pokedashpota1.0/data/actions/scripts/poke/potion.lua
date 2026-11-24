@@ -148,12 +148,13 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			player:sendCancelMessage("Your Pokémon is already at full health.")
 			return true
 		end
-		if target:getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT) then
-			player:sendCancelMessage("Your Pokémon is already recovering health.")
+		if target:getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)
+			or target:getCondition(CONDITION_REGENERATION, CONDITIONID_COMBAT) then
+			player:sendCancelMessage("Your Pokémon is already recovering from a potion.")
 			return true
 		end
 
-		local condition = Condition(CONDITION_REGENERATION)
+		local condition = Condition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)
 		condition:setParameter(CONDITION_PARAM_TICKS, healingTicks * healingInterval)
 		condition:setParameter(CONDITION_PARAM_HEALTHGAIN, healPerTick)
 		condition:setParameter(CONDITION_PARAM_HEALTHTICKS, healingInterval)

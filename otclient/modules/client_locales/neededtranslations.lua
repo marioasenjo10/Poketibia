@@ -99,6 +99,7 @@ neededTranslations = {'1a) Offensive Name', '1b) Invalid Name Format', '1c) Unsu
                       'Unable to load dat file, please place a valid dat in \'%s\'',
                       'Unable to load spr file, please place a valid spr in \'%s\'', 'Unignore', 'Unjustified Points',
                       'Unload', 'Update needed', 'Update needed', 'Use', 'Use on target', 'Use on yourself',
+                      'Use on your Pokémon', '%s: (use object on your Pokémon)',
                       'Use with ...', 'Version', 'VIP List', 'Voc.', 'Vocation', 'Waiting List', 'Website', 'Weight',
                       'Will boost your walk on high speed characters',
                       'Will detect when to use diagonal step based on the\nkeys you are pressing', 'With crosshair',
