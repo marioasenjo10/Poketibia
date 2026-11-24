@@ -6,16 +6,28 @@ local function isOutOfRange(masterPosition, summonPosition)
 		or math.abs(masterPosition.y - summonPosition.y) > MAX_DISTANCE
 end
 
+local function isInSameRestrictedArea(masterTile, summonTile)
+	local masterHouse = masterTile:getHouse()
+	local summonHouse = summonTile:getHouse()
+	if masterHouse or summonHouse then
+		return masterHouse == summonHouse
+	end
+	return masterTile:hasFlag(TILESTATE_PROTECTIONZONE)
+		== summonTile:hasFlag(TILESTATE_PROTECTIONZONE)
+end
+
 function onThink(interval)
 	for _, player in ipairs(Game.getPlayers()) do
 		local masterPosition = player:getPosition()
 		local masterTile = Tile(masterPosition)
 
-		if masterTile and not masterTile:getHouse() and not masterTile:hasFlag(TILESTATE_PROTECTIONZONE) then
+		if masterTile then
 			for _, summon in ipairs(player:getSummons()) do
 				local summonPosition = summon:getPosition()
-				if isOutOfRange(masterPosition, summonPosition) then
-					local destination = player:getClosestFreePosition(masterPosition, 1, false)
+				local summonTile = Tile(summonPosition)
+				if isOutOfRange(masterPosition, summonPosition)
+					or summonTile and not isInSameRestrictedArea(masterTile, summonTile) then
+					local destination = player:getClosestFreePosition(masterPosition, 1, false, true)
 					if (destination.x ~= 0 or destination.y ~= 0)
 						and summon:teleportTo(destination, false) then
 						destination:sendMagicEffect(CONST_ME_TELEPORT)

@@ -1,5 +1,8 @@
-function Creature.getClosestFreePosition(self, position, maxRadius, mustBeReachable)
+function Creature.getClosestFreePosition(self, position, maxRadius, mustBeReachable, allowHouseAndProtectionZone)
 	maxRadius = maxRadius or 1
+	local originTile = allowHouseAndProtectionZone and Tile(position)
+	local originHouse = originTile and originTile:getHouse()
+	local originInProtectionZone = originTile and originTile:hasFlag(TILESTATE_PROTECTIONZONE)
 
 	-- backward compatability (extended)
 	if maxRadius == true then
@@ -19,7 +22,17 @@ function Creature.getClosestFreePosition(self, position, maxRadius, mustBeReacha
 			end
 
 			local tile = Tile(checkPosition)
-			if tile and tile:getCreatureCount() == 0 and tile:getGround() and tile:getGround():getId() ~= flyFloor and not tile:hasProperty(CONST_PROP_IMMOVABLEBLOCKSOLID) and not tile:hasProperty(CONST_PROP_BLOCKPATH) and not tile:getHouse() and not tile:hasFlag(TILESTATE_PROTECTIONZONE) and not tile:hasFlag(TILESTATE_FLOORCHANGE) and
+			local tileHouse = tile and tile:getHouse()
+			local tileInProtectionZone = tile and tile:hasFlag(TILESTATE_PROTECTIONZONE)
+			local allowedArea = not tileHouse and not tileInProtectionZone
+			if allowHouseAndProtectionZone then
+				if originHouse then
+					allowedArea = tileHouse == originHouse
+				else
+					allowedArea = not tileHouse and tileInProtectionZone == originInProtectionZone
+				end
+			end
+			if tile and tile:getCreatureCount() == 0 and tile:getGround() and tile:getGround():getId() ~= flyFloor and not tile:hasProperty(CONST_PROP_IMMOVABLEBLOCKSOLID) and not tile:hasProperty(CONST_PROP_BLOCKPATH) and allowedArea and not tile:hasFlag(TILESTATE_FLOORCHANGE) and
 				(not mustBeReachable or self:getPathTo(checkPosition)) then --pota
 				return checkPosition
 			end

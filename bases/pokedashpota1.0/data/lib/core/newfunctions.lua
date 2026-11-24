@@ -2538,7 +2538,7 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 
 	local summonBoost = ball:getSpecialAttribute("pokeBoost") or 0
 
-	local newPos = player:getClosestFreePosition(pos, 2) or pos
+	local newPos = player:getClosestFreePosition(pos, 2, false, true) or pos
 	if newPos.x == 0 then
 		newPos = pos
 	end
@@ -2558,6 +2558,7 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		monster:setMaxHealth(maxHealth)
 		monster:setHealth(math.min(health, maxHealth))
 		monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
+		player:registerEvent("RemoveSummon")
 		if effect then
 			monster:getPosition():sendMagicEffect(effect)
 		end
