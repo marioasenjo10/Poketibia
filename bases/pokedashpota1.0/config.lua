@@ -1,8 +1,8 @@
-monsterLevelDamage = 0.02 -- 2% bonus damage per level
-monsterLevelExp = 0.10 -- 10% bonus exp per level
-monsterLevelSpeed = 0.03 -- 3% bonus speed per level
-monsterLevelHealth = 0.05 -- 5% bonus health per level
-monsterLevelLoot = 0.01 -- 1% bonus loot per level
+monsterLevelDamage = 0 -- sin bonus de danio por nivel (los salvajes no tienen nivel propio)
+monsterLevelExp = 0 -- sin bonus de exp por nivel
+monsterLevelSpeed = 0 -- sin bonus de velocidad por nivel
+monsterLevelHealth = 0 -- sin bonus de vida por nivel
+monsterLevelLoot = 0 -- sin bonus de loot por nivel
 monsterPrefix = "" -- Ghoul [Lv 100]
 
 -- Combat settings
