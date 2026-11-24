@@ -1,7 +1,7 @@
-// Barras en forma de pastilla (vida, ataques...), el mismo estilo que las de abajo.
-// OTClient pinta el relleno en rectangulo: va encima de un "track" oscuro y la imagen del
-// PillBar redondea las esquinas pintando lo de fuera con el color del panel.
-// Uso: un PillTrack y justo despues el PillBar con anchors.fill: prev.
+// Barras en forma de pastilla (vida, ataques...). El relleno tambien es redondeado y suave:
+// UIPillBar (corelib/ui/uipillbar.lua) estira una imagen de pastilla (hijo "fill") hasta el
+// % y la tine con el color (setBackgroundColor); el texto va en el hijo "label", encima.
+// Uso: un PillTrack (la guia oscura) y justo despues el PillBar con anchors.fill: prev.
 
 PillTrack < UIWidget
   height: 18
@@ -9,15 +9,28 @@ PillTrack < UIWidget
   image-border: 9
   phantom: true
 
-PillBar < UIProgressBar
+PillBar < UIPillBar
   anchors.fill: prev
-  image-source: /images/statusbar/pill
-  image-border: 9
-  background-color: #2f9e44
-  font: poppins-semibold-11px
-  color: #ffffff
-  text-offset: 0 1
+  fill-color: #2f9e44
   phantom: true
+
+  UIWidget
+    id: fill
+    anchors.left: parent.left
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    image-source: /images/statusbar/pill_fill
+    image-border: 9
+    phantom: true
+
+  Label
+    id: label
+    anchors.fill: parent
+    text-align: center
+    text-offset: 0 1
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
 
 ThinTrack < UIWidget
   height: 6
@@ -25,12 +38,19 @@ ThinTrack < UIWidget
   image-border: 3
   phantom: true
 
-ThinBar < UIProgressBar
+ThinBar < UIPillBar
   anchors.fill: prev
-  image-source: /images/statusbar/thin_pill
-  image-border: 3
-  background-color: #3b82d9
+  fill-color: #3b82d9
   phantom: true
+
+  UIWidget
+    id: fill
+    anchors.left: parent.left
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    image-source: /images/statusbar/thin_fill
+    image-border: 3
+    phantom: true
 
 PillText < UILabel
   font: poppins-semibold-11px
@@ -38,9 +58,7 @@ PillText < UILabel
   text-auto-resize: true
   phantom: true
 
-// dentro de las capsulas (Pokebar, Combate): esquinas con el color de la capsula (pill_row)
+// dentro de las capsulas (Pokebar, Combate): ahora son iguales, se mantienen los nombres
 RowPillBar < PillBar
-  image-source: /images/statusbar/pill_row
 
 RowThinBar < ThinBar
-  image-source: /images/statusbar/thin_pill_row

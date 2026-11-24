@@ -76,4 +76,4 @@ BattleButton < UICreatureButton
 
   RowThinBar
     id: lifeBar
-    background-color: #2f9e44
+    fill-color: #2f9e44

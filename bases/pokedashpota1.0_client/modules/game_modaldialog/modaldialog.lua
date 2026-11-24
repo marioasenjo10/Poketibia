@@ -60,7 +60,9 @@ function onModalDialog(id, title, message, buttons, enterButton, escapeButton, c
     local buttonId = buttons[i][1]
     local buttonText = buttons[i][2]
 
-    local button = g_ui.createWidget('ModalButton', buttonsPanel)
+    -- el boton de Enter, en azul (principal)
+    local style = buttonId == enterButton and 'ModalPrimaryButton' or 'ModalButton'
+    local button = g_ui.createWidget(style, buttonsPanel)
     button:setText(buttonText)
     button.onClick = function(self)
                        local focusedChoice = choiceList:getFocusedChild()

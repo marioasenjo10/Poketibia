@@ -356,7 +356,7 @@ git pull
 Start-Job {
     Set-Location 'C:\Develop\Poketibia-project'
     $t = (Resolve-Path 'tools\pokeassets').Path
-    Add-Type -Path "$t\Otb.cs","$t\Things.cs","$t\Minimap.cs" -ReferencedAssemblies System.Drawing
+    Add-Type -Path "$t\Otb.cs","$t\Things.cs","$t\MapColors.cs","$t\Minimap.cs" -ReferencedAssemblies System.Drawing
     [WorldMap]::Run((Resolve-Path 'bases\pokedashpota1.0\data\world\global_dash.otbm').Path,
                     (Resolve-Path 'bases\pokedashpota1.0\data\items\items.otb').Path,
                     (Resolve-Path 'bases\pokedashpota1.0_client\data\things\1098\Tibia.dat').Path,

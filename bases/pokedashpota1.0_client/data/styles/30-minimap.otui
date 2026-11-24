@@ -2,68 +2,72 @@ MinimapFlag < UIWidget
   size: 11 11
   focusable: false
 
+// "estas aqui": punto azul con aro (antes una cruz blanca)
 MinimapCross < UIWidget
   focusable: false
   phantom: true
-  image: /images/game/minimap/cross
-  size: 16 16
+  image: /images/map/me
+  size: 18 18
 
-MinimapFloorUpButton < Button
-  size: 20 20
-  margin-right: 28
-  margin-bottom: 28
-  anchors.right: parent.right
-  anchors.bottom: parent.bottom
-  icon-source: /images/game/minimap/floor_up
-  icon-clip: 0 32 16 16
+// botones del minimapa: cuadrado oscuro con icono (UiSkin.RunModern, images/map)
+MapButton < UIButton
+  size: 22 22
+  image-source: /images/map/btn
+  image-border: 6
+  // icono de 14px centrado en el boton de 22px (esta version no tiene icon-align)
+  icon-offset: 4 4
+
+  $hover:
+    image-source: /images/map/btn_hover
+
   $pressed:
-    icon-clip: 0 0 16 16
-  $hover !pressed:
-    icon-clip: 0 16 16 16
+    opacity: 0.8
 
-MinimapFloorDownButton < Button
-  size: 20 20
-  margin-right: 28
+MinimapFloorUpButton < MapButton
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+  margin-right: 30
+  margin-bottom: 30
+  icon-source: /images/map/up
+  !tooltip: 'Subir un piso'
+
+MinimapFloorDownButton < MapButton
+  anchors.right: parent.right
+  anchors.bottom: parent.bottom
+  margin-right: 30
   margin-bottom: 4
+  icon-source: /images/map/down
+  !tooltip: 'Bajar un piso'
+
+MinimapZoomInButton < MapButton
   anchors.right: parent.right
   anchors.bottom: parent.bottom
-  icon-source: /images/game/minimap/floor_down
-  icon-clip: 0 32 16 16
-  $pressed:
-    icon-clip: 0 0 16 16
-  $hover !pressed:
-    icon-clip: 0 16 16 16
-
-MinimapZoomInButton < Button
-  text: +
-  size: 20 20
   margin-right: 4
-  margin-bottom: 28
+  margin-bottom: 30
+  icon-source: /images/map/plus
+  !tooltip: 'Acercar'
+
+MinimapZoomOutButton < MapButton
   anchors.right: parent.right
   anchors.bottom: parent.bottom
-  //icon-source: /images/game/minimap/zoom_in
-
-MinimapZoomOutButton < Button
-  text: -
-  size: 20 20
   margin-right: 4
   margin-bottom: 4
-  anchors.right: parent.right
-  anchors.bottom: parent.bottom
-  //icon-source: /images/game/minimap/zoom_out
+  icon-source: /images/map/minus
+  !tooltip: 'Alejar'
 
-MinimapResetButton < Button
-  !text: tr('Center')
-  size: 44 20
+MinimapResetButton < MapButton
   anchors.left: parent.left
   anchors.top: parent.top
   margin: 4
+  icon-source: /images/map/center
+  !tooltip: 'Centrar en ti'
 
 Minimap < UIMinimap
   draggable: true
   focusable: false
   cross: true
-  color: black
+  // fuera del mundo: mar profundo en vez de negro (igual que el mapa suavizado)
+  color: #2a5580
 
   MinimapFloorUpButton
     id: floorUp

@@ -61,9 +61,81 @@ public static class WorldMap
 	public static string Run(string otbmPath, string otbPath, string datPath, string outPath)
 	{
 		var log = Load(otbmPath, otbPath, datPath);
+		log.AppendLine("Casillas limpiadas (motas sueltas): " + Denoise());
 		WriteOtmm(outPath);
 		log.AppendLine("Guardado: " + outPath + " (" + new FileInfo(outPath).Length / 1024 + " KB)");
 		return log.ToString();
+	}
+
+	// Quita el moteado: una casilla cuyo color casi no tienen sus 8 vecinas (flores, piedras,
+	// puntitos) pasa al color que domina alrededor. No toca paredes, escaleras ni caminos (son
+	// informacion) ni la transitabilidad: solo el color. Dos pasadas.
+	static readonly HashSet<int> keepColors = new HashSet<int>
+	{
+		MapColors.Map(5 * 36 + 1 * 6 + 0), // paredes
+		MapColors.Map(5 * 36 + 5 * 6 + 0), // escaleras / rampas (amarillo)
+		MapColors.Map(3 * 36 + 3 * 6 + 3), // caminos
+		MapColors.Map(5 * 36 + 2 * 6 + 0),
+		MapColors.Map(3 * 36 + 1 * 6 + 0),
+	};
+
+	const int WATER = 1 * 36 + 2 * 6 + 3; // (51,102,153)
+
+	static int Denoise()
+	{
+		int changedTotal = 0;
+		var tally = new int[256];
+		for (int pass = 0; pass < 2; pass++)
+		{
+			var changes = new List<KeyValuePair<long, byte>>();
+			foreach (var kv in blocks)
+			{
+				int z = (int)(kv.Key >> 32), bx = (int)((kv.Key >> 16) & 0xFFFF), by = (int)(kv.Key & 0xFFFF);
+				var block = kv.Value;
+				for (int ly = 0; ly < BLOCK; ly++)
+					for (int lx = 0; lx < BLOCK; lx++)
+					{
+						int idx = (ly * BLOCK + lx) * 3;
+						if ((block[idx] & FLAG_SEEN) == 0) continue;
+						byte c = block[idx + 1];
+						if (c == 255) continue;
+						bool keep = keepColors.Contains(c);
+						int x = bx * BLOCK + lx, y = by * BLOCK + ly;
+						int same = 0, best = -1, bestCount = 0;
+						for (int dy = -1; dy <= 1; dy++)
+							for (int dx = -1; dx <= 1; dx++)
+							{
+								if (dx == 0 && dy == 0) continue;
+								byte n = ColorAt(x + dx, y + dy, z);
+								if (n == 255) continue;
+								if (n == c) { same++; continue; }
+								int k = ++tally[n];
+								if (k > bestCount) { bestCount = k; best = n; }
+							}
+						for (int dy = -1; dy <= 1; dy++)
+							for (int dx = -1; dx <= 1; dx++)
+							{
+								byte n = ColorAt(x + dx, y + dy, z);
+								if (n != 255) tally[n] = 0;
+							}
+						// normales: motas sueltas al color de alrededor. Paredes/caminos/escaleras solo si
+						// estan solas en medio del agua (postes y barreras que en el mapa son puntitos)
+						bool flip = keep
+							? same == 0 && best == WATER && bestCount >= 6
+							: same <= 1 && bestCount >= 5 && !keepColors.Contains(best);
+						if (flip)
+							changes.Add(new KeyValuePair<long, byte>((long)z * 0x10000000000L + (long)x * 0x100000L + y, (byte)best));
+					}
+			}
+			foreach (var ch in changes)
+			{
+				int z = (int)(ch.Key / 0x10000000000L), x = (int)(ch.Key / 0x100000L % 0x100000L), y = (int)(ch.Key % 0x100000L);
+				long key = (long)z * 0x100000000L + (long)(x / BLOCK) * 0x10000L + (y / BLOCK);
+				blocks[key][((y % BLOCK) * BLOCK + (x % BLOCK)) * 3 + 1] = ch.Value;
+			}
+			changedTotal += changes.Count;
+		}
+		return changedTotal;
 	}
 
 	static StringBuilder Load(string otbmPath, string otbPath, string datPath)
@@ -278,6 +350,7 @@ public static class WorldMap
 			int r = 0, g = 0, bl = 0;
 			if (c > 0 && c < 216) { r = c / 36 % 6 * 51; g = c / 6 % 6 * 51; bl = c % 6 * 51; }
 			pal[c] = (r << 16) | (g << 8) | bl;
+			if (c == 255) pal[c] = 0x2A5580; // sin casillas: mar profundo (igual que el fondo del minimapa)
 		}
 		return pal;
 	}
@@ -313,6 +386,99 @@ public static class WorldMap
 			q += len;
 		}
 		return "Bloques leidos: " + blocks.Count + Environment.NewLine + WriteChunks(outDir);
+	}
+
+	// cuantas casillas hay de cada color (para elegir la paleta): "indice rgb casillas" de mas a menos
+	public static string Histogram(string otmmPath)
+	{
+		RunSmoothFromOtmmLoadOnly(otmmPath);
+		var counts = new long[256];
+		foreach (var block in blocks.Values)
+			for (int i = 0; i < BLOCK * BLOCK; i++)
+				if ((block[i * 3] & FLAG_SEEN) != 0) counts[block[i * 3 + 1]]++;
+		var order = new List<int>();
+		for (int c = 0; c < 256; c++) if (counts[c] > 0) order.Add(c);
+		order.Sort((a, b2) => counts[b2].CompareTo(counts[a]));
+		var sb = new StringBuilder();
+		foreach (int c in order)
+		{
+			int rgb = palette[c];
+			sb.AppendLine(string.Format("{0,3} ({1,3},{2,3},{3,3}) {4}", c, (rgb >> 16) & 255, (rgb >> 8) & 255, rgb & 255, counts[c]));
+		}
+		return sb.ToString();
+	}
+
+	// Vista previa de la paleta nueva + limpieza, a 1 pixel por casilla (piso z), a partir de un
+	// world.otmm ya generado. remapear: aplica MapColors al vuelo (para probar antes de tocar el dat)
+	public static string PreviewPalette(string otmmPath, string outPng, int z, bool remapear, int x0, int y0, int w, int h)
+	{
+		RunSmoothFromOtmmLoadOnly(otmmPath);
+		if (remapear)
+			foreach (var block in blocks.Values)
+				for (int i = 0; i < BLOCK * BLOCK; i++)
+					if (block[i * 3 + 1] != 255) block[i * 3 + 1] = (byte)MapColors.Map(block[i * 3 + 1]);
+		int cleaned = Denoise();
+		using (var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb))
+		{
+			for (int y = 0; y < h; y++)
+				for (int x = 0; x < w; x++)
+				{
+					byte c = ColorAt(x0 + x, y0 + y, z);
+					int rgb = c == 255 ? 0x101317 : palette[c];
+					bmp.SetPixel(x, y, Color.FromArgb(255, (rgb >> 16) & 255, (rgb >> 8) & 255, rgb & 255));
+				}
+			bmp.Save(outPng, ImageFormat.Png);
+		}
+		return "limpiadas: " + cleaned;
+	}
+
+	// colores de las casillas aisladas en el agua (las 8 vecinas son agua): "indice casillas"
+	public static string IsolatedInWater(string otmmPath)
+	{
+		RunSmoothFromOtmmLoadOnly(otmmPath);
+		var counts = new long[256];
+		foreach (var kv in blocks)
+		{
+			int z = (int)(kv.Key >> 32), bx = (int)((kv.Key >> 16) & 0xFFFF), by = (int)(kv.Key & 0xFFFF);
+			for (int ly = 0; ly < BLOCK; ly++)
+				for (int lx = 0; lx < BLOCK; lx++)
+				{
+					byte c = kv.Value[(ly * BLOCK + lx) * 3 + 1];
+					if (c == 255 || c == 51) continue;
+					int x = bx * BLOCK + lx, y = by * BLOCK + ly, water = 0;
+					for (int dy = -1; dy <= 1; dy++)
+						for (int dx = -1; dx <= 1; dx++)
+							if ((dx != 0 || dy != 0) && ColorAt(x + dx, y + dy, z) == 51) water++;
+					if (water >= 6) counts[c]++;
+				}
+		}
+		var sb = new StringBuilder();
+		for (int c = 0; c < 256; c++) if (counts[c] > 0) sb.AppendLine(c + " " + counts[c]);
+		return sb.ToString();
+	}
+
+	static void RunSmoothFromOtmmLoadOnly(string otmmPath)
+	{
+		var data = File.ReadAllBytes(otmmPath);
+		if (BitConverter.ToUInt32(data, 0) != 0x4D4D544Fu) throw new Exception("no es un archivo OTMM");
+		blocks = new Dictionary<long, byte[]>();
+		int q = BitConverter.ToUInt16(data, 4);
+		while (true)
+		{
+			int x = BitConverter.ToUInt16(data, q), y = BitConverter.ToUInt16(data, q + 2), z = data[q + 4];
+			if (x == 65535 && y == 65535 && z == 255) break;
+			int len = BitConverter.ToUInt16(data, q + 5);
+			q += 7;
+			var raw = new byte[BLOCK * BLOCK * 3];
+			using (var ms = new MemoryStream(data, q + 2, len - 6))
+			using (var ds = new DeflateStream(ms, CompressionMode.Decompress))
+			{
+				int read = 0, n;
+				while (read < raw.Length && (n = ds.Read(raw, read, raw.Length - read)) > 0) read += n;
+			}
+			blocks[(long)z * 0x100000000L + (long)(x / BLOCK) * 0x10000L + (y / BLOCK)] = raw;
+			q += len;
+		}
 	}
 
 	static string WriteChunks(string outDir)

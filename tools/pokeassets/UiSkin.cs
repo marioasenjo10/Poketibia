@@ -275,6 +275,29 @@ public static class UiSkin
 		Save(ScrollPiece(16, 13, false, 6, Color.FromArgb(255, 140, 146, 158)), ui, "scroll_thumb_h_hover");
 		Save(ScrollPiece(16, 13, false, 6, Accent), ui, "scroll_thumb_h_pressed");
 
+		// mapa: botones (fondo + iconos), pastillas de ciudad y marcador "estas aqui"
+		string map = Path.Combine(imagesDir, "map");
+		Directory.CreateDirectory(map);
+		Save(Flat(22, 22, 6, Color.FromArgb(225, 17, 19, 23), Color.FromArgb(255, 60, 63, 72)), map, "btn");
+		Save(Flat(22, 22, 6, Color.FromArgb(240, 38, 41, 48), Accent), map, "btn_hover");
+		Save(MapGlyph("plus"), map, "plus");
+		Save(MapGlyph("minus"), map, "minus");
+		Save(MapGlyph("up"), map, "up");
+		Save(MapGlyph("down"), map, "down");
+		Save(MapGlyph("center"), map, "center");
+		Save(Flat(32, 24, 12, Color.FromArgb(230, 17, 19, 23), Color.FromArgb(255, 60, 63, 72)), map, "town_pill");
+		Save(Flat(32, 24, 12, Color.FromArgb(240, 30, 33, 40), Accent), map, "town_pill_hover");
+		using (var me = new Bitmap(18, 18, PixelFormat.Format32bppArgb))
+		{
+			using (var g = Canvas(me))
+			{
+				using (var halo = new SolidBrush(A(90, Accent))) g.FillEllipse(halo, 0.5f, 0.5f, 17, 17);
+				using (var dot = new SolidBrush(Color.White)) g.FillEllipse(dot, 4.5f, 4.5f, 9, 9);
+				using (var core = new SolidBrush(Accent)) g.FillEllipse(core, 6.5f, 6.5f, 5, 5);
+			}
+			me.Save(Path.Combine(map, "me.png"), ImageFormat.Png);
+		}
+
 		// tienda de NPC: selector de pestanas, campo de busqueda y boton principal
 		string shop = Path.Combine(imagesDir, "shop");
 		Directory.CreateDirectory(shop);
@@ -394,6 +417,28 @@ public static class UiSkin
 			using (var path = Round(r, thick / 2f - 0.01f))
 			using (var brush = new SolidBrush(color))
 				g.FillPath(brush, path);
+		}
+		return bmp;
+	}
+
+	static Bitmap MapGlyph(string kind)
+	{
+		var bmp = new Bitmap(14, 14, PixelFormat.Format32bppArgb);
+		using (var g = Canvas(bmp))
+		using (var pen = new Pen(Color.FromArgb(235, 255, 255, 255), 1.8f) { StartCap = LineCap.Round, EndCap = LineCap.Round, LineJoin = LineJoin.Round })
+		{
+			switch (kind)
+			{
+				case "plus": g.DrawLine(pen, 3, 7, 11, 7); g.DrawLine(pen, 7, 3, 7, 11); break;
+				case "minus": g.DrawLine(pen, 3, 7, 11, 7); break;
+				case "up": g.DrawLines(pen, new[] { new PointF(3, 9), new PointF(7, 5), new PointF(11, 9) }); break;
+				case "down": g.DrawLines(pen, new[] { new PointF(3, 5), new PointF(7, 9), new PointF(11, 5) }); break;
+				case "center":
+					g.DrawEllipse(pen, 3.5f, 3.5f, 7, 7);
+					g.DrawLine(pen, 7, 0.8f, 7, 2.5f); g.DrawLine(pen, 7, 11.5f, 7, 13.2f);
+					g.DrawLine(pen, 0.8f, 7, 2.5f, 7); g.DrawLine(pen, 11.5f, 7, 13.2f, 7);
+					break;
+			}
 		}
 		return bmp;
 	}

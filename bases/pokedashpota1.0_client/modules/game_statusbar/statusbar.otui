@@ -82,4 +82,4 @@ StaminaLine < UIWidget
 
   ThinBar
     id: staminaBar
-    background-color: #3d5f8c
+    fill-color: #3d5f8c

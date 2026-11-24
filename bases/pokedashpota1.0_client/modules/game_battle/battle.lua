@@ -94,7 +94,8 @@ function init()
   if separator then separator:hide() end
 
   -- boton de la cabecera: mostrar u ocultar el pokemon propio
-  hideOwnPokemon = g_settings.getBoolean('battle_hideOwnPokemon')
+  -- por defecto oculto: solo sale si se ha pedido mostrarlo con el boton
+  hideOwnPokemon = not g_settings.getBoolean('battle_showOwnPokemon')
   hideOwnButton = battleWindow:getChildById('hideOwnButton')
   hideOwnButton.onClick = toggleOwnPokemon
   updateOwnButton()
@@ -128,7 +129,7 @@ function terminate()
   })
 end
 
-hideOwnPokemon = false
+hideOwnPokemon = true
 hideOwnButton = nil
 
 function updateOwnButton()
@@ -139,7 +140,7 @@ end
 
 function toggleOwnPokemon()
   hideOwnPokemon = not hideOwnPokemon
-  g_settings.set('battle_hideOwnPokemon', hideOwnPokemon)
+  g_settings.set('battle_showOwnPokemon', not hideOwnPokemon)
   updateOwnButton()
   checkCreatures()
 end
@@ -279,15 +280,25 @@ function doCreatureFitFilters(creature)
     return false
   end
   local okType, creatureType = pcall(function() return creature:getType() end)
-  if okType then
-    if creatureType == CreatureTypeSummonOther then
-      return false
-    end
-    if creatureType == CreatureTypeSummonOwn and hideOwnPokemon then
-      return false
-    end
+  if okType and creatureType == CreatureTypeSummonOther then
+    return false
+  end
+  if hideOwnPokemon and isOwnPokemon(creature, okType and creatureType) then
+    return false
   end
   return true
+end
+
+-- el pokemon propio: marcado como "summon own" o el que la Pokebar sabe que esta fuera.
+-- (Al cambiar de pokemon el servidor lo crea antes de darle dueno y llega como uno mas;
+-- la Pokebar lo sabe por el opcode 60 y vuelve a revisar esta lista.)
+function isOwnPokemon(creature, creatureType)
+  if creatureType == CreatureTypeSummonOwn then
+    return true
+  end
+  local bar = modules.game_pokemonbar
+  local own = bar and bar.getActiveCreature and bar.getActiveCreature()
+  return own ~= nil and own:getId() == creature:getId()
 end
 
 function onCreatureHealthPercentChange(creature, health)

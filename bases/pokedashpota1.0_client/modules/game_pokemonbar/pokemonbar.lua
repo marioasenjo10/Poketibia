@@ -398,6 +398,10 @@ function onActiveInfo(name, look, creatureId, maxHealth)
   end
   updateActive()
   updateRows()
+  -- la lista de Combate puede tener que ocultarlo (filtro "mi Pokemon")
+  if modules.game_battle and modules.game_battle.checkCreatures then
+    modules.game_battle.checkCreatures()
+  end
 end
 
 -- criatura del pokemon que esta fuera (la usan las casillas de objetos para las pociones)

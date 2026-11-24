@@ -59,7 +59,7 @@ PokeRow < UIWidget
 
   RowThinBar
     id: miniHealth
-    background-color: #2f9e44
+    fill-color: #2f9e44
     visible: false
 
   // numero del pokemon (el de "Sacar Pokemon N" y !p N)

@@ -228,43 +228,58 @@ function clearTownLabels()
   townLabels = {}
 end
 
-local TOWN_FONT = 'poppins-semibold-13px'
+local TOWN_FONT = 'poppins-semibold-11px'
 local TOWN_COLOR = '#ffffff'
-local TOWN_COLOR_HIDDEN = '#9aa3b2'
+local TOWN_COLOR_HIDDEN = '#aeb6c2'
 local TOWN_COLOR_HOVER = '#ffd84a'
 
-local function townText(parent, text, color, offsetX, offsetY)
-  local label = g_ui.createWidget('UIWidget', parent)
-  label:fill('parent')
-  label:setFont(TOWN_FONT)
-  label:setText(text)
-  label:setColor(color)
-  label:setTextAlign(AlignLeftCenter)
-  label:setTextOffset({ x = offsetX, y = offsetY })
-  label:setPhantom(true)
-  return label
-end
-
--- chincheta + nombre con sombra (sin caja), blanco si la has descubierto y apagado si no
+-- nombre de ciudad en una pastilla oscura (legible sobre cualquier zona del mapa):
+-- descubierta = pokeball y texto blanco; sin descubrir = candado y texto gris claro
+-- La pastilla va en la parte de arriba de un contenedor transparente mas alto: el contenedor
+-- se centra en la ciudad, asi la pastilla queda por encima y no tapa tu posicion.
+local TOWN_LIFT = 20 -- pixeles que sube la pastilla respecto al punto de la ciudad
 local function createTownLabel(name, discovered)
-  local widget = g_ui.createWidget('UIWidget')
+  local holder = g_ui.createWidget('UIWidget')
+  holder:setFocusable(false)
+  holder:setPhantom(true)
+
+  local widget = g_ui.createWidget('UIWidget', holder)
   widget:setFocusable(false)
-  local pin = g_ui.createWidget('UIWidget', widget)
-  pin:setSize({ width = 16, height = 22 })
-  pin:addAnchor(AnchorLeft, 'parent', AnchorLeft)
-  pin:addAnchor(AnchorTop, 'parent', AnchorTop)
-  pin:setImageSource(discovered and '/game_pokedex/images/pin' or '/game_pokedex/images/pin_off')
-  pin:setPhantom(true)
-  townText(widget, name, '#000000c0', 20, 1)
-  local text = townText(widget, name, discovered and TOWN_COLOR or TOWN_COLOR_HIDDEN, 19, 0)
-  widget:setSize({ width = 19 + text:getTextSize().width + 3, height = 22 })
-  if not discovered then
-    widget:setOpacity(0.8)
-  end
+  widget:setImageSource('/images/map/town_pill')
+  widget:setImageBorder(12)
+  widget:addAnchor(AnchorTop, 'parent', AnchorTop)
+  widget:addAnchor(AnchorHorizontalCenter, 'parent', AnchorHorizontalCenter)
+  holder.pill = widget
+
+  local icon = g_ui.createWidget('UIWidget', widget)
+  icon:setSize({ width = 14, height = 14 })
+  icon:addAnchor(AnchorLeft, 'parent', AnchorLeft)
+  icon:addAnchor(AnchorVerticalCenter, 'parent', AnchorVerticalCenter)
+  icon:setMarginLeft(7)
+  icon:setImageSource(discovered and '/images/statusbar/ownmon_on' or '/images/statusbar/lock')
+  if not discovered then icon:setImageColor('#aeb6c2') end
+  icon:setPhantom(true)
+
+  local text = g_ui.createWidget('UIWidget', widget)
+  text:setFont(TOWN_FONT)
+  text:setText(name)
+  text:setColor(discovered and TOWN_COLOR or TOWN_COLOR_HIDDEN)
+  text:setTextAlign(AlignLeftCenter)
+  text:setTextOffset({ x = 0, y = 1 })
+  text:setPhantom(true)
+  local textWidth = text:getTextSize().width
+  text:setSize({ width = textWidth + 2, height = 24 })
+  text:addAnchor(AnchorLeft, 'parent', AnchorLeft)
+  text:addAnchor(AnchorVerticalCenter, 'parent', AnchorVerticalCenter)
+  text:setMarginLeft(26)
+
+  widget:setSize({ width = 26 + textWidth + 11, height = 24 })
+  holder:setSize({ width = 26 + textWidth + 11, height = 24 + TOWN_LIFT * 2 })
   widget.onHoverChange = function(_, hovered)
+    widget:setImageSource(hovered and '/images/map/town_pill_hover' or '/images/map/town_pill')
     text:setColor(hovered and TOWN_COLOR_HOVER or (discovered and TOWN_COLOR or TOWN_COLOR_HIDDEN))
   end
-  return widget
+  return holder
 end
 
 function onTownsOpcode(protocol, opcode, buffer)
@@ -274,13 +289,14 @@ function onTownsOpcode(protocol, opcode, buffer)
     if name and name ~= '' then
       local discovered = flag ~= '0'
       local label = createTownLabel(name, discovered)
+      -- ayuda y clic en la pastilla (el contenedor deja pasar el raton)
       if discovered then
-        label:setTooltip(name .. '\nClic: teletransportarse (necesitas un pokemon con Teleport, como Abra o Alakazam)')
+        label.pill:setTooltip(name .. '\nClic: teletransportarse (necesitas un pokemon con Teleport, como Abra o Alakazam)')
       else
-        label:setTooltip(name .. '\nAun no has descubierto esta ciudad')
+        label.pill:setTooltip(name .. '\nAun no has descubierto esta ciudad.\nHabla con la enfermera Joy de ' .. name .. ' para desbloquear el teletransporte.')
       end
-      label.onClick = function(widget) askTeleport(name, widget, discovered) end
-      minimapWidget:addAlternativeWidget(label, { x = tonumber(x), y = tonumber(y) - 4, z = tonumber(z) }, -100)
+      label.pill.onClick = function(widget) askTeleport(name, widget, discovered) end
+      minimapWidget:addAlternativeWidget(label, { x = tonumber(x), y = tonumber(y), z = tonumber(z) }, -100)
       table.insert(townLabels, label)
       if fullmapView then
         minimapWidget:insertChild(worldChunkCount + 1, label)
@@ -293,7 +309,7 @@ end
 
 function askTeleport(townName, widget, discovered)
   if discovered == false then
-    modules.game_textmessage.displayFailureMessage('Aun no has descubierto ' .. townName .. '. Ve primero para poder teletransportarte.')
+    modules.game_textmessage.displayFailureMessage('Aun no has descubierto ' .. townName .. '. Habla con su enfermera Joy para poder teletransportarte.')
     return
   end
   local menu = g_ui.createWidget('PopupMenu')

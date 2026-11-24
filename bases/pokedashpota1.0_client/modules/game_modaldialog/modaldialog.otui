@@ -1,11 +1,16 @@
+// Ventana de mensaje del servidor (enfermera, NPCs...) con el estilo moderno: texto en
+// Poppins, botones redondeados (el de Enter en azul) y sin el separador de Tibia.
+
 ChoiceListLabel < Label
-  font: verdana-11px-monochrome
+  font: poppins-semibold-11px
+  color: #c9d1dc
   background-color: alpha
-  text-offset: 2 0
+  text-offset: 6 2
+  height: 22
   focusable: true
 
   $focus:
-    background-color: #00000055
+    background-color: #2c68b655
     color: #ffffff
 
 ChoiceList < TextList
@@ -28,19 +33,34 @@ ChoiceScrollBar < VerticalScrollBar
   pixels-scroll: true
   visible: false
 
-ModalButton < Button
+ModalButton < UIButton
+  height: 30
+  padding: 0 22
+  margin-left: 8
   text-auto-resize: true
-  margin-top: 2
-  margin-bottom: 2
-  margin-left: 2
+  font: poppins-semibold-11px
+  color: #e8eef7
+  image-source: /images/shop/secondary
+  image-border: 9
+
+  $hover:
+    image-source: /images/shop/secondary_hover
+
+// el boton que se activa con Enter
+ModalPrimaryButton < ModalButton
+  color: #ffffff
+  image-source: /images/shop/primary
+
+  $hover:
+    image-source: /images/shop/primary_hover
 
   $pressed:
-    text-offset: 0 0
+    image-source: /images/shop/primary_pressed
 
 ModalDialog < MainWindow
   id: modalDialog
-  size: 280 97
-  &minimumWidth: 200
+  size: 300 118
+  &minimumWidth: 260
   &maximumWidth: 600
   &minimumChoices: 4
   &maximumChoices: 10
@@ -49,9 +69,12 @@ ModalDialog < MainWindow
     id: messageLabel
     anchors.top: parent.top
     anchors.left: parent.left
+    margin-top: 4
     text-align: left
     text-auto-resize: true
     text-wrap: true
+    font: poppins-12px
+    color: #d6dde8
 
   ChoiceList
 
@@ -59,13 +82,14 @@ ModalDialog < MainWindow
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: next.top
+    visible: false
 
   Panel
     id: buttonsPanel
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
-    height: 24
+    height: 30
     layout: horizontalBox
       align-right: true
 
