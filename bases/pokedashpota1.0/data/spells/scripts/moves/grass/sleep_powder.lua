@@ -5,8 +5,10 @@ combat:setParameter(COMBAT_PARAM_EFFECT, 745)
 combat:setArea(createCombatArea(AREA_CIRCLE3X3))
 
 local sleepDuration = 5000
+local sleepEffectInterval = 1000
 local sleepingTargets = {}
 local sleepConditionSubId = 65055
+local sleepToken = 0
 
 local pilotSpecies = {
 	["venusaur"] = true,
@@ -24,12 +26,21 @@ local function isSleepTarget(target)
 	return target and target:isMonster() and not target:isPokemon()
 end
 
-local function wakeTarget(targetId, expiresAt)
+local function wakeTarget(targetId, token)
 	local target = Monster(targetId)
-	if target and sleepingTargets[targetId] == expiresAt then
+	if sleepingTargets[targetId] == token then
 		sleepingTargets[targetId] = nil
-		target:removeCondition(CONDITION_PARALYZE, CONDITIONID_COMBAT, sleepConditionSubId)
-		target:searchTarget()
+		if target then
+			target:removeCondition(CONDITION_PARALYZE, CONDITIONID_COMBAT, sleepConditionSubId)
+		end
+	end
+end
+
+local function showSleepEffect(targetId, token)
+	local target = Monster(targetId)
+	if target and sleepingTargets[targetId] == token then
+		target:getPosition():sendMagicEffect(CONST_ME_SLEEP)
+		addEvent(showSleepEffect, sleepEffectInterval, targetId, token)
 	end
 end
 
@@ -46,18 +57,12 @@ function onTargetCreature(creature, target)
 	paralysis:setParameter(CONDITION_PARAM_SPEED, -math.max(target:getSpeed(), 1))
 	paralysis:setParameter(CONDITION_PARAM_SUBID, sleepConditionSubId)
 	target:addCondition(paralysis)
-	local expiresAt = os.time() + 5
 	local targetId = target:getId()
-	sleepingTargets[targetId] = expiresAt
-	target:setTarget(nil)
-	local targets = target:getTargetList()
-	for i = 1, #targets do
-		local currentTarget = targets[i]
-		if currentTarget then
-			target:removeTarget(currentTarget)
-		end
-	end
-	addEvent(wakeTarget, sleepDuration, targetId, expiresAt)
+	sleepToken = sleepToken + 1
+	local token = sleepToken
+	sleepingTargets[targetId] = token
+	showSleepEffect(targetId, token)
+	addEvent(wakeTarget, sleepDuration, targetId, token)
 end
 
 combat:setCallback(CALLBACK_PARAM_TARGETCREATURE, "onTargetCreature")
