@@ -1,7 +1,5 @@
-local SLEEP_POWDER_STORAGE = 65055
-
 function isCreatureSleeping(creature)
-	return creature and creature:getStorageValue(SLEEP_POWDER_STORAGE) > os.time()
+	return creature ~= nil and type(creature.hasCondition) == "function" and creature:hasCondition(CONDITION_ROOT)
 end
 
 function Creature:onChangeOutfit(outfit)

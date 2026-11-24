@@ -1,9 +1,11 @@
 local combat = Combat()
+combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_NONE)
+combat:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
 combat:setParameter(COMBAT_PARAM_EFFECT, 745)
 combat:setArea(createCombatArea(AREA_CIRCLE3X3))
 
-local sleepKey = 65055
 local sleepDuration = 5000
+local sleepingTargets = {}
 
 local pilotSpecies = {
 	["venusaur"] = true,
@@ -23,8 +25,8 @@ end
 
 local function wakeTarget(targetId, expiresAt)
 	local target = Monster(targetId)
-	if target and target:getStorageValue(sleepKey) == expiresAt then
-		target:setStorageValue(sleepKey, 0)
+	if target and sleepingTargets[targetId] == expiresAt then
+		sleepingTargets[targetId] = nil
 		target:removeCondition(CONDITION_ROOT)
 		target:searchTarget()
 	end
@@ -39,15 +41,17 @@ function onTargetCreature(creature, target)
 	root:setParameter(CONDITION_PARAM_TICKS, sleepDuration)
 	target:addCondition(root)
 	local expiresAt = os.time() + 5
-	target:setStorageValue(sleepKey, expiresAt)
+	local targetId = target:getId()
+	sleepingTargets[targetId] = expiresAt
 	target:setTarget(nil)
-	for i = target:getTargetCount() - 1, 0, -1 do
-		local currentTarget = target:getTargetList()[i]
+	local targets = target:getTargetList()
+	for i = 1, #targets do
+		local currentTarget = targets[i]
 		if currentTarget then
 			target:removeTarget(currentTarget)
 		end
 	end
-	addEvent(wakeTarget, sleepDuration, target:getId(), expiresAt)
+	addEvent(wakeTarget, sleepDuration, targetId, expiresAt)
 end
 
 combat:setCallback(CALLBACK_PARAM_TARGETCREATURE, "onTargetCreature")
