@@ -522,3 +522,8 @@ stack traceback:
         [C]: in function 'getStorageValue'
         data/events/scripts/creature.lua:4: in function 'isCreatureSleeping'
         data/events/scripts/creature.lua:21: in function <data/events/scripts/creature.lua:20>
+
+Lua Script Error: [Spell Interface]
+in callback: data/spells/scripts/moves/grass/sleep_powder.lua:onTargetCreature
+(Unknown scriptfile)
+data/spells/scripts/moves/grass/sleep_powder.lua:41: attempt to index local 'root' (a nil value)
