@@ -5,7 +5,8 @@ combat:setParameter(COMBAT_PARAM_EFFECT, 745)
 combat:setArea(createCombatArea(AREA_CIRCLE3X3))
 
 local sleepDuration = 5000
-local sleepEffectInterval = 1000
+local sleepTickInterval = 250
+local sleepEffectEveryTicks = 4
 local sleepingTargets = {}
 local sleepConditionSubId = 65055
 local sleepToken = 0
@@ -26,22 +27,65 @@ local function isSleepTarget(target)
 	return target and target:isMonster() and not target:isPokemon()
 end
 
-local function wakeTarget(targetId, token)
-	local target = Monster(targetId)
-	if sleepingTargets[targetId] == token then
-		sleepingTargets[targetId] = nil
-		if target then
-			target:removeCondition(CONDITION_PARALYZE, CONDITIONID_COMBAT, sleepConditionSubId)
+-- Mientras duerme, el salvaje no puede tener objetivo: se guardan los objetivos
+-- que tenia y se le quitan, para que no ataque. Al despertar se restauran.
+local function holdTarget(target, state)
+	target:setTarget(nil)
+	local targets = target:getTargetList()
+	for i = 1, #targets do
+		local current = targets[i]
+		if current then
+			state.saved[current:getId()] = true
+			target:removeTarget(current)
 		end
 	end
 end
 
-local function showSleepEffect(targetId, token)
-	local target = Monster(targetId)
-	if target and sleepingTargets[targetId] == token then
-		target:getPosition():sendMagicEffect(CONST_ME_SLEEP)
-		addEvent(showSleepEffect, sleepEffectInterval, targetId, token)
+local function wakeTarget(targetId, token)
+	local state = sleepingTargets[targetId]
+	if not state or state.token ~= token then
+		return
 	end
+	sleepingTargets[targetId] = nil
+
+	local target = Monster(targetId)
+	if not target then
+		return
+	end
+
+	-- los objetivos se devuelven antes de quitar la paralisis para que el monstruo no se quede inactivo
+	local restored
+	for savedId in pairs(state.saved) do
+		local creature = Creature(savedId)
+		if creature then
+			target:addTarget(creature)
+			restored = restored or creature
+		end
+	end
+	target:removeCondition(CONDITION_PARALYZE, CONDITIONID_COMBAT, sleepConditionSubId)
+	if restored then
+		target:selectTarget(restored)
+	end
+	target:searchTarget()
+end
+
+local function sleepTick(targetId, token, tick)
+	local state = sleepingTargets[targetId]
+	if not state or state.token ~= token then
+		return
+	end
+
+	local target = Monster(targetId)
+	if not target then
+		sleepingTargets[targetId] = nil
+		return
+	end
+
+	holdTarget(target, state)
+	if tick % sleepEffectEveryTicks == 0 then
+		target:getPosition():sendMagicEffect(CONST_ME_SLEEP)
+	end
+	addEvent(sleepTick, sleepTickInterval, targetId, token, tick + 1)
 end
 
 function onTargetCreature(creature, target)
@@ -60,8 +104,9 @@ function onTargetCreature(creature, target)
 	local targetId = target:getId()
 	sleepToken = sleepToken + 1
 	local token = sleepToken
-	sleepingTargets[targetId] = token
-	showSleepEffect(targetId, token)
+	local previous = sleepingTargets[targetId]
+	sleepingTargets[targetId] = {token = token, saved = previous and previous.saved or {}}
+	sleepTick(targetId, token, 0)
 	addEvent(wakeTarget, sleepDuration, targetId, token)
 end
 
