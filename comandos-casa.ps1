@@ -478,3 +478,28 @@ Start-Job {
 git add bases/pokedashpota1.0_client/modules/game_pokedex/artwork
 git commit -q -m "Ilustraciones oficiales normales y shiny de la PokeDex"
 git push
+
+
+Lua Script Error: [Event Interface]
+data/events/scripts/creature.lua:Creature@onTargetCombat
+data/events/scripts/creature.lua:4: attempt to call method 'getStorageValue' (a nil value)
+stack traceback:
+        [C]: in function 'getStorageValue'
+        data/events/scripts/creature.lua:4: in function 'isCreatureSleeping'
+        data/events/scripts/creature.lua:21: in function <data/events/scripts/creature.lua:20>
+
+Lua Script Error: [Event Interface]
+data/events/scripts/creature.lua:Creature@onTargetCombat
+data/events/scripts/creature.lua:4: attempt to call method 'getStorageValue' (a nil value)
+stack traceback:
+        [C]: in function 'getStorageValue'
+        data/events/scripts/creature.lua:4: in function 'isCreatureSleeping'
+        data/events/scripts/creature.lua:21: in function <data/events/scripts/creature.lua:20>
+
+Lua Script Error: [Event Interface]
+data/events/scripts/creature.lua:Creature@onTargetCombat
+data/events/scripts/creature.lua:4: attempt to call method 'getStorageValue' (a nil value)
+stack traceback:
+        [C]: in function 'getStorageValue'
+        data/events/scripts/creature.lua:4: in function 'isCreatureSleeping'
+        data/events/scripts/creature.lua:21: in function <data/events/scripts/creature.lua:20>

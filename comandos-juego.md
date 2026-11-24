@@ -40,6 +40,7 @@ Los marcados con (?) no están probados todavía.
 | `/ban nombre` / `/ipban nombre` / `/unban nombre` | Banear / desbanear |
 | `/B mensaje` | Mensaje a todo el servidor |
 | `/addskill nombre, skill` | Subir un skill |
+| `/setlevel nombre, nivel` | Bajar al jugador conectado al nivel indicado (solo GOD) |
 | `/addpremium nombre, días` | Dar premium (?) |
 | `/addtutor` / `/removetutor` | Dar / quitar tutor |
 | `/setactionid N` | Poner un actionid a un item (?) |
