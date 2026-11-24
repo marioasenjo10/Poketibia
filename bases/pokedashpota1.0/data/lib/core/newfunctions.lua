@@ -1911,16 +1911,6 @@ end
 
 
 function Monster.getTotalSpeed(self)
-	if self:isPokemon() then
-		local master = self:getMaster()
-		if master and master:isPlayer() then
-			local masterSpeed = master:getSpeed()
-			if masterSpeed <= 0 then
-				masterSpeed = master:getBaseSpeed()
-			end
-			return math.floor(masterSpeed * 0.9 * getShinyStatMultiplier(self))
-		end
-	end
 	local monsterType = MonsterType(self:getName())
 	return monsterType and math.floor(monsterType:getBaseSpeed() * getShinyStatMultiplier(self)) or 220
 end

@@ -6,7 +6,6 @@ function onAdvance(player, skill, oldLevel, newLevel)
 	local summon = player:getSummon()
 	if summon and summon:isPokemon() then
 		summon:setMaxHealth(summon:getTotalHealth())
-		summon:changeSpeed(-summon:getSpeed() + summon:getTotalSpeed())
 		summon:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 	end
 	return true
