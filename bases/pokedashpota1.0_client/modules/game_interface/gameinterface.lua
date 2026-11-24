@@ -97,7 +97,8 @@ function bindKeys()
   g_keyboard.bindKeyPress('Ctrl+=', function() gameMapPanel:zoomIn() end, gameRootPanel)
   g_keyboard.bindKeyPress('Ctrl+-', function() gameMapPanel:zoomOut() end, gameRootPanel)
   g_keyboard.bindKeyDown('Ctrl+L', function() tryLogout(false) end, gameRootPanel)
-  g_keyboard.bindKeyDown('Ctrl+W', function() g_map.cleanTexts() modules.game_textmessage.clearMessages() end, gameRootPanel)
+  g_keyboard.bindKeyDown('Ctrl+Q', function() tryLogout(false) end, gameRootPanel) -- salir, como en Tibia
+  -- sin Ctrl+W (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+W', function() g_map.cleanTexts() modules.game_textmessage.clearMessages() end, gameRootPanel)
   g_keyboard.bindKeyDown('Ctrl+.', nextViewMode, gameRootPanel)
 end
 
@@ -114,6 +115,10 @@ function unbindWalkKey(key)
   -- bindWalkKey usa combos "alone" que unbindKeyDown/Up no quitan
   if gameRootPanel.boundAloneKeyDownCombos then gameRootPanel.boundAloneKeyDownCombos[key] = nil end
   if gameRootPanel.boundAloneKeyUpCombos then gameRootPanel.boundAloneKeyUpCombos[key] = nil end
+end
+
+function unbindTurnKey(key)
+  g_keyboard.unbindKeyPress(key, gameRootPanel)
 end
 
 function bindTurnKey(key, dir)

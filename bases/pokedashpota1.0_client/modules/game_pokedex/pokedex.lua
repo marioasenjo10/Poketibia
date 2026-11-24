@@ -170,7 +170,7 @@ function init()
   window = g_ui.displayUI('pokedex')
   window:hide()
 
-  dexButton = modules.client_topmenu.addRightGameToggleButton('pokedexButton', 'Pokedex (E / Ctrl+D)',
+  dexButton = modules.client_topmenu.addRightGameToggleButton('pokedexButton', 'Pokedex (E)',
     '/images/topmenu/pokedex', toggle)
   dexButton:setOn(false)
 
@@ -185,14 +185,14 @@ function init()
   g_keyboard.bindKeyPress('Down', function() list:focusNextChild(KeyboardFocusReason) end, window)
   g_keyboard.bindKeyPress('Up', function() list:focusPreviousChild(KeyboardFocusReason) end, window)
 
-  g_keyboard.bindKeyDown('Ctrl+D', toggle)
+  -- sin Ctrl+D (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+D', toggle)
   ProtocolGame.registerExtendedOpcode(OPCODE_POKEDEX, onPokedexOpcode)
   connect(g_game, { onGameEnd = onGameEnd })
   clearInfo()
 end
 
 function terminate()
-  g_keyboard.unbindKeyDown('Ctrl+D')
+  -- sin Ctrl+D (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+D')
   ProtocolGame.unregisterExtendedOpcode(OPCODE_POKEDEX)
   disconnect(g_game, { onGameEnd = onGameEnd })
   window:destroy()

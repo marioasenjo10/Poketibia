@@ -1,0 +1,193 @@
+// Ventana de atajos por acciones (Ctrl+K). La lista clasica sigue en "Avanzado".
+
+ActionSection < UILabel
+  height: 24
+  font: poppins-semibold-13px
+  color: #8fd3ff
+  text-offset: 4 4
+  margin-top: 6
+
+ActionKey < UIButton
+  size: 120 24
+  image-source: /images/bottombar/cell
+  image-border: 12
+  font: poppins-semibold-11px
+  color: #ffffff
+  text-align: center
+
+  $hover:
+    image-source: /images/bottombar/cell_hover
+
+  $on:
+    image-source: /images/bottombar/cell_hover
+    color: #ffe680
+
+ActionRow < UIWidget
+  height: 28
+  margin-top: 2
+  background-color: alpha
+
+  $hover:
+    background-color: #ffffff0d
+
+  UILabel
+    id: name
+    anchors.left: parent.left
+    anchors.right: key1.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 8
+    font: poppins-semibold-11px
+    color: #e6f1ff
+    phantom: true
+
+  ActionKey
+    id: key1
+    anchors.right: key2.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 8
+
+  ActionKey
+    id: key2
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 6
+
+ActionButton < UIButton
+  height: 26
+  image-source: /images/bottombar/cell
+  image-border: 12
+  font: poppins-semibold-11px
+  color: #ffffff
+  padding: 0 12
+  text-auto-resize: true
+
+  $hover:
+    image-source: /images/bottombar/cell_hover
+
+  $pressed:
+    image-source: /images/bottombar/cell_pressed
+
+UIWindow
+  id: actionsWindow
+  size: 440 520
+  image-source: /images/ui/miniwindow
+  image-border: 7
+  image-border-top: 23
+  padding: 0
+
+  UILabel
+    id: title
+    text: Atajos
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 3
+    margin-left: 10
+    font: poppins-semibold-13px
+    color: #ffffff
+    text-auto-resize: true
+    phantom: true
+
+  UIButton
+    id: closeButton
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 5
+    margin-right: 6
+    size: 14 14
+    image-source: /images/ui/miniwindow_buttons
+    image-clip: 28 0 14 14
+
+    $hover:
+      image-clip: 28 14 14 14
+
+    $pressed:
+      image-clip: 28 28 14 14
+
+  UILabel
+    id: headerAction
+    !text: 'Acci' .. string.char(243) .. 'n'
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 30
+    margin-left: 18
+    font: poppins-semibold-11px
+    color: #8fb4d8
+    text-auto-resize: true
+
+  UILabel
+    text: Tecla 2
+    anchors.top: parent.top
+    anchors.right: parent.right
+    width: 120
+    margin-top: 30
+    margin-right: 32
+    text-align: center
+    font: poppins-semibold-11px
+    color: #8fb4d8
+
+  UILabel
+    text: Tecla 1
+    anchors.top: parent.top
+    anchors.right: prev.left
+    width: 120
+    margin-top: 30
+    margin-right: 8
+    text-align: center
+    font: poppins-semibold-11px
+    color: #8fb4d8
+
+  VerticalScrollBar
+    id: actionsScrollBar
+    anchors.top: parent.top
+    anchors.bottom: footer.top
+    anchors.right: parent.right
+    margin-top: 50
+    margin-bottom: 8
+    margin-right: 10
+    step: 28
+    pixels-scroll: true
+
+  ScrollablePanel
+    id: actionsList
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: actionsScrollBar.left
+    anchors.bottom: footer.top
+    margin-top: 50
+    margin-left: 10
+    margin-bottom: 8
+    vertical-scrollbar: actionsScrollBar
+    layout:
+      type: verticalBox
+
+  UIWidget
+    id: footer
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 0 10 10 10
+    height: 26
+
+    UILabel
+      id: hint
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      font: verdana-11px-rounded
+      color: #8fb4d8
+      text-auto-resize: true
+
+  UIWidget
+    id: capture
+    anchors.fill: parent
+    margin: 23 1 1 1
+    background-color: #050c18dd
+    visible: false
+    focusable: true
+
+    UILabel
+      id: captureText
+      anchors.centerIn: parent
+      font: poppins-semibold-13px
+      color: #ffffff
+      text-auto-resize: true
+      phantom: true

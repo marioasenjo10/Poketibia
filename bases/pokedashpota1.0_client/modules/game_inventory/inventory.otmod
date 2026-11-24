@@ -4,6 +4,6 @@ Module
   author: baxnie, edubart, BeniS
   website: https://github.com/edubart/otclient
   sandboxed: true
-  scripts: [ inventory ]
+  scripts: [ inventory, itembar ]
   @onLoad: init()
   @onUnload: terminate()

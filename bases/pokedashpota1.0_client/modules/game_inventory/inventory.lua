@@ -55,7 +55,7 @@ local function updateBarCell(slot)
     image = 'cell_hover'
   end
   icon:setImageSource('/images/bottombar/' .. image)
-  local size = (slot:isHovered() and not slot.barPressed) and 40 or 36
+  local size = (slot:isHovered() and not slot.barPressed) and 38 or 34
   icon:getChildById('img'):setSize({ width = size, height = size })
 end
 
@@ -72,6 +72,11 @@ end
 -- clic izquierdo usa el objeto (el derecho y los modificadores siguen como siempre)
 local function setupBarSlot(slot, icon)
   slot:getChildById('icon'):getChildById('img'):setImageSource('/images/bottombar/' .. icon)
+  -- el nombre (antes debajo de la casilla) sale al pasar el raton
+  local label = slot:getParent() and slot:getParent():getChildByIndex(2)
+  if label and label.getText then
+    slot:setTooltip(label:getText())
+  end
   slot.onHoverChange = function(self, hovered)
     UIItem.onHoverChange(self, hovered)
     if not hovered then self.barPressed = false end
@@ -119,6 +124,10 @@ function refreshBarKeys()
       label:setVisible(key ~= nil)
     end
   end
+  -- casillas 1-0: son los atajos de esas teclas
+  if onHotkeysChanged then
+    onHotkeysChanged()
+  end
 end
 
 function init()
@@ -128,9 +137,9 @@ function init()
   })
   connect(g_game, { onGameStart = refresh })
 
-  g_keyboard.bindKeyDown('Ctrl+I', toggle)
+  -- sin Ctrl+I (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+I', toggle)
 
-  inventoryButton = modules.client_topmenu.addRightGameToggleButton('inventoryButton', tr('Inventory') .. ' (Ctrl+I)', '/images/topmenu/inventory', toggle)
+  inventoryButton = modules.client_topmenu.addRightGameToggleButton('inventoryButton', tr('Inventory'), '/images/topmenu/inventory', toggle)
   inventoryButton:setOn(false)
 
   inventoryWindow = g_ui.loadUI('inventory', modules.game_interface.getMapPanel())
@@ -140,6 +149,7 @@ function init()
     local slot = inventoryPanel:recursiveGetChildById(info.id)
     if slot then setupBarSlot(slot, info.icon) end
   end
+  initItemBar()
 
   refresh()
 end
@@ -151,7 +161,8 @@ function terminate()
   })
   disconnect(g_game, { onGameStart = refresh })
 
-  g_keyboard.unbindKeyDown('Ctrl+I')
+  -- sin Ctrl+I (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+I')
+  terminateItemBar()
 
   inventoryWindow:destroy()
   inventoryButton:destroy()

@@ -19,5 +19,6 @@
 	<event type="move" name="FlyEvent" script="flyevent.lua" />
 	<event type="move" name="RemoveSummon" script="removesummon.lua" />
 	<event type="modalwindow" name="ModalWindowHelper" script="modalwindowhelper.lua" />
+	<event type="think" name="PokeballIcons" script="pokeballicons.lua" />
 
 </creaturescripts>

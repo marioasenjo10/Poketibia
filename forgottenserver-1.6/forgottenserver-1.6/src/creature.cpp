@@ -44,18 +44,32 @@ void bringSummonToMaster(uint32_t masterId, uint32_t summonId, Position preferre
 		return;
 	}
 
-	// primero la casilla de la que acaba de salir el dueno, luego las de alrededor
+	// primero la casilla de la que acaba de salir el dueno, luego las de alrededor ordenadas
+	// de detras hacia delante segun hacia donde camina: el summon nunca debe aparecer en su
+	// camino. (Si el dueno sigue andando, al ejecutarse esto ya ha dado otro paso y "preferred"
+	// queda a 2 casillas; antes se caia a un orden fijo que empezaba por la columna de la
+	// izquierda, justo delante al andar hacia la izquierda, y le bloqueaba el paso.)
 	std::vector<Position> candidates;
 	if (preferred.z == masterPos.z && masterPos.getDistanceX(preferred) <= 1 && masterPos.getDistanceY(preferred) <= 1) {
 		candidates.push_back(preferred);
 	}
+	const int32_t moveX = (masterPos.x > preferred.x) - (masterPos.x < preferred.x);
+	const int32_t moveY = (masterPos.y > preferred.y) - (masterPos.y < preferred.y);
+	std::vector<std::pair<int32_t, Position>> around;
 	for (int32_t dx = -1; dx <= 1; ++dx) {
 		for (int32_t dy = -1; dy <= 1; ++dy) {
 			if (dx != 0 || dy != 0) {
-				candidates.emplace_back(static_cast<uint16_t>(masterPos.x + dx), static_cast<uint16_t>(masterPos.y + dy),
-				                        masterPos.z);
+				// negativo = detras, 0 = a los lados, positivo = delante; a igualdad, mejor en recto
+				int32_t score = (dx * moveX + dy * moveY) * 4 + std::abs(dx) + std::abs(dy);
+				around.emplace_back(score, Position(static_cast<uint16_t>(masterPos.x + dx),
+				                                    static_cast<uint16_t>(masterPos.y + dy), masterPos.z));
 			}
 		}
+	}
+	std::stable_sort(around.begin(), around.end(),
+	                 [](const auto& a, const auto& b) { return a.first < b.first; });
+	for (const auto& entry : around) {
+		candidates.push_back(entry.second);
 	}
 
 	for (const Position& pos : candidates) {

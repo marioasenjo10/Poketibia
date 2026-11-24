@@ -1,17 +1,27 @@
+// Barras de desplazamiento modernas: sin flechas, guia fina y tirador redondeado que se
+// aclara con el raton encima y se pone azul al arrastrarlo. Siguen midiendo 13px de ancho
+// (vertical) / alto (horizontal), asi que ninguna ventana cambia de medidas. Las flechas
+// existen (las usa UIScrollBar) pero miden 0. Imagenes: UiSkin.RunModern (ui/scroll_*).
+
 ScrollBarSlider < UIButton
   id: sliderButton
   anchors.centerIn: parent
   size: 13 17
-  image-source: /images/ui/scrollbar
-  image-clip: 0 26 13 13
-  image-border: 2
-  image-color: #ffffffff
+  image-source: /images/ui/scroll_thumb_v
+  image-border: 4
   $hover:
-    image-clip: 13 26 13 13
+    image-source: /images/ui/scroll_thumb_v_hover
   $pressed:
-    image-clip: 26 26 13 13
+    image-source: /images/ui/scroll_thumb_v_pressed
   $disabled:
-    image-color: #ffffff66
+    image-color: #ffffff00
+
+ScrollBarSliderH < ScrollBarSlider
+  image-source: /images/ui/scroll_thumb_h
+  $hover:
+    image-source: /images/ui/scroll_thumb_h_hover
+  $pressed:
+    image-source: /images/ui/scroll_thumb_h_pressed
 
 ScrollBarValueLabel < Label
   id: valueLabel
@@ -23,40 +33,21 @@ VerticalScrollBar < UIScrollBar
   orientation: vertical
   width: 13
   height: 39
-  image-source: /images/ui/scrollbar
-  image-clip: 39 0 13 65
-  image-border: 1
+  image-source: /images/ui/scroll_track_v
+  image-border: 4
   pixels-scroll: true
 
   UIButton
     id: decrementButton
     anchors.top: parent.top
     anchors.left: parent.left
-    image-source: /images/ui/scrollbar
-    image-clip: 0 0 13 13
-    image-color: #ffffffff
-    size: 13 13
-    $hover:
-      image-clip: 13 0 13 13
-    $pressed:
-      image-clip: 26 0 13 13
-    $disabled:
-      image-color: #ffffff66
+    size: 13 0
 
   UIButton
     id: incrementButton
     anchors.bottom: parent.bottom
     anchors.right: parent.right
-    size: 13 13
-    image-source: /images/ui/scrollbar
-    image-clip: 0 13 13 13
-    image-color: #ffffffff
-    $hover:
-      image-clip: 13 13 13 13
-    $pressed:
-      image-clip: 26 13 13 13
-    $disabled:
-      image-color: #ffffff66
+    size: 13 0
 
   ScrollBarSlider
 
@@ -66,9 +57,8 @@ HorizontalScrollBar < UIScrollBar
   orientation: horizontal
   height: 13
   width: 39
-  image-source: /images/ui/scrollbar
-  image-clip: 0 65 52 13
-  image-border: 1
+  image-source: /images/ui/scroll_track_h
+  image-border: 4
 
   $disabled:
     color: #bbbbbb88
@@ -77,32 +67,14 @@ HorizontalScrollBar < UIScrollBar
     id: decrementButton
     anchors.top: parent.top
     anchors.left: parent.left
-    image-source: /images/ui/scrollbar
-    image-clip: 0 39 13 13
-    image-color: #ffffffff
-    size: 13 13
-    $hover:
-      image-clip: 13 39 13 13
-    $pressed:
-      image-clip: 26 39 13 13
-    $disabled:
-      image-color: #ffffff66
+    size: 0 13
 
   UIButton
     id: incrementButton
     anchors.bottom: parent.bottom
     anchors.right: parent.right
-    size: 13 13
-    image-source: /images/ui/scrollbar
-    image-clip: 0 52 13 13
-    image-color: #ffffffff
-    $hover:
-      image-clip: 13 52 13 13
-    $pressed:
-      image-clip: 26 52 13 13
-    $disabled:
-      image-color: #ffffff66
+    size: 0 13
 
-  ScrollBarSlider
+  ScrollBarSliderH
 
   ScrollBarValueLabel

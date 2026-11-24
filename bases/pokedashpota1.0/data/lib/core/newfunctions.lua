@@ -32,6 +32,46 @@ trainerLevelDamageBuff = 0.008 -- buff por nivel del entrenador
 -- pega como el Charizard de un entrenador nivel 80.
 -- twoStageFinal: final de una linea de solo 2 etapas (Raichu, Slowbro, Rapidash...).
 pokemonStageLevels = {base = 0, middle = 40, twoStageFinal = 50, final = 80}
+-- Nivel particular por pokemon (nombre en minusculas, sin "shiny "). Tiene prioridad
+-- sobre pokemonStageLevels; el shiny sigue sumando shinyExtraLevel. Sirve para cualquier
+-- etapa, no solo las intermedias.
+pokemonRequiredLevels = {
+	-- capullos
+	metapod = 10, kakuna = 10, silcoon = 10, cascoon = 10,
+	-- etapas intermedias comunes
+	pidgeotto = 20, staravia = 20, skiploom = 20,
+	flaaffy = 25, gloom = 25, weepinbell = 25, nidorina = 25, nidorino = 25,
+	golbat = 30, poliwhirl = 30, kirlia = 30, roselia = 30, lombre = 30, nuzleaf = 30,
+	loudred = 30, luxio = 30, wormadam = 30,
+	machoke = 35, graveler = 35, kadabra = 35, haunter = 35, seadra = 35, vigoroth = 35, sealeo = 35,
+	magneton = 40, chansey = 40, piloswine = 40, lairon = 40, vibrava = 40,
+	slowbro = 45, dusclops = 45,
+	rhydon = 50, porygon2 = 50,
+	-- iniciales
+	ivysaur = 35, charmeleon = 35, wartortle = 35, bayleef = 35, quilava = 35, croconaw = 35,
+	grovyle = 35, combusken = 35, marshtomp = 35, grotle = 35, monferno = 35, prinplup = 35,
+	-- finales de linea de 2 etapas (por defecto twoStageFinal)
+	raticate = 20, furret = 20,
+	ledian = 25, kricketune = 25, sunflora = 25, bibarel = 25, seaking = 25, lumineon = 25, cherrim = 25,
+	raichu = 30, dodrio = 30, ariados = 30, persian = 30, fearow = 30, noctowl = 30, parasect = 30,
+	venomoth = 30, dugtrio = 30, sandslash = 30, arbok = 30, electrode = 30, kingler = 30,
+	wigglytuff = 30, clefable = 30, azumarill = 30, quagsire = 30,
+	-- finales de linea de 3 etapas (por defecto final)
+	butterfree = 25, beedrill = 25, beautifly = 40, dustox = 40, mothim = 40, jumpluff = 40,
+	pidgeot = 50, bellossom = 50,
+	vileplume = 55, victreebel = 55, shiftry = 55,
+	staraptor = 60, ampharos = 60, luxray = 60, nidoking = 60, nidoqueen = 60, politoed = 60,
+	poliwrath = 60, crobat = 60, roserade = 60, ludicolo = 60, exploud = 60, slowking = 60,
+	walrein = 65, blissey = 65,
+	venusaur = 70, charizard = 70, blastoise = 70, meganium = 70, typhlosion = 70, feraligatr = 70,
+	sceptile = 70, blaziken = 70, swampert = 70, torterra = 70, infernape = 70, empoleon = 70,
+	alakazam = 70, gengar = 70, machamp = 70, golem = 70, magnezone = 70, gardevoir = 70,
+	dusknoir = 70, kingdra = 70, flygon = 70, aggron = 70, mamoswine = 70, rhyperior = 70,
+	["porygon-z"] = 70, slaking = 70,
+	dragonite = 80, tyranitar = 80, salamence = 80, metagross = 80, garchomp = 80,
+	-- pseudo-legendarios (etapa media)
+	dragonair = 55, pupitar = 55, shelgon = 55, metang = 55, gabite = 55,
+}
 shinyExtraLevel = 20
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
@@ -130,6 +170,10 @@ storageItemQuestDifficulty = 91019
 slotItems = {38680, 38682, 2263, 2270, 26820}
 badgesPortraits = {26614, 26609, 26615, 26612, 26613, 26616, 26610, 26611, 38689, 38683, 38685, 38690, 38684, 38688, 38686, 38687}
 badgeContainer = 38680
+-- Cinturon pokemon: contenedor de 6 casillas en la casilla del pecho, solo para pokeballs.
+-- El equipo (Pokebar, !p 1..6) empieza por el. Cliente: boton del cinturon en la barra de arriba.
+pokemonBelt = 5927
+pokemonBeltSlot = CONST_SLOT_ARMOR
 
 waterIds = {493, 4608, 4609, 4610, 4611, 4612, 4613, 4614, 4615, 4616, 4617, 4618, 4619, 4620, 4621, 4622, 4623, 4624, 4625, 7236, 10499, 15401, 15402, 4820, 4821, 4822, 4823, 4824, 4825, 4664, 4665, 4666}
 
@@ -2489,6 +2533,71 @@ function doSmartCombo(player, param)
 	smartComboStep(cid, slots, 1, 0, {})
 end
 
+-- Manda al cliente los datos del pokemon que esta fuera: opcode 60 (retrato, outfit, nombre,
+-- info de ataques, id de la criatura, vida maxima) y 52 (barra de ataques con cooldowns).
+-- Se usa al sacarlo y cuando el cliente lo pide (opcode 71).
+function sendSummonInfo(player, monster, ball)
+	local monsterType = MonsterType(monster:getName())
+	if not monsterType then return end
+	local movesTable = {}
+	local moves = monsterType:getMoveList()
+	for i = 1, #moveWords do
+		local move = moves[i]
+		if move then
+			if i == 1 then
+				table.insert(movesTable, move.name)
+			else
+				table.insert(movesTable, "," .. move.name)
+			end
+		end
+	end
+	for i = 1, #moveWords do
+		local move = moves[i]
+		if move then
+			table.insert(movesTable, "," .. move.speed)
+		end
+	end
+	-- un valor por ataque existente (si no, los bloques siguientes se desplazan en el cliente)
+	for i = 1, #moveWords do
+		if moves[i] then
+			local moveCooldown = ball and ball:getSpecialAttribute("cd" .. i) or 0
+			if os.time() > moveCooldown then
+				table.insert(movesTable, ",0")
+			else
+				table.insert(movesTable, "," .. 1000 * math.floor(moveCooldown - os.time()))
+			end
+		end
+	end
+	-- Smart Combo: 1 si el ataque necesita objetivo, 0 si es de area
+	for i = 1, #moveWords do
+		local move = moves[i]
+		if move then
+			table.insert(movesTable, "," .. (moveNeedsTarget(move) and 1 or 0))
+		end
+	end
+	-- Smart Combo: alcance maximo de cada ataque (0 = sin limite)
+	for i = 1, #moveWords do
+		local move = moves[i]
+		if move then
+			table.insert(movesTable, "," .. (tonumber(move.range) or 0))
+		end
+	end
+	table.insert(movesTable, ",")
+	-- Smart Combo: retrato, outfit, nombre y elemento/categoria/efecto de cada ataque
+	local movesInfo = {}
+	for i = 1, #moveWords do
+		local move = moves[i]
+		if move then
+			local info = getMoveInfo(move.name)
+			table.insert(movesInfo, info.element .. ":" .. info.category .. ":" .. info.effect)
+		end
+	end
+	-- 5: id de la criatura (el cliente lee su vida en directo), 6: vida maxima
+	player:sendExtendedOpcode(60, (monsterType:portraitId() or 0) .. "|" .. monster:getOutfit().lookType .. "|" .. monster:getName() .. "|" .. table.concat(movesInfo, ";")
+		.. "|" .. monster:getId() .. "|" .. monster:getMaxHealth())
+	player:sendExtendedOpcode(52, table.concat(movesTable))
+end
+
 function doReleaseSummon(cid, pos, effect, message, missile)
 	local player = Player(cid)
 	if not player then return false end
@@ -2587,61 +2696,7 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			end
 		end
 
-		local movesTable = {}
-		local moves = monsterType:getMoveList()
-		for i = 1, #moveWords do
-			local move = moves[i]
-			if move then
-				if i == 1 then
-					table.insert(movesTable, move.name)
-				else
-					table.insert(movesTable, "," .. move.name)
-				end
-			end
-		end
-		for i = 1, #moveWords do
-			local move = moves[i]
-			if move then
-				table.insert(movesTable, "," .. move.speed)
-			end
-		end
-		-- un valor por ataque existente (si no, los bloques siguientes se desplazan en el cliente)
-		for i = 1, #moveWords do
-			if moves[i] then
-				local moveCooldown = ball:getSpecialAttribute("cd" .. i) or 0
-				if os.time() > moveCooldown then
-					table.insert(movesTable, ",0")
-				else
-					table.insert(movesTable, "," .. 1000 * math.floor(moveCooldown - os.time()))
-				end
-			end
-		end
-		-- Smart Combo: 1 si el ataque necesita objetivo, 0 si es de area
-		for i = 1, #moveWords do
-			local move = moves[i]
-			if move then
-				table.insert(movesTable, "," .. (moveNeedsTarget(move) and 1 or 0))
-			end
-		end
-		-- Smart Combo: alcance maximo de cada ataque (0 = sin limite)
-		for i = 1, #moveWords do
-			local move = moves[i]
-			if move then
-				table.insert(movesTable, "," .. (tonumber(move.range) or 0))
-			end
-		end
-		table.insert(movesTable, ",")
-		-- Smart Combo: retrato, outfit, nombre y elemento/categoria/efecto de cada ataque
-		local movesInfo = {}
-		for i = 1, #moveWords do
-			local move = moves[i]
-			if move then
-				local info = getMoveInfo(move.name)
-				table.insert(movesInfo, info.element .. ":" .. info.category .. ":" .. info.effect)
-			end
-		end
-		player:sendExtendedOpcode(60, (monsterType:portraitId() or 0) .. "|" .. monster:getOutfit().lookType .. "|" .. monster:getName() .. "|" .. table.concat(movesInfo, ";"))
-		player:sendExtendedOpcode(52, table.concat(movesTable))
+		sendSummonInfo(player, monster, ball)
 
 		return monster:getId()
 	end
@@ -2699,6 +2754,7 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 	end
 	if ball and ball:isPokeball() then
 		ball:setSpecialAttribute("pokeHealth", summon:getHealth())
+		ball:setSpecialAttribute("pokeMaxHealth", summon:getMaxHealth())
 		ball:setSpecialAttribute("pokeLookDir", summon:getDirection())
 	end
 	if not (player:isOnFly() or player:isOnRide() or player:isOnSurf() or summon:isEvolving()) then
@@ -2715,6 +2771,9 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 		player:say("Thanks, " .. summon:getName() .. "!", TALKTYPE_MONSTER_SAY)
 	end
 	summon:remove()	
+	-- panel del pokemon activo: ya no hay ninguno fuera; barra del equipo con la vida guardada
+	player:sendExtendedOpcode(70, "")
+	player:refreshPokemonBar({}, {})
 	return true
 end
 
@@ -2821,7 +2880,19 @@ function doAddPokeball(cid, name, boost, ballKey, dp, msg)
 			return false 
 		end
 		local addBall
-		if dp == false then
+		-- si queda sitio en el cinturon, la pokeball va ahi
+		local belt = player:getPokemonBelt()
+		if belt and belt:getEmptySlots() > 0 then
+			addBall = belt:addItem(balls[ballKey].usedOn, 1)
+			dp = false
+		end
+		-- sin sitio en el cinturon: al PC (los pokemon nunca van a la mochila)
+		if not addBall then
+			dp = true
+		end
+		if addBall then
+			-- ya esta en el cinturon
+		elseif dp == false then
 			addBall = player:addItem(balls[ballKey].usedOn, 1, false)
 		else
 			local depot = player:getInbox()
@@ -2925,12 +2996,61 @@ function Container.getPokeballs(self)
 	return ret
 end
 
+function Player.getPokemonBelt(self)
+	local item = self:getSlotItem(pokemonBeltSlot)
+	if item and item:getId() == pokemonBelt then
+		return Container(item:getUniqueId())
+	end
+	return nil
+end
+
+-- Pone el cinturon si falta. Al crearlo mete en el hasta 6 pokeballs de la mochila.
+function Player.checkPokemonBelt(self)
+	if self:getPokemonBelt() then
+		return
+	end
+	if self:getSlotItem(pokemonBeltSlot) then
+		print("WARNING! Player " .. self:getName() .. " has the belt slot taken, no pokemon belt.")
+		return
+	end
+	self:addItem(pokemonBelt, 1, false, 1, pokemonBeltSlot)
+	local belt = self:getPokemonBelt()
+	if not belt then
+		return
+	end
+	local backpack = self:getSlotItem(CONST_SLOT_BACKPACK)
+	if not backpack then
+		return
+	end
+	-- getPokeballs recorre la mochila del final al principio: se mueven en el orden de la mochila
+	local inBackpack = backpack:getPokeballs()
+	for i = #inBackpack, 1, -1 do
+		if belt:getEmptySlots() <= 0 then
+			break
+		end
+		inBackpack[i]:moveTo(belt)
+	end
+end
+
 function Player.getPokeballs(self)
 	local pokeballs = {}
 
+	-- primero el cinturon, en el orden de sus casillas
+	local belt = self:getPokemonBelt()
+	if belt then
+		for slot = 0, belt:getSize() - 1 do
+			local ball = belt:getItem(slot)
+			if ball and ball:isPokeball() then
+				table.insert(pokeballs, ball)
+			end
+		end
+	end
+
 	local backpack = self:getSlotItem(CONST_SLOT_BACKPACK)
 	if backpack then
-		pokeballs = backpack:getPokeballs()
+		for _, ball in ipairs(backpack:getPokeballs()) do
+			table.insert(pokeballs, ball)
+		end
 	end	
 
 	local ballOn = self:getSlotItem(CONST_SLOT_AMMO)
@@ -3348,13 +3468,45 @@ function Player:refreshPokemonBar(add, remove)
 			print("WARNING! Player " .. self:getName() .. " had one ball removed!")
 		else
 			if not isInArray(remove, pokeName) then
-				table.insert(pokemonsTable, "," .. pokeName)
+				-- 10 campos por pokemon: nombre, % de vida (la guardada en la ball), 1 si esta fuera,
+				-- n de ataques, cooldowns, boost, vida, vida maxima, n de pokedex, nombres de ataques
+				local health = tonumber(ball:getSpecialAttribute("pokeHealth")) or 0
+				local maxHealth = tonumber(ball:getSpecialAttribute("pokeMaxHealth")) or 0
+				local percent = 100
+				if health <= 0 then
+					percent = 0
+				elseif maxHealth > 0 then
+					percent = math.max(1, math.min(100, math.floor(health * 100 / maxHealth)))
+				end
+				local used = (ball:getSpecialAttribute("isBeingUsed") or 0) == 1 and 1 or 0
+				-- ataques: cuantos tiene y segundos de cooldown que le quedan a cada uno ("0" = listo)
+				local total = 0
+				local cooldowns = {}
+				local moveNames = {}
+				local dex = 0
+				local monsterType = MonsterType(pokeName)
+				if monsterType then
+					local moveList = monsterType:getMoveList()
+					total = math.min(#moveWords, #moveList)
+					for m = 1, total do
+						local cdEnd = tonumber(ball:getSpecialAttribute("cd" .. m)) or 0
+						cooldowns[m] = math.max(0, cdEnd - os.time())
+						moveNames[m] = (moveList[m].name or "?"):gsub("[,;|]", " ")
+					end
+					dex = tonumber(monsterType:dexEntry()) or 0
+				end
+				-- para el recuadro de la Pokebar: boost, vida exacta, numero de pokedex y ataques
+				local boost = tonumber(ball:getSpecialAttribute("pokeBoost")) or 0
+				table.insert(pokemonsTable, "," .. pokeName .. "," .. percent .. "," .. used .. "," .. total
+					.. "," .. (#cooldowns > 0 and table.concat(cooldowns, ";") or "-")
+					.. "," .. boost .. "," .. math.max(0, health) .. "," .. maxHealth .. "," .. dex
+					.. "," .. (#moveNames > 0 and table.concat(moveNames, ";") or "-"))
 			end
 		end
 		
 	end
 	for i = 1, #add do
-		table.insert(pokemonsTable, "," .. add[i])
+		table.insert(pokemonsTable, "," .. add[i] .. ",100,0,0,-,0,0,0,0,-")
 	end
 	table.insert(pokemonsTable, ",")
 	self:sendExtendedOpcode(53, table.concat(pokemonsTable))

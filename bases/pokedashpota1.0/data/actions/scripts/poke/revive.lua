@@ -41,6 +41,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	target:setSpecialAttribute("pokeHealth", MonsterType(summonName):getHealth())
 	local ballKey = getBallKey(target:getId())
 	target:transform(balls[ballKey].usedOn)
+	player:refreshPokemonBar({}, {})
 	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 	item:remove(1)
 	return true

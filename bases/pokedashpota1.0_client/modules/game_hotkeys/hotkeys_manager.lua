@@ -2,6 +2,8 @@ HOTKEY_MANAGER_USE = nil
 HOTKEY_MANAGER_USEONSELF = 1
 HOTKEY_MANAGER_USEONTARGET = 2
 HOTKEY_MANAGER_USEWITH = 3
+-- PokeDash: usar sobre el pokemon que esta fuera (pociones, revive...); si no hay, con mira
+HOTKEY_MANAGER_USEONPOKEMON = 4
 
 HotkeyColors = {
   text = '#888888',
@@ -54,8 +56,8 @@ lastHotkeyTime = g_clock.millis()
 
 -- public functions
 function init()
-  hotkeysButton = modules.client_topmenu.addLeftGameButton('hotkeysButton', tr('Hotkeys') .. ' (Ctrl+K)', '/images/topbuttons/hotkeys', toggle)
-  g_keyboard.bindKeyDown('Ctrl+K', toggle)
+  hotkeysButton = modules.client_topmenu.addLeftGameButton('hotkeysButton', tr('Hotkeys') .. ' (Ctrl+K)', '/images/topbuttons/hotkeys', toggleActions)
+  g_keyboard.bindKeyDown('Ctrl+K', toggleActions)
   hotkeysWindow = g_ui.displayUI('hotkeys_manager')
   hotkeysWindow:setVisible(false)
 
@@ -105,6 +107,7 @@ function terminate()
 
   unload()
 
+  terminateActions()
   hotkeysWindow:destroy()
   hotkeysButton:destroy()
   mouseGrabberWidget:destroy()
@@ -124,6 +127,7 @@ end
 function offline()
   unload()
   hide()
+  hideActions()
 end
 
 function show()
@@ -191,8 +195,8 @@ end
 -- La primera vez de cada personaje se anaden las teclas E = usar pokedex (con mira:
 -- sobre ti abre la lista, sobre un pokemon abre su ficha) y Q = order. Luego se pueden cambiar en Ctrl+K.
 -- La barra de abajo (game_inventory) usa esta misma funcion para R = rope, Z = rod y B = badges.
-local POKEDEX_CLIENT_ID = 3150
-local ORDER_CLIENT_ID = 3157
+POKEDEX_CLIENT_ID = 3150
+ORDER_CLIENT_ID = 3157
 function addDefaultItemHotkey(settingsNode, keyCombo, clientId, plainUse)
   local key = ((G.host or '') .. '_' .. g_game.getCharacterName()):gsub('[^%w]', '_')
   local done = g_settings.getNode(settingsNode) or {}
@@ -424,14 +428,15 @@ function addKeyCombo(keyCombo, keySettings, focus)
   end
 end
 
-function doKeyCombo(keyCombo)
+-- fromClick: desde un clic (casillas de abajo), sin mirar si se esta escribiendo
+function doKeyCombo(keyCombo, fromClick)
   if not g_game.isOnline() then return end
   local hotKey = hotkeyList[keyCombo]
   if not hotKey then return end
 
   -- teclas de escritura (letras, espacio, Shift+letra): solo si no se esta escribiendo
   local isTypingKey = #keyCombo == 1 or keyCombo == 'Space' or keyCombo:match('^Shift%+.$')
-  if isTypingKey and modules.game_console and modules.game_console.areLetterKeysFree
+  if isTypingKey and not fromClick and modules.game_console and modules.game_console.areLetterKeysFree
      and not modules.game_console.areLetterKeysFree() then
     return
   end
@@ -501,6 +506,14 @@ function doKeyCombo(keyCombo)
       item = tmpItem
     end
     modules.game_interface.startUseWith(item)
+  elseif hotKey.useType == HOTKEY_MANAGER_USEONPOKEMON then
+    local bar = modules.game_pokemonbar
+    local pokemon = bar and bar.getActiveCreature and bar.getActiveCreature()
+    if pokemon then
+      g_game.useInventoryItemWith(hotKey.itemId, pokemon)
+    else
+      modules.game_interface.startUseWith(Item.create(hotKey.itemId))
+    end
   end
 end
 

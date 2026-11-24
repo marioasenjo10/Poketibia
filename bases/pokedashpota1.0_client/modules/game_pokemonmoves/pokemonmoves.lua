@@ -342,6 +342,30 @@ function onPokemonInfo(protocol, opcode, buffer)
     moveInfo[#moveInfo + 1] = { element = e[1] or '', category = e[2] or '', effect = e[3] or '' }
   end
   refreshComboWindow()
+  -- panel del pokemon activo (game_pokemonbar): campos 5 y 6 = id de la criatura y vida maxima
+  if modules.game_pokemonbar and modules.game_pokemonbar.onActiveInfo then
+    modules.game_pokemonbar.onActiveInfo(pokemonName, pokemonLook, tonumber(parts[5]) or 0, tonumber(parts[6]) or 0)
+  end
+end
+
+-- Para la Pokebar y el panel del pokemon activo: ataques listos y total
+function getMovesReady()
+  local now = g_clock.millis()
+  local ready = 0
+  for i = 1, #spells do
+    if not cdEnd[i] or cdEnd[i] <= now then ready = ready + 1 end
+  end
+  return ready, #spells
+end
+
+-- Para el recuadro de la Pokebar: ataques del pokemon que esta fuera con los ms que les quedan
+function getMoveCooldowns()
+  local now = g_clock.millis()
+  local list = {}
+  for i, spell in ipairs(spells) do
+    list[i] = { name = titleCase(spell.words or '?'), remaining = math.max(0, (cdEnd[i] or 0) - now) }
+  end
+  return list
 end
 
 function onLevelChange(localPlayer, value, percent)

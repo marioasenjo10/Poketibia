@@ -19,10 +19,10 @@ hidePartyButton = nil
 
 function init()
   g_ui.importStyle('battlebutton')
-  battleButton = modules.client_topmenu.addRightGameToggleButton('battleButton', tr('Battle') .. ' (Ctrl+B)', '/images/topbuttons/battle', toggle)
+  battleButton = modules.client_topmenu.addRightGameToggleButton('battleButton', 'Combate', '/images/topmenu/battle', toggle)
   battleButton:setOn(true)
   battleWindow = g_ui.loadUI('battle', modules.game_interface.getRightPanel())
-  g_keyboard.bindKeyDown('Ctrl+B', toggle)
+  -- sin Ctrl+B (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+B', toggle)
 
   -- this disables scrollbar auto hiding
   local scrollbar = battleWindow:getChildById('miniwindowScrollBar')
@@ -86,10 +86,22 @@ function init()
 
   checkCreatures()
   battleWindow:setup()
+
+  -- sin los filtros y el orden de Tibia (solo se listan pokemon)
+  hideFilterPanel()
+  toggleFilterButton:getParent():hide()
+  local separator = battleWindow:recursiveGetChildById('filterSeparator')
+  if separator then separator:hide() end
+
+  -- boton de la cabecera: mostrar u ocultar el pokemon propio
+  hideOwnPokemon = g_settings.getBoolean('battle_hideOwnPokemon')
+  hideOwnButton = battleWindow:getChildById('hideOwnButton')
+  hideOwnButton.onClick = toggleOwnPokemon
+  updateOwnButton()
 end
 
 function terminate()
-  g_keyboard.unbindKeyDown('Ctrl+B')
+  -- sin Ctrl+B (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+B')
   battleButtonsByCreaturesList = {}
   battleButton:destroy()
   battleWindow:destroy()
@@ -114,6 +126,22 @@ function terminate()
     onFollowingCreatureChange = onFollow,
     onGameEnd = removeAllCreatures
   })
+end
+
+hideOwnPokemon = false
+hideOwnButton = nil
+
+function updateOwnButton()
+  if not hideOwnButton then return end
+  hideOwnButton:setImageSource('/images/statusbar/' .. (hideOwnPokemon and 'ownmon_off' or 'ownmon_on'))
+  hideOwnButton:setTooltip(hideOwnPokemon and 'Mostrar mi Pok\233mon' or 'Ocultar mi Pok\233mon')
+end
+
+function toggleOwnPokemon()
+  hideOwnPokemon = not hideOwnPokemon
+  g_settings.set('battle_hideOwnPokemon', hideOwnPokemon)
+  updateOwnButton()
+  checkCreatures()
 end
 
 function toggle()
@@ -245,24 +273,20 @@ function doCreatureFitFilters(creature)
   local localPlayer = g_game.getLocalPlayer()
   if pos.z ~= localPlayer:getPosition().z or not creature:canBeSeen() then return false end
 
-  local hidePlayers = hidePlayersButton:isChecked()
-  local hideNPCs = hideNPCsButton:isChecked()
-  local hideMonsters = hideMonstersButton:isChecked()
-  local hideSkulls = hideSkullsButton:isChecked()
-  local hideParty = hidePartyButton:isChecked()
-
-  if hidePlayers and creature:isPlayer() then
-    return false
-  elseif hideNPCs and creature:isNpc() then
-    return false
-  elseif hideMonsters and creature:isMonster() then
-    return false
-  elseif hideSkulls and creature:isPlayer() and creature:getSkull() == SkullNone then
-    return false
-  elseif hideParty and creature:getShield() > ShieldWhiteBlue then
+  -- PokeDash: solo pokemon. Ni jugadores ni NPCs, ni los pokemon de otros entrenadores;
+  -- el propio sale salvo que se oculte con el boton de la cabecera.
+  if creature:isPlayer() or creature:isNpc() then
     return false
   end
-
+  local okType, creatureType = pcall(function() return creature:getType() end)
+  if okType then
+    if creatureType == CreatureTypeSummonOther then
+      return false
+    end
+    if creatureType == CreatureTypeSummonOwn and hideOwnPokemon then
+      return false
+    end
+  end
   return true
 end
 
@@ -363,6 +387,15 @@ function addCreature(creature)
   if not battleButton then
     battleButton = g_ui.createWidget('BattleButton')
     battleButton:setup(creature)
+    -- ilustracion de la pokedex si existe; si no, el sprite de la criatura
+    local artwork = '/game_pokedex/artwork/' .. creature:getName():lower() .. '.png'
+    if g_resources.fileExists(artwork) then
+      local portrait = battleButton:getChildById('portrait')
+      portrait:setImageSource(artwork)
+      portrait:show()
+      battleButton:getChildById('creature'):hide()
+    end
+    updateBattleRow(battleButton)
 
     battleButton.onHoverChange = onBattleButtonHoverChange
     battleButton.onMouseRelease = onBattleButtonMouseRelease
@@ -552,8 +585,25 @@ function updateCreatureEmblem(creature, emblemId)
   end
 end
 
+-- fondo de la capsula segun el estado y nombre en claro cuando no es objetivo ni seguido
+function updateBattleRow(battleButton)
+  local image = 'battle_row'
+  if battleButton.isTarget then
+    image = 'battle_row_target'
+  elseif battleButton.isFollowed then
+    image = 'battle_row_follow'
+  elseif battleButton.isHovered then
+    image = 'battle_row_hover'
+  end
+  battleButton:setImageSource('/images/statusbar/' .. image)
+  if not battleButton.isTarget and not battleButton.isFollowed then
+    battleButton:getChildById('label'):setColor(battleButton.isHovered and '#ffffff' or '#c9d1dc')
+  end
+end
+
 function updateBattleButton(battleButton)
   battleButton:update()
+  updateBattleRow(battleButton)
   if battleButton.isTarget or battleButton.isFollowed then
     -- set new last battle button switched
     if lastBattleButtonSwitched and lastBattleButtonSwitched ~= battleButton then

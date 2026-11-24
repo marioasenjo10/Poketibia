@@ -36,6 +36,8 @@ function init()
   end
 
   combatControlsWindow:setup()
+  -- alto fijo: modos de combate + pokemon que esta fuera
+  combatControlsWindow:setHeight(132)
 end
 
 function terminate()

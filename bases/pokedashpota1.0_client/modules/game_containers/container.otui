@@ -65,3 +65,30 @@ ContainerWindow < MiniWindow
       type: grid
       cell-size: 34 34
       flow: true
+
+// pokemon dentro de una pokeball (pokeballicons.lua): tapa la ball con la ilustracion
+// del pokemon y la deja pequena en la esquina. Phantom: los clics y arrastres van al objeto.
+PokeballIcon < UIWidget
+  anchors.fill: parent
+  image-source: /images/ui/item
+  phantom: true
+
+  // se adapta al tamano de la casilla (mochila 34px, cinturon 50px)
+  UIWidget
+    id: pokemon
+    anchors.fill: parent
+    margin: 1 6 6 1
+    image-smooth: true
+    phantom: true
+
+  // el sprite de la ball solo ocupa parte de sus 32px: se dibuja grande y desplazado
+  // para que la ball se vea de unos 12px en la esquina
+  UIItem
+    id: ball
+    size: 26 26
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-right: -3
+    margin-bottom: -3
+    virtual: true
+    phantom: true

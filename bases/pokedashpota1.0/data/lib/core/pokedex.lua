@@ -377,8 +377,8 @@ local function stageParent(species, speciesShiny)
 	return nil
 end
 
--- nivel de entrenador para usar el pokemon: base 0, etapa media 40,
--- final de linea de 2 etapas 50, final 80 (shiny +20)
+-- nivel de entrenador para usar el pokemon: el de pokemonRequiredLevels si esta;
+-- si no, por etapa: base 0, etapa media 40, final de linea de 2 etapas 50, final 80 (shiny +20)
 function getPokemonRequiredLevel(name)
 	if not name or name == "" then
 		return 0
@@ -401,7 +401,10 @@ function getPokemonRequiredLevel(name)
 	end
 	local monsterType = MonsterType(species)
 	local level = pokemonStageLevels.final
-	if monsterType then
+	local override = pokemonRequiredLevels and pokemonRequiredLevels[species:lower():gsub("^shiny ", "")]
+	if override then
+		level = override
+	elseif monsterType then
 		local speciesShiny = isShinyName(species)
 		local evolves = false
 		for _, evolution in ipairs(monsterType:getEvolutionList()) do

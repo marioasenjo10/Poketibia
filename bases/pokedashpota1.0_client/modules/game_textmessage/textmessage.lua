@@ -86,8 +86,9 @@ function displayMessage(mode, text)
 
   if msgtype == MessageSettings.none then return end
 
-  -- sin el aviso "Using the last info button..." al usar la pokedex con la tecla
-  if text:find('^Using ') and text:find('info button') then return end
+  -- sin los avisos de Tibia al usar objetos con tecla o casilla ("Using one of 79 poke balls...",
+  -- "Using the last ..."): se usa y punto
+  if mode == MessageModes.HotkeyUse or text:find('^Using one of ') or text:find('^Using the last ') then return end
 
   if msgtype.consoleTab ~= nil and (msgtype.consoleOption == nil or modules.client_options.getOption(msgtype.consoleOption)) then
     modules.game_console.addText(text, msgtype, tr(msgtype.consoleTab))

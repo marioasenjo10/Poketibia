@@ -100,7 +100,12 @@ local function bindWasd(bind)
   end
   for key, dir in pairs(keys) do
     gameInterface.unbindWalkKey(key)
-    if bind then gameInterface.bindWalkKey(key, dir) end
+    -- Ctrl+W/A/S/D gira sin andar, igual que Ctrl+flechas
+    gameInterface.unbindTurnKey('Ctrl+' .. key)
+    if bind then
+      gameInterface.bindWalkKey(key, dir)
+      gameInterface.bindTurnKey('Ctrl+' .. key, dir)
+    end
   end
 end
 
@@ -214,9 +219,9 @@ function init()
   consoleTabBar.onTabChange = onTabChange
 
   -- tibia like hotkeys
-  g_keyboard.bindKeyDown('Ctrl+O', g_game.requestChannels)
-  g_keyboard.bindKeyDown('Ctrl+E', removeCurrentTab)
-  g_keyboard.bindKeyDown('Ctrl+H', openHelp)
+  -- sin Ctrl+O (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+O', g_game.requestChannels)
+  -- sin Ctrl+E (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+E', removeCurrentTab)
+  -- sin Ctrl+H (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+H', openHelp)
 
   consoleToggleChat = consolePanel:getChildById('toggleChat')
   wasdMode = g_settings.get('wasdMode', 'true') == 'true'
@@ -292,9 +297,9 @@ function terminate()
 
   g_keyboard.unbindKeyUp('Enter', onEnterUp)
   bindWasd(false)
-  g_keyboard.unbindKeyDown('Ctrl+O')
-  g_keyboard.unbindKeyDown('Ctrl+E')
-  g_keyboard.unbindKeyDown('Ctrl+H')
+  -- sin Ctrl+O (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+O')
+  -- sin Ctrl+E (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+E')
+  -- sin Ctrl+H (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+H')
 
   saveCommunicationSettings()
 
@@ -1461,7 +1466,7 @@ function online()
   applyWasdMode()
 
   if g_game.getClientVersion() < 862 then
-    g_keyboard.bindKeyDown('Ctrl+R', openPlayerReportRuleViolationWindow)
+    -- sin Ctrl+R (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+R', openPlayerReportRuleViolationWindow)
   end
   -- open last channels
   local lastChannelsOpen = g_settings.getNode('lastChannelsOpen')
@@ -1484,7 +1489,7 @@ end
 
 function offline()
   if g_game.getClientVersion() < 862 then
-    g_keyboard.unbindKeyDown('Ctrl+R')
+    -- sin Ctrl+R (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+R')
   end
   clear()
 end

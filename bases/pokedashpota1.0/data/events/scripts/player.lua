@@ -155,7 +155,47 @@ function Player:onLookInShop(itemType, count)
 	return true
 end
 
+-- el cinturon pokemon: su casilla del equipo o una ventana suya abierta
+local function isPokemonBeltPosition(player, position)
+	if position.x ~= 65535 then
+		return false
+	end
+	if position.y == pokemonBeltSlot then
+		return player:getPokemonBelt() ~= nil
+	end
+	if position.y >= 64 then
+		local container = player:getContainerById(position.y - 64)
+		return container ~= nil and container:getId() == pokemonBelt
+	end
+	return false
+end
+
 function Player:onMoveItem(item, count, fromPosition, toPosition, fromCylinder, toCylinder)
+	-- cinturon pokemon: no se quita y solo admite pokeballs
+	if item:getId() == pokemonBelt then
+		self:sendCancelMessage("Sorry, not possible.")
+		return false
+	end
+	if isPokemonBeltPosition(self, toPosition) and not item:isPokeball() then
+		self:sendCancelMessage("Only Pokemon can go in the Trainer Belt.")
+		return false
+	end
+	-- y las pokeballs solo van en el Trainer Belt o en el PC: ni en la mochila ni en otras
+	-- bolsas que lleve encima (la casilla de municion se sigue permitiendo, la usa el sistema)
+	if item:isPokeball() and toPosition.x == 65535 and not isPokemonBeltPosition(self, toPosition) then
+		local carried = false
+		if toPosition.y >= 64 then
+			local container = self:getContainerById(toPosition.y - 64)
+			local top = container and container:getTopParent()
+			carried = top ~= nil and top.isPlayer ~= nil and top:isPlayer()
+		elseif toPosition.y ~= CONST_SLOT_AMMO then
+			carried = true
+		end
+		if carried then
+			self:sendCancelMessage("Pokemon can only go in your Trainer Belt or the PC.")
+			return false
+		end
+	end
 	if item:getId() == 2270 or item:getId() == 2263 or item:getId() == 8922 then self:sendCancelMessage("Sorry, not possible.") return false end
 	if item:getId() == 27634 and toPosition.x ~= 65535 and self:getStorageValue(storageBike) > 0 then self:sendCancelMessage("Sorry, not possible.") return false end
 	if item:getId() == 26749 then
@@ -222,6 +262,9 @@ function Player:onItemMoved(item, count, fromPosition, toPosition, fromCylinder,
 	if item:isPokeball() or item:isContainer() then
 		self:refreshPokemonBar({}, {})
 	end
+	-- iconos de las pokeballs y cantidades al momento (si no, hasta un segundo sin dibujo)
+	self:sendPokeballIcons()
+	self:sendItemCounts()
 end
 
 function Player:onMoveCreature(creature, fromPosition, toPosition)

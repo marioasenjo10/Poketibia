@@ -50,14 +50,14 @@ function init()
   searchText = npcWindow:recursiveGetChildById('searchText')
 
   setupPanel = npcWindow:recursiveGetChildById('setupPanel')
-  quantityScroll = setupPanel:getChildById('quantityScroll')
-  nameLabel = setupPanel:getChildById('name')
-  priceLabel = setupPanel:getChildById('price')
-  moneyLabel = setupPanel:getChildById('money')
-  weightDesc = setupPanel:getChildById('weightDesc')
-  weightLabel = setupPanel:getChildById('weight')
-  capacityDesc = setupPanel:getChildById('capacityDesc')
-  capacityLabel = setupPanel:getChildById('capacity')
+  quantityScroll = setupPanel:recursiveGetChildById('quantityScroll')
+  nameLabel = setupPanel:recursiveGetChildById('name')
+  priceLabel = setupPanel:recursiveGetChildById('price')
+  moneyLabel = setupPanel:recursiveGetChildById('money')
+  weightDesc = setupPanel:recursiveGetChildById('weightDesc')
+  weightLabel = setupPanel:recursiveGetChildById('weight')
+  capacityDesc = setupPanel:recursiveGetChildById('capacityDesc')
+  capacityLabel = setupPanel:recursiveGetChildById('capacity')
   tradeButton = npcWindow:recursiveGetChildById('tradeButton')
 
   buyWithBackpack = npcWindow:recursiveGetChildById('buyWithBackpack')
@@ -81,6 +81,7 @@ function init()
   setShowWeight(false)
   setShowYourCapacity(false)
   ignoreCapacity:setChecked(true)
+  showAllItems:setChecked(false)
 
   if g_game.isOnline() then
     playerFreeCapacity = g_game.getLocalPlayer():getFreeCapacity()
@@ -158,6 +159,46 @@ function onQuantityValueChange(quantity)
     weightLabel:setText(string.format('%.2f', selectedItem.weight*quantity) .. ' ' .. WEIGHT_UNIT)
     priceLabel:setText(formatCurrency(getItemPrice(selectedItem)))
   end
+  updateQuantityControls()
+end
+
+-- selector de cantidad (- / + / Max) sobre quantityScroll, que no se ve
+function updateQuantityControls()
+  local value, minimum, maximum = quantityScroll:getValue(), quantityScroll:getMinimum(), quantityScroll:getMaximum()
+  local has = selectedItem ~= nil and maximum > 0
+  setupPanel:getChildById('qtyLabel'):setText(has and tostring(value) or '0')
+  setupPanel:getChildById('minusButton'):setEnabled(has and value > minimum)
+  setupPanel:getChildById('plusButton'):setEnabled(has and value < maximum)
+  setupPanel:getChildById('maxButton'):setEnabled(has and value < maximum)
+end
+
+function changeQuantity(delta)
+  if not selectedItem then return end
+  -- con Shift, de 10 en 10
+  if g_keyboard.isShiftPressed() then delta = delta * 10 end
+  local value = math.max(quantityScroll:getMinimum(), math.min(quantityScroll:getMaximum(), quantityScroll:getValue() + delta))
+  quantityScroll:setValue(value)
+  updateQuantityControls()
+end
+
+function setMaxQuantity()
+  if not selectedItem then return end
+  quantityScroll:setValue(quantityScroll:getMaximum())
+  updateQuantityControls()
+end
+
+-- icono, nombre y precio por unidad del objeto elegido (o el aviso si no hay ninguno)
+local function showSelection(item)
+  local selItem = setupPanel:getChildById('selItem')
+  local unit = setupPanel:getChildById('unitPrice')
+  setupPanel:getChildById('emptyHint'):setVisible(item == nil)
+  if item then
+    selItem:setItem(item.ptr)
+    unit:setText(formatCurrency(item.price) .. ' / unidad')
+  else
+    selItem:setItem(nil)
+    unit:setText('')
+  end
 end
 
 function onTradeTypeChange(radioTabs, selected, deselected)
@@ -166,10 +207,7 @@ function onTradeTypeChange(radioTabs, selected, deselected)
   deselected:setOn(false)
 
   local currentTradeType = getCurrentTradeType()
-  buyWithBackpack:setVisible(currentTradeType == BUY)
-  ignoreCapacity:setVisible(false)
-  ignoreEquipped:setVisible(currentTradeType == SELL)
-  showAllItems:setVisible(currentTradeType == SELL)
+  -- las opciones de Tibia (mochila, equipado, mostrar todo) no se muestran
   sellAllButton:setVisible(currentTradeType == SELL)
 
   refreshTradeItems()
@@ -185,6 +223,8 @@ function onTradeClick()
 end
 
 function onSearchTextChange()
+  local hint = npcWindow and npcWindow:recursiveGetChildById('searchHint')
+  if hint then hint:setVisible(searchText:getText() == '') end
   refreshPlayerGoods()
 end
 
@@ -255,6 +295,8 @@ function clearSelectedItem()
     radioItems:selectWidget(nil)
     selectedItem = nil
   end
+  showSelection(nil)
+  updateQuantityControls()
 end
 
 function getCurrentTradeType()
@@ -326,6 +368,8 @@ function refreshItem(item)
   end
 
   setupPanel:enable()
+  showSelection(item)
+  updateQuantityControls()
 end
 
 function refreshTradeItems()
@@ -348,16 +392,10 @@ function refreshTradeItems()
     local itemBox = g_ui.createWidget('NPCItemBox', itemsPanel)
     itemBox.item = item
 
-    local text = ''
-    local name = item.name
-    text = text .. name
-    if showWeight then
-      local weight = string.format('%.2f', item.weight) .. ' ' .. WEIGHT_UNIT
-      text = text .. '\n' .. weight
-    end
-    local price = formatCurrency(item.price)
-    text = text .. '\n' .. price
-    itemBox:setText(text)
+    -- tarjeta: nombre y precio por unidad en sus etiquetas
+    itemBox:getChildById('name'):setText(item.name)
+    itemBox:getChildById('price'):setText(formatCurrency(item.price))
+    itemBox:setTooltip(item.name)
 
     local itemWidget = itemBox:getChildById('item')
     itemWidget:setItem(item.ptr)
@@ -375,7 +413,7 @@ function refreshPlayerGoods()
 
   checkSellAllTooltip()
 
-  moneyLabel:setText(formatCurrency(playerMoney))
+  moneyLabel:setText('Saldo: ' .. formatCurrency(playerMoney))
   capacityLabel:setText(string.format('%.2f', playerFreeCapacity) .. ' ' .. WEIGHT_UNIT)
 
   local currentTradeType = getCurrentTradeType()

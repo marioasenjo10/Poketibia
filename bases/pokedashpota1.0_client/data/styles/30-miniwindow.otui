@@ -1,14 +1,15 @@
 MiniWindow < UIMiniWindow
-  font: verdana-11px-antialised
+  font: poppins-semibold-11px
   icon-rect: 4 4 16 16
   width: 192
   height: 200
-  text-offset: 24 5
+  text-offset: 24 4
   text-align: topLeft
+  color: #e8eef7
   image-source: /images/ui/miniwindow
-  image-border: 4
+  image-border: 7
   image-border-top: 23
-  image-border-bottom: 4
+  image-border-bottom: 7
   focusable: false
   &minimizedHeight: 24
 

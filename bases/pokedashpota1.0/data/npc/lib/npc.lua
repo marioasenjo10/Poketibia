@@ -28,6 +28,7 @@ function npcHealPlayer(player)
 			ball:transform(balls[ballKey].usedOn)
 		end
 	end
+	player:refreshPokemonBar({}, {})
 	local window = ModalWindow(1001, "Pokemon Center", "You and your pokemon have been healed!")
 	window:addButton(1, "Ok")
 	window:setDefaultEnterButton(1)

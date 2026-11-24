@@ -18,6 +18,12 @@
 		<attribute key="containerSize" value="16" />
 		<attribute key="slotType" value="feet" />
 	</item>
+	<!-- cinturon pokemon (era la "pirate bag"): 6 casillas en el pecho, solo pokeballs -->
+	<item id="5927" article="a" name="trainer belt">
+		<attribute key="containerSize" value="6" />
+		<attribute key="slotType" value="body" />
+		<attribute key="weight" value="0" />
+	</item>
 	<item id="2263" article="an" name="info button">
 		<attribute key="slotType" value="info" />
 	</item>
@@ -18846,11 +18852,6 @@
 	<item id="5926" article="a" name="pirate backpack">
 		<attribute key="weight" value="1800" />
 		<attribute key="containerSize" value="20" />
-		<attribute key="slotType" value="backpack" />
-	</item>
-	<item id="5927" article="a" name="pirate bag">
-		<attribute key="weight" value="800" />
-		<attribute key="containerSize" value="8" />
 		<attribute key="slotType" value="backpack" />
 	</item>
 	<item id="5928" article="an" name="empty goldfish bowl">

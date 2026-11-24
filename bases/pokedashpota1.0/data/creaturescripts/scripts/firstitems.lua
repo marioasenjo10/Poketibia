@@ -18,7 +18,9 @@ function onLogin(player)
 			player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
 		end
 		local backpack = player:getSlotItem(CONST_SLOT_BACKPACK)
-		local addPokeball = backpack:addItem(26661, 1)
+		-- el pokemon inicial va al cinturon pokemon
+		player:checkPokemonBelt()
+		local addPokeball = (player:getPokemonBelt() or backpack):addItem(26661, 1)
 --		player:addItem(27141, 1, false, 1, CONST_SLOT_HEAD)
 		if addPokeball then
 			addPokeball:setSpecialAttribute("pokeName", name)

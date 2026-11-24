@@ -43,7 +43,7 @@ function init()
   reasonsTextList = ruleViolationWindow:getChildById('reasonList')
   actionsTextList = ruleViolationWindow:getChildById('actionList')
 
-  g_keyboard.bindKeyDown('Ctrl+Y', function() show() end)
+  -- sin Ctrl+Y (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+Y', function() show() end)
 
   if g_game.isOnline() then
     loadReasons()
@@ -52,7 +52,7 @@ end
 
 function terminate()
   disconnect(g_game, { onGMActions = loadReasons })
-  g_keyboard.unbindKeyDown('Ctrl+Y')
+  -- sin Ctrl+Y (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+Y')
 
   ruleViolationWindow:destroy()
 end

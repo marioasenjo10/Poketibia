@@ -16,13 +16,13 @@ end
 
 function online()
   if g_game.getFeature(GamePlayerMounts) then
-    g_keyboard.bindKeyDown('Ctrl+R', toggleMount)
+    -- sin Ctrl+R (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+R', toggleMount)
   end
 end
 
 function offline()
   if g_game.getFeature(GamePlayerMounts) then
-    g_keyboard.unbindKeyDown('Ctrl+R')
+    -- sin Ctrl+R (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+R')
   end
 end
 

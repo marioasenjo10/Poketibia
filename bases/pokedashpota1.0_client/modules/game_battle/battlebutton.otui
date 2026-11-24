@@ -1,2 +1,79 @@
-BattleButton < CreatureButton
+// Fila de la lista de Combate, con el estilo de la Pokebar: capsula con retrato en circulo,
+// nombre y barra de vida redondeada. Mantiene los ids que usa UICreatureButton
+// (creature, spacer, skull, emblem, label, lifeBar). El fondo (objetivo en rojo, seguido en
+// verde, raton encima) lo pone battle.lua segun el estado.
+BattleButton < UICreatureButton
   &isBattleButton: true
+  height: 40
+  margin-bottom: 4
+  image-source: /images/statusbar/battle_row
+  image-border: 20
+
+  UIWidget
+    id: portraitBg
+    size: 32 32
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    image-source: /images/statusbar/circle
+    phantom: true
+
+  UICreature
+    id: creature
+    size: 32 32
+    anchors.centerIn: portraitBg
+    phantom: true
+
+  UIWidget
+    id: portrait
+    size: 34 34
+    anchors.centerIn: portraitBg
+    image-smooth: true
+    phantom: true
+    visible: false
+
+  UIWidget
+    id: spacer
+    width: 8
+    anchors.left: portraitBg.right
+    anchors.top: parent.top
+    phantom: true
+
+  UIWidget
+    id: skull
+    height: 11
+    anchors.left: spacer.right
+    anchors.top: parent.top
+    margin-top: 6
+    phantom: true
+
+  UIWidget
+    id: emblem
+    height: 11
+    anchors.left: skull.right
+    anchors.top: parent.top
+    margin-top: 6
+    phantom: true
+
+  Label
+    id: label
+    anchors.left: emblem.right
+    anchors.right: parent.right
+    anchors.top: parent.top
+    margin-top: 5
+    margin-right: 14
+    font: poppins-semibold-11px
+    color: #c9d1dc
+    phantom: true
+
+  ThinTrack
+    id: lifeTrack
+    anchors.left: spacer.right
+    anchors.right: parent.right
+    anchors.top: label.bottom
+    margin-top: 4
+    margin-right: 14
+
+  RowThinBar
+    id: lifeBar
+    background-color: #2f9e44

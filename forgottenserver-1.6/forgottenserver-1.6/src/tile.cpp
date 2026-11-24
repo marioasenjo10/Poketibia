@@ -497,7 +497,16 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 		}
 
 		if (const Monster* monster = creature->getMonster()) {
-			if (hasFlag(TILESTATE_PROTECTIONZONE | TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
+			// PokeDash: el pokemon de un jugador acompana a su dueno dentro de las zonas protegidas
+			// (centros pokemon...). Los salvajes siguen sin poder entrar. Dentro no hay combate:
+			// lo impide combat.cpp para cualquier casilla protegida.
+			const Creature* master = monster->getMaster();
+			const bool playerSummon = master && master->getPlayer();
+			uint32_t blockedFlags = TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT;
+			if (!playerSummon) {
+				blockedFlags |= TILESTATE_PROTECTIONZONE;
+			}
+			if (hasFlag(blockedFlags)) {
 				return RETURNVALUE_NOTPOSSIBLE;
 			}
 

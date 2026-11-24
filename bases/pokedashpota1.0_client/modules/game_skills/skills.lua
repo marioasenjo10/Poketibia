@@ -25,14 +25,16 @@ function init()
     onGameEnd = offline
   })
 
-  skillsButton = modules.client_topmenu.addRightGameToggleButton('skillsButton', 'Estado del entrenador (Ctrl+S)', '/images/topmenu/skills', toggle)
+  skillsButton = modules.client_topmenu.addRightGameToggleButton('skillsButton', 'Estado del entrenador', '/images/topmenu/skills', toggle)
   skillsButton:setOn(true)
   skillsWindow = g_ui.loadUI('skills', modules.game_interface.getRightPanel())
 
-  g_keyboard.bindKeyDown('Ctrl+S', toggle)
+  -- sin Ctrl+S (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+S', toggle)
 
   refresh()
   skillsWindow:setup()
+  -- la ventana ya no se usa: el boton muestra u oculta las barras de abajo (game_statusbar)
+  skillsWindow:close()
 end
 
 function terminate()
@@ -59,7 +61,7 @@ function terminate()
     onGameEnd = offline
   })
 
-  g_keyboard.unbindKeyDown('Ctrl+S')
+  -- sin Ctrl+S (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+S')
   skillsWindow:destroy()
   skillsButton:destroy()
 end
@@ -176,19 +178,22 @@ function checkAlert(id, value, maxValue, threshold, greaterThan)
   end
 end
 
-function update()
-  local offlineTraining = skillsWindow:recursiveGetChildById('offlineTraining')
-  if not g_game.getFeature(GameOfflineTrainingTime) then
-    offlineTraining:hide()
-  else
-    offlineTraining:show()
-  end
+-- PokeDash: solo datos del entrenador. Mana, soul, regeneracion, entrenamiento offline,
+-- nivel magico y skills de lucha son de Tibia y aqui no se usan.
+local hiddenSkills = {'mana', 'soul', 'regenerationTime', 'offlineTraining', 'magiclevel'}
 
-  local regenerationTime = skillsWindow:recursiveGetChildById('regenerationTime')
-  if not g_game.getFeature(GamePlayerRegenerationTime) then
-    regenerationTime:hide()
-  else
-    regenerationTime:show()
+function update()
+  for _, id in ipairs(hiddenSkills) do
+    local widget = skillsWindow:recursiveGetChildById(id)
+    if widget then
+      widget:hide()
+    end
+  end
+  for i = Skill.Fist, Skill.ManaLeechAmount do
+    local widget = skillsWindow:recursiveGetChildById('skillId' .. i)
+    if widget then
+      widget:hide()
+    end
   end
 end
 
@@ -225,24 +230,18 @@ function refresh()
 
   local contentsPanel = skillsWindow:getChildById('contentsPanel')
   skillsWindow:setContentMinimumHeight(44)
-  if hasAdditionalSkills then
-    skillsWindow:setContentMaximumHeight(480)
-  else
-    skillsWindow:setContentMaximumHeight(390)
-  end
+  skillsWindow:setContentMaximumHeight(110)
 end
 
 function offline()
   if expSpeedEvent then expSpeedEvent:cancel() expSpeedEvent = nil end
 end
 
+-- boton "Estado del entrenador": muestra u oculta las barras de vida, resistencia y nivel
 function toggle()
-  if skillsButton:isOn() then
-    skillsWindow:close()
-    skillsButton:setOn(false)
-  else
-    skillsWindow:open()
-    skillsButton:setOn(true)
+  local statusbar = modules.game_statusbar
+  if statusbar and statusbar.toggleVisible then
+    skillsButton:setOn(statusbar.toggleVisible())
   end
 end
 

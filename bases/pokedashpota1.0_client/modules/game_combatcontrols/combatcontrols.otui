@@ -29,7 +29,7 @@ MiniWindow
   id: combatControlsWindow
   !text: 'Estado de combate'
   icon: /images/topmenu/combat
-  height: 72
+  height: 132
   &save: true
   @onClose: modules.game_combatcontrols.onMiniWindowClose()
 
@@ -45,3 +45,89 @@ MiniWindow
       id: fightDefensiveBox
       anchors.left: fightBalancedBox.right
       margin-left: 8
+
+    // pokemon que esta fuera (lo rellena game_pokemonbar)
+    UIWidget
+      id: activePokemon
+      anchors.top: fightBalancedBox.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 8
+      margin-left: 4
+      margin-right: 4
+      height: 50
+      phantom: true
+
+      // sin pokemon fuera solo se ve este aviso (game_pokemonbar)
+      UILabel
+        id: emptyText
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 2
+        text-auto-resize: true
+        font: poppins-semibold-11px
+        color: #98a2b3
+        !text: 'Sin Pok' .. string.char(233) .. 'mon fuera'
+        visible: false
+        phantom: true
+
+      UIWidget
+        id: portraitBox
+        size: 48 48
+        anchors.left: parent.left
+        anchors.top: parent.top
+        image-source: /images/bottombar/cell
+        image-border: 12
+        phantom: true
+
+      UIWidget
+        id: portrait
+        size: 42 42
+        anchors.centerIn: portraitBox
+        image-smooth: true
+        phantom: true
+
+      UICreature
+        id: creature
+        size: 46 46
+        anchors.centerIn: portraitBox
+        phantom: true
+
+      UILabel
+        id: name
+        anchors.top: parent.top
+        anchors.left: portraitBox.right
+        anchors.right: parent.right
+        margin-left: 6
+        font: poppins-semibold-11px
+        color: #ffffff
+        text-auto-resize: false
+        height: 15
+        phantom: true
+
+      PillTrack
+        id: healthTrack
+        anchors.top: name.bottom
+        anchors.left: name.left
+        anchors.right: parent.right
+        margin-top: 3
+
+      PillBar
+        id: health
+
+      PillText
+        id: movesText
+        anchors.right: parent.right
+        anchors.top: healthTrack.bottom
+        margin-top: 2
+
+      ThinTrack
+        id: movesTrack
+        anchors.left: name.left
+        anchors.right: movesText.left
+        anchors.top: healthTrack.bottom
+        margin-top: 8
+        margin-right: 6
+
+      ThinBar
+        id: moves

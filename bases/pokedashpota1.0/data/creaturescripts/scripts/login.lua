@@ -36,6 +36,14 @@ function onLogin(player)
 	player:registerEvent("DropLoot")
 	player:registerEvent("MonsterHealthChange")
 	player:registerEvent("TrainerAdvance")
+	-- iconos de pokemon en las pokeballs: reenviar todo al entrar
+	player:registerEvent("PokeballIcons")
+	if pokeballIconsSent then
+		pokeballIconsSent[player:getId()] = nil
+	end
+	if itemCountsSent then
+		itemCountsSent[player:getId()] = nil
+	end
 
 	-- Update questlog
 	player:updateQuestLog()
@@ -128,6 +136,8 @@ function onLogin(player)
 
 	-- Check slots
 	player:addSlotItems()
+	-- Cinturon pokemon (la primera vez se llena con las pokeballs de la mochila)
+	player:checkPokemonBelt()
 
 	-- No pokes are being used
 --	local balls = player:getPokeballs()

@@ -91,6 +91,7 @@ local function applyBallHealingTick(playerId, token)
 	end
 
 	ball:setSpecialAttribute("pokeHealth", math.min(health + amount, maxHealth))
+	player:refreshPokemonBar({}, {})
 	ticks = ticks - 1
 	ball:setSpecialAttribute("potionHealingTicks", ticks)
 	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)

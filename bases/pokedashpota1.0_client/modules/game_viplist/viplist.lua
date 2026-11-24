@@ -11,9 +11,9 @@ function init()
                     onVipStateChange = onVipStateChange })
 
 
-  g_keyboard.bindKeyDown('Ctrl+P', toggle)
+  -- sin Ctrl+P (choca con andar en WASD): g_keyboard.bindKeyDown('Ctrl+P', toggle)
 
-  vipButton = modules.client_topmenu.addRightGameToggleButton('vipListButton', tr('VIP List') .. ' (Ctrl+P)', '/images/topmenu/viplist', toggle)
+  vipButton = modules.client_topmenu.addRightGameToggleButton('vipListButton', tr('VIP List'), '/images/topmenu/viplist', toggle)
   vipButton:setOn(true)
   vipWindow = g_ui.loadUI('viplist', modules.game_interface.getRightPanel())
 
@@ -22,10 +22,15 @@ function init()
   end
   refresh()
   vipWindow:setup()
+  -- una sola vez: "Amigos" empieza cerrada (ocupaba sitio vacia); se abre con su boton de arriba
+  if not g_settings.getBoolean('viplist_closedOnce') then
+    vipWindow:close()
+    g_settings.set('viplist_closedOnce', true)
+  end
 end
 
 function terminate()
-  g_keyboard.unbindKeyDown('Ctrl+P')
+  -- sin Ctrl+P (choca con andar en WASD): g_keyboard.unbindKeyDown('Ctrl+P')
   disconnect(g_game, { onGameStart = refresh,
                        onGameEnd = clear,
                        onAddVip = onAddVip,

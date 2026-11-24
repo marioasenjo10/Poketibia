@@ -24,8 +24,8 @@ local function isInSameRestrictedArea(masterTile, summonTile)
 	if masterHouse or summonHouse then
 		return masterHouse == summonHouse
 	end
-	return masterTile:hasFlag(TILESTATE_PROTECTIONZONE)
-		== summonTile:hasFlag(TILESTATE_PROTECTIONZONE)
+	-- la zona protegida ya no separa: el pokemon del jugador entra andando (tile.cpp)
+	return true
 end
 
 local function canWalkSummonTo(tile, masterTile)
@@ -37,9 +37,6 @@ local function canWalkSummonTo(tile, masterTile)
 		or tile:hasFlag(TILESTATE_IMMOVABLEBLOCKSOLID)
 		or tile:hasFlag(TILESTATE_FLOORCHANGE)
 		or tile:hasFlag(TILESTATE_TELEPORT) then
-		return false
-	end
-	if tile:hasFlag(TILESTATE_PROTECTIONZONE) ~= masterTile:hasFlag(TILESTATE_PROTECTIONZONE) then
 		return false
 	end
 

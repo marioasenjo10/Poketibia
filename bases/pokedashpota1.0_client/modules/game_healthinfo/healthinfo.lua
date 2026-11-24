@@ -118,7 +118,7 @@ function onHealthChange(localPlayer, health, maxHealth)
 end
 
 function onLevelChange(localPlayer, value, percent)
-  experienceBar:setText(percent .. '%')
+  experienceBar:setText('Exp ' .. percent .. '%')
   experienceBar:setTooltip(tr(experienceTooltip, percent, value+1))
   experienceBar:setPercent(percent)
 end

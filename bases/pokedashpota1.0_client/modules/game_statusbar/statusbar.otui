@@ -1,0 +1,85 @@
+// Orbes de vida (izquierda) y nivel (derecha) a los lados de la barra de objetos
+// (game_inventory: inventoryWindow) y la resistencia como linea fina encima de ella.
+// Aqui solo los estilos: statusbar.lua los crea en el panel del mapa y los ancla a la barra.
+// El anillo es un recorte de /images/statusbar/ring (101 anillos blancos, 0..100 %) que
+// statusbar.lua elige y tine de color.
+
+StatusOrb < UIWidget
+  size: 84 84
+  image-source: /images/statusbar/orb_bg
+  phantom: false
+
+  UIWidget
+    id: ring
+    anchors.fill: parent
+    image-source: /images/statusbar/ring
+    image-clip: 0 0 84 84
+    phantom: true
+
+  UIWidget
+    id: icon
+    size: 18 18
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 15
+    phantom: true
+
+  Label
+    id: value
+    anchors.top: icon.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 1
+    text-auto-resize: true
+    font: poppins-bold-16px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: sub
+    anchors.top: value.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    text-auto-resize: true
+    font: noto-bold-9px
+    color: #98a2b3
+    phantom: true
+
+// stamina: linea fina sobre la barra (statusbar.lua la ancla a inventoryWindow); solo se ve
+// cuando no esta llena
+StaminaLine < UIWidget
+  height: 20
+  image-source: /images/ui/pokebar
+  image-border: 9
+  phantom: false
+
+  Label
+    id: staminaName
+    text: STAMINA
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 10
+    text-auto-resize: true
+    font: poppins-semibold-11px
+    color: #98a2b3
+    phantom: true
+
+  Label
+    id: staminaValue
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 10
+    text-auto-resize: true
+    font: poppins-semibold-11px
+    color: #e8eef7
+    phantom: true
+
+  ThinTrack
+    id: staminaTrack
+    anchors.left: staminaName.right
+    anchors.right: staminaValue.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 10
+    margin-right: 10
+
+  ThinBar
+    id: staminaBar
+    background-color: #3d5f8c

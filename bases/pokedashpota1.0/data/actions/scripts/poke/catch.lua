@@ -1,9 +1,14 @@
 local initialLevel = 1
 local initialBoost = 0
-local multiplierExpFirstNormal = 800
-local multiplierExpNormal = 200
-local multiplierExpFirstShiny = 3000
-local multiplierExpShiny = 1000
+-- Experiencia por capturar: cantidad fija, como una mision. No depende de la experiencia del
+-- pokemon, ni de la tasa de experiencia, ni de las etapas por nivel (esas solo multiplican
+-- la de matar). Primera captura: base + extra por cada nivel requerido del pokemon
+-- (getPokemonRequiredLevel: Caterpie 0 -> 500, Charmeleon 35 -> 1375, Charizard 70 -> 2250).
+local catchExpBase = 500
+local catchExpPerRequiredLevel = 25
+local catchExpRepeatFactor = 0.2      -- capturas siguientes: el 20 %
+local catchExpFirstShinyFactor = 3    -- primera shiny: el triple
+local catchExpShinyFactor = 0.5       -- shiny ya capturada antes: la mitad
 
 local function doPlayerSendEffect(cid, effect)
 	local player = Player(cid)
@@ -234,46 +239,51 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			player:setStorageValue(pityStorage, 0)
 		end
 		-- check how many pokeballs the player has
-		if player:getSlotItem(CONST_SLOT_BACKPACK) and player:getSlotItem(CONST_SLOT_BACKPACK):getEmptySlots() >= 1 and player:getFreeCapacity() >= 1 then -- add to backpack
+		-- al Trainer Belt si tiene sitio; si no, al PC (los pokemon nunca van a la mochila)
+		local belt = player:getPokemonBelt()
+		if belt and belt:getEmptySlots() >= 1 then -- add to belt
 			addEvent(doAddPokeball, delayMessage, player:getId(), name, initialBoost, ballKey, false, delayMessage)
 		else -- send to cp
 			local addPokeball = doAddPokeball(player:getId(), name, initialBoost, ballKey, true, delayMessage + 4000)
 			if not addPokeball then
 				print("ERROR! Player " .. player:getName() .. " lost pokemon " .. name .. "! addPokeball false")
 			end
-			addEvent(doPlayerSendTextMessage, delayMessage + 2000, player:getId(), MESSAGE_EVENT_ADVANCE, "Since you are at maximum capacity, your ball was sent to CP.")
+			addEvent(doPlayerSendTextMessage, delayMessage + 2000, player:getId(), MESSAGE_EVENT_ADVANCE, "Your Trainer Belt is full, your Pokemon was sent to the PC.")
 		end
 		
 		local playerLevel = player:getLevel()
 		local maxExp = getNeededExp(playerLevel + 2) - getNeededExp(playerLevel)
 		local maxExpShiny = getNeededExp(playerLevel + 5) - getNeededExp(playerLevel)
 
-		local givenExp = monsterType:getExperience() * configManager.getNumber(configKeys.RATE_EXPERIENCE)
+		local firstCatchExp = catchExpBase + catchExpPerRequiredLevel * getPokemonRequiredLevel(name)
+		local givenExp = firstCatchExp
 		if msgcontains(name, 'Shiny') and player:getStorageValue(storageCatch) == -1 then
-			givenExp = givenExp * multiplierExpFirstShiny
+			givenExp = firstCatchExp * catchExpFirstShinyFactor
 			if givenExp > maxExpShiny then
 				givenExp = maxExpShiny 
 			end
 			addEvent(doPlayerSendTextMessage, delayMessage + 1000, player:getId(), MESSAGE_EVENT_ADVANCE, "You got a bonus exp for your first catch of " .. name .. "!")
 		elseif msgcontains(name, 'Shiny') and player:getStorageValue(storageCatch) > 0 then
-			givenExp = givenExp * multiplierExpShiny
+			givenExp = firstCatchExp * catchExpShinyFactor
 			if givenExp > maxExpShiny then
 				givenExp = maxExpShiny 
 			end
 			addEvent(doPlayerSendTextMessage, delayMessage + 1000, player:getId(), MESSAGE_EVENT_ADVANCE, "You got a bonus exp for catching a shiny!")
 		elseif not msgcontains(name, 'Shiny') and player:getStorageValue(storageCatch) == -1 then
-			givenExp = givenExp * multiplierExpFirstNormal
+			givenExp = firstCatchExp
 			if givenExp > maxExp then
 				givenExp = maxExp
 			end
 			addEvent(doPlayerSendTextMessage, delayMessage + 1000, player:getId(), MESSAGE_EVENT_ADVANCE, "You got a bonus exp for your first catch of " .. name .. "!")
 		else
-			givenExp = givenExp * multiplierExpNormal
+			givenExp = firstCatchExp * catchExpRepeatFactor
 			if givenExp > maxExp then
 				givenExp = maxExp
 			end
 
 		end
+
+		givenExp = math.floor(givenExp)
 
 		if player:getStorageValue(storageCatch) == -1 then
 			player:setStorageValue(storageCatch, 1)

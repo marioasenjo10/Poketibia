@@ -1,0 +1,46 @@
+// Barras en forma de pastilla (vida, ataques...), el mismo estilo que las de abajo.
+// OTClient pinta el relleno en rectangulo: va encima de un "track" oscuro y la imagen del
+// PillBar redondea las esquinas pintando lo de fuera con el color del panel.
+// Uso: un PillTrack y justo despues el PillBar con anchors.fill: prev.
+
+PillTrack < UIWidget
+  height: 18
+  image-source: /images/statusbar/track
+  image-border: 9
+  phantom: true
+
+PillBar < UIProgressBar
+  anchors.fill: prev
+  image-source: /images/statusbar/pill
+  image-border: 9
+  background-color: #2f9e44
+  font: poppins-semibold-11px
+  color: #ffffff
+  text-offset: 0 1
+  phantom: true
+
+ThinTrack < UIWidget
+  height: 6
+  image-source: /images/statusbar/thin_track
+  image-border: 3
+  phantom: true
+
+ThinBar < UIProgressBar
+  anchors.fill: prev
+  image-source: /images/statusbar/thin_pill
+  image-border: 3
+  background-color: #3b82d9
+  phantom: true
+
+PillText < UILabel
+  font: poppins-semibold-11px
+  color: #c9d1dc
+  text-auto-resize: true
+  phantom: true
+
+// dentro de las capsulas (Pokebar, Combate): esquinas con el color de la capsula (pill_row)
+RowPillBar < PillBar
+  image-source: /images/statusbar/pill_row
+
+RowThinBar < ThinBar
+  image-source: /images/statusbar/thin_pill_row

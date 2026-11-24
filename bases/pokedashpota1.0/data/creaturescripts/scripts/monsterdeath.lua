@@ -19,6 +19,8 @@ function onDeath(creature, corpse, killer, mostDamageKiller, unjustified, mostDa
 		creature:unregisterEvent("MonsterDeath")
 		player:say("Thanks, " .. creature:getName() .. "!", TALKTYPE_MONSTER_SAY)
 		item:setSpecialAttribute("isBeingUsed", 0)
+		player:sendExtendedOpcode(70, "")
+		player:refreshPokemonBar({}, {})
 	end
     end
     return true

@@ -1,0 +1,10 @@
+Module
+  name: game_statusbar
+  description: Barras de vida, resistencia y experiencia encima de la barra de objetos
+  author: pokedash
+  sandboxed: true
+  scripts: [ statusbar ]
+  @onLoad: init()
+  @onUnload: terminate()
+  dependencies:
+    - game_interface

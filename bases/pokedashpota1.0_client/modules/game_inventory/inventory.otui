@@ -89,50 +89,101 @@ OrderSlot < InventoryItem
 // casilla de la barra de abajo: el objeto real sigue debajo (para usarlo / arrastrarlo),
 // pero lo tapa la casilla con el icono nuevo. El icono y la tecla los pone inventory.lua
 BarCell < UIWidget
-  size: 60 74
+  size: 50 50
 
 BarSlot < UIItem
-  size: 52 52
-  padding: 12
+  size: 50 50
+  padding: 11
   anchors.top: parent.top
   anchors.horizontalCenter: parent.horizontalCenter
 
+  // casilla opaca que tapa el objeto real de debajo, con el icono nuevo encima. Tamano fijo
+  // y centrada: anclada con fill se quedaba en el hueco del padding (28px) y no se veia
   UIWidget
     id: icon
-    anchors.fill: parent
+    anchors.centerIn: parent
+    size: 50 50
     phantom: true
     image-source: /images/bottombar/cell
     image-border: 12
 
     UIWidget
       id: img
-      size: 36 36
+      size: 34 34
       anchors.centerIn: parent
+      image-smooth: true
       phantom: true
 
   Label
     id: key
     anchors.left: parent.left
     anchors.top: parent.top
-    margin-left: -6
-    margin-top: -6
+    margin-left: -16
+    margin-top: -16
     image-source: /images/bottombar/keycap
     image-border: 5
     padding: 0 4 3 4
     text-auto-resize: true
     font: noto-bold-9px
-    color: #1b2230
+    color: #e6edf7
     phantom: true
     visible: false
 
+// el nombre ya no se ve debajo: sale al pasar el raton (inventory.lua lo pone de tooltip)
 BarLabel < Label
-  anchors.bottom: parent.bottom
-  anchors.left: parent.left
-  anchors.right: parent.right
-  height: 16
-  font: poppins-semibold-11px
-  color: #ffffff
-  text-align: center
+  visible: false
+  phantom: true
+
+// casillas de objetos 1-9 y 0 (itembar.lua): se arrastra un objeto encima para asignarlo,
+// clic o tecla para usarlo, clic derecho para vaciarla
+HotItemCell < UIWidget
+  size: 50 50
+
+  UIItem
+    id: item
+    size: 50 50
+    padding: 8
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    virtual: true
+    image-source: /images/bottombar/cell
+    image-border: 12
+
+    $hover:
+      image-source: /images/bottombar/cell_hover
+
+    Label
+      id: key
+      anchors.left: parent.left
+      anchors.top: parent.top
+      margin-left: -13
+      margin-top: -13
+      image-source: /images/bottombar/keycap
+      image-border: 5
+      padding: 0 4 3 4
+      text-auto-resize: true
+      font: noto-bold-9px
+      color: #e6edf7
+      phantom: true
+
+    // cantidad dentro de la casilla, abajo a la derecha
+    Label
+      id: count
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-right: -4
+      margin-bottom: -5
+      text-auto-resize: true
+      font: poppins-semibold-11px
+      color: #ffffff
+      phantom: true
+
+ItemBarSeparator < UIWidget
+  size: 1 40
+  margin-top: 5
+  margin-left: 4
+  margin-right: 4
+  background-color: #353943
   phantom: true
 
 // barra de objetos (pokedex, order, rope, rod, badges) abajo del mapa, encima del chat
@@ -141,8 +192,8 @@ UIWidget
   anchors.bottom: parent.bottom
   anchors.horizontalCenter: parent.horizontalCenter
   margin-bottom: 4
-  height: 94
-  padding: 10 14
+  height: 66
+  padding: 8 10
   image-source: /images/bottombar/bar
   image-border: 18
   layout:
@@ -155,35 +206,57 @@ UIWidget
       id: slot12
       &position: {x=65535, y=12, z=0}
     BarLabel
-      text: POKEDEX
+      text: POKÉDEX
 
   BarCell
     BarSlot
       id: slot11
       &position: {x=65535, y=11, z=0}
     BarLabel
-      text: ORDER
+      text: ORDEN
 
   BarCell
     BarSlot
       id: slot9
       &position: {x=65535, y=9, z=0}
     BarLabel
-      text: ROPE
+      text: CUERDA
 
   BarCell
     BarSlot
       id: slot2
       &position: {x=65535, y=2, z=0}
     BarLabel
-      text: ROD
+      text: CAÑA
 
   BarCell
     BarSlot
       id: slot8
       &position: {x=65535, y=8, z=0}
     BarLabel
-      text: BADGES
+      text: MEDALLAS
+
+  ItemBarSeparator
+  HotItemCell
+    id: hotItem1
+  HotItemCell
+    id: hotItem2
+  HotItemCell
+    id: hotItem3
+  HotItemCell
+    id: hotItem4
+  HotItemCell
+    id: hotItem5
+  HotItemCell
+    id: hotItem6
+  HotItemCell
+    id: hotItem7
+  HotItemCell
+    id: hotItem8
+  HotItemCell
+    id: hotItem9
+  HotItemCell
+    id: hotItem10
 
   BackSlot
     visible: false

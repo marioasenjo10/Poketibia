@@ -6,6 +6,8 @@ function init()
                        onSizeChange = onContainerChangeSize,
                        onUpdateItem = onContainerUpdateItem })
   connect(Game, { onGameEnd = clean() })
+  initPokeballIcons()
+  initPokemonBelt()
 
   reloadContainers()
 end
@@ -16,6 +18,8 @@ function terminate()
                           onSizeChange = onContainerChangeSize,
                           onUpdateItem = onContainerUpdateItem })
   disconnect(Game, { onGameEnd = clean() })
+  terminatePokeballIcons()
+  terminatePokemonBelt()
 end
 
 function reloadContainers()
@@ -48,6 +52,7 @@ function refreshContainerItems(container)
   if container:hasPages() then
     refreshContainerPages(container)
   end
+  refreshPokeballIcons(container)
 end
 
 function toggleContainerPages(containerWindow, pages)
@@ -141,9 +146,13 @@ function onContainerOpen(container, previousContainer)
   end
 
   containerWindow:setup()
+  decoratePokemonBelt(container, containerWindow)
+  refreshPokeballIcons(container)
 end
 
 function onContainerClose(container)
+  onPokemonBeltClose(container)
+  forgetPokeballIcons(container)
   destroy(container)
 end
 
@@ -156,4 +165,5 @@ function onContainerUpdateItem(container, slot, item, oldItem)
   if not container.window then return end
   local itemWidget = container.itemsPanel:getChildById('item' .. slot)
   itemWidget:setItem(item)
+  refreshPokeballIcons(container)
 end
