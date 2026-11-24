@@ -348,6 +348,11 @@ function Monster:onSpawn(position, startup, artificial)
 			self:setMaxHealth(maxHealth)
 			self:setHealth(maxHealth)
 		end
+		-- Misma velocidad que un pokemon propio de su especie (sin escalado por nivel).
+		local totalSpeed = self:getTotalSpeed()
+		if totalSpeed > 0 and self:getSpeed() ~= totalSpeed then
+			self:changeSpeed(totalSpeed - self:getSpeed())
+		end
 	end
 	return true
 end
