@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <monster name="Shiny Mawile" nameDescription="a shiny mawile" race="steel" race2="fairy" experience="74" speed="150" manacost="0">
-	<level min="30" max="50"/>
 	<health now="1598" max="1598" />
 	<look type="1792" head="113" body="57" legs="95" feet="113" corpse="28358" />
 	<targetchange interval="5000" chance="0" />

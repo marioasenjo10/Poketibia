@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <monster name="Shiny Croagunk" nameDescription="a shiny croagunk" race="poison" race2="fighting" experience="45" speed="150" manacost="0">
-	<level min="8" max="18"/>
 	<health now="1224" max="1224" />
 	<look type="3332" head="113" body="57" legs="95" feet="113" corpse="38855" />
 	<targetchange interval="5000" chance="0" />
