@@ -6,6 +6,7 @@ combat:setArea(createCombatArea(AREA_CIRCLE3X3))
 
 local sleepDuration = 5000
 local sleepingTargets = {}
+local sleepConditionSubId = 65055
 
 local pilotSpecies = {
 	["venusaur"] = true,
@@ -27,7 +28,7 @@ local function wakeTarget(targetId, expiresAt)
 	local target = Monster(targetId)
 	if target and sleepingTargets[targetId] == expiresAt then
 		sleepingTargets[targetId] = nil
-		target:removeCondition(CONDITION_ROOT)
+		target:removeCondition(CONDITION_PARALYZE, CONDITIONID_COMBAT, sleepConditionSubId)
 		target:searchTarget()
 	end
 end
@@ -37,9 +38,14 @@ function onTargetCreature(creature, target)
 		return
 	end
 
-	local root = Condition(CONDITION_ROOT)
-	root:setParameter(CONDITION_PARAM_TICKS, sleepDuration)
-	target:addCondition(root)
+	local paralysis = Condition(CONDITION_PARALYZE)
+	if not paralysis then
+		return
+	end
+	paralysis:setParameter(CONDITION_PARAM_TICKS, sleepDuration)
+	paralysis:setParameter(CONDITION_PARAM_SPEED, -math.max(target:getSpeed(), 1))
+	paralysis:setParameter(CONDITION_PARAM_SUBID, sleepConditionSubId)
+	target:addCondition(paralysis)
 	local expiresAt = os.time() + 5
 	local targetId = target:getId()
 	sleepingTargets[targetId] = expiresAt

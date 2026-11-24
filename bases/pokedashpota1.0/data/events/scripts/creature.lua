@@ -1,5 +1,7 @@
+local SLEEP_POWDER_SUBID = 65055
+
 function isCreatureSleeping(creature)
-	return creature ~= nil and type(creature.hasCondition) == "function" and creature:hasCondition(CONDITION_ROOT)
+	return creature ~= nil and type(creature.hasCondition) == "function" and creature:hasCondition(CONDITION_PARALYZE, SLEEP_POWDER_SUBID)
 end
 
 function Creature:onChangeOutfit(outfit)
