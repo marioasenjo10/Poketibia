@@ -63,6 +63,8 @@ function onLogin(player)
 	-- Nombres de las ciudades para el mapa grande del cliente
 	player:checkTownDiscovery()
 	player:sendTownList()
+	-- Centros Pokemon y tiendas en el mapa
+	player:sendMapPois()
 
 	-- Check fly
 --	if player:getStorageValue(storageFly) > 0 or player:getStorageValue(storageSurf) > 0 or player:getStorageValue(storageDive) > 0 then

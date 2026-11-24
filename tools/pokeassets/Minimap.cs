@@ -350,7 +350,7 @@ public static class WorldMap
 			int r = 0, g = 0, bl = 0;
 			if (c > 0 && c < 216) { r = c / 36 % 6 * 51; g = c / 6 % 6 * 51; bl = c % 6 * 51; }
 			pal[c] = (r << 16) | (g << 8) | bl;
-			if (c == 255) pal[c] = 0x2A5580; // sin casillas: mar profundo (igual que el fondo del minimapa)
+			if (c == 255) pal[c] = 0x336699; // sin casillas: el mismo azul que el agua (y el fondo del minimapa), sin cortes
 		}
 		return pal;
 	}

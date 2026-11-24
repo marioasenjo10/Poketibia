@@ -13,6 +13,9 @@ WORLD_CHUNKS_DIR = '/game_minimap/world/'    -- mapa grande suavizado en trozos 
 WORLD_CHUNKS_MIN_SCALE = 2                   -- con menos zoom no se notan los cuadraditos
 townLabels = {}
 pokedexFlags = {}
+OPCODE_MAP_POIS = 74 -- Centros Pokemon y tiendas (servidor: lib/core/mappois.lua)
+mapPois = {}
+POI_MIN_SCALE = 1    -- con el mapa mas alejado no se ven (serian puntitos encima de todo)
 worldChunks = {}
 worldChunkCount = 0
 local worldIndex = nil
@@ -41,6 +44,8 @@ function init()
   g_keyboard.bindKeyDown('Ctrl+Tab', toggleFullMap)
   g_keyboard.bindKeyDown('Escape', closeFullMap, gameRootPanel)
   ProtocolGame.registerExtendedOpcode(OPCODE_TOWNS, onTownsOpcode)
+  pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_MAP_POIS)
+  ProtocolGame.registerExtendedOpcode(OPCODE_MAP_POIS, onMapPoisOpcode)
 
   minimapWindow:setup()
 
@@ -92,6 +97,8 @@ function terminate()
   g_keyboard.unbindKeyDown('Ctrl+Tab')
   g_keyboard.unbindKeyDown('Escape', gameRootPanel)
   ProtocolGame.unregisterExtendedOpcode(OPCODE_TOWNS)
+  pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_MAP_POIS)
+  clearMapPois()
   clearPokedexFlags()
   clearTownLabels()
   clearWorldChunks()
@@ -126,6 +133,7 @@ function online()
 end
 
 function offline()
+  clearMapPois()
   if fullmapView then
     toggleFullMap()
   end
@@ -321,6 +329,42 @@ function askTeleport(townName, widget, discovered)
   menu:display(g_window.getMousePosition())
 end
 
+-- ===== Iconos de Centro Pokemon y tienda (minimapa y mapa grande) =====
+-- Van como hijos del minimapa, igual que las marcas del jugador: el propio minimapa los
+-- mueve al desplazarse, tanto en la ventana como en el mapa grande.
+
+local POI_INFO = {
+  c = { icon = '/images/map/poi_center', name = 'Centro Pok\233mon' },
+  s = { icon = '/images/map/poi_shop', name = 'Tienda' },
+}
+
+function clearMapPois()
+  for _, poi in ipairs(mapPois) do
+    poi:destroy()
+  end
+  mapPois = {}
+end
+
+function onMapPoisOpcode(protocol, opcode, buffer)
+  clearMapPois()
+  for entry in buffer:gmatch('[^;]+') do
+    local kind, x, y, z = entry:match('^(%a):(%d+):(%d+):(%d+)$')
+    local info = kind and POI_INFO[kind]
+    if info then
+      local poi = g_ui.createWidget('UIWidget')
+      poi:setSize({ width = 16, height = 16 })
+      poi:setImageSource(info.icon)
+      poi:setTooltip(info.name)
+      poi:setFocusable(false)
+      poi.pos = { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
+      minimapWidget:insertChild(worldChunkCount + 1, poi)
+      minimapWidget:centerInPosition(poi, poi.pos)
+      table.insert(mapPois, poi)
+    end
+  end
+  updateOverlayFloors()
+end
+
 -- muestra cada marca/ciudad solo en su piso (el mapa no las oculta solo)
 function updateOverlayFloors()
   if not minimapWidget then return end
@@ -331,6 +375,10 @@ function updateOverlayFloors()
       local zoomOk = (not label.minZoom or label.minZoom >= zoom) and (label.maxZoom or 0) <= zoom
       label:setVisible(zoomOk and label.pos.z == z)
     end
+  end
+  local poiScale = minimapWidget:getScale() >= POI_MIN_SCALE
+  for _, poi in ipairs(mapPois) do
+    poi:setVisible(poiScale and poi.pos.z == z)
   end
   for _, marker in ipairs(pokedexFlags) do
     if not marker:isDestroyed() and marker.pos then

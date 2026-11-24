@@ -285,6 +285,8 @@ public static class UiSkin
 		Save(MapGlyph("up"), map, "up");
 		Save(MapGlyph("down"), map, "down");
 		Save(MapGlyph("center"), map, "center");
+		Save(PoiIcon(true), map, "poi_center");
+		Save(PoiIcon(false), map, "poi_shop");
 		Save(Flat(32, 24, 12, Color.FromArgb(230, 17, 19, 23), Color.FromArgb(255, 60, 63, 72)), map, "town_pill");
 		Save(Flat(32, 24, 12, Color.FromArgb(240, 30, 33, 40), Accent), map, "town_pill_hover");
 		using (var me = new Bitmap(18, 18, PixelFormat.Format32bppArgb))
@@ -417,6 +419,31 @@ public static class UiSkin
 			using (var path = Round(r, thick / 2f - 0.01f))
 			using (var brush = new SolidBrush(color))
 				g.FillPath(brush, path);
+		}
+		return bmp;
+	}
+
+	// iconos del mapa: Centro Pokemon (rojo con cruz) y tienda (azul con bolsa), 16x16
+	static Bitmap PoiIcon(bool center)
+	{
+		var bmp = new Bitmap(16, 16, PixelFormat.Format32bppArgb);
+		using (var g = Canvas(bmp))
+		{
+			Color fill = center ? Color.FromArgb(255, 226, 72, 64) : Color.FromArgb(255, 52, 120, 210);
+			DrawFlat(g, new RectangleF(0.5f, 0.5f, 15, 15), 4, fill, Color.FromArgb(255, 20, 22, 26));
+			using (var white = new SolidBrush(Color.White))
+			{
+				if (center)
+				{
+					g.FillRectangle(white, 6.5f, 3.5f, 3, 9);
+					g.FillRectangle(white, 3.5f, 6.5f, 9, 3);
+				}
+				else
+				{
+					using (var path = Round(new RectangleF(3.5f, 6, 9, 7), 1.5f)) g.FillPath(white, path);
+					using (var pen = new Pen(Color.White, 1.4f)) g.DrawArc(pen, 5.5f, 3, 5, 6, 180, 180);
+				}
+			}
 		}
 		return bmp;
 	}
