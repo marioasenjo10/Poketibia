@@ -1,0 +1,271 @@
+// Panel de tareas: una tarjeta por tarea (quien la manda, que hay que hacer, progreso y premio)
+
+TaskKindChip < Label
+  height: 20
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  font: poppins-semibold-11px
+  color: #ffffff
+  text-align: center
+  phantom: true
+
+TaskProgress < UIWidget
+  height: 8
+  background-color: #2c3039
+  phantom: true
+
+  UIWidget
+    id: fill
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    width: 0
+    background-color: #43a047
+    phantom: true
+
+TaskCard < UIWidget
+  height: 160
+  background-color: #1b1e24
+  border-width: 1
+  border-color: #2c3039
+  phantom: true
+
+  TaskKindChip
+    id: kind
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 10
+    margin-left: 12
+
+  Label
+    id: giver
+    anchors.left: kind.right
+    anchors.verticalCenter: kind.verticalCenter
+    anchors.right: status.left
+    margin-left: 8
+    margin-right: 8
+    font: poppins-12px
+    color: #8b95a5
+    phantom: true
+
+  Label
+    id: status
+    anchors.right: parent.right
+    anchors.verticalCenter: kind.verticalCenter
+    margin-right: 12
+    font: poppins-semibold-11px
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: title
+    anchors.top: kind.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 8
+    margin-left: 12
+    margin-right: 12
+    height: 24
+    text-align: left
+    font: poppins-bold-16px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: text
+    anchors.top: title.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+    margin-left: 12
+    margin-right: 12
+    height: 52
+    font: poppins-12px
+    color: #c9d1dc
+    text-wrap: true
+    text-align: topLeft
+    phantom: true
+
+  TaskProgress
+    id: progress
+    anchors.left: parent.left
+    anchors.right: progressLabel.left
+    anchors.bottom: parent.bottom
+    margin-left: 12
+    margin-right: 8
+    margin-bottom: 14
+
+  Label
+    id: progressLabel
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-right: 12
+    margin-bottom: 9
+    height: 16
+    width: 44
+    text-align: right
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: reward
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: progress.top
+    margin-left: 12
+    margin-right: 12
+    margin-bottom: 6
+    font: poppins-12px
+    color: #f2c14e
+    phantom: true
+
+// seguimiento de la tarea activa, arriba a la izquierda del mapa
+TaskTracker < UIWidget
+  size: 270 64
+  background-color: #14161bcc
+  border-width: 1
+  border-color: #2c3039
+  focusable: false
+
+  Label
+    id: header
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 10
+    margin-right: 10
+    font: poppins-semibold-11px
+    color: #f2c14e
+    phantom: true
+
+  Label
+    id: title
+    anchors.top: header.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 2
+    margin-left: 10
+    margin-right: 10
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
+
+  TaskProgress
+    id: progress
+    anchors.left: parent.left
+    anchors.right: progressLabel.left
+    anchors.bottom: parent.bottom
+    margin-left: 10
+    margin-right: 8
+    margin-bottom: 10
+    height: 6
+
+  Label
+    id: progressLabel
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-right: 10
+    margin-bottom: 5
+    height: 16
+    width: 40
+    text-align: right
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
+
+UIWindow
+  id: tasksWindow
+  size: 560 520
+  anchors.centerIn: parent
+  image-source: /game_pokedex/images/panel
+  image-border: 16
+  @onEscape: modules.game_tasks.hide()
+
+  UIWidget
+    id: titleIcon
+    size: 22 22
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 12
+    margin-left: 14
+    image-source: /game_pokedex/images/pokeball_big
+    phantom: true
+
+  Label
+    id: windowTitle
+    anchors.left: titleIcon.right
+    anchors.verticalCenter: titleIcon.verticalCenter
+    margin-left: 8
+    font: poppins-bold-16px
+    color: #ffffff
+    text: Tareas
+    text-auto-resize: true
+    phantom: true
+
+  TaskKindChip
+    id: capChip
+    anchors.left: windowTitle.right
+    anchors.verticalCenter: titleIcon.verticalCenter
+    margin-left: 12
+
+  UIButton
+    id: closeButton
+    size: 16 16
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 15
+    margin-right: 16
+    image-source: /game_pokemonmoves/images/close
+    focusable: false
+    @onClick: modules.game_tasks.hide()
+
+    $hover:
+      image-source: /game_pokemonmoves/images/close_hover
+
+  ScrollablePanel
+    id: taskList
+    anchors.top: titleIcon.bottom
+    anchors.left: parent.left
+    anchors.right: taskScroll.left
+    anchors.bottom: trackerCheck.top
+    margin-top: 14
+    margin-left: 14
+    margin-right: 6
+    margin-bottom: 10
+    vertical-scrollbar: taskScroll
+    layout:
+      type: verticalBox
+      spacing: 8
+
+  VerticalScrollBar
+    id: taskScroll
+    anchors.top: titleIcon.bottom
+    anchors.bottom: trackerCheck.top
+    anchors.right: parent.right
+    margin-top: 14
+    margin-bottom: 10
+    margin-right: 12
+    step: 30
+    pixels-scroll: true
+
+  Label
+    id: emptyLabel
+    anchors.centerIn: taskList
+    font: poppins-12px
+    color: #8b95a5
+    text: No tienes tareas por ahora.
+    text-auto-resize: true
+    visible: false
+
+  CheckBox
+    id: trackerCheck
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 16
+    margin-bottom: 14
+    width: 300
+    font: poppins-12px
+    color: #c9d1dc
+    text: Mostrar la tarea activa sobre el mapa

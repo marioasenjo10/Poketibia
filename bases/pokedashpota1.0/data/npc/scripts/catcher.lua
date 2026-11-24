@@ -128,5 +128,16 @@ local function creatureSayCallback(cid, type, msg)
 	return true
 end
 
+-- jugadores con la progresion nueva: Julie les explica sus tareas (data/lib/core/progression.lua)
+local function creatureGreetCallback(cid, message)
+	local player = Player(cid)
+	if player and progressionOnJulieGreet and progressionOnJulieGreet(player) then
+		selfSay("Hola, " .. player:getName() .. "!", cid)
+		return false
+	end
+	return true
+end
+
+npcHandler:setCallback(CALLBACK_GREET, creatureGreetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new())

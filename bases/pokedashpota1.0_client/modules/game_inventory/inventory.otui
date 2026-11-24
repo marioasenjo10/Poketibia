@@ -217,6 +217,13 @@ UIWidget
 
   BarCell
     BarSlot
+      id: slot7
+      &position: {x=65535, y=7, z=0}
+    BarLabel
+      text: BICI
+
+  BarCell
+    BarSlot
       id: slot9
       &position: {x=65535, y=9, z=0}
     BarLabel

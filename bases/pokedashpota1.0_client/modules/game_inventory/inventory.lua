@@ -23,6 +23,7 @@ purseButton = nil
 local barSlots = {
   { id = 'slot12', icon = 'pokedex' },
   { id = 'slot11', icon = 'order' },
+  { id = 'slot7', icon = 'bike' },
   { id = 'slot9', icon = 'rope', node = 'rope_hotkey', key = 'R' },
   { id = 'slot2', icon = 'rod', node = 'rod_hotkey', key = 'Z' },
   { id = 'slot8', icon = 'badges', node = 'badges_hotkey', key = 'B' },

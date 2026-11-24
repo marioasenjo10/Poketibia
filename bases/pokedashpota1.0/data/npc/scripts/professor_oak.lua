@@ -107,6 +107,26 @@ local function creatureSayCallback(cid, type, msg)
 	return true
 end
 
+-- jugador nuevo sin Pokemon: Oak le recibe con las ventanas de la intro (progression.lua)
+local function creatureGreetCallback(cid, message)
+	local player = Player(cid)
+	if player and progressionNeedsStarter and progressionNeedsStarter(player) then
+		selfSay("Ah, " .. player:getName() .. "! Te estaba esperando.", cid)
+		progressionShowOakIntro(player)
+		return false
+	end
+	local index, task
+	if player and progressionGetActiveTask then
+		index, task = progressionGetActiveTask(player)
+	end
+	if index and task.id == "julie_meet" then
+		selfSay("Ve a hablar con Julie, " .. player:getName() .. ". Esta en el Centro Pokemon de Pueblo Paleta, el edificio de la cruz roja. Ella te dara tu primera tarea.", cid)
+		return false
+	end
+	return true
+end
+
+npcHandler:setCallback(CALLBACK_GREET, creatureGreetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:setCallback(CALLBACK_ONTHINK, creatureOnThinkCallback)
 npcHandler:setCallback(CALLBACK_ONRELEASEFOCUS, creatureOnReleaseFocusCallback)

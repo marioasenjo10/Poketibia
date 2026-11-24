@@ -1,53 +1,71 @@
 local criticalProbability = 1
 local blockedProbability = 1
-local racesStrength = 
+-- Tabla de tipos (como en Pokemon): para cada tipo ATACANTE, contra que tipos defensores es
+-- eficaz (strong), poco eficaz (weak) o no hace nada (immune). Con doble tipo se multiplica
+-- por cada tipo del defensor (Agua contra Geodude, Roca/Tierra = x1.5 x1.5).
+-- "earth" es el COMBAT_EARTHDAMAGE que el servidor usa para el veneno.
+typeStrongMultiplier = 1.5
+typeWeakMultiplier = 1 / 1.5
+typeImmuneMultiplier = 0.0
+-- dano de condiciones (sin atacante): fraccion del dano en bruto que se aplica en cada tick
+conditionDamageFactor = 0.25
+local racesStrength =
 	{
-		["none"] = {strong = {}, weak = {}},
-		["blood"] = {strong = {}, weak = {}},
-		["physical"] = {strong = {}, weak = {}},
-		["healing"] = {strong = {}, weak = {}},
-		["fire"] = {strong = {"grass", "ice", "bug", "steel"}, weak = {"water", "ground", "rock"}},
-		["grass"] = {strong = {"water", "ground", "rock"}, weak = {"fire", "ice", "poison", "flying", "bug"}},
-		["normal"] = {strong = {}, weak = {"fighting"}},
-		["water"] = {strong = {"fire", "ground", "rock"}, weak = {"electric", "grass"}},
-		["flying"] = {strong = {"grass", "fighting", "bug"}, weak = {"electric", "ice", "rock"}},
-		["poison"] = {strong = {"grass", "fairy"}, weak = {"ground", "psychic"}},
-		["earth"] = {strong = {"grass", "fairy"}, weak = {"ground", "psychic"}}, --correct CONDITION_POISON = COMBAT_EARTHDAMAGE
-		["electric"] = {strong = {"water", "flying"}, weak = {"ground"}},
-		["ground"] = {strong = {"fire", "electric", "poison", "rock", "steel"}, weak = {"water", "grass", "ice"}},
-		["psychic"] = {strong = {"fighting", "poison"}, weak = {"bug", "ghost", "dark"}},
-		["rock"] = {strong = {"fire", "ice", "flying", "bug"}, weak = {"water", "grass", "fighting", "ground", "steel"}},
-		["ice"] = {strong = {"grass", "ground", "flying", "dragon"}, weak = {"fire", "fighting", "rock", "steel"}},
-		["bug"] = {strong = {"grass", "psychic", "dark"}, weak = {"fire", "flying", "rock"}},
-		["dragon"] = {strong = {"dragon"}, weak = {"ice", "dragon", "fairy"}},
-		["ghost"] = {strong = {"psychic", "ghost"}, weak = {"ghost", "dark"}},
-		["dark"] = {strong = {"psychic", "ghost"}, weak = {"fighting", "bug", "fairy"}},
-		["steel"] = {strong = {"ice", "rock", "fairy"}, weak = {"fire", "fighting", "ground"}},
-		["fairy"] = {strong = {"fighting", "dragon", "dark"}, weak = {"poison", "steel"}},
-		["fighting"] = {strong = {"normal", "ice", "rock", "dark", "steel"}, weak = {"flying", "psychic", "fairy"}}
+		["normal"] = {strong = {}, weak = {"rock", "steel"}, immune = {"ghost"}},
+		["fire"] = {strong = {"grass", "ice", "bug", "steel"}, weak = {"fire", "water", "rock", "dragon"}, immune = {}},
+		["water"] = {strong = {"fire", "ground", "rock"}, weak = {"water", "grass", "dragon"}, immune = {}},
+		["electric"] = {strong = {"water", "flying"}, weak = {"electric", "grass", "dragon"}, immune = {"ground"}},
+		["grass"] = {strong = {"water", "ground", "rock"}, weak = {"fire", "grass", "poison", "flying", "bug", "dragon", "steel"}, immune = {}},
+		["ice"] = {strong = {"grass", "ground", "flying", "dragon"}, weak = {"fire", "water", "ice", "steel"}, immune = {}},
+		["fighting"] = {strong = {"normal", "ice", "rock", "dark", "steel"}, weak = {"poison", "flying", "psychic", "bug", "fairy"}, immune = {"ghost"}},
+		["poison"] = {strong = {"grass", "fairy"}, weak = {"poison", "ground", "rock", "ghost"}, immune = {"steel"}},
+		["ground"] = {strong = {"fire", "electric", "poison", "rock", "steel"}, weak = {"grass", "bug"}, immune = {"flying"}},
+		["flying"] = {strong = {"grass", "fighting", "bug"}, weak = {"electric", "rock", "steel"}, immune = {}},
+		["psychic"] = {strong = {"fighting", "poison"}, weak = {"psychic", "steel"}, immune = {"dark"}},
+		["bug"] = {strong = {"grass", "psychic", "dark"}, weak = {"fire", "fighting", "poison", "flying", "ghost", "steel", "fairy"}, immune = {}},
+		["rock"] = {strong = {"fire", "ice", "flying", "bug"}, weak = {"fighting", "ground", "steel"}, immune = {}},
+		["ghost"] = {strong = {"psychic", "ghost"}, weak = {"dark"}, immune = {"normal"}},
+		["dragon"] = {strong = {"dragon"}, weak = {"steel"}, immune = {"fairy"}},
+		["dark"] = {strong = {"psychic", "ghost"}, weak = {"fighting", "dark", "fairy"}, immune = {}},
+		["steel"] = {strong = {"ice", "rock", "fairy"}, weak = {"fire", "water", "electric", "steel"}, immune = {}},
+		["fairy"] = {strong = {"fighting", "dragon", "dark"}, weak = {"fire", "poison", "steel"}, immune = {}},
 	}
+racesStrength["earth"] = racesStrength["poison"]
 
-local function isStrongAgainst(attackerRace, defenderRace, defenderRace2)
-
-	if isInArray(racesStrength[attackerRace].strong, defenderRace) or isInArray(racesStrength[attackerRace].strong, defenderRace2) then
-		return true
+-- multiplicador de eficacia de un tipo de ataque contra los dos tipos del defensor
+function getTypeEffectiveness(attackerRace, defenderRace, defenderRace2)
+	local entry = racesStrength[attackerRace]
+	if not entry then
+		return 1.0
 	end
-
-	return false
-end
-
-local function isWeakAgainst(attackerRace, defenderRace, defenderRace2)
-
-	if isInArray(racesStrength[attackerRace].weak, defenderRace) or isInArray(racesStrength[attackerRace].weak, defenderRace2) then
-		return true
+	local multiplier = 1.0
+	for _, race in ipairs({defenderRace, defenderRace2}) do
+		if race and race ~= "none" then
+			if isInArray(entry.immune, race) then
+				return typeImmuneMultiplier
+			end
+			if isInArray(entry.strong, race) then
+				multiplier = multiplier * typeStrongMultiplier
+			end
+			if isInArray(entry.weak, race) then
+				multiplier = multiplier * typeWeakMultiplier
+			end
+		end
 	end
-
-	return false
+	return multiplier
 end
 
 function onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType)
 
 	if not attacker then
+		-- dano de condiciones (veneno, leech seed, quemaduras...): llega sin atacante y se salta
+		-- toda la formula de arriba, asi que se escala aqui para que no sea mas fuerte que un golpe
+		if primaryType ~= COMBAT_HEALING and primaryDamage ~= 0 then
+			primaryDamage = math.max(1, math.floor(math.abs(primaryDamage) * conditionDamageFactor)) * (primaryDamage < 0 and -1 or 1)
+		end
+		if secondaryType ~= COMBAT_HEALING and secondaryDamage ~= 0 then
+			secondaryDamage = math.max(1, math.floor(math.abs(secondaryDamage) * conditionDamageFactor)) * (secondaryDamage < 0 and -1 or 1)
+		end
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
 	if creature:isPlayer() and attacker:isMonster() and not attacker:getMaster() and #creature:getSummons() > 0 then
@@ -113,12 +131,16 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	local defenderRace = defenderMonsterType:getRaceName()
 	local defenderRace2 = defenderMonsterType:getRace2Name()
 
-	if isStrongAgainst(primaryTypeName, defenderRace, defenderRace2) then
-		localDamageMultiplier = localDamageMultiplier * 1.5
+	local effectiveness = getTypeEffectiveness(primaryTypeName, defenderRace, defenderRace2)
+	if effectiveness <= 0 then
+		Game.sendAnimatedText(creature:getPosition(), "INMUNE", TEXTCOLOR_LIGHTGREY)
+		return 0, primaryType, 0, secondaryType
 	end
+	localDamageMultiplier = localDamageMultiplier * effectiveness
 
-	if isWeakAgainst(primaryTypeName, defenderRace, defenderRace2) then
-		localDamageMultiplier = localDamageMultiplier / 1.5
+	-- equipos de gimnasio/NPC: dano extra configurado en el script del lider
+	if gymSummonDamage and gymSummonDamage[attacker:getId()] then
+		localDamageMultiplier = localDamageMultiplier * gymSummonDamage[attacker:getId()]
 	end
 
 	if math.random(1, 100) <= criticalProbability then
@@ -142,7 +164,7 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	localDamageMultiplier = localDamageMultiplier * (0.3 + math.random(1, 20) * 0.01)
 
 	if primaryDamage then primaryDamage = math.floor(primaryDamage * localDamageMultiplier) end
-	if secundaryDamage then secondaryDamage = math.floor(secondaryDamage * localDamageMultiplier) end
+	if secondaryDamage then secondaryDamage = math.floor(secondaryDamage * localDamageMultiplier) end
 
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end

@@ -30,6 +30,19 @@ function onPostDeath(creature, corpse, killer, mostDamage, unjustified, mostDama
 		return true
 	end
 	local player = Player(owner)
+	-- los shiny salvajes sueltan casi siempre su piedra de evolucion (pokedex.lua: getShinyStoneDrop)
+	if getShinyStoneDrop and not creature:getMaster() then
+		local stone, chance = getShinyStoneDrop(creature:getName())
+		if stone and math.random(1, 100) <= chance then
+			local stoneType = ItemType(stone)
+			if stoneType and stoneType:getId() ~= 0 then
+				corpse:addItem(stoneType:getId(), 1)
+				if player then
+					player:sendTextMessage(MESSAGE_EVENT_ADVANCE, creature:getName() .. " ha soltado una " .. stone .. "!")
+				end
+			end
+		end
+	end
 	local shinyEvoItem = doShinyEvoDrop(creature, corpse)
 	if shinyEvoItem then
 		doSendMultipleEffects(corpse:getPosition(), 56, 10, 600)

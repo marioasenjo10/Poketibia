@@ -3,7 +3,20 @@ local name = "Pikachu"
 --local portraitId = 27141
 
 function onLogin(player)
-	if player:getLastLoginSaved() == 0 then
+	-- ventanas del Profesor Oak (eleccion de inicial)
+	player:registerEvent("ProgressionModal")
+	if player:getLastLoginSaved() == 0 and progressionNewStartEnabled then
+		-- inicio nuevo: Pueblo Paleta, sin Pokemon; Oak le da el inicial (data/lib/core/progression.lua)
+		for i = 1, #firstItems do
+			player:addItem(firstItems[i], 1)
+		end
+		player:addSlotItems()
+		if not player:getSlotItem(CONST_SLOT_BACKPACK) then
+			player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
+		end
+		player:checkPokemonBelt()
+		progressionSetupNewPlayer(player)
+	elseif player:getLastLoginSaved() == 0 then
 		for i = 1, #firstItems do
 			player:addItem(firstItems[i], 1)
 		end
@@ -37,6 +50,23 @@ function onLogin(player)
 	-- mochila PKA permanente
 	if not player:getSlotItem(CONST_SLOT_BACKPACK) then
 		player:addItem(1988, 1, false, CONST_SLOT_BACKPACK)
+	end
+	-- la bici va en su casilla de la barra de abajo (piernas), no en la mochila
+	if not player:getSlotItem(CONST_SLOT_LEGS) and player:getItemCount(27634) > 0 and player:removeItem(27634, 1) then
+		player:addItem(27634, 1)
+	end
+	-- panel de tareas: al entrar y otra vez al segundo (por si el cliente aun no estaba listo)
+	if player:isOnProgression() then
+		player:sendTasks()
+		addEvent(function(playerId)
+			local p = Player(playerId)
+			if p then
+				p:sendTasks()
+				if progressionNeedsStarter(p) and p:getLastLoginSaved() > 0 then
+					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Todavia no tienes Pokemon. Habla con el Profesor Oak en Pueblo Paleta (di hi).")
+				end
+			end
+		end, 1500, player:getId())
 	end
 	return true
 end

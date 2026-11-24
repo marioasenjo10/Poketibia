@@ -90,7 +90,16 @@ function onModalDialog(id, title, message, buttons, enterButton, escapeButton, c
 
   modalDialog:setWidth(math.min(modalDialog.maximumWidth, math.max(buttonsWidth, messageLabel:getWidth(), modalDialog.minimumWidth)))
   messageLabel:setWidth(math.min(modalDialog.maximumWidth, math.max(buttonsWidth, messageLabel:getWidth(), modalDialog.minimumWidth)) - horizontalPadding)
-  modalDialog:setHeight(modalDialog:getHeight() + additionalHeight + messageLabel:getHeight() - 8)
+  local baseHeight = modalDialog:getHeight() + additionalHeight - 8
+  modalDialog:setHeight(baseHeight + messageLabel:getHeight())
+  -- el texto se reparte en lineas al maquetar: recalcular la altura despues,
+  -- si no el boton tapa las ultimas lineas
+  local dialog = modalDialog
+  scheduleEvent(function()
+    if dialog and not dialog:isDestroyed() then
+      dialog:setHeight(baseHeight + messageLabel:getHeight())
+    end
+  end, 1)
 
   local enterFunc = function()
     local focusedChoice = choiceList:getFocusedChild()

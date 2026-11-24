@@ -1,0 +1,199 @@
+// Escena de la intro: Oak habla, el jugador elige su primer Pokemon entre cuatro tarjetas
+
+IntroButton < UIButton
+  height: 34
+  image-source: /game_pokedex/images/card
+  image-border: 5
+  font: poppins-semibold-11px
+  color: #dfe8f3
+  focusable: false
+  text-offset: 0 0
+
+  $hover:
+    image-source: /game_pokedex/images/card_hover
+    color: #ffffff
+
+  $disabled:
+    color: #6b7280
+
+IntroPrimaryButton < IntroButton
+  image-color: #2f6fd6
+
+  $hover:
+    image-source: /game_pokedex/images/card_hover
+    image-color: #4285f4
+
+IntroTypeChip < Label
+  height: 20
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  font: poppins-semibold-11px
+  color: #ffffff
+  text-align: center
+  phantom: true
+
+StarterCard < UIWidget
+  size: 184 300
+  background-color: #1b1e24
+  border-width: 2
+  border-color: #2c3039
+  focusable: false
+
+  $hover:
+    background-color: #232731
+    border-color: #4a5160
+
+  UIWidget
+    id: art
+    size: 150 150
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 14
+    image-smooth: true
+    phantom: true
+
+  Label
+    id: name
+    anchors.top: art.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 10
+    height: 22
+    font: poppins-bold-16px
+    color: #ffffff
+    text-align: center
+    phantom: true
+
+  UIWidget
+    id: chips
+    anchors.top: name.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 6
+    size: 170 20
+    phantom: true
+    layout:
+      type: horizontalBox
+      spacing: 4
+
+  Label
+    id: text
+    anchors.top: chips.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin: 10 10 10 10
+    font: poppins-12px
+    color: #c9d1dc
+    text-wrap: true
+    text-align: top
+    phantom: true
+
+UIWidget
+  id: introOverlay
+  anchors.fill: parent
+  background-color: #000000b0
+  focusable: true
+
+  UIWidget
+    id: panel
+    size: 840 520
+    anchors.centerIn: parent
+    image-source: /game_pokedex/images/panel
+    image-border: 16
+
+    UIWidget
+      id: titleIcon
+      size: 22 22
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 14
+      margin-left: 16
+      image-source: /game_pokedex/images/pokeball_big
+      phantom: true
+
+    Label
+      id: speaker
+      anchors.left: titleIcon.right
+      anchors.verticalCenter: titleIcon.verticalCenter
+      margin-left: 8
+      font: poppins-bold-16px
+      color: #ffffff
+      text: Profesor Oak
+      text-auto-resize: true
+      phantom: true
+
+    Label
+      id: stepLabel
+      anchors.right: parent.right
+      anchors.verticalCenter: titleIcon.verticalCenter
+      margin-right: 18
+      font: poppins-12px
+      color: #8b95a5
+      text-auto-resize: true
+      phantom: true
+
+    // fila de las cuatro ilustraciones (decoracion en las paginas de dialogo)
+    UIWidget
+      id: teaser
+      anchors.top: titleIcon.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 18
+      size: 600 140
+      phantom: true
+      layout:
+        type: horizontalBox
+        spacing: 10
+
+    // ilustracion grande (confirmacion y despedida)
+    UIWidget
+      id: bigArt
+      size: 220 220
+      anchors.top: titleIcon.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 14
+      image-smooth: true
+      phantom: true
+
+    UIWidget
+      id: cards
+      anchors.top: titleIcon.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-top: 18
+      size: 778 300
+      layout:
+        type: horizontalBox
+        spacing: 14
+
+    Label
+      id: message
+      anchors.left: parent.left
+      anchors.right: parent.right
+      anchors.bottom: buttons.top
+      margin-left: 40
+      margin-right: 40
+      margin-bottom: 18
+      height: 120
+      font: poppins-12px
+      color: #e6ebf2
+      text-wrap: true
+      text-align: top
+      phantom: true
+
+    UIWidget
+      id: buttons
+      anchors.bottom: parent.bottom
+      anchors.horizontalCenter: parent.horizontalCenter
+      margin-bottom: 22
+      size: 420 34
+      layout:
+        type: horizontalBox
+        spacing: 12
+        align-right: false
+
+      IntroButton
+        id: secondaryButton
+        width: 160
+
+      IntroPrimaryButton
+        id: primaryButton
+        width: 248

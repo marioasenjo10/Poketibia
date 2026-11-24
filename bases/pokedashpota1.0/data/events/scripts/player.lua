@@ -353,6 +353,10 @@ end
 
 function Player:onGainExperience(source, exp, rawExp)
 	if not source then
+		-- experiencia sin criatura (capturas, recompensas de tareas): tambien respeta el tope
+		if progressionCapExperience then
+			exp = progressionCapExperience(self, exp)
+		end
 		return exp
 	end
 
@@ -386,6 +390,11 @@ function Player:onGainExperience(source, exp, rawExp)
 	-- Vocation buff
 	if vocation:getName() == "Explorer" then
 		exp = exp * explorerExperienceBuff
+	end
+
+	-- Tope de nivel hasta ganar la medalla del gimnasio que toca (progresion por gimnasios)
+	if progressionCapExperience then
+		exp = progressionCapExperience(self, exp)
 	end
 
 	return exp

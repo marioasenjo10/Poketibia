@@ -1,5 +1,6 @@
 local halloweenChance = 4
-local christmasChance = 4
+-- evento de Navidad desactivado de momento (salian Xmas Rattata, etc. en las zonas de inicio). Antes: 4
+local christmasChance = 0
 local megaChance = 1
 
 local halloweenPokes = 
@@ -340,7 +341,8 @@ function Monster:onSpawn(position, startup, artificial)
 --			end
 --		end
 	end
-	-- Los salvajes usan la vida base de su especie, sin escalado por nivel o etapa.
+	-- Los salvajes usan la vida de su especie escalada por su nivel de fuerza (el nivel que
+	-- pide su especie: Monster.getPowerLevel en newfunctions.lua).
 	-- Los summons y pokemon de NPC la vuelven a fijar al crearlos.
 	if MonsterType(self:getName()):dexEntry() > 0 then
 		local maxHealth = self:getTotalHealth()

@@ -1,12 +1,18 @@
+-- percent = % de la vida maxima del Pokemon que cura la pocion en total (repartido en los ticks)
 local potions = {
-	[27642] = {name = "Small Potion", level = 0, heal = 10},
-	[27643] = {name = "Great Potion", level = 20, heal = 20},
-	[27641] = {name = "Ultra Potion", level = 50, heal = 30},
-	[27647] = {name = "Hyper Potion", level = 80, heal = 40},
-	[27646] = {name = "Ultimate Potion", level = 100, heal = 50}
+	[27642] = {name = "Small Potion", level = 0, percent = 40},
+	[27643] = {name = "Great Potion", level = 20, percent = 55},
+	[27641] = {name = "Ultra Potion", level = 50, percent = 70},
+	[27647] = {name = "Hyper Potion", level = 80, percent = 85},
+	[27646] = {name = "Ultimate Potion", level = 100, percent = 100}
 }
 
+local function getHealPerTick(potion, maxHealth)
+	return math.max(1, math.ceil(maxHealth * potion.percent / 100 / healingTicksTotal))
+end
+
 local healingTicks = 5
+healingTicksTotal = healingTicks
 local healingInterval = 2000
 local ballHealingToken = 0
 
@@ -129,7 +135,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 
-	local healPerTick = potion.heal + math.floor(player:getLevel() / 5)
 	if target:isCreature() then
 		if not target:isPokemon() then
 			player:sendCancelMessage("Pokémon potions can only be used on a Pokémon.")
@@ -155,6 +160,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			return true
 		end
 
+		local healPerTick = getHealPerTick(potion, target:getMaxHealth())
 		local condition = Condition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)
 		condition:setParameter(CONDITION_PARAM_TICKS, healingTicks * healingInterval)
 		condition:setParameter(CONDITION_PARAM_HEALTHGAIN, healPerTick)
@@ -199,6 +205,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			return true
 		end
 		clearBallHealing(target)
+		local healPerTick = getHealPerTick(potion, maxHealth)
 
 		ballHealingToken = ballHealingToken + 1
 		local token = tostring(player:getGuid()) .. ":" .. tostring(os.time()) .. ":" .. tostring(ballHealingToken)

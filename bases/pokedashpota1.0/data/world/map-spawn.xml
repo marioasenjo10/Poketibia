@@ -7573,43 +7573,43 @@
 	</spawn>
 	<spawn centerx="748" centery="787" centerz="7" radius="30">
 		<monster name="Geodude" x="-25" y="-13" z="7" spawntime="60" />
-		<monster name="Rhydon" x="-24" y="-10" z="7" spawntime="60" />
+		<monster name="Geodude" x="-24" y="-10" z="7" spawntime="60" />
 		<monster name="Geodude" x="-26" y="-8" z="7" spawntime="60" />
 		<monster name="Geodude" x="17" y="-4" z="7" spawntime="60" />
 		<monster name="Geodude" x="-29" y="-3" z="7" spawntime="60" />
-		<monster name="Hariyama" x="17" y="0" z="7" spawntime="60" />
-		<monster name="Golem" x="19" y="0" z="7" spawntime="60" />
-		<monster name="Sandslash" x="22" y="0" z="7" spawntime="60" />
+		<monster name="Makuhita" x="17" y="0" z="7" spawntime="60" />
+		<monster name="Geodude" x="19" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="22" y="0" z="7" spawntime="60" />
 		<monster name="Geodude" x="12" y="4" z="7" spawntime="60" />
-		<monster name="Graveler" x="15" y="4" z="7" spawntime="60" />
-		<monster name="Sandslash" x="19" y="4" z="7" spawntime="60" />
+		<monster name="Geodude" x="15" y="4" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="19" y="4" z="7" spawntime="60" />
 		<monster name="Geodude" x="22" y="4" z="7" spawntime="60" />
-		<monster name="Sandslash" x="13" y="6" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="13" y="6" z="7" spawntime="60" />
 		<monster name="Geodude" x="-16" y="9" z="7" spawntime="60" />
 		<monster name="Geodude" x="-6" y="9" z="7" spawntime="60" />
-		<monster name="Sandslash" x="-1" y="9" z="7" spawntime="60" />
-		<monster name="Graveler" x="-11" y="10" z="7" spawntime="60" />
-		<monster name="Hariyama" x="-9" y="10" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="-1" y="9" z="7" spawntime="60" />
+		<monster name="Geodude" x="-11" y="10" z="7" spawntime="60" />
+		<monster name="Makuhita" x="-9" y="10" z="7" spawntime="60" />
 		<monster name="Geodude" x="-26" y="11" z="7" spawntime="60" />
-		<monster name="Hariyama" x="-24" y="11" z="7" spawntime="60" />
-		<monster name="Sandslash" x="-21" y="11" z="7" spawntime="60" />
-		<monster name="Sandslash" x="-8" y="11" z="7" spawntime="60" />
-		<monster name="Graveler" x="10" y="11" z="7" spawntime="60" />
+		<monster name="Makuhita" x="-24" y="11" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="-21" y="11" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="-8" y="11" z="7" spawntime="60" />
+		<monster name="Geodude" x="10" y="11" z="7" spawntime="60" />
 		<monster name="Geodude" x="-7" y="13" z="7" spawntime="60" />
-		<monster name="Sandslash" x="3" y="13" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="3" y="13" z="7" spawntime="60" />
 		<monster name="Geodude" x="6" y="14" z="7" spawntime="60" />
-		<monster name="Sandslash" x="10" y="14" z="7" spawntime="60" />
-		<monster name="Sandslash" x="15" y="14" z="7" spawntime="60" />
-		<monster name="Marowak" x="12" y="15" z="7" spawntime="60" />
-		<monster name="Hariyama" x="9" y="16" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="10" y="14" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="15" y="14" z="7" spawntime="60" />
+		<monster name="Cubone" x="12" y="15" z="7" spawntime="60" />
+		<monster name="Makuhita" x="9" y="16" z="7" spawntime="60" />
 		<monster name="Geodude" x="17" y="18" z="7" spawntime="60" />
-		<monster name="Marowak" x="19" y="21" z="7" spawntime="60" />
-		<monster name="Graveler" x="19" y="25" z="7" spawntime="60" />
+		<monster name="Cubone" x="19" y="21" z="7" spawntime="60" />
+		<monster name="Geodude" x="19" y="25" z="7" spawntime="60" />
 		<monster name="Geodude" x="15" y="27" z="7" spawntime="60" />
-		<monster name="Marowak" x="23" y="27" z="7" spawntime="60" />
+		<monster name="Cubone" x="23" y="27" z="7" spawntime="60" />
 		<monster name="Geodude" x="28" y="27" z="7" spawntime="60" />
-		<monster name="Marowak" x="18" y="28" z="7" spawntime="60" />
-		<monster name="Marowak" x="27" y="29" z="7" spawntime="60" />
+		<monster name="Cubone" x="18" y="28" z="7" spawntime="60" />
+		<monster name="Cubone" x="27" y="29" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1283" centery="787" centerz="7" radius="20">
 		<monster name="Gastly" x="5" y="-4" z="7" spawntime="60" />
@@ -7651,49 +7651,49 @@
 	</spawn>
 	<spawn centerx="688" centery="795" centerz="7" radius="30">
 		<monster name="Geodude" x="28" y="-22" z="7" spawntime="60" />
-		<monster name="Rhydon" x="29" y="-19" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="29" y="-19" z="7" spawntime="60" />
 		<monster name="Geodude" x="28" y="-17" z="7" spawntime="60" />
-		<monster name="Golem" x="-10" y="-6" z="7" spawntime="60" />
-		<monster name="Graveler" x="-2" y="-6" z="7" spawntime="60" />
-		<monster name="Rhydon" x="28" y="-6" z="7" spawntime="60" />
+		<monster name="Geodude" x="-10" y="-6" z="7" spawntime="60" />
+		<monster name="Geodude" x="-2" y="-6" z="7" spawntime="60" />
+		<monster name="Geodude" x="28" y="-6" z="7" spawntime="60" />
 		<monster name="Geodude" x="-9" y="-5" z="7" spawntime="60" />
 		<monster name="Geodude" x="26" y="-5" z="7" spawntime="60" />
 		<monster name="Geodude" x="4" y="-4" z="7" spawntime="60" />
 		<monster name="Geodude" x="-18" y="-3" z="7" spawntime="60" />
-		<monster name="Golem" x="7" y="-3" z="7" spawntime="60" />
-		<monster name="Graveler" x="-22" y="-2" z="7" spawntime="60" />
+		<monster name="Geodude" x="7" y="-3" z="7" spawntime="60" />
+		<monster name="Geodude" x="-22" y="-2" z="7" spawntime="60" />
 		<monster name="Geodude" x="-3" y="0" z="7" spawntime="60" />
-		<monster name="Rhydon" x="-7" y="1" z="7" spawntime="60" />
-		<monster name="Rhydon" x="-1" y="1" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="-7" y="1" z="7" spawntime="60" />
+		<monster name="Geodude" x="-1" y="1" z="7" spawntime="60" />
 		<monster name="Geodude" x="-18" y="3" z="7" spawntime="60" />
-		<monster name="Rhydon" x="-4" y="3" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="-4" y="3" z="7" spawntime="60" />
 		<monster name="Geodude" x="12" y="3" z="7" spawntime="60" />
 		<monster name="Geodude" x="21" y="3" z="7" spawntime="60" />
-		<monster name="Rhydon" x="29" y="4" z="7" spawntime="60" />
-		<monster name="Golem" x="-24" y="5" z="7" spawntime="60" />
-		<monster name="Golem" x="-20" y="5" z="7" spawntime="60" />
-		<monster name="Sandslash" x="22" y="5" z="7" spawntime="60" />
+		<monster name="Geodude" x="29" y="4" z="7" spawntime="60" />
+		<monster name="Geodude" x="-24" y="5" z="7" spawntime="60" />
+		<monster name="Geodude" x="-20" y="5" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="22" y="5" z="7" spawntime="60" />
 		<monster name="Geodude" x="-22" y="7" z="7" spawntime="60" />
-		<monster name="Graveler" x="-18" y="7" z="7" spawntime="60" />
-		<monster name="Rhydon" x="11" y="7" z="7" spawntime="60" />
-		<monster name="Golem" x="17" y="7" z="7" spawntime="60" />
-		<monster name="Graveler" x="13" y="9" z="7" spawntime="60" />
+		<monster name="Geodude" x="-18" y="7" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="11" y="7" z="7" spawntime="60" />
+		<monster name="Geodude" x="17" y="7" z="7" spawntime="60" />
+		<monster name="Geodude" x="13" y="9" z="7" spawntime="60" />
 		<monster name="Geodude" x="-18" y="11" z="7" spawntime="60" />
-		<monster name="Sudowoodo" x="0" y="11" z="7" spawntime="60" />
+		<monster name="Bonsly" x="0" y="11" z="7" spawntime="60" />
 		<monster name="Geodude" x="2" y="12" z="7" spawntime="60" />
 		<monster name="Geodude" x="6" y="14" z="7" spawntime="60" />
-		<monster name="Sudowoodo" x="-1" y="19" z="7" spawntime="60" />
+		<monster name="Bonsly" x="-1" y="19" z="7" spawntime="60" />
 		<monster name="Geodude" x="-26" y="21" z="7" spawntime="60" />
 		<monster name="Geodude" x="-3" y="22" z="7" spawntime="60" />
-		<monster name="Machamp" x="-4" y="23" z="7" spawntime="180" />
-		<monster name="Golem" x="-23" y="25" z="7" spawntime="60" />
-		<monster name="Sudowoodo" x="-20" y="25" z="7" spawntime="60" />
+		<monster name="Machop" x="-4" y="23" z="7" spawntime="180" />
+		<monster name="Geodude" x="-23" y="25" z="7" spawntime="60" />
+		<monster name="Bonsly" x="-20" y="25" z="7" spawntime="60" />
 		<monster name="Geodude" x="-18" y="26" z="7" spawntime="60" />
-		<monster name="Machamp" x="-19" y="28" z="7" spawntime="60" />
+		<monster name="Machop" x="-19" y="28" z="7" spawntime="60" />
 		<monster name="Geodude" x="-9" y="28" z="7" spawntime="60" />
 		<npc name="Brock" x="11" y="28" z="7" spawntime="60" />
-		<monster name="Sudowoodo" x="-15" y="30" z="7" spawntime="60" />
-		<monster name="Golem" x="-9" y="30" z="7" spawntime="60" />
+		<monster name="Bonsly" x="-15" y="30" z="7" spawntime="60" />
+		<monster name="Geodude" x="-9" y="30" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1341" centery="795" centerz="7" radius="20">
 		<monster name="Murkrow" x="-14" y="-14" z="7" spawntime="180" />
@@ -7827,23 +7827,23 @@
 	</spawn>
 	<spawn centerx="797" centery="809" centerz="7" radius="30">
 		<monster name="Geodude" x="9" y="-12" z="7" spawntime="60" />
-		<monster name="Hariyama" x="9" y="-11" z="7" spawntime="60" />
-		<monster name="Hariyama" x="7" y="-10" z="7" spawntime="60" />
-		<monster name="Hariyama" x="13" y="-9" z="7" spawntime="60" />
-		<monster name="Hariyama" x="3" y="-8" z="7" spawntime="60" />
+		<monster name="Makuhita" x="9" y="-11" z="7" spawntime="60" />
+		<monster name="Makuhita" x="7" y="-10" z="7" spawntime="60" />
+		<monster name="Makuhita" x="13" y="-9" z="7" spawntime="60" />
+		<monster name="Makuhita" x="3" y="-8" z="7" spawntime="60" />
 		<monster name="Geodude" x="15" y="-5" z="7" spawntime="60" />
 		<monster name="Geodude" x="4" y="-4" z="7" spawntime="60" />
-		<monster name="Hariyama" x="5" y="1" z="7" spawntime="60" />
+		<monster name="Makuhita" x="5" y="1" z="7" spawntime="60" />
 		<monster name="Geodude" x="1" y="8" z="7" spawntime="60" />
-		<monster name="Graveler" x="-21" y="10" z="7" spawntime="60" />
+		<monster name="Geodude" x="-21" y="10" z="7" spawntime="60" />
 		<monster name="Geodude" x="22" y="15" z="7" spawntime="60" />
 		<monster name="Geodude" x="10" y="17" z="7" spawntime="60" />
-		<monster name="Marowak" x="-29" y="18" z="7" spawntime="60" />
-		<monster name="Hariyama" x="11" y="18" z="7" spawntime="60" />
+		<monster name="Cubone" x="-29" y="18" z="7" spawntime="60" />
+		<monster name="Makuhita" x="11" y="18" z="7" spawntime="60" />
 		<monster name="Geodude" x="30" y="18" z="7" spawntime="60" />
 		<monster name="Geodude" x="-9" y="20" z="7" spawntime="60" />
-		<monster name="Hariyama" x="-7" y="22" z="7" spawntime="60" />
-		<monster name="Hariyama" x="5" y="22" z="7" spawntime="60" />
+		<monster name="Makuhita" x="-7" y="22" z="7" spawntime="60" />
+		<monster name="Makuhita" x="5" y="22" z="7" spawntime="60" />
 		<monster name="Geodude" x="-28" y="23" z="7" spawntime="60" />
 		<monster name="Geodude" x="0" y="26" z="7" spawntime="60" />
 	</spawn>
@@ -7992,16 +7992,16 @@
 	</spawn>
 	<spawn centerx="761" centery="825" centerz="7" radius="30">
 		<monster name="Geodude" x="2" y="-6" z="7" spawntime="60" />
-		<monster name="Hariyama" x="3" y="-6" z="7" spawntime="60" />
+		<monster name="Makuhita" x="3" y="-6" z="7" spawntime="60" />
 		<monster name="Geodude" x="4" y="-3" z="7" spawntime="60" />
 		<monster name="Geodude" x="2" y="1" z="7" spawntime="60" />
-		<monster name="Hariyama" x="4" y="2" z="7" spawntime="60" />
-		<monster name="Marowak" x="1" y="5" z="7" spawntime="60" />
-		<monster name="Marowak" x="5" y="5" z="7" spawntime="60" />
+		<monster name="Makuhita" x="4" y="2" z="7" spawntime="60" />
+		<monster name="Cubone" x="1" y="5" z="7" spawntime="60" />
+		<monster name="Cubone" x="5" y="5" z="7" spawntime="60" />
 		<npc name="Eva" x="-15" y="23" z="7" spawntime="60" />
 		<npc name="mark" x="-8" y="24" z="7" spawntime="60" />
-		<monster name="Gloom" x="23" y="29" z="7" spawntime="60" />
-		<monster name="Gloom" x="14" y="30" z="7" spawntime="60" />
+		<monster name="Oddish" x="23" y="29" z="7" spawntime="60" />
+		<monster name="Caterpie" x="14" y="30" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="3040" centery="825" centerz="7" radius="1">
 		<monster name="Walrein" x="0" y="0" z="7" spawntime="60" />
@@ -8096,25 +8096,25 @@
 		<monster name="Walrein" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="670" centery="834" centerz="7" radius="30">
-		<monster name="Machamp" x="11" y="-7" z="7" spawntime="60" />
+		<monster name="Machop" x="11" y="-7" z="7" spawntime="60" />
 		<monster name="Geodude" x="4" y="-2" z="7" spawntime="60" />
-		<monster name="Machamp" x="4" y="0" z="7" spawntime="60" />
-		<monster name="Golem" x="-5" y="5" z="7" spawntime="60" />
-		<monster name="Rhydon" x="4" y="5" z="7" spawntime="60" />
-		<monster name="Steelix" x="1" y="7" z="7" spawntime="180" />
-		<monster name="Steelix" x="-6" y="8" z="7" spawntime="60" />
-		<monster name="Golem" x="-9" y="9" z="7" spawntime="60" />
-		<monster name="Machamp" x="1" y="9" z="7" spawntime="60" />
-		<monster name="Machamp" x="-6" y="11" z="7" spawntime="60" />
-		<monster name="Golem" x="6" y="11" z="7" spawntime="60" />
-		<monster name="Steelix" x="0" y="13" z="7" spawntime="60" />
-		<monster name="Steelix" x="3" y="13" z="7" spawntime="60" />
-		<monster name="Machamp" x="-3" y="14" z="7" spawntime="60" />
-		<monster name="Machamp" x="2" y="15" z="7" spawntime="60" />
-		<monster name="Steelix" x="-7" y="16" z="7" spawntime="60" />
-		<monster name="Golem" x="-4" y="16" z="7" spawntime="60" />
-		<monster name="Rhydon" x="0" y="16" z="7" spawntime="60" />
-		<monster name="Parasect" x="-3" y="28" z="7" spawntime="60" />
+		<monster name="Machop" x="4" y="0" z="7" spawntime="60" />
+		<monster name="Geodude" x="-5" y="5" z="7" spawntime="60" />
+		<monster name="Geodude" x="4" y="5" z="7" spawntime="60" />
+		<monster name="Onix" x="1" y="7" z="7" spawntime="180" />
+		<monster name="Onix" x="-6" y="8" z="7" spawntime="60" />
+		<monster name="Geodude" x="-9" y="9" z="7" spawntime="60" />
+		<monster name="Machop" x="1" y="9" z="7" spawntime="60" />
+		<monster name="Machop" x="-6" y="11" z="7" spawntime="60" />
+		<monster name="Geodude" x="6" y="11" z="7" spawntime="60" />
+		<monster name="Onix" x="0" y="13" z="7" spawntime="60" />
+		<monster name="Onix" x="3" y="13" z="7" spawntime="60" />
+		<monster name="Machop" x="-3" y="14" z="7" spawntime="60" />
+		<monster name="Machop" x="2" y="15" z="7" spawntime="60" />
+		<monster name="Onix" x="-7" y="16" z="7" spawntime="60" />
+		<monster name="Geodude" x="-4" y="16" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="16" z="7" spawntime="60" />
+		<monster name="Paras" x="-3" y="28" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="3011" centery="834" centerz="7" radius="1">
 		<monster name="Froslass" x="0" y="-1" z="7" spawntime="180" />
@@ -8802,10 +8802,9 @@
 		<monster name="Forretress" x="4" y="1" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="666" centery="875" centerz="7" radius="10">
-		<monster name="Paras" x="0" y="-3" z="7" spawntime="60" />
-		<monster name="Parasect" x="-1" y="-2" z="7" spawntime="60" />
+		<monster name="Paras" x="-1" y="-2" z="7" spawntime="60" />
 		<monster name="Paras" x="-3" y="9" z="7" spawntime="60" />
-		<monster name="Parasect" x="-2" y="10" z="7" spawntime="60" />
+		<monster name="Paras" x="-2" y="10" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1172" centery="875" centerz="7" radius="3">
 		<monster name="Diglett" x="0" y="0" z="7" spawntime="60" />
@@ -8959,56 +8958,47 @@
 		<monster name="Butterfree" x="-16" y="-10" z="7" spawntime="60" />
 		<monster name="Butterfree" x="-17" y="-9" z="7" spawntime="60" />
 		<monster name="Butterfree" x="-12" y="-8" z="7" spawntime="60" />
-		<monster name="Crobat" x="13" y="-8" z="7" spawntime="60" />
 		<monster name="Crobat" x="-26" y="-7" z="7" spawntime="60" />
-		<monster name="Crobat" x="14" y="-6" z="7" spawntime="60" />
-		<monster name="Sunflora" x="26" y="-6" z="7" spawntime="60" />
+		<monster name="Zubat" x="14" y="-6" z="7" spawntime="60" />
+		<monster name="Sunkern" x="26" y="-6" z="7" spawntime="60" />
 		<monster name="Metapod" x="-25" y="-5" z="7" spawntime="60" />
 		<monster name="Beedrill" x="-29" y="-4" z="7" spawntime="60" />
-		<monster name="Crobat" x="20" y="-4" z="7" spawntime="60" />
-		<monster name="Sunflora" x="23" y="-4" z="7" spawntime="60" />
-		<monster name="Sunflora" x="24" y="-4" z="7" spawntime="180" />
+		<monster name="Zubat" x="20" y="-4" z="7" spawntime="60" />
+		<monster name="Rattata" x="24" y="-4" z="7" spawntime="180" />
 		<monster name="Beedrill" x="-22" y="-3" z="7" spawntime="60" />
-		<monster name="Crobat" x="18" y="-3" z="7" spawntime="60" />
+		<monster name="Zubat" x="18" y="-3" z="7" spawntime="60" />
 		<monster name="Bellossom" x="-25" y="-2" z="7" spawntime="60" />
 		<monster name="Caterpie" x="-16" y="-2" z="7" spawntime="60" />
-		<monster name="Crobat" x="13" y="-2" z="7" spawntime="60" />
+		<monster name="Zubat" x="13" y="-2" z="7" spawntime="60" />
 		<monster name="Metapod" x="-19" y="-1" z="7" spawntime="60" />
-		<monster name="Crobat" x="12" y="0" z="7" spawntime="60" />
-		<monster name="Tangela" x="23" y="0" z="7" spawntime="60" />
-		<monster name="Gloom" x="29" y="3" z="7" spawntime="60" />
-		<monster name="Sunflora" x="25" y="8" z="7" spawntime="60" />
-		<monster name="Sunflora" x="21" y="9" z="7" spawntime="60" />
+		<monster name="Oddish" x="23" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="29" y="3" z="7" spawntime="60" />
+		<monster name="Sunkern" x="25" y="8" z="7" spawntime="60" />
 		<monster name="Skorupi" x="19" y="12" z="7" spawntime="60" />
 		<monster name="Skorupi" x="8" y="13" z="7" spawntime="60" />
 		<monster name="Skorupi" x="28" y="13" z="7" spawntime="60" />
 		<monster name="Gloom" x="-30" y="16" z="7" spawntime="60" />
-		<monster name="Tangela" x="15" y="16" z="7" spawntime="60" />
 		<monster name="Smeargle" x="5" y="17" z="7" spawntime="60" />
-		<monster name="Smeargle" x="12" y="17" z="7" spawntime="60" />
-		<monster name="Tangela" x="17" y="17" z="7" spawntime="180" />
+		<monster name="Sentret" x="12" y="17" z="7" spawntime="60" />
+		<monster name="Oddish" x="17" y="17" z="7" spawntime="180" />
 		<monster name="Sunflora" x="-8" y="19" z="7" spawntime="60" />
-		<monster name="Sunflora" x="8" y="19" z="7" spawntime="60" />
-		<monster name="Skorupi" x="21" y="19" z="7" spawntime="60" />
+		<monster name="Rattata" x="8" y="19" z="7" spawntime="60" />
 		<monster name="Tangela" x="-16" y="20" z="7" spawntime="60" />
-		<monster name="Sunflora" x="9" y="20" z="7" spawntime="180" />
-		<monster name="Smeargle" x="19" y="20" z="7" spawntime="60" />
-		<monster name="Sunflora" x="25" y="21" z="7" spawntime="60" />
+		<monster name="Sunkern" x="9" y="20" z="7" spawntime="180" />
+		<monster name="Sentret" x="19" y="20" z="7" spawntime="60" />
+		<monster name="Pidgey" x="25" y="21" z="7" spawntime="60" />
 		<monster name="Sunflora" x="-20" y="22" z="7" spawntime="60" />
 		<monster name="Gloom" x="-12" y="22" z="7" spawntime="60" />
 		<monster name="Gloom" x="-20" y="24" z="7" spawntime="60" />
-		<monster name="Skorupi" x="8" y="24" z="7" spawntime="60" />
-		<monster name="Smeargle" x="22" y="24" z="7" spawntime="60" />
+		<monster name="Sentret" x="22" y="24" z="7" spawntime="60" />
 		<monster name="Gloom" x="-14" y="25" z="7" spawntime="180" />
-		<monster name="Gloom" x="19" y="25" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="19" y="25" z="7" spawntime="60" />
 		<monster name="Skorupi" x="26" y="25" z="7" spawntime="60" />
 		<monster name="Tangela" x="-15" y="26" z="7" spawntime="60" />
 		<monster name="Tangela" x="-14" y="26" z="7" spawntime="180" />
-		<monster name="Sunflora" x="28" y="27" z="7" spawntime="60" />
-		<monster name="Tangela" x="22" y="28" z="7" spawntime="60" />
-		<monster name="Gloom" x="16" y="29" z="7" spawntime="60" />
-		<monster name="Sunflora" x="9" y="30" z="7" spawntime="60" />
-		<monster name="Gloom" x="16" y="30" z="7" spawntime="180" />
+		<monster name="Pidgey" x="22" y="28" z="7" spawntime="60" />
+		<monster name="Oddish" x="16" y="29" z="7" spawntime="60" />
+		<monster name="Sunkern" x="9" y="30" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1145" centery="881" centerz="7" radius="3">
 		<monster name="Diglett" x="1" y="-3" z="7" spawntime="60" />
@@ -9117,32 +9107,26 @@
 	</spawn>
 	<spawn centerx="606" centery="890" centerz="7" radius="22">
 		<monster name="Sunflora" x="-20" y="-21" z="7" spawntime="60" />
-		<monster name="Gloom" x="-19" y="-18" z="7" spawntime="60" />
-		<monster name="Sunflora" x="11" y="-7" z="7" spawntime="60" />
-		<monster name="Gloom" x="-13" y="-1" z="7" spawntime="60" />
-		<monster name="Tangela" x="-12" y="-1" z="7" spawntime="60" />
-		<monster name="Tangela" x="7" y="0" z="7" spawntime="60" />
-		<monster name="Gloom" x="-13" y="1" z="7" spawntime="180" />
-		<monster name="Tangela" x="-18" y="2" z="7" spawntime="60" />
-		<monster name="Gloom" x="-13" y="2" z="7" spawntime="180" />
-		<monster name="Sunflora" x="-14" y="3" z="7" spawntime="60" />
-		<monster name="Gloom" x="-13" y="3" z="7" spawntime="180" />
+		<monster name="Pidgey" x="-19" y="-18" z="7" spawntime="60" />
+		<monster name="Pidgey" x="11" y="-7" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="-13" y="-1" z="7" spawntime="60" />
+		<monster name="Pidgey" x="7" y="0" z="7" spawntime="60" />
+		<monster name="Oddish" x="-13" y="1" z="7" spawntime="180" />
+		<monster name="Oddish" x="-18" y="2" z="7" spawntime="60" />
+		<monster name="Rattata" x="-14" y="3" z="7" spawntime="60" />
+		<monster name="Pidgey" x="-13" y="3" z="7" spawntime="180" />
 		<monster name="Skorupi" x="-16" y="6" z="7" spawntime="60" />
-		<monster name="Sunflora" x="1" y="7" z="7" spawntime="60" />
-		<monster name="Sunflora" x="7" y="9" z="7" spawntime="60" />
-		<monster name="Sunflora" x="7" y="10" z="7" spawntime="180" />
-		<monster name="Sunflora" x="-16" y="11" z="7" spawntime="60" />
-		<monster name="Gloom" x="-17" y="12" z="7" spawntime="60" />
-		<monster name="Tangela" x="-8" y="12" z="7" spawntime="60" />
-		<monster name="Tangela" x="-5" y="12" z="7" spawntime="180" />
-		<monster name="Gloom" x="-17" y="13" z="7" spawntime="180" />
-		<monster name="Gloom" x="10" y="13" z="7" spawntime="60" />
-		<monster name="Gloom" x="3" y="14" z="7" spawntime="60" />
-		<monster name="Tangela" x="9" y="15" z="7" spawntime="180" />
-		<monster name="Tangela" x="9" y="16" z="7" spawntime="60" />
-		<monster name="Sunflora" x="12" y="18" z="7" spawntime="60" />
-		<monster name="Gloom" x="-19" y="20" z="7" spawntime="60" />
-		<monster name="Gloom" x="-18" y="20" z="7" spawntime="180" />
+		<monster name="Pidgey" x="7" y="9" z="7" spawntime="60" />
+		<monster name="Rattata" x="7" y="10" z="7" spawntime="180" />
+		<monster name="Sunkern" x="-16" y="11" z="7" spawntime="60" />
+		<monster name="Pidgey" x="-8" y="12" z="7" spawntime="60" />
+		<monster name="Oddish" x="-5" y="12" z="7" spawntime="180" />
+		<monster name="Oddish" x="-17" y="13" z="7" spawntime="180" />
+		<monster name="Pidgey" x="3" y="14" z="7" spawntime="60" />
+		<monster name="Pidgey" x="9" y="15" z="7" spawntime="180" />
+		<monster name="Oddish" x="9" y="16" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="-19" y="20" z="7" spawntime="60" />
+		<monster name="Oddish" x="-18" y="20" z="7" spawntime="180" />
 	</spawn>
 	<spawn centerx="1190" centery="890" centerz="7" radius="3">
 		<monster name="Diglett" x="0" y="0" z="7" spawntime="60" />
@@ -9156,11 +9140,10 @@
 		<monster name="Walrein" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="686" centery="893" centerz="7" radius="10">
-		<monster name="Parasect" x="0" y="-6" z="7" spawntime="60" />
-		<monster name="Paras" x="7" y="0" z="7" spawntime="60" />
-		<monster name="Parasect" x="8" y="1" z="7" spawntime="60" />
+		<monster name="Paras" x="0" y="-6" z="7" spawntime="60" />
+		<monster name="Paras" x="8" y="1" z="7" spawntime="60" />
 		<monster name="Paras" x="-8" y="3" z="7" spawntime="60" />
-		<monster name="Parasect" x="-7" y="4" z="7" spawntime="60" />
+		<monster name="Paras" x="-7" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1112" centery="893" centerz="7" radius="3">
 		<monster name="Diglett" x="1" y="-1" z="7" spawntime="60" />
@@ -9294,36 +9277,28 @@
 		<monster name="Weavile" x="4" y="7" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="792" centery="900" centerz="7" radius="30">
-		<monster name="Geodude" x="-3" y="-14" z="7" spawntime="60" />
 		<monster name="Geodude" x="-27" y="-13" z="7" spawntime="60" />
 		<monster name="Geodude" x="-19" y="-12" z="7" spawntime="60" />
 		<monster name="Geodude" x="-11" y="-12" z="7" spawntime="60" />
 		<monster name="Geodude" x="29" y="-9" z="7" spawntime="60" />
-		<monster name="Geodude" x="-15" y="-7" z="7" spawntime="60" />
 		<monster name="Geodude" x="5" y="-6" z="7" spawntime="60" />
 		<monster name="Geodude" x="-30" y="-5" z="7" spawntime="60" />
 		<monster name="Geodude" x="14" y="-1" z="7" spawntime="60" />
-		<monster name="Geodude" x="25" y="-1" z="7" spawntime="60" />
 		<monster name="Geodude" x="-25" y="2" z="7" spawntime="60" />
 		<monster name="Geodude" x="-6" y="2" z="7" spawntime="60" />
 		<monster name="Geodude" x="0" y="7" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="20" y="14" z="7" spawntime="60" />
 		<monster name="Geodude" x="3" y="15" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-20" y="16" z="7" spawntime="60" />
 		<monster name="Oddish" x="23" y="16" z="7" spawntime="60" />
-		<monster name="Oddish" x="16" y="17" z="7" spawntime="60" />
-		<monster name="Furret" x="3" y="19" z="7" spawntime="60" />
+		<monster name="Sentret" x="3" y="19" z="7" spawntime="60" />
 		<monster name="Oddish" x="10" y="19" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-6" y="20" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-14" y="21" z="7" spawntime="60" />
-		<monster name="Furret" x="23" y="21" z="7" spawntime="60" />
+		<monster name="Sentret" x="23" y="21" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="11" y="22" z="7" spawntime="60" />
-		<monster name="Gloom" x="18" y="22" z="7" spawntime="60" />
-		<monster name="Oddish" x="-9" y="23" z="7" spawntime="60" />
+		<monster name="Caterpie" x="18" y="22" z="7" spawntime="60" />
 		<monster name="Oddish" x="1" y="25" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="6" y="25" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-7" y="27" z="7" spawntime="60" />
-		<monster name="Gloom" x="2" y="29" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1060" centery="900" centerz="7" radius="1">
 		<npc name="Nurse Chansey" x="-1" y="0" z="7" spawntime="60" />
@@ -9455,12 +9430,11 @@
 		<monster name="Venusaur" x="1" y="0" z="7" spawntime="180" />
 	</spawn>
 	<spawn centerx="708" centery="912" centerz="7" radius="10">
-		<monster name="Parasect" x="-9" y="-4" z="7" spawntime="60" />
+		<monster name="Paras" x="-9" y="-4" z="7" spawntime="60" />
 		<monster name="Paras" x="-8" y="-4" z="7" spawntime="60" />
 		<monster name="Paras" x="1" y="-3" z="7" spawntime="60" />
-		<monster name="Parasect" x="1" y="-2" z="7" spawntime="60" />
 		<monster name="Paras" x="7" y="3" z="7" spawntime="60" />
-		<monster name="Parasect" x="7" y="4" z="7" spawntime="60" />
+		<monster name="Paras" x="7" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="836" centery="912" centerz="7" radius="30">
 		<monster name="Oddish" x="17" y="9" z="7" spawntime="60" />
@@ -9546,19 +9520,15 @@
 	</spawn>
 	<spawn centerx="771" centery="919" centerz="7" radius="30">
 		<monster name="Oddish" x="-10" y="-8" z="7" spawntime="60" />
-		<monster name="Oddish" x="-13" y="-6" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-10" y="-6" z="7" spawntime="60" />
-		<monster name="Furret" x="-11" y="-2" z="7" spawntime="60" />
+		<monster name="Sentret" x="-11" y="-2" z="7" spawntime="60" />
 		<monster name="Oddish" x="-26" y="14" z="7" spawntime="60" />
-		<monster name="Marowak" x="-3" y="14" z="7" spawntime="60" />
 		<monster name="Cubone" x="-10" y="16" z="7" spawntime="60" />
-		<monster name="Furret" x="-26" y="19" z="7" spawntime="60" />
+		<monster name="Sentret" x="-26" y="19" z="7" spawntime="60" />
 		<monster name="Cubone" x="4" y="22" z="7" spawntime="60" />
-		<monster name="Marowak" x="-15" y="24" z="7" spawntime="60" />
-		<monster name="Marowak" x="28" y="24" z="7" spawntime="60" />
-		<monster name="Marowak" x="11" y="25" z="7" spawntime="60" />
-		<monster name="Marowak" x="18" y="25" z="7" spawntime="60" />
-		<monster name="Cubone" x="-12" y="27" z="7" spawntime="60" />
+		<monster name="Cubone" x="28" y="24" z="7" spawntime="60" />
+		<monster name="Cubone" x="11" y="25" z="7" spawntime="60" />
+		<monster name="Cubone" x="18" y="25" z="7" spawntime="60" />
 		<monster name="Cubone" x="-5" y="30" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1436" centery="919" centerz="7" radius="5">
@@ -9879,51 +9849,45 @@
 	<spawn centerx="556" centery="941" centerz="7" radius="30">
 		<monster name="Tangela" x="-7" y="-27" z="7" spawntime="60" />
 		<monster name="Gloom" x="1" y="-26" z="7" spawntime="60" />
-		<monster name="Sunflora" x="12" y="-26" z="7" spawntime="60" />
+		<monster name="Rattata" x="12" y="-26" z="7" spawntime="60" />
 		<monster name="Gloom" x="-9" y="-25" z="7" spawntime="60" />
-		<monster name="Gloom" x="10" y="-25" z="7" spawntime="60" />
-		<monster name="Gloom" x="24" y="-25" z="7" spawntime="60" />
-		<monster name="Gloom" x="25" y="-25" z="7" spawntime="180" />
-		<monster name="Gloom" x="26" y="-25" z="7" spawntime="180" />
+		<monster name="Bellsprout" x="10" y="-25" z="7" spawntime="60" />
+		<monster name="Caterpie" x="25" y="-25" z="7" spawntime="180" />
+		<monster name="Pidgey" x="26" y="-25" z="7" spawntime="180" />
 		<monster name="Gloom" x="-10" y="-24" z="7" spawntime="180" />
-		<monster name="Gloom" x="25" y="-21" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="25" y="-21" z="7" spawntime="60" />
 		<monster name="Tangela" x="-12" y="-20" z="7" spawntime="60" />
-		<monster name="Gloom" x="25" y="-20" z="7" spawntime="180" />
 		<monster name="Gloom" x="-16" y="-19" z="7" spawntime="60" />
 		<monster name="Gloom" x="-15" y="-18" z="7" spawntime="180" />
 		<monster name="Weezing" x="1" y="-11" z="7" spawntime="60" />
-		<monster name="Weezing" x="6" y="-8" z="7" spawntime="60" />
-		<monster name="Weezing" x="24" y="-7" z="7" spawntime="60" />
+		<monster name="Koffing" x="6" y="-8" z="7" spawntime="60" />
+		<monster name="Koffing" x="24" y="-7" z="7" spawntime="60" />
 		<monster name="Pidgey" x="-26" y="-1" z="7" spawntime="60" />
 		<monster name="Furret" x="-22" y="1" z="7" spawntime="60" />
 		<monster name="Granbull" x="-26" y="4" z="7" spawntime="60" />
-		<monster name="Weezing" x="21" y="4" z="7" spawntime="60" />
+		<monster name="Koffing" x="21" y="4" z="7" spawntime="60" />
 		<monster name="Oddish" x="-16" y="7" z="7" spawntime="60" />
 		<monster name="Chikorita" x="-29" y="10" z="7" spawntime="60" />
-		<monster name="Weezing" x="19" y="11" z="7" spawntime="60" />
-		<monster name="Weezing" x="25" y="11" z="7" spawntime="60" />
+		<monster name="Koffing" x="25" y="11" z="7" spawntime="60" />
 		<monster name="Oddish" x="-14" y="12" z="7" spawntime="60" />
 		<monster name="Oddish" x="-27" y="14" z="7" spawntime="60" />
-		<monster name="Weezing" x="7" y="16" z="7" spawntime="60" />
+		<monster name="Koffing" x="7" y="16" z="7" spawntime="60" />
 		<monster name="Pidgey" x="-24" y="17" z="7" spawntime="60" />
-		<monster name="Weezing" x="26" y="18" z="7" spawntime="60" />
+		<monster name="Koffing" x="26" y="18" z="7" spawntime="60" />
 		<monster name="Chikorita" x="-26" y="19" z="7" spawntime="60" />
 		<monster name="Weezing" x="-3" y="20" z="7" spawntime="60" />
-		<monster name="Shuppet" x="10" y="21" z="7" spawntime="60" />
 		<monster name="Oddish" x="-16" y="22" z="7" spawntime="60" />
 		<monster name="Koffing" x="4" y="22" z="7" spawntime="60" />
 		<monster name="Shuppet" x="1" y="23" z="7" spawntime="60" />
-		<monster name="Shiny Shuppet" x="8" y="23" z="7" spawntime="60" />
+		<monster name="Shuppet" x="8" y="23" z="7" spawntime="60" />
 		<monster name="Shuppet" x="9" y="25" z="7" spawntime="60" />
-		<monster name="Shuppet" x="12" y="25" z="7" spawntime="60" />
 		<monster name="Weezing" x="-2" y="26" z="7" spawntime="180" />
 		<monster name="Shuppet" x="4" y="26" z="7" spawntime="60" />
-		<monster name="Shieldon" x="16" y="26" z="7" spawntime="60" />
+		<monster name="Geodude" x="16" y="26" z="7" spawntime="60" />
 		<monster name="Koffing" x="11" y="27" z="7" spawntime="60" />
 		<monster name="Pidgey" x="-27" y="29" z="7" spawntime="60" />
 		<monster name="Furret" x="-23" y="29" z="7" spawntime="60" />
-		<monster name="Shieldon" x="13" y="29" z="7" spawntime="60" />
-		<monster name="Weezing" x="18" y="29" z="7" spawntime="60" />
+		<monster name="Koffing" x="18" y="29" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1191" centery="941" centerz="7" radius="10">
 		<monster name="Metapod" x="10" y="-6" z="7" spawntime="60" />
@@ -9953,26 +9917,21 @@
 	<spawn centerx="3227" centery="941" centerz="7" radius="1" />
 	<spawn centerx="3233" centery="941" centerz="7" radius="1" />
 	<spawn centerx="616" centery="942" centerz="7" radius="30">
-		<monster name="Gloom" x="-24" y="-23" z="7" spawntime="60" />
-		<monster name="Gloom" x="-25" y="-22" z="7" spawntime="60" />
-		<monster name="Gloom" x="-24" y="-22" z="7" spawntime="180" />
-		<monster name="Gloom" x="-20" y="-20" z="7" spawntime="60" />
-		<monster name="Gloom" x="-19" y="-20" z="7" spawntime="180" />
-		<monster name="Weezing" x="-26" y="-19" z="7" spawntime="60" />
-		<monster name="Koffing" x="3" y="-16" z="7" spawntime="60" />
+		<monster name="Caterpie" x="-24" y="-23" z="7" spawntime="60" />
+		<monster name="Pidgey" x="-25" y="-22" z="7" spawntime="60" />
+		<monster name="Oddish" x="-20" y="-20" z="7" spawntime="60" />
+		<monster name="Caterpie" x="-19" y="-20" z="7" spawntime="180" />
+		<monster name="Koffing" x="-26" y="-19" z="7" spawntime="60" />
 		<monster name="Koffing" x="-17" y="-12" z="7" spawntime="60" />
 		<monster name="Koffing" x="12" y="-11" z="7" spawntime="60" />
-		<monster name="Stantler" x="-21" y="-7" z="7" spawntime="60" />
-		<monster name="Koffing" x="-9" y="-4" z="7" spawntime="60" />
-		<monster name="Weezing" x="-26" y="-2" z="7" spawntime="60" />
+		<monster name="Rattata" x="-21" y="-7" z="7" spawntime="60" />
+		<monster name="Koffing" x="-26" y="-2" z="7" spawntime="60" />
 		<monster name="Koffing" x="9" y="2" z="7" spawntime="60" />
 		<monster name="Koffing" x="-5" y="6" z="7" spawntime="60" />
-		<monster name="Weezing" x="-25" y="10" z="7" spawntime="60" />
 		<monster name="Koffing" x="-29" y="15" z="7" spawntime="60" />
 		<monster name="Koffing" x="-11" y="16" z="7" spawntime="60" />
 		<monster name="Koffing" x="12" y="20" z="7" spawntime="60" />
-		<monster name="Koffing" x="24" y="20" z="7" spawntime="60" />
-		<monster name="Weezing" x="-25" y="21" z="7" spawntime="60" />
+		<monster name="Koffing" x="-25" y="21" z="7" spawntime="60" />
 		<monster name="Koffing" x="-9" y="28" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="763" centery="942" centerz="7" radius="10" />
@@ -9986,10 +9945,10 @@
 		<monster name="Metapod" x="-9" y="10" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="812" centery="943" centerz="7" radius="1">
-		<monster name="Marowak" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Cubone" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="818" centery="943" centerz="7" radius="1">
-		<monster name="Marowak" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Cubone" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1318" centery="943" centerz="7" radius="5">
 		<monster name="Venusaur" x="1" y="1" z="7" spawntime="180" />
@@ -10002,7 +9961,7 @@
 		<npc name="mark" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="805" centery="944" centerz="7" radius="1">
-		<monster name="Marowak" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Cubone" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="821" centery="944" centerz="7" radius="1">
 		<monster name="Marowak" x="0" y="0" z="7" spawntime="60" />
@@ -10052,7 +10011,7 @@
 		<monster name="Treecko" x="-4" y="-1" z="7" spawntime="180" />
 	</spawn>
 	<spawn centerx="784" centery="946" centerz="7" radius="10">
-		<monster name="Marowak" x="-1" y="4" z="7" spawntime="60" />
+		<monster name="Cubone" x="-1" y="4" z="7" spawntime="60" />
 		<monster name="Cubone" x="6" y="10" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="3071" centery="946" centerz="7" radius="1">
@@ -10062,71 +10021,54 @@
 		<monster name="Rhyhorn" x="-6" y="8" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="677" centery="947" centerz="7" radius="30">
-		<monster name="Meowth" x="7" y="-30" z="7" spawntime="60" />
 		<monster name="Kakuna" x="2" y="-29" z="7" spawntime="60" />
 		<monster name="Oddish" x="9" y="-28" z="7" spawntime="60" />
-		<monster name="Bellossom" x="12" y="-28" z="7" spawntime="60" />
-		<monster name="Weedle" x="16" y="-28" z="7" spawntime="60" />
+		<monster name="Oddish" x="12" y="-28" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="7" y="-25" z="7" spawntime="60" />
-		<monster name="Gloom" x="14" y="-25" z="7" spawntime="60" />
+		<monster name="Pidgey" x="14" y="-25" z="7" spawntime="60" />
 		<monster name="Metapod" x="1" y="-22" z="7" spawntime="60" />
-		<monster name="Kakuna" x="18" y="-22" z="7" spawntime="60" />
 		<monster name="Metapod" x="12" y="-20" z="7" spawntime="60" />
 		<monster name="Meowth" x="6" y="-19" z="7" spawntime="60" />
 		<monster name="Oddish" x="-1" y="-18" z="7" spawntime="60" />
-		<monster name="Bellossom" x="1" y="-17" z="7" spawntime="60" />
 		<monster name="Metapod" x="-2" y="-15" z="7" spawntime="60" />
 		<monster name="Kakuna" x="5" y="-15" z="7" spawntime="60" />
 		<monster name="Oddish" x="19" y="-15" z="7" spawntime="60" />
-		<monster name="Weedle" x="26" y="-15" z="7" spawntime="60" />
-		<monster name="Gloom" x="24" y="-12" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="24" y="-12" z="7" spawntime="60" />
 		<monster name="Kakuna" x="-2" y="-11" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="5" y="-11" z="7" spawntime="60" />
-		<monster name="Weedle" x="12" y="-10" z="7" spawntime="60" />
 		<monster name="Metapod" x="-11" y="-8" z="7" spawntime="60" />
-		<monster name="Gloom" x="23" y="-8" z="7" spawntime="60" />
-		<monster name="Gloom" x="10" y="-7" z="7" spawntime="60" />
-		<monster name="Metapod" x="28" y="-7" z="7" spawntime="60" />
+		<monster name="Oddish" x="23" y="-8" z="7" spawntime="60" />
+		<monster name="Caterpie" x="10" y="-7" z="7" spawntime="60" />
 		<monster name="Oddish" x="2" y="-6" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="16" y="-6" z="7" spawntime="60" />
 		<monster name="Meowth" x="-4" y="-5" z="7" spawntime="60" />
-		<monster name="Kakuna" x="-11" y="-4" z="7" spawntime="60" />
 		<monster name="Metapod" x="-2" y="-4" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-3" y="-3" z="7" spawntime="60" />
+		<monster name="Oddish" x="-3" y="-3" z="7" spawntime="60" />
 		<monster name="Kakuna" x="28" y="-3" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="4" y="-2" z="7" spawntime="60" />
 		<monster name="Weedle" x="17" y="-2" z="7" spawntime="60" />
 		<monster name="Meowth" x="12" y="-1" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-6" y="0" z="7" spawntime="60" />
-		<monster name="Meowth" x="-1" y="0" z="7" spawntime="60" />
 		<monster name="Oddish" x="5" y="1" z="7" spawntime="60" />
 		<monster name="Weedle" x="12" y="1" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="3" y="4" z="7" spawntime="60" />
-		<monster name="Gloom" x="10" y="4" z="7" spawntime="60" />
 		<monster name="Metapod" x="29" y="5" z="7" spawntime="60" />
 		<monster name="Oddish" x="-3" y="6" z="7" spawntime="60" />
 		<monster name="Metapod" x="12" y="7" z="7" spawntime="60" />
-		<monster name="Gloom" x="2" y="9" z="7" spawntime="60" />
 		<monster name="Kakuna" x="29" y="9" z="7" spawntime="60" />
 		<monster name="Meowth" x="17" y="10" z="7" spawntime="60" />
 		<monster name="Weedle" x="7" y="11" z="7" spawntime="60" />
-		<monster name="Meowth" x="-6" y="12" z="7" spawntime="60" />
 		<monster name="Oddish" x="19" y="12" z="7" spawntime="60" />
 		<monster name="Weedle" x="26" y="12" z="7" spawntime="60" />
-		<monster name="Bellossom" x="19" y="13" z="7" spawntime="60" />
-		<monster name="Kakuna" x="5" y="14" z="7" spawntime="60" />
+		<monster name="Oddish" x="19" y="13" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="17" y="15" z="7" spawntime="60" />
-		<monster name="Gloom" x="24" y="15" z="7" spawntime="60" />
+		<monster name="Oddish" x="24" y="15" z="7" spawntime="60" />
 		<monster name="Oddish" x="23" y="19" z="7" spawntime="60" />
-		<monster name="Gloom" x="20" y="20" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-4" y="22" z="7" spawntime="60" />
+		<monster name="Oddish" x="-4" y="22" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="23" y="23" z="7" spawntime="60" />
 		<monster name="Kakuna" x="30" y="23" z="7" spawntime="60" />
-		<monster name="Oddish" x="-8" y="25" z="7" spawntime="60" />
-		<monster name="Heracross" x="-6" y="26" z="7" spawntime="60" />
+		<monster name="Pidgey" x="-6" y="26" z="7" spawntime="60" />
 		<monster name="Kakuna" x="4" y="27" z="7" spawntime="60" />
-		<monster name="Bellossom" x="18" y="27" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="13" y="29" z="7" spawntime="60" />
+		<monster name="Oddish" x="18" y="27" z="7" spawntime="60" />
 		<monster name="Kakuna" x="21" y="29" z="7" spawntime="60" />
 		<monster name="Metapod" x="25" y="30" z="7" spawntime="60" />
 	</spawn>
@@ -10240,9 +10182,8 @@
 		<npc name="mark" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="740" centery="956" centerz="7" radius="5">
-		<monster name="Pinsir" x="0" y="-1" z="7" spawntime="60" />
-		<monster name="Gloom" x="-4" y="0" z="7" spawntime="60" />
-		<monster name="Bellossom" x="2" y="2" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Oddish" x="2" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="3023" centery="956" centerz="7" radius="1">
 		<monster name="Aggron" x="0" y="0" z="7" spawntime="60" />
@@ -10360,7 +10301,6 @@
 	<spawn centerx="786" centery="963" centerz="7" radius="10">
 		<monster name="Cubone" x="-3" y="-3" z="7" spawntime="60" />
 		<monster name="Cubone" x="-6" y="0" z="7" spawntime="60" />
-		<monster name="Cubone" x="9" y="10" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1185" centery="963" centerz="7" radius="10">
 		<monster name="Bellsprout" x="-6" y="-4" z="7" spawntime="60" />
@@ -10386,9 +10326,9 @@
 		<monster name="Rhyperior" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="796" centery="966" centerz="7" radius="10">
-		<monster name="Marowak" x="2" y="-6" z="7" spawntime="60" />
-		<monster name="Marowak" x="9" y="4" z="7" spawntime="60" />
-		<monster name="Marowak" x="-4" y="8" z="7" spawntime="60" />
+		<monster name="Cubone" x="2" y="-6" z="7" spawntime="60" />
+		<monster name="Cubone" x="9" y="4" z="7" spawntime="60" />
+		<monster name="Cubone" x="-4" y="8" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1034" centery="966" centerz="7" radius="10">
 		<monster name="Tangela" x="-9" y="-9" z="7" spawntime="60" />
@@ -10447,44 +10387,34 @@
 		<monster name="Aggron" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="746" centery="969" centerz="7" radius="30">
-		<monster name="Bellossom" x="-12" y="-26" z="7" spawntime="60" />
 		<monster name="Weedle" x="-27" y="-24" z="7" spawntime="60" />
-		<monster name="Gloom" x="-29" y="-21" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="-29" y="-21" z="7" spawntime="60" />
 		<monster name="Weedle" x="-26" y="-12" z="7" spawntime="60" />
-		<monster name="Gloom" x="6" y="-10" z="7" spawntime="60" />
-		<monster name="Gloom" x="-28" y="-9" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-26" y="-6" z="7" spawntime="60" />
-		<monster name="Gloom" x="-12" y="-5" z="7" spawntime="60" />
-		<monster name="Bellossom" x="14" y="-4" z="7" spawntime="60" />
-		<monster name="Gloom" x="0" y="-3" z="7" spawntime="60" />
-		<monster name="Gloom" x="14" y="-3" z="7" spawntime="60" />
+		<monster name="Caterpie" x="-28" y="-9" z="7" spawntime="60" />
+		<monster name="Oddish" x="-26" y="-6" z="7" spawntime="60" />
+		<monster name="Pidgey" x="-12" y="-5" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="0" y="-3" z="7" spawntime="60" />
+		<monster name="Oddish" x="14" y="-3" z="7" spawntime="60" />
 		<monster name="Kakuna" x="6" y="-1" z="7" spawntime="60" />
-		<monster name="Bellossom" x="25" y="0" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-8" y="3" z="7" spawntime="60" />
+		<monster name="Oddish" x="-8" y="3" z="7" spawntime="60" />
 		<monster name="Metapod" x="-17" y="4" z="7" spawntime="60" />
-		<monster name="Gloom" x="-4" y="6" z="7" spawntime="60" />
-		<monster name="Meowth" x="-12" y="7" z="7" spawntime="60" />
+		<monster name="Caterpie" x="-4" y="6" z="7" spawntime="60" />
 		<monster name="Metapod" x="19" y="7" z="7" spawntime="60" />
-		<monster name="Bellossom" x="23" y="7" z="7" spawntime="60" />
+		<monster name="Oddish" x="23" y="7" z="7" spawntime="60" />
 		<monster name="Weedle" x="-3" y="9" z="7" spawntime="60" />
-		<monster name="Meowth" x="24" y="10" z="7" spawntime="60" />
 		<monster name="Metapod" x="4" y="12" z="7" spawntime="60" />
 		<monster name="Oddish" x="26" y="12" z="7" spawntime="60" />
 		<monster name="Weedle" x="-30" y="13" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-27" y="15" z="7" spawntime="60" />
 		<monster name="Meowth" x="9" y="15" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="24" y="15" z="7" spawntime="60" />
 		<monster name="Oddish" x="11" y="17" z="7" spawntime="60" />
-		<monster name="Weedle" x="18" y="17" z="7" spawntime="60" />
 		<monster name="Kakuna" x="3" y="19" z="7" spawntime="60" />
 		<monster name="Kakuna" x="1" y="20" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="9" y="20" z="7" spawntime="60" />
-		<monster name="Gloom" x="16" y="20" z="7" spawntime="60" />
-		<monster name="Gloom" x="9" y="22" z="7" spawntime="60" />
-		<monster name="Beedrill" x="14" y="23" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-28" y="27" z="7" spawntime="60" />
-		<monster name="Kakuna" x="22" y="28" z="7" spawntime="60" />
-		<monster name="Gloom" x="2" y="30" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="9" y="22" z="7" spawntime="60" />
+		<monster name="Weedle" x="14" y="23" z="7" spawntime="60" />
+		<monster name="Oddish" x="-28" y="27" z="7" spawntime="60" />
+		<monster name="Oddish" x="2" y="30" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1353" centery="969" centerz="7" radius="5">
 		<monster name="Vileplume" x="-1" y="2" z="7" spawntime="180" />
@@ -11017,31 +10947,24 @@
 	<spawn centerx="615" centery="1001" centerz="7" radius="30">
 		<monster name="Koffing" x="-9" y="-27" z="7" spawntime="60" />
 		<monster name="Koffing" x="9" y="-23" z="7" spawntime="60" />
-		<monster name="Koffing" x="4" y="-22" z="7" spawntime="60" />
 		<monster name="Koffing" x="24" y="-22" z="7" spawntime="60" />
 		<monster name="Koffing" x="-2" y="-20" z="7" spawntime="60" />
 		<monster name="Koffing" x="24" y="-20" z="7" spawntime="60" />
-		<monster name="Koffing" x="18" y="-14" z="7" spawntime="180" />
 		<monster name="Koffing" x="19" y="-14" z="7" spawntime="60" />
 		<monster name="Koffing" x="-24" y="-12" z="7" spawntime="60" />
 		<monster name="Koffing" x="13" y="-10" z="7" spawntime="60" />
-		<monster name="Weezing" x="8" y="-3" z="7" spawntime="60" />
-		<monster name="Weezing" x="-4" y="1" z="7" spawntime="60" />
-		<monster name="Weezing" x="7" y="5" z="7" spawntime="60" />
-		<monster name="Weezing" x="7" y="10" z="7" spawntime="180" />
-		<monster name="Venonat" x="-28" y="11" z="7" spawntime="60" />
+		<monster name="Koffing" x="-4" y="1" z="7" spawntime="60" />
+		<monster name="Koffing" x="7" y="5" z="7" spawntime="60" />
+		<monster name="Koffing" x="7" y="10" z="7" spawntime="180" />
 		<monster name="Venonat" x="-27" y="12" z="7" spawntime="180" />
 		<monster name="Venonat" x="-16" y="12" z="7" spawntime="60" />
-		<monster name="Weezing" x="-4" y="15" z="7" spawntime="60" />
-		<monster name="Weezing" x="12" y="15" z="7" spawntime="60" />
+		<monster name="Koffing" x="-4" y="15" z="7" spawntime="60" />
 		<monster name="Venonat" x="-19" y="16" z="7" spawntime="180" />
 		<monster name="Venonat" x="-14" y="16" z="7" spawntime="180" />
-		<monster name="Stantler" x="23" y="16" z="7" spawntime="60" />
-		<monster name="Venonat" x="-22" y="17" z="7" spawntime="60" />
-		<monster name="Weezing" x="17" y="19" z="7" spawntime="180" />
-		<monster name="Venomoth" x="-23" y="21" z="7" spawntime="60" />
-		<monster name="Venomoth" x="-30" y="23" z="7" spawntime="60" />
-		<monster name="Venonat" x="-27" y="24" z="7" spawntime="60" />
+		<monster name="Rattata" x="23" y="16" z="7" spawntime="60" />
+		<monster name="Koffing" x="17" y="19" z="7" spawntime="180" />
+		<monster name="Venonat" x="-23" y="21" z="7" spawntime="60" />
+		<monster name="Venonat" x="-30" y="23" z="7" spawntime="60" />
 		<monster name="Venonat" x="-30" y="27" z="7" spawntime="180" />
 	</spawn>
 	<spawn centerx="1101" centery="1001" centerz="7" radius="10">
@@ -11059,18 +10982,16 @@
 		<monster name="Rampardos" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="553" centery="1002" centerz="7" radius="30">
-		<monster name="Shieldon" x="18" y="-30" z="7" spawntime="60" />
+		<monster name="Geodude" x="18" y="-30" z="7" spawntime="60" />
 		<monster name="Koffing" x="1" y="-29" z="7" spawntime="60" />
 		<monster name="Oddish" x="-18" y="-28" z="7" spawntime="60" />
-		<monster name="Shieldon" x="18" y="-23" z="7" spawntime="60" />
+		<monster name="Geodude" x="18" y="-23" z="7" spawntime="60" />
 		<monster name="Pineco" x="-27" y="-21" z="7" spawntime="60" />
 		<monster name="Weezing" x="5" y="-21" z="7" spawntime="60" />
 		<monster name="Pineco" x="-26" y="-20" z="7" spawntime="180" />
-		<monster name="Shieldon" x="8" y="-20" z="7" spawntime="60" />
-		<monster name="Shieldon" x="10" y="-19" z="7" spawntime="60" />
+		<monster name="Geodude" x="10" y="-19" z="7" spawntime="60" />
 		<monster name="Koffing" x="8" y="-16" z="7" spawntime="60" />
-		<monster name="Weezing" x="16" y="-16" z="7" spawntime="180" />
-		<monster name="Shieldon" x="8" y="-15" z="7" spawntime="60" />
+		<monster name="Koffing" x="16" y="-16" z="7" spawntime="180" />
 		<monster name="Pineco" x="-10" y="-13" z="7" spawntime="60" />
 		<monster name="Koffing" x="29" y="-13" z="7" spawntime="60" />
 		<monster name="Pineco" x="-9" y="-12" z="7" spawntime="180" />
@@ -11078,11 +10999,10 @@
 		<monster name="Pineco" x="0" y="-8" z="7" spawntime="60" />
 		<monster name="Victreebel" x="-17" y="-7" z="7" spawntime="60" />
 		<monster name="Pineco" x="1" y="-7" z="7" spawntime="180" />
-		<monster name="Weezing" x="18" y="-7" z="7" spawntime="60" />
+		<monster name="Koffing" x="18" y="-7" z="7" spawntime="60" />
 		<monster name="Victreebel" x="5" y="-3" z="7" spawntime="60" />
 		<monster name="Koffing" x="17" y="-1" z="7" spawntime="60" />
 		<monster name="Victreebel" x="-23" y="1" z="7" spawntime="60" />
-		<monster name="Venomoth" x="27" y="2" z="7" spawntime="60" />
 		<monster name="Victreebel" x="-16" y="5" z="7" spawntime="60" />
 		<monster name="Victreebel" x="-6" y="5" z="7" spawntime="60" />
 		<monster name="Venonat" x="27" y="5" z="7" spawntime="60" />
@@ -11091,18 +11011,15 @@
 		<monster name="Victreebel" x="3" y="7" z="7" spawntime="60" />
 		<monster name="Victreebel" x="-18" y="11" z="7" spawntime="60" />
 		<monster name="Venonat" x="27" y="14" z="7" spawntime="60" />
-		<monster name="Venomoth" x="14" y="16" z="7" spawntime="60" />
-		<monster name="Venomoth" x="23" y="16" z="7" spawntime="60" />
+		<monster name="Venonat" x="23" y="16" z="7" spawntime="60" />
 		<monster name="Venonat" x="20" y="18" z="7" spawntime="60" />
 		<monster name="Pineco" x="8" y="19" z="7" spawntime="180" />
-		<monster name="Venonat" x="8" y="23" z="7" spawntime="60" />
 		<monster name="Pineco" x="-11" y="24" z="7" spawntime="60" />
 		<monster name="Venonat" x="8" y="24" z="7" spawntime="180" />
-		<monster name="Venomoth" x="15" y="24" z="7" spawntime="60" />
+		<monster name="Venonat" x="15" y="24" z="7" spawntime="60" />
 		<monster name="Victreebel" x="-11" y="26" z="7" spawntime="60" />
 		<monster name="Fearow" x="3" y="26" z="7" spawntime="60" />
 		<monster name="Venonat" x="23" y="26" z="7" spawntime="60" />
-		<monster name="Venonat" x="9" y="27" z="7" spawntime="60" />
 		<monster name="Pineco" x="12" y="27" z="7" spawntime="60" />
 		<monster name="Victreebel" x="-18" y="28" z="7" spawntime="180" />
 	</spawn>
@@ -11249,79 +11166,60 @@
 	<spawn centerx="688" centery="1005" centerz="7" radius="30">
 		<monster name="Metapod" x="-9" y="-27" z="7" spawntime="60" />
 		<monster name="Kakuna" x="-7" y="-27" z="7" spawntime="60" />
-		<monster name="Kakuna" x="25" y="-26" z="7" spawntime="60" />
 		<monster name="Oddish" x="-20" y="-25" z="7" spawntime="60" />
 		<monster name="Meowth" x="-4" y="-24" z="7" spawntime="60" />
 		<monster name="Kakuna" x="14" y="-24" z="7" spawntime="60" />
-		<monster name="Meowth" x="16" y="-24" z="7" spawntime="60" />
 		<monster name="Oddish" x="21" y="-23" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-12" y="-22" z="7" spawntime="60" />
+		<monster name="Oddish" x="-12" y="-22" z="7" spawntime="60" />
 		<monster name="Oddish" x="-2" y="-22" z="7" spawntime="60" />
-		<monster name="Weedle" x="5" y="-22" z="7" spawntime="60" />
-		<monster name="Beedrill" x="-13" y="-20" z="7" spawntime="60" />
+		<monster name="Weedle" x="-13" y="-20" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="19" y="-20" z="7" spawntime="60" />
-		<monster name="Gloom" x="26" y="-20" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-4" y="-19" z="7" spawntime="60" />
-		<monster name="Gloom" x="3" y="-19" z="7" spawntime="60" />
-		<monster name="Bellossom" x="16" y="-19" z="7" spawntime="60" />
+		<monster name="Caterpie" x="26" y="-20" z="7" spawntime="60" />
+		<monster name="Pidgey" x="3" y="-19" z="7" spawntime="60" />
+		<monster name="Oddish" x="16" y="-19" z="7" spawntime="60" />
 		<monster name="Oddish" x="-7" y="-18" z="7" spawntime="60" />
-		<monster name="Metapod" x="12" y="-18" z="7" spawntime="60" />
-		<monster name="Gloom" x="-30" y="-16" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="-30" y="-16" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-15" y="-16" z="7" spawntime="60" />
 		<monster name="Oddish" x="1" y="-16" z="7" spawntime="60" />
-		<monster name="Oddish" x="-20" y="-15" z="7" spawntime="60" />
 		<monster name="Meowth" x="17" y="-15" z="7" spawntime="60" />
 		<monster name="Kakuna" x="24" y="-15" z="7" spawntime="60" />
 		<monster name="Oddish" x="19" y="-13" z="7" spawntime="60" />
-		<monster name="Weedle" x="26" y="-13" z="7" spawntime="60" />
 		<monster name="Oddish" x="12" y="-12" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="7" y="-11" z="7" spawntime="60" />
 		<monster name="Kakuna" x="9" y="-11" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-29" y="-10" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="17" y="-10" z="7" spawntime="60" />
-		<monster name="Gloom" x="24" y="-10" z="7" spawntime="60" />
+		<monster name="Oddish" x="24" y="-10" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="18" y="-8" z="7" spawntime="60" />
-		<monster name="Oddish" x="-19" y="-7" z="7" spawntime="60" />
 		<monster name="Oddish" x="22" y="-6" z="7" spawntime="60" />
 		<monster name="Oddish" x="-15" y="-5" z="7" spawntime="60" />
-		<monster name="Gloom" x="-4" y="-5" z="7" spawntime="60" />
-		<monster name="Gloom" x="-28" y="-4" z="7" spawntime="60" />
+		<monster name="Caterpie" x="-4" y="-5" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-17" y="-2" z="7" spawntime="60" />
 		<monster name="Kakuna" x="30" y="-2" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-30" y="1" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="23" y="1" z="7" spawntime="60" />
 		<monster name="Oddish" x="-11" y="2" z="7" spawntime="60" />
-		<monster name="Gloom" x="-14" y="3" z="7" spawntime="60" />
-		<monster name="Gloom" x="24" y="3" z="7" spawntime="60" />
-		<monster name="Heracross" x="-12" y="6" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="-14" y="3" z="7" spawntime="60" />
+		<monster name="Oddish" x="24" y="3" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-11" y="6" z="7" spawntime="60" />
 		<monster name="Oddish" x="-2" y="7" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="17" y="8" z="7" spawntime="60" />
-		<monster name="Oddish" x="-20" y="9" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-16" y="12" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-3" y="12" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="8" y="13" z="7" spawntime="60" />
-		<monster name="Oddish" x="27" y="13" z="7" spawntime="60" />
 		<monster name="Oddish" x="-10" y="14" z="7" spawntime="60" />
-		<monster name="Gloom" x="13" y="14" z="7" spawntime="60" />
+		<monster name="Caterpie" x="13" y="14" z="7" spawntime="60" />
 		<monster name="Oddish" x="19" y="14" z="7" spawntime="60" />
-		<monster name="Gloom" x="-4" y="18" z="7" spawntime="60" />
 		<monster name="Oddish" x="16" y="18" z="7" spawntime="60" />
 		<monster name="Metapod" x="17" y="18" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-7" y="19" z="7" spawntime="60" />
-		<monster name="Oddish" x="4" y="21" z="7" spawntime="60" />
 		<monster name="Meowth" x="22" y="21" z="7" spawntime="60" />
-		<monster name="Bellossom" x="28" y="21" z="7" spawntime="60" />
+		<monster name="Oddish" x="28" y="21" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="14" y="22" z="7" spawntime="60" />
-		<monster name="Gloom" x="28" y="22" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="5" y="23" z="7" spawntime="60" />
 		<monster name="Oddish" x="24" y="23" z="7" spawntime="60" />
-		<monster name="Bellossom" x="20" y="26" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="22" y="26" z="7" spawntime="60" />
+		<monster name="Oddish" x="20" y="26" z="7" spawntime="60" />
 		<monster name="Oddish" x="24" y="26" z="7" spawntime="60" />
-		<monster name="Gloom" x="29" y="26" z="7" spawntime="60" />
+		<monster name="Oddish" x="29" y="26" z="7" spawntime="60" />
 		<monster name="Oddish" x="5" y="29" z="7" spawntime="60" />
-		<monster name="Gloom" x="17" y="29" z="7" spawntime="60" />
 		<monster name="Oddish" x="12" y="30" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2947" centery="1005" centerz="7" radius="1">
@@ -11330,52 +11228,40 @@
 	</spawn>
 	<spawn centerx="763" centery="1006" centerz="7" radius="30">
 		<monster name="Weedle" x="16" y="-25" z="7" spawntime="60" />
-		<monster name="Gloom" x="14" y="-22" z="7" spawntime="60" />
-		<monster name="Bellossom" x="20" y="-22" z="7" spawntime="60" />
-		<monster name="Bellossom" x="15" y="-18" z="7" spawntime="60" />
+		<monster name="Pidgey" x="14" y="-22" z="7" spawntime="60" />
+		<monster name="Oddish" x="15" y="-18" z="7" spawntime="60" />
 		<monster name="Kakuna" x="20" y="-14" z="7" spawntime="60" />
-		<monster name="Beedrill" x="-2" y="-6" z="7" spawntime="60" />
-		<monster name="Gloom" x="-28" y="-5" z="7" spawntime="60" />
+		<monster name="Weedle" x="-2" y="-6" z="7" spawntime="60" />
 		<monster name="Metapod" x="-22" y="-4" z="7" spawntime="60" />
-		<monster name="Bellossom" x="3" y="-4" z="7" spawntime="60" />
-		<monster name="Bellossom" x="2" y="-3" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-29" y="-2" z="7" spawntime="60" />
+		<monster name="Oddish" x="3" y="-4" z="7" spawntime="60" />
+		<monster name="Oddish" x="2" y="-3" z="7" spawntime="60" />
 		<monster name="Meowth" x="-17" y="-1" z="7" spawntime="60" />
 		<monster name="Kakuna" x="1" y="0" z="7" spawntime="60" />
 		<monster name="Kakuna" x="-29" y="1" z="7" spawntime="60" />
-		<monster name="Oddish" x="-15" y="1" z="7" spawntime="60" />
 		<monster name="Weedle" x="-8" y="1" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-17" y="3" z="7" spawntime="60" />
+		<monster name="Oddish" x="-17" y="3" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-17" y="4" z="7" spawntime="60" />
-		<monster name="Gloom" x="-10" y="4" z="7" spawntime="60" />
-		<monster name="Beedrill" x="-23" y="5" z="7" spawntime="60" />
+		<monster name="Weedle" x="-23" y="5" z="7" spawntime="60" />
 		<monster name="Metapod" x="4" y="7" z="7" spawntime="60" />
 		<monster name="Meowth" x="-28" y="10" z="7" spawntime="60" />
-		<monster name="Meowth" x="9" y="10" z="7" spawntime="60" />
-		<monster name="Bellossom" x="14" y="11" z="7" spawntime="60" />
+		<monster name="Oddish" x="14" y="11" z="7" spawntime="60" />
 		<monster name="Oddish" x="-26" y="12" z="7" spawntime="60" />
-		<monster name="Gloom" x="-24" y="12" z="7" spawntime="60" />
-		<monster name="Weedle" x="-19" y="12" z="7" spawntime="60" />
+		<monster name="Caterpie" x="-24" y="12" z="7" spawntime="60" />
 		<monster name="Kakuna" x="-4" y="12" z="7" spawntime="60" />
 		<monster name="Oddish" x="11" y="12" z="7" spawntime="60" />
 		<monster name="Weedle" x="18" y="12" z="7" spawntime="60" />
-		<monster name="Metapod" x="-7" y="13" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-29" y="15" z="7" spawntime="60" />
+		<monster name="Oddish" x="-29" y="15" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-28" y="15" z="7" spawntime="60" />
-		<monster name="Gloom" x="-21" y="15" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="9" y="15" z="7" spawntime="60" />
-		<monster name="Gloom" x="16" y="15" z="7" spawntime="60" />
+		<monster name="Pidgey" x="-21" y="15" z="7" spawntime="60" />
+		<monster name="Bellsprout" x="16" y="15" z="7" spawntime="60" />
 		<monster name="Meowth" x="-2" y="16" z="7" spawntime="60" />
 		<monster name="Oddish" x="0" y="18" z="7" spawntime="60" />
-		<monster name="Weedle" x="7" y="18" z="7" spawntime="60" />
-		<monster name="Bellossom" x="9" y="18" z="7" spawntime="60" />
+		<monster name="Oddish" x="9" y="18" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-2" y="21" z="7" spawntime="60" />
-		<monster name="Gloom" x="5" y="21" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-5" y="22" z="7" spawntime="60" />
+		<monster name="Oddish" x="5" y="21" z="7" spawntime="60" />
 		<monster name="Kakuna" x="-15" y="23" z="7" spawntime="60" />
 		<monster name="Kakuna" x="22" y="23" z="7" spawntime="60" />
 		<monster name="Metapod" x="-19" y="24" z="7" spawntime="60" />
-		<monster name="Meowth" x="-14" y="27" z="7" spawntime="60" />
 		<monster name="Oddish" x="-12" y="29" z="7" spawntime="60" />
 		<monster name="Weedle" x="-5" y="29" z="7" spawntime="60" />
 		<monster name="Kakuna" x="11" y="29" z="7" spawntime="60" />
@@ -11546,9 +11432,8 @@
 		<monster name="Aggron" x="-12" y="23" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="720" centery="1017" centerz="7" radius="5">
-		<monster name="Bellossom" x="0" y="-4" z="7" spawntime="60" />
-		<monster name="Pinsir" x="0" y="1" z="7" spawntime="60" />
-		<monster name="Bellossom" x="2" y="2" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="1" z="7" spawntime="60" />
+		<monster name="Oddish" x="2" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="900" centery="1017" centerz="7" radius="20">
 		<monster name="Slowbro" x="9" y="-9" z="7" spawntime="60" />
@@ -12220,9 +12105,7 @@
 		<monster name="Tangela" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="737" centery="1043" centerz="7" radius="5">
-		<monster name="Bellossom" x="-2" y="-1" z="7" spawntime="60" />
-		<monster name="Pinsir" x="3" y="0" z="7" spawntime="60" />
-		<monster name="Bellossom" x="-4" y="4" z="7" spawntime="60" />
+		<monster name="Pidgey" x="3" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1370" centery="1043" centerz="7" radius="5">
 		<monster name="Lotad" x="-3" y="-1" z="7" spawntime="180" />
@@ -12290,7 +12173,6 @@
 	<spawn centerx="3159" centery="1046" centerz="7" radius="1" />
 	<spawn centerx="648" centery="1047" centerz="7" radius="5">
 		<monster name="Spearow" x="-3" y="-4" z="7" spawntime="60" />
-		<monster name="Nidoran Male" x="2" y="-2" z="7" spawntime="60" />
 		<monster name="Nidoran Female" x="3" y="1" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2395" centery="1047" centerz="7" radius="19">
@@ -12338,9 +12220,7 @@
 		<monster name="Rhydon" x="0" y="0" z="7" spawntime="180" />
 	</spawn>
 	<spawn centerx="658" centery="1049" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="2" y="-3" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="-2" y="-2" z="7" spawntime="60" />
-		<monster name="Nidoran Female" x="-2" y="3" z="7" spawntime="60" />
 		<monster name="Nidoran Female" x="5" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="666" centery="1049" centerz="7" radius="5">
@@ -12348,7 +12228,6 @@
 	</spawn>
 	<spawn centerx="1228" centery="1049" centerz="7" radius="1" />
 	<spawn centerx="676" centery="1050" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="-1" y="-4" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="2" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2404" centery="1050" centerz="7" radius="30">
@@ -12459,9 +12338,7 @@
 		<monster name="Golem" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="646" centery="1054" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="-3" y="-1" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="4" y="1" z="7" spawntime="60" />
-		<monster name="Nidoran Female" x="2" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1113" centery="1054" centerz="7" radius="1" />
 	<spawn centerx="1401" centery="1054" centerz="7" radius="5">
@@ -12522,7 +12399,6 @@
 	</spawn>
 	<spawn centerx="668" centery="1058" centerz="7" radius="5">
 		<monster name="Nidoran Female" x="-5" y="1" z="7" spawntime="60" />
-		<monster name="Nidoran Female" x="2" y="3" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2403" centery="1058" centerz="7" radius="1" />
 	<spawn centerx="2422" centery="1058" centerz="7" radius="1" />
@@ -12557,7 +12433,6 @@
 		<monster name="Crobat" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="651" centery="1062" centerz="7" radius="5">
-		<monster name="Nidoran Male" x="1" y="-2" z="7" spawntime="60" />
 		<monster name="Nidoran Female" x="5" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="860" centery="1062" centerz="7" radius="5" />
@@ -12646,7 +12521,6 @@
 		<monster name="Machamp" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="643" centery="1067" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="-3" y="0" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="3" y="1" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1077" centery="1067" centerz="7" radius="1">
@@ -12701,7 +12575,6 @@
 		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="664" centery="1069" centerz="7" radius="5">
-		<monster name="Nidoran Male" x="3" y="-4" z="7" spawntime="60" />
 		<monster name="Nidoran Female" x="2" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="674" centery="1069" centerz="7" radius="5">
@@ -12709,7 +12582,6 @@
 	</spawn>
 	<spawn centerx="683" centery="1069" centerz="7" radius="5">
 		<monster name="Nidoran Female" x="3" y="-3" z="7" spawntime="60" />
-		<monster name="Nidoran Male" x="-1" y="-1" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="-3" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1434" centery="1069" centerz="7" radius="5">
@@ -12863,7 +12735,6 @@
 		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="638" centery="1072" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="-1" y="0" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="-5" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1442" centery="1072" centerz="7" radius="5">
@@ -12889,8 +12760,6 @@
 		<monster name="Golem" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="650" centery="1073" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="-3" y="0" z="7" spawntime="60" />
-		<monster name="Nidoran Male" x="4" y="2" z="7" spawntime="60" />
 		<monster name="Nidoran Female" x="4" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2405" centery="1073" centerz="7" radius="1" />
@@ -12954,9 +12823,7 @@
 		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="621" centery="1075" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="1" y="-4" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="-2" y="-1" z="7" spawntime="60" />
-		<monster name="Nidoran Female" x="-2" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="888" centery="1075" centerz="7" radius="10">
 		<monster name="Psyduck" x="-5" y="1" z="7" spawntime="60" />
@@ -13044,12 +12911,9 @@
 	</spawn>
 	<spawn centerx="627" centery="1079" centerz="7" radius="5">
 		<monster name="Nidoran Female" x="2" y="1" z="7" spawntime="60" />
-		<monster name="Nidoran Male" x="-4" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="661" centery="1079" centerz="7" radius="5">
 		<monster name="Nidoran Male" x="-1" y="-4" z="7" spawntime="60" />
-		<monster name="Nidoran Female" x="1" y="2" z="7" spawntime="60" />
-		<monster name="Nidoran Male" x="5" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="668" centery="1079" centerz="7" radius="5">
 		<monster name="Nidoran Female" x="5" y="4" z="7" spawntime="60" />
@@ -13093,7 +12957,7 @@
 		<monster name="Crobat" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="578" centery="1080" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2414" centery="1080" centerz="7" radius="12" />
 	<spawn centerx="2421" centery="1080" centerz="7" radius="9" />
@@ -13120,7 +12984,7 @@
 		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="582" centery="1081" centerz="7" radius="1">
-		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Ekans" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="638" centery="1081" centerz="7" radius="5">
 		<monster name="Nidoran Male" x="2" y="-1" z="7" spawntime="60" />
@@ -13154,7 +13018,6 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="652" centery="1082" centerz="7" radius="5">
-		<monster name="Nidoran Female" x="3" y="1" z="7" spawntime="60" />
 		<monster name="Nidoran Male" x="1" y="3" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="915" centery="1082" centerz="7" radius="10">
@@ -13198,7 +13061,7 @@
 		<monster name="Machoke" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="579" centery="1083" centerz="7" radius="1">
-		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2498" centery="1083" centerz="7" radius="1">
 		<monster name="Budew" x="0" y="0" z="7" spawntime="60" />
@@ -13255,7 +13118,7 @@
 		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="583" centery="1085" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="704" centery="1085" centerz="7" radius="1">
 		<npc name="Nurse Chansey" x="0" y="0" z="7" spawntime="60" />
@@ -13285,10 +13148,10 @@
 		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="560" centery="1086" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="565" centery="1086" centerz="7" radius="1">
-		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Ekans" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2504" centery="1086" centerz="7" radius="1">
 		<monster name="Lopunny" x="0" y="0" z="7" spawntime="180" />
@@ -13306,7 +13169,7 @@
 		<monster name="Golbat" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="575" centery="1087" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2829" centery="1087" centerz="7" radius="1">
 		<monster name="Rotom" x="0" y="0" z="7" spawntime="180" />
@@ -13318,13 +13181,13 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="570" centery="1088" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="578" centery="1088" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="581" centery="1088" centerz="7" radius="1">
-		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="677" centery="1088" centerz="7" radius="5">
 		<monster name="Nidoran Male" x="0" y="-1" z="7" spawntime="60" />
@@ -13357,13 +13220,10 @@
 		<monster name="Crobat" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="564" centery="1089" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="614" centery="1089" centerz="7" radius="5">
-		<monster name="Mankey" x="-2" y="-3" z="7" spawntime="60" />
 		<monster name="Mankey" x="3" y="-3" z="7" spawntime="60" />
-		<monster name="Mankey" x="0" y="2" z="7" spawntime="60" />
-		<monster name="Mankey" x="-2" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2819" centery="1089" centerz="7" radius="1">
 		<monster name="Rotom" x="0" y="0" z="7" spawntime="180" />
@@ -13380,10 +13240,10 @@
 		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="567" centery="1090" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="588" centery="1090" centerz="7" radius="1">
-		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Ekans" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2828" centery="1090" centerz="7" radius="1">
 		<monster name="Rotom" x="1" y="-1" z="7" spawntime="180" />
@@ -13397,13 +13257,10 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="585" centery="1091" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="631" centery="1091" centerz="7" radius="5">
-		<monster name="Mankey" x="2" y="-4" z="7" spawntime="60" />
-		<monster name="Mankey" x="-4" y="-3" z="7" spawntime="60" />
 		<monster name="Mankey" x="4" y="1" z="7" spawntime="60" />
-		<monster name="Mankey" x="-3" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1049" centery="1091" centerz="7" radius="1">
 		<npc name="Architect" x="1" y="0" z="7" spawntime="60" />
@@ -13418,16 +13275,16 @@
 		<monster name="Golbat" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="560" centery="1092" centerz="7" radius="1">
-		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="571" centery="1092" centerz="7" radius="1">
-		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="577" centery="1092" centerz="7" radius="1">
-		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="581" centery="1092" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1045" centery="1092" centerz="7" radius="1">
 		<npc name="Job Manager" x="0" y="-1" z="7" spawntime="60" />
@@ -13455,16 +13312,16 @@
 		<npc name="Simon the Guard" x="1" y="0" z="7" spawntime="60" direction="1" />
 	</spawn>
 	<spawn centerx="565" centery="1094" centerz="7" radius="1">
-		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="569" centery="1094" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="584" centery="1094" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="589" centery="1094" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1122" centery="1094" centerz="7" radius="20">
 		<monster name="Beedrill" x="-2" y="-1" z="7" spawntime="60" />
@@ -13616,12 +13473,10 @@
 		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="561" centery="1095" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="623" centery="1095" centerz="7" radius="5">
-		<monster name="Mankey" x="-1" y="-2" z="7" spawntime="60" />
 		<monster name="Mankey" x="-4" y="3" z="7" spawntime="60" />
-		<monster name="Mankey" x="2" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2508" centery="1095" centerz="7" radius="1">
 		<monster name="Budew" x="0" y="0" z="7" spawntime="60" />
@@ -13642,10 +13497,10 @@
 		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="574" centery="1096" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="579" centery="1096" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="741" centery="1096" centerz="7" radius="1">
 		<npc name="mark" x="0" y="0" z="7" spawntime="60" />
@@ -13663,13 +13518,13 @@
 		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="587" centery="1097" centerz="7" radius="1">
-		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="435" centery="1098" centerz="7" radius="1">
 		<monster name="Golem" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="565" centery="1098" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="450" centery="1099" centerz="7" radius="1">
 		<monster name="Onix" x="0" y="0" z="7" spawntime="60" />
@@ -13684,13 +13539,13 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="562" centery="1099" centerz="7" radius="1">
-		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="569" centery="1099" centerz="7" radius="1">
-		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="590" centery="1099" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="957" centery="1099" centerz="7" radius="5">
 		<monster name="Tangela" x="1" y="-1" z="7" spawntime="60" />
@@ -13725,16 +13580,13 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="573" centery="1100" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="577" centery="1100" centerz="7" radius="1">
-		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Ekans" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="613" centery="1100" centerz="7" radius="7">
-		<monster name="Mankey" x="-5" y="-1" z="7" spawntime="60" />
-		<monster name="Mankey" x="-4" y="1" z="7" spawntime="60" />
 		<monster name="Mankey" x="-5" y="7" z="7" spawntime="60" />
-		<monster name="Mankey" x="6" y="7" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="739" centery="1100" centerz="7" radius="1" />
 	<spawn centerx="1050" centery="1100" centerz="7" radius="1">
@@ -13783,7 +13635,7 @@
 		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="586" centery="1101" centerz="7" radius="1">
-		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="850" centery="1101" centerz="7" radius="10">
 		<monster name="Lapras" x="-1" y="-6" z="7" spawntime="60" />
@@ -13810,7 +13662,7 @@
 		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="580" centery="1102" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2862" centery="1102" centerz="7" radius="20">
 		<monster name="Rotom" x="7" y="-18" z="7" spawntime="60" />
@@ -13915,10 +13767,10 @@
 		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="562" centery="1103" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="567" centery="1103" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="659" centery="1103" centerz="7" radius="5">
 		<monster name="Spearow" x="-3" y="-1" z="7" spawntime="60" />
@@ -13939,22 +13791,20 @@
 		<monster name="Golbat" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="572" centery="1104" centerz="7" radius="1">
-		<monster name="Fearow" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="583" centery="1104" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="540" centery="1105" centerz="7" radius="1">
 		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="576" centery="1105" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Spearow" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="685" centery="1105" centerz="7" radius="10">
 		<monster name="Spearow" x="-3" y="-2" z="7" spawntime="60" />
-		<monster name="Spearow" x="1" y="-2" z="7" spawntime="60" />
 		<monster name="Spearow" x="3" y="-1" z="7" spawntime="60" />
-		<monster name="Spearow" x="1" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2373" centery="1105" centerz="7" radius="7" />
 	<spawn centerx="544" centery="1106" centerz="7" radius="1">
@@ -14022,19 +13872,19 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="571" centery="1107" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="581" centery="1107" centerz="7" radius="1">
-		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2530" centery="1107" centerz="7" radius="1">
 		<monster name="Umbreon" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="564" centery="1108" centerz="7" radius="1">
-		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Ekans" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="568" centery="1108" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="488" centery="1109" centerz="7" radius="1">
 		<monster name="Golbat" x="0" y="0" z="7" spawntime="60" />
@@ -14086,10 +13936,10 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="574" centery="1110" centerz="7" radius="1">
-		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Ekans" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="577" centery="1110" centerz="7" radius="1">
-		<monster name="Primeape" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1155" centery="1110" centerz="7" radius="20">
 		<monster name="Beedrill" x="-9" y="-12" z="7" spawntime="60" />
@@ -14112,15 +13962,12 @@
 		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="564" centery="1111" centerz="7" radius="1">
-		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Female" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="646" centery="1111" centerz="7" radius="5">
-		<monster name="Mankey" x="2" y="-3" z="7" spawntime="60" />
 		<monster name="Mankey" x="-2" y="-1" z="7" spawntime="60" />
-		<monster name="Mankey" x="-3" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="656" centery="1111" centerz="7" radius="5">
-		<monster name="Spearow" x="-1" y="0" z="7" spawntime="60" />
 		<monster name="Mankey" x="2" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2581" centery="1111" centerz="7" radius="1">
@@ -14170,13 +14017,12 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="561" centery="1113" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="568" centery="1113" centerz="7" radius="1">
-		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Sandshrew" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="670" centery="1113" centerz="7" radius="5">
-		<monster name="Spearow" x="3" y="-4" z="7" spawntime="60" />
 		<monster name="Spearow" x="-1" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="451" centery="1114" centerz="7" radius="1">
@@ -14190,7 +14036,6 @@
 	</spawn>
 	<spawn centerx="613" centery="1114" centerz="7" radius="5">
 		<monster name="Mankey" x="-3" y="-3" z="7" spawntime="60" />
-		<monster name="Mankey" x="0" y="-2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2234" centery="1114" centerz="7" radius="30">
 		<monster name="Exeggutor" x="-6" y="-5" z="7" spawntime="60" />
@@ -14350,7 +14195,7 @@
 		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="565" centery="1115" centerz="7" radius="1">
-		<monster name="Nidoking" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Nidoran Male" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1124" centery="1115" centerz="7" radius="20">
 		<monster name="Magnemite" x="2" y="5" z="7" spawntime="60" />
@@ -14372,12 +14217,10 @@
 		<monster name="Sandslash" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="572" centery="1116" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="622" centery="1116" centerz="7" radius="5">
-		<monster name="Mankey" x="1" y="-3" z="7" spawntime="60" />
 		<monster name="Mankey" x="-1" y="1" z="7" spawntime="60" />
-		<monster name="Mankey" x="-3" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2340" centery="1116" centerz="7" radius="1">
 		<monster name="Delcatty" x="0" y="0" z="7" spawntime="180" />
@@ -14476,7 +14319,7 @@
 		<monster name="Nidoqueen" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="561" centery="1118" centerz="7" radius="1">
-		<monster name="Ditto" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="643" centery="1118" centerz="7" radius="1">
 		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
@@ -14503,7 +14346,7 @@
 		<monster name="Dustox" x="14" y="21" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="567" centery="1119" centerz="7" radius="1">
-		<monster name="Arbok" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Ekans" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="654" centery="1119" centerz="7" radius="1">
 		<monster name="Mankey" x="0" y="0" z="7" spawntime="60" />
@@ -14546,10 +14389,8 @@
 	</spawn>
 	<spawn centerx="630" centery="1122" centerz="7" radius="5">
 		<monster name="Mankey" x="4" y="1" z="7" spawntime="60" />
-		<monster name="Mankey" x="-4" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="679" centery="1122" centerz="7" radius="5">
-		<monster name="Spearow" x="-1" y="-3" z="7" spawntime="60" />
 		<monster name="Spearow" x="2" y="3" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="644" centery="1123" centerz="7" radius="1">
@@ -14832,8 +14673,6 @@
 		<monster name="Cherubi" x="-9" y="19" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="670" centery="1129" centerz="7" radius="5">
-		<monster name="Mankey" x="2" y="-4" z="7" spawntime="60" />
-		<monster name="Spearow" x="0" y="-3" z="7" spawntime="60" />
 		<monster name="Mankey" x="1" y="-1" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2878" centery="1129" centerz="7" radius="1">
@@ -14851,9 +14690,6 @@
 	</spawn>
 	<spawn centerx="655" centery="1130" centerz="7" radius="7">
 		<monster name="Mankey" x="-6" y="-6" z="7" spawntime="60" />
-		<monster name="Mankey" x="5" y="-4" z="7" spawntime="60" />
-		<monster name="Mankey" x="6" y="0" z="7" spawntime="60" />
-		<monster name="Mankey" x="-5" y="2" z="7" spawntime="60" />
 		<monster name="Mankey" x="3" y="6" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2622" centery="1130" centerz="7" radius="7">
@@ -15004,7 +14840,6 @@
 		<monster name="Rotom" x="9" y="5" z="7" spawntime="180" />
 	</spawn>
 	<spawn centerx="667" centery="1139" centerz="7" radius="5">
-		<monster name="Mankey" x="1" y="-4" z="7" spawntime="60" />
 		<monster name="Mankey" x="-4" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1063" centery="1139" centerz="7" radius="20">
@@ -15102,7 +14937,6 @@
 	</spawn>
 	<spawn centerx="2416" centery="1142" centerz="7" radius="1" />
 	<spawn centerx="657" centery="1143" centerz="7" radius="5">
-		<monster name="Mankey" x="4" y="-3" z="7" spawntime="60" />
 		<monster name="Mankey" x="-3" y="3" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="372" centery="1144" centerz="7" radius="5">
@@ -15168,7 +15002,6 @@
 		<monster name="Noctowl" x="-1" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="666" centery="1150" centerz="7" radius="5">
-		<monster name="Mankey" x="5" y="-2" z="7" spawntime="60" />
 		<monster name="Mankey" x="-4" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2418" centery="1150" centerz="7" radius="1" />
@@ -15227,137 +15060,53 @@
 		<monster name="Meditite" x="3" y="2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="723" centery="1154" centerz="7" radius="30">
-		<monster name="Caterpie" x="14" y="-28" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="27" y="-28" z="7" spawntime="60" />
-		<monster name="Weedle" x="16" y="-26" z="7" spawntime="60" />
 		<monster name="Caterpie" x="29" y="-26" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="12" y="-25" z="7" spawntime="60" />
-		<monster name="Tangela" x="25" y="-25" z="7" spawntime="180" />
+		<monster name="Pidgey" x="25" y="-25" z="7" spawntime="180" />
 		<monster name="Caterpie" x="-20" y="-23" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-8" y="-23" z="7" spawntime="180" />
-		<monster name="Caterpie" x="14" y="-23" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="18" y="-23" z="7" spawntime="60" />
-		<monster name="Sunflora" x="23" y="-23" z="7" spawntime="180" />
-		<monster name="Tangela" x="-7" y="-22" z="7" spawntime="180" />
 		<monster name="Caterpie" x="-6" y="-22" z="7" spawntime="60" />
-		<monster name="Sunflora" x="13" y="-22" z="7" spawntime="180" />
-		<monster name="Tangela" x="-21" y="-21" z="7" spawntime="180" />
 		<monster name="Weedle" x="-18" y="-21" z="7" spawntime="60" />
-		<monster name="Tangela" x="14" y="-21" z="7" spawntime="180" />
 		<monster name="Bellsprout" x="-22" y="-20" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-11" y="-20" z="7" spawntime="180" />
-		<monster name="Sunflora" x="5" y="-20" z="7" spawntime="180" />
 		<monster name="Caterpie" x="27" y="-20" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-8" y="-19" z="7" spawntime="60" />
-		<monster name="Caterpie" x="-20" y="-18" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-16" y="-18" z="7" spawntime="60" />
-		<monster name="Tangela" x="27" y="-18" z="7" spawntime="180" />
-		<monster name="Weedle" x="29" y="-18" z="7" spawntime="60" />
 		<monster name="Caterpie" x="-6" y="-17" z="7" spawntime="60" />
-		<monster name="Tangela" x="-4" y="-17" z="7" spawntime="180" />
-		<monster name="Bellsprout" x="-2" y="-17" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="25" y="-17" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-11" y="-15" z="7" spawntime="180" />
-		<monster name="Caterpie" x="27" y="-15" z="7" spawntime="60" />
 		<monster name="Caterpie" x="-11" y="-14" z="7" spawntime="60" />
-		<monster name="Caterpie" x="7" y="-14" z="7" spawntime="60" />
-		<monster name="Sunflora" x="2" y="-13" z="7" spawntime="180" />
-		<monster name="Sunflora" x="26" y="-13" z="7" spawntime="180" />
-		<monster name="Weedle" x="9" y="-12" z="7" spawntime="60" />
-		<monster name="Tangela" x="28" y="-12" z="7" spawntime="180" />
-		<monster name="Tangela" x="-26" y="-11" z="7" spawntime="180" />
-		<monster name="Caterpie" x="-23" y="-11" z="7" spawntime="60" />
+		<monster name="Pidgey" x="26" y="-13" z="7" spawntime="180" />
+		<monster name="Pidgey" x="28" y="-12" z="7" spawntime="180" />
 		<monster name="Bellsprout" x="-13" y="-11" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="5" y="-11" z="7" spawntime="60" />
-		<monster name="Tangela" x="12" y="-11" z="7" spawntime="180" />
-		<monster name="Sunflora" x="16" y="-11" z="7" spawntime="180" />
-		<monster name="Tangela" x="-10" y="-10" z="7" spawntime="180" />
-		<monster name="Weedle" x="-21" y="-9" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-20" y="-9" z="7" spawntime="180" />
-		<monster name="Sunflora" x="-14" y="-9" z="7" spawntime="180" />
-		<monster name="Caterpie" x="-11" y="-9" z="7" spawntime="60" />
+		<monster name="Rattata" x="16" y="-11" z="7" spawntime="180" />
+		<monster name="Sunkern" x="-20" y="-9" z="7" spawntime="180" />
 		<monster name="Bellsprout" x="-7" y="-9" z="7" spawntime="60" />
-		<monster name="Tangela" x="-2" y="-9" z="7" spawntime="180" />
-		<monster name="Bellsprout" x="11" y="-9" z="7" spawntime="60" />
 		<monster name="Caterpie" x="18" y="-9" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-25" y="-8" z="7" spawntime="60" />
-		<monster name="Tangela" x="-20" y="-8" z="7" spawntime="180" />
 		<monster name="Weedle" x="20" y="-7" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-26" y="-6" z="7" spawntime="180" />
 		<monster name="Caterpie" x="-23" y="-6" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-19" y="-6" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-6" y="-6" z="7" spawntime="180" />
-		<monster name="Sunflora" x="12" y="-6" z="7" spawntime="180" />
-		<monster name="Sunflora" x="13" y="-6" z="7" spawntime="180" />
-		<monster name="Tangela" x="15" y="-6" z="7" spawntime="180" />
+		<monster name="Pidgey" x="12" y="-6" z="7" spawntime="180" />
 		<monster name="Bellsprout" x="16" y="-6" z="7" spawntime="60" />
-		<monster name="Tangela" x="3" y="-5" z="7" spawntime="180" />
-		<monster name="Caterpie" x="5" y="-4" z="7" spawntime="60" />
 		<monster name="Caterpie" x="18" y="-4" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="22" y="-4" z="7" spawntime="60" />
-		<monster name="Tangela" x="25" y="-4" z="7" spawntime="180" />
-		<monster name="Sunflora" x="-16" y="-3" z="7" spawntime="180" />
-		<monster name="Tangela" x="5" y="-3" z="7" spawntime="180" />
-		<monster name="Sunflora" x="27" y="-3" z="7" spawntime="180" />
+		<monster name="Sunkern" x="-16" y="-3" z="7" spawntime="180" />
 		<monster name="Weedle" x="7" y="-2" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="3" y="-1" z="7" spawntime="60" />
-		<monster name="Caterpie" x="-10" y="0" z="7" spawntime="60" />
-		<monster name="Sunflora" x="14" y="0" z="7" spawntime="180" />
-		<monster name="Sunflora" x="-11" y="1" z="7" spawntime="180" />
+		<monster name="Rattata" x="14" y="0" z="7" spawntime="180" />
 		<monster name="Caterpie" x="5" y="1" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="9" y="1" z="7" spawntime="60" />
-		<monster name="Caterpie" x="19" y="1" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-22" y="2" z="7" spawntime="180" />
-		<monster name="Weedle" x="-8" y="2" z="7" spawntime="60" />
-		<monster name="Tangela" x="25" y="2" z="7" spawntime="180" />
+		<monster name="Pidgey" x="-22" y="2" z="7" spawntime="180" />
 		<monster name="Bellsprout" x="-12" y="3" z="7" spawntime="60" />
-		<monster name="Sunflora" x="8" y="3" z="7" spawntime="180" />
-		<monster name="Weedle" x="21" y="3" z="7" spawntime="60" />
-		<monster name="Tangela" x="-21" y="4" z="7" spawntime="180" />
-		<monster name="Tangela" x="-14" y="4" z="7" spawntime="180" />
-		<monster name="Bellsprout" x="17" y="4" z="7" spawntime="60" />
+		<monster name="Oddish" x="-21" y="4" z="7" spawntime="180" />
 		<monster name="Caterpie" x="-10" y="5" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-6" y="5" z="7" spawntime="60" />
-		<monster name="Tangela" x="-1" y="5" z="7" spawntime="180" />
 		<monster name="Caterpie" x="9" y="5" z="7" spawntime="60" />
-		<monster name="Sunflora" x="15" y="5" z="7" spawntime="180" />
-		<monster name="Sunflora" x="23" y="5" z="7" spawntime="180" />
-		<monster name="Sunflora" x="-5" y="6" z="7" spawntime="180" />
-		<monster name="Sunflora" x="14" y="6" z="7" spawntime="180" />
+		<monster name="Rattata" x="-5" y="6" z="7" spawntime="180" />
 		<monster name="Caterpie" x="19" y="6" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="23" y="6" z="7" spawntime="60" />
-		<monster name="Tangela" x="-13" y="7" z="7" spawntime="180" />
 		<monster name="Weedle" x="11" y="7" z="7" spawntime="60" />
-		<monster name="Caterpie" x="-12" y="8" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="7" y="8" z="7" spawntime="60" />
 		<monster name="Caterpie" x="18" y="8" z="7" spawntime="60" />
-		<monster name="Tangela" x="16" y="9" z="7" spawntime="180" />
-		<monster name="Sunflora" x="28" y="9" z="7" spawntime="180" />
 		<monster name="Weedle" x="-10" y="10" z="7" spawntime="60" />
-		<monster name="Caterpie" x="9" y="10" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="13" y="10" z="7" spawntime="60" />
 		<monster name="Weedle" x="20" y="10" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-14" y="11" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-8" y="11" z="7" spawntime="180" />
 		<monster name="Bellsprout" x="16" y="11" z="7" spawntime="60" />
-		<monster name="Sunflora" x="-10" y="12" z="7" spawntime="180" />
-		<monster name="Tangela" x="27" y="12" z="7" spawntime="180" />
 		<monster name="Caterpie" x="-9" y="13" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-8" y="13" z="7" spawntime="60" />
-		<monster name="Tangela" x="-2" y="13" z="7" spawntime="180" />
-		<monster name="Caterpie" x="18" y="13" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="22" y="13" z="7" spawntime="60" />
+		<monster name="Oddish" x="-2" y="13" z="7" spawntime="180" />
 		<monster name="Caterpie" x="6" y="14" z="7" spawntime="60" />
-		<monster name="Sunflora" x="15" y="14" z="7" spawntime="180" />
-		<monster name="Sunflora" x="10" y="15" z="7" spawntime="180" />
-		<monster name="Sunflora" x="11" y="15" z="7" spawntime="180" />
-		<monster name="Caterpie" x="-6" y="16" z="7" spawntime="60" />
-		<monster name="Tangela" x="-5" y="16" z="7" spawntime="180" />
-		<monster name="Sunflora" x="-3" y="16" z="7" spawntime="180" />
-		<monster name="Tangela" x="6" y="16" z="7" spawntime="180" />
-		<monster name="Weedle" x="8" y="16" z="7" spawntime="60" />
+		<monster name="Sunkern" x="11" y="15" z="7" spawntime="180" />
+		<monster name="Pidgey" x="-3" y="16" z="7" spawntime="180" />
 		<monster name="Bellsprout" x="4" y="17" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="5" y="18" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="939" centery="1154" centerz="7" radius="20">
 		<monster name="Skorupi" x="-7" y="-11" z="7" spawntime="60" />
@@ -16218,11 +15967,8 @@
 		<monster name="Oddish" x="-13" y="-5" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-17" y="-2" z="7" spawntime="60" />
 		<monster name="Oddish" x="-20" y="-1" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-24" y="6" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-22" y="11" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-28" y="13" z="7" spawntime="60" />
-		<monster name="Gloom" x="-24" y="14" z="7" spawntime="60" />
-		<monster name="Gloom" x="-26" y="15" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="971" centery="1204" centerz="7" radius="1">
 		<monster name="Squirtle" x="0" y="-1" z="7" spawntime="180" />
@@ -16297,8 +16043,7 @@
 		<monster name="Swampert" x="-1" y="-2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="715" centery="1208" centerz="7" radius="1">
-		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
-		<monster name="Scyther" x="0" y="1" z="7" spawntime="180" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="978" centery="1208" centerz="7" radius="1">
 		<monster name="Squirtle" x="0" y="0" z="7" spawntime="60" />
@@ -16314,7 +16059,7 @@
 		<monster name="Golduck" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="725" centery="1209" centerz="7" radius="1">
-		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="971" centery="1209" centerz="7" radius="1">
 		<monster name="Squirtle" x="0" y="0" z="7" spawntime="60" />
@@ -16341,7 +16086,7 @@
 		<monster name="Magneton" x="4" y="10" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="745" centery="1211" centerz="7" radius="1">
-		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="992" centery="1211" centerz="7" radius="1">
 		<monster name="Slowbro" x="0" y="0" z="7" spawntime="60" />
@@ -16361,10 +16106,10 @@
 		<monster name="Purugly" x="-8" y="12" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="718" centery="1212" centerz="7" radius="1">
-		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="727" centery="1212" centerz="7" radius="1">
-		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="998" centery="1212" centerz="7" radius="1">
 		<monster name="Slowbro" x="0" y="0" z="7" spawntime="60" />
@@ -16441,10 +16186,10 @@
 		<monster name="Squirtle" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="723" centery="1216" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="744" centery="1216" centerz="7" radius="1">
-		<monster name="Sceptile" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="994" centery="1216" centerz="7" radius="1">
 		<monster name="Slowbro" x="0" y="0" z="7" spawntime="60" />
@@ -16465,13 +16210,13 @@
 		<monster name="Magnezone" x="3" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="728" centery="1217" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="737" centery="1217" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="741" centery="1217" centerz="7" radius="1">
-		<monster name="Sceptile" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="976" centery="1217" centerz="7" radius="1">
 		<monster name="Slowbro" x="0" y="0" z="7" spawntime="60" />
@@ -16502,14 +16247,13 @@
 		<monster name="Magnezone" x="3" y="5" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="743" centery="1219" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
-		<monster name="Sableye" x="0" y="1" z="7" spawntime="180" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="981" centery="1220" centerz="7" radius="1">
 		<monster name="Squirtle" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="734" centery="1221" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1110" centery="1221" centerz="7" radius="20">
 		<monster name="Paras" x="2" y="-11" z="7" spawntime="60" />
@@ -16521,19 +16265,19 @@
 		<monster name="Paras" x="2" y="20" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="711" centery="1222" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="977" centery="1222" centerz="7" radius="1">
 		<monster name="Squirtle" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="718" centery="1223" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="737" centery="1223" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="745" centery="1223" centerz="7" radius="1">
-		<monster name="Sceptile" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="967" centery="1223" centerz="7" radius="1">
 		<monster name="Golduck" x="0" y="0" z="7" spawntime="60" />
@@ -16639,10 +16383,10 @@
 	</spawn>
 	<spawn centerx="2800" centery="1224" centerz="7" radius="1" />
 	<spawn centerx="712" centery="1226" centerz="7" radius="1">
-		<monster name="Sceptile" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="721" centery="1226" centerz="7" radius="1">
-		<monster name="Sceptile" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2137" centery="1226" centerz="7" radius="1">
 		<monster name="Mawile" x="0" y="-1" z="7" spawntime="180" />
@@ -16654,7 +16398,7 @@
 	<spawn centerx="2614" centery="1226" centerz="7" radius="1" />
 	<spawn centerx="2782" centery="1226" centerz="7" radius="1" />
 	<spawn centerx="742" centery="1227" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="982" centery="1227" centerz="7" radius="1">
 		<monster name="Golduck" x="0" y="0" z="7" spawntime="60" />
@@ -16683,13 +16427,13 @@
 		<monster name="Kricketot" x="3" y="13" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="722" centery="1228" centerz="7" radius="1">
-		<monster name="Sableye" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Rattata" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2300" centery="1228" centerz="7" radius="1" />
 	<spawn centerx="2772" centery="1228" centerz="7" radius="19" />
 	<spawn centerx="2297" centery="1229" centerz="7" radius="1" />
 	<spawn centerx="736" centery="1230" centerz="7" radius="1">
-		<monster name="Sceptile" x="0" y="0" z="7" spawntime="60" />
+		<monster name="Pidgey" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1294" centery="1230" centerz="7" radius="5">
 		<monster name="Ekans" x="3" y="0" z="7" spawntime="60" />
@@ -76266,5 +76010,8 @@
 	</spawn>
 	<spawn centerx="485" centery="626" centerz="15" radius="1">
 		<monster name="Banette" x="0" y="0" z="15" spawntime="60" />
+	</spawn>
+	<spawn centerx="690" centery="1190" centerz="7" radius="1">
+		<npc name="Julie" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 </spawns>

@@ -30,6 +30,8 @@ public class Dat
 	public int ItemCount, CreatureCount, EffectCount, MissileCount;
 	public Dictionary<int, DatThing> Items = new Dictionary<int, DatThing>();
 	public Dictionary<int, DatThing> Creatures = new Dictionary<int, DatThing>();
+	public Dictionary<int, DatThing> Effects = new Dictionary<int, DatThing>();
+	public Dictionary<int, DatThing> Missiles = new Dictionary<int, DatThing>();
 	public int ItemsEnd;
 	public bool IdleAnimations;
 
@@ -62,8 +64,8 @@ public class Dat
 		catch (Exception e) { throw new Exception("item " + (d.Items.Count + 100) + ": " + e.Message); }
 		d.ItemsEnd = p;
 		for (int id = 1; id <= d.CreatureCount; id++) d.Creatures[id] = d.ParseThing(ref p, true);
-		for (int id = 1; id <= d.EffectCount; id++) d.ParseThing(ref p, false);
-		for (int id = 1; id <= d.MissileCount; id++) d.ParseThing(ref p, false);
+		for (int id = 1; id <= d.EffectCount; id++) d.Effects[id] = d.ParseThing(ref p, false);
+		for (int id = 1; id <= d.MissileCount; id++) d.Missiles[id] = d.ParseThing(ref p, false);
 		if (p != data.Length) throw new Exception("tamano inesperado (" + p + " de " + data.Length + ")");
 		return d;
 	}

@@ -5,7 +5,8 @@ function init()
   g_ui.importStyle('questlogwindow')
   g_ui.importStyle('questlinewindow')
 
-  questLogButton = modules.client_topmenu.addRightGameButton('questLogButton', tr('Quest Log'), '/images/topmenu/questlog', function() g_game.requestQuestLog() end)
+  -- sin boton: el panel de Tareas (game_tasks) sustituye al quest log
+  -- questLogButton = modules.client_topmenu.addRightGameButton('questLogButton', tr('Quest Log'), '/images/topmenu/questlog', function() g_game.requestQuestLog() end)
 
   connect(g_game, { onQuestLog = onGameQuestLog,
                     onQuestLine = onGameQuestLine,
@@ -18,7 +19,9 @@ function terminate()
                        onGameEnd = destroyWindows})
 
   destroyWindows()
-  questLogButton:destroy()
+  if questLogButton then
+    questLogButton:destroy()
+  end
 end
 
 function destroyWindows()

@@ -31,6 +31,7 @@
 	<talkaction words="/chameleon" separator=" " script="chameleon.lua" />
 	<talkaction words="/addskill" separator=" " script="add_skill.lua" />
 	<talkaction words="/setlevel" separator=" " script="set_level.lua" />
+	<talkaction words="/progreso" separator=" " script="progreso.lua" />
 	<talkaction words="/mccheck" script="mccheck.lua" />
 	<talkaction words="/ghost" script="ghost.lua" />
 	<talkaction words="/save" script="save.lua" />
@@ -79,4 +80,5 @@
 	<talkaction words="!p" separator=" " script="usesummon.lua" />
 	<talkaction words="smartcombo" separator=" " script="smartcombo.lua" />
 	<talkaction words="pokedexview" separator=" " script="pokedexview.lua" />
+	<talkaction words="progressionintro" separator=" " script="progressionintro.lua" />
 </talkactions>

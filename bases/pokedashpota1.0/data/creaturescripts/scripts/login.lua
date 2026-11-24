@@ -1,15 +1,18 @@
 function onLogin(player)
-	local loginStr = "Bem vindo ao " .. configManager.getString(configKeys.SERVER_NAME) .. "!"
+	local loginStr = "Bienvenido a " .. configManager.getString(configKeys.SERVER_NAME) .. "!"
 	if player:getLastLoginSaved() <= 0 then
-		loginStr = loginStr .. " Please choose your outfit."
-		player:sendOutfitWindow()
+		-- con el inicio nuevo, el aspecto se elige al acabar la intro del Profesor Oak (progression.lua)
+		if not progressionNewStartEnabled then
+			loginStr = loginStr .. " Elige tu aspecto."
+			player:sendOutfitWindow()
+		end
 		player:enableAutoLoot()
 	else
 		if loginStr ~= "" then
 			player:sendTextMessage(MESSAGE_STATUS_DEFAULT, loginStr)
 		end
 
-		loginStr = string.format("Sua ultima visita foi em %s.", os.date("%a %b %d %X %Y", player:getLastLoginSaved()))
+		loginStr = string.format("Tu ultima visita fue el %s.", os.date("%d/%m/%Y a las %H:%M", player:getLastLoginSaved()))
 	end
 	player:sendTextMessage(MESSAGE_STATUS_DEFAULT, loginStr)
 

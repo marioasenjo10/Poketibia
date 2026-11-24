@@ -49,6 +49,48 @@ local function getMonsterFile(name)
 	return monsterFiles[name:lower()]
 end
 
+-- ===================== Piedra de evolucion de los shiny =====================
+-- Un shiny salvaje suelta a menudo la piedra de evolucion que lleva en su botin (fire stone,
+-- heart stone...), segun su etapa (mirada en la especie normal):
+--   inicial (Rattata, Weedle, Charmander) 30 % | intermedia (Charmeleon, Kakuna) 60 % | final (Charizard, Raticate) 80 %
+-- (El objeto shiny especial para evolucionar shinys es otra cosa: shinyevolution.lua)
+shinyStoneChanceByStage = {base = 30, middle = 60, final = 80}
+evolutionStoneNames = {["leaf stone"] = true, ["water stone"] = true, ["venom stone"] = true,
+	["thunder stone"] = true, ["rock stone"] = true, ["punch stone"] = true, ["fire stone"] = true,
+	["ice stone"] = true, ["cocoon stone"] = true, ["crystal stone"] = true, ["darkness stone"] = true,
+	["earth stone"] = true, ["enigma stone"] = true, ["heart stone"] = true, ["metal coat"] = true,
+	["sun stone"] = true, ["feather stone"] = true, ["king's rock stone"] = true, ["dragon stone"] = true}
+local shinyStoneCache = {}
+
+-- devuelve nombre de la piedra y % de que la suelte (nil si no es shiny o no lleva piedra)
+function getShinyStoneDrop(name)
+	if not name or name:sub(1, 6):lower() ~= "shiny " then
+		return nil
+	end
+	local key = name:lower()
+	if shinyStoneCache[key] == nil then
+		shinyStoneCache[key] = false
+		local file = getMonsterFile(name)
+		local content = file and readFile("data/monster/" .. file)
+		local lootBlock = content and content:match("<loot>(.-)</loot>")
+		if lootBlock then
+			for attrs in lootBlock:gmatch("<item%s([^>]*)>") do
+				local itemName = attrs:match('name="([^"]+)"')
+				if itemName and evolutionStoneNames[itemName:lower()] then
+					local stage = getPokemonEvoStage(name:sub(7))
+					shinyStoneCache[key] = {stone = itemName:lower(), chance = shinyStoneChanceByStage[stage] or 0}
+					break
+				end
+			end
+		end
+	end
+	local entry = shinyStoneCache[key]
+	if not entry then
+		return nil
+	end
+	return entry.stone, entry.chance
+end
+
 local function formatChance(pct)
 	if pct >= 100 then return "100" end
 	if pct >= 10 then return string.format("%d", math.floor(pct + 0.5)) end
@@ -79,6 +121,10 @@ local function getPokedexLoot(name)
 			local itemType = ItemType(id or itemName or 0)
 			if itemType and itemType:getId() ~= 0 then
 				local chance = tonumber(attrs:match('chance="(%d+)"')) or 100000
+				local shinyStone, shinyStoneChance = getShinyStoneDrop(name)
+				if shinyStone and itemType:getName():lower() == shinyStone then
+					chance = shinyStoneChance * 1000 / rate
+				end
 				local countMax = tonumber(attrs:match('countmax="(%d+)"')) or 1
 				table.insert(list, {
 					clientId = clientIdOf(itemType),
@@ -312,6 +358,29 @@ local function buildEvoParents()
 		end
 	end
 end
+
+-- etapa de evolucion de una especie normal: "base" (no viene de nada), "middle" o "final" (no evoluciona mas)
+function getPokemonEvoStage(species)
+	if not monstersTable then
+		buildDex()
+	end
+	if not evoParent then
+		buildEvoParents()
+	end
+	local monsterType = MonsterType(species)
+	local evolves = false
+	for _, evolution in ipairs(monsterType and monsterType:getEvolutionList() or {}) do
+		if evolution.name and evolution.name ~= "" and not isShinyName(evolution.name) then
+			evolves = true
+			break
+		end
+	end
+	if not evolves then
+		return "final"
+	end
+	return evoParent[species:lower()] and "middle" or "base"
+end
+
 
 local function getEvolutionChain(name)
 	if not evoParent then
@@ -571,6 +640,9 @@ function Player.checkTownDiscovery(self)
 			self:setStorageValue(TOWN_DISCOVERED_STORAGE + t.id, 1)
 			self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Has descubierto " .. t.name .. ". Ya puedes teletransportarte aqui desde el mapa.")
 			self:sendTownList()
+			if progressionOnTownDiscovered then
+				progressionOnTownDiscovered(self)
+			end
 		end
 	end
 end

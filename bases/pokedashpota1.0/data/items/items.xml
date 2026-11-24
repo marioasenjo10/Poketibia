@@ -9296,7 +9296,9 @@
 	</item> 
 
 	<!-- Loots -->
-	<item id="27634" article="a" name="bicycle" />
+	<item id="27634" article="a" name="bicycle">
+		<attribute key="slotType" value="legs" />
+	</item>
 	<item id="27658" article="a" name="bag of pollem" />
 	<item id="27680" article="a" name="bird beak" />
 	<item id="27681" article="a" name="bitten apple" />

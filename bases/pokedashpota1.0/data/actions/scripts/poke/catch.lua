@@ -9,6 +9,10 @@ local catchExpPerRequiredLevel = 25
 local catchExpRepeatFactor = 0.2      -- capturas siguientes: el 20 %
 local catchExpFirstShinyFactor = 3    -- primera shiny: el triple
 local catchExpShinyFactor = 0.5       -- shiny ya capturada antes: la mitad
+-- multiplicador por rareza (tier de captura de data/pokemon-tiers-review.csv): Rattata/Pidgey (T7) x1,
+-- Metapod/Kakuna/Meowth (T6) x2, Graveler/Pikachu (T5) x3, Onix (T4) x4...
+local catchExpTierFactor = {T7 = 1, T6 = 2, T5 = 3, T4 = 4, T3 = 5, T2 = 6, T1 = 8,
+	["Super Rare"] = 10, ["Ultra Rare"] = 12, ["Ultra rare"] = 12, Legendary = 15, Mythic = 15}
 
 local function doPlayerSendEffect(cid, effect)
 	local player = Player(cid)
@@ -255,7 +259,8 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		local maxExp = getNeededExp(playerLevel + 2) - getNeededExp(playerLevel)
 		local maxExpShiny = getNeededExp(playerLevel + 5) - getNeededExp(playerLevel)
 
-		local firstCatchExp = catchExpBase + catchExpPerRequiredLevel * getPokemonRequiredLevel(name)
+		local catchTier = getCatchTier(name:gsub("^Shiny ", ""))
+		local firstCatchExp = (catchExpBase + catchExpPerRequiredLevel * getPokemonRequiredLevel(name)) * (catchTier and catchExpTierFactor[catchTier] or 1)
 		local givenExp = firstCatchExp
 		if msgcontains(name, 'Shiny') and player:getStorageValue(storageCatch) == -1 then
 			givenExp = firstCatchExp * catchExpFirstShinyFactor
@@ -289,6 +294,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			player:setStorageValue(storageCatch, 1)
 		else
 			player:setStorageValue(storageCatch, player:getStorageValue(storageCatch) + 1)
+		end
+		-- tareas de captura (panel de tareas)
+		if progressionOnCatch then
+			addEvent(progressionOnCatchById, delayMessage + 500, player:getId(), name)
 		end
 
 		addEvent(doPlayerAddExperience, delayMessage, player:getId(), givenExp)

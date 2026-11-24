@@ -25,7 +25,17 @@ shinyStatMultiplier = 1.25 -- shiny pokemon have 25% stronger stats than their o
 -- Estilo Poke Alliance: los pokemon no tienen nivel (no ganan exp ni suben de nivel,
 -- evolucionan con piedras). La fuerza de un pokemon de jugador (dano, vida, defensa,
 -- velocidad) depende del nivel del entrenador + boost.
-trainerLevelDamageBuff = 0.008 -- buff por nivel del entrenador
+trainerLevelDamageBuff = 0.008 -- (ya no se usa: ver trainerLevelCurve)
+-- Curva de fuerza por nivel. La usan los pokemon de jugador (nivel del entrenador) y los
+-- equipos de NPC/gimnasio (nivel configurado). Los salvajes (nivel 0) se quedan en 1.0.
+-- Sube rapido hasta el nivel 30 (que subir se note y a nivel 25-30 un Caterpie caiga de un
+-- golpe) y despues mas despacio. El dano escala con el cuadrado (el ataque y onHealthChange
+-- aplican la formula), la vida y la defensa de forma lineal.
+--   nivel:  1 -> 1.36 | 10 -> 1.90 | 20 -> 2.50 | 30 -> 3.10 | 50 -> 3.40 | 80 -> 3.85
+trainerCurveBase = 1.3
+trainerCurveEarly = 0.06 -- por nivel hasta trainerCurveEarlyCap
+trainerCurveEarlyCap = 30
+trainerCurveLate = 0.015 -- por nivel a partir de trainerCurveEarlyCap
 -- Nivel de entrenador necesario para usar un pokemon segun su etapa evolutiva
 -- (los que no evolucionan, como Snorlax o Heracross, cuentan como etapa final).
 -- Los salvajes usan este mismo valor como nivel de fuerza: un Charizard salvaje
@@ -73,6 +83,12 @@ pokemonRequiredLevels = {
 	dragonair = 55, pupitar = 55, shelgon = 55, metang = 55, gabite = 55,
 }
 shinyExtraLevel = 20
+-- Pokemon salvajes: nivel de fuerza = nivel requerido de su especie (por wildPowerFactor).
+-- Las formas base (nivel 0) se quedan con sus stats de especie; un Golem salvaje (70)
+-- tiene la vida y el dano del Golem de un entrenador de nivel 70.
+wildPowerFromSpecies = true
+wildPowerFactor = 1.0
+wildBaseHealthFactor = 0.75 -- vida de las formas base salvajes (nivel 0)
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
 	smoochum = true, elekid = true, magby = true, azurill = true, wynaut = true}
@@ -1554,13 +1570,23 @@ local function getShinyStatMultiplier(monster)
 	return getPokemonShinyStatMultiplier(monster:getName())
 end
 
+function trainerLevelCurve(level)
+	level = tonumber(level) or 0
+	if level <= 0 then
+		return 1.0
+	end
+	local early = math.min(level, trainerCurveEarlyCap)
+	local late = math.max(level - trainerCurveEarlyCap, 0)
+	return trainerCurveBase + early * trainerCurveEarly + late * trainerCurveLate
+end
+
 function statusGainFormula(playerLevel, summonLevel, summonBoost, pokeLove)
 	-- pokemon de jugador (playerLevel > 0): su fuerza depende del nivel del entrenador
 	if playerLevel and playerLevel > 0 then
-		return (1.0 + playerLevel * trainerLevelDamageBuff + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
+		return (trainerLevelCurve(playerLevel) + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
 	end
-	-- Pokemon salvajes usan stats base de especie; summonLevel solo aplica a equipos NPC.
-	return (1.0 + (summonLevel or 0) * summonLevelDamageBuff + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
+	-- Pokemon salvajes usan stats base de especie (nivel 0 -> 1.0); summonLevel solo aplica a equipos NPC.
+	return (trainerLevelCurve(summonLevel) + (summonBoost or 0) * summonBoostDamageBuff + (pokeLove or 0) * summonLoveDamageBuff)
 end
 
 function damageFormula(playerLevel, summonLevel, summonBoost, pokeLove)
@@ -1594,7 +1620,13 @@ function Monster.getTotalHealth(self)
 		end
 		return total
 	elseif self:isMonster() then
-		return math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getPowerLevel(), 0, 0) * getShinyStatMultiplier(self))
+		local total = math.floor(monsterType:getMaxHealth() * statusGainFormula(0, self:getPowerLevel(), 0, 0) * getShinyStatMultiplier(self))
+		-- formas base salvajes (nivel de fuerza 0): un poco menos de vida, para que los
+		-- primeros niveles no se hagan pesados
+		if wildBaseHealthFactor and not self:getMaster() and monsterType:dexEntry() > 0 and self:getPowerLevel() == 0 then
+			total = math.floor(total * wildBaseHealthFactor)
+		end
+		return total
 	end
 	return 0
 end
@@ -2292,6 +2324,10 @@ function Monster.getPowerLevel(self)
 	if MonsterType(self:getName()):dexEntry() <= 0 then
 		return self:getLevel() -- monstruos que no son pokemon
 	end
+	-- salvajes: fuerza del nivel que pide su especie (ver wildPowerFromSpecies)
+	if wildPowerFromSpecies and getPokemonRequiredLevel then
+		return math.floor(getPokemonRequiredLevel(self:getName()) * wildPowerFactor)
+	end
 	return 0
 end
 
@@ -2593,9 +2629,23 @@ function sendSummonInfo(player, monster, ball)
 		end
 	end
 	-- 5: id de la criatura (el cliente lee su vida en directo), 6: vida maxima
-	player:sendExtendedOpcode(60, (monsterType:portraitId() or 0) .. "|" .. monster:getOutfit().lookType .. "|" .. monster:getName() .. "|" .. table.concat(movesInfo, ";")
+	local lookType = monster:getOutfit().lookType
+	lookType = premierLooksReverse and premierLooksReverse[lookType] or lookType
+	player:sendExtendedOpcode(60, (monsterType:portraitId() or 0) .. "|" .. lookType .. "|" .. monster:getName() .. "|" .. table.concat(movesInfo, ";")
 		.. "|" .. monster:getId() .. "|" .. monster:getMaxHealth())
 	player:sendExtendedOpcode(52, table.concat(movesTable))
+end
+
+-- Premier Ball: el pokemon sale con su aspecto de contorno arcoiris (premierlooks.lua, generado
+-- por tools/pokeassets/RainbowApply.cs junto con los dibujos del cliente)
+function Monster.setPremierLook(self)
+	if not premierLooks then return false end
+	local outfit = self:getOutfit()
+	local premier = premierLooks[outfit.lookType]
+	if not premier then return false end
+	outfit.lookType = premier
+	self:setOutfit(outfit)
+	return true
 end
 
 function doReleaseSummon(cid, pos, effect, message, missile)
@@ -2659,6 +2709,9 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			player:say(monster:getName() .. ", I need your help!", TALKTYPE_MONSTER_SAY)
 		end
 		player:addSummon(monster)
+		if getBallKey(ball:getId()) == "premierball" then
+			monster:setPremierLook()
+		end
 		monster:setDirection(ball:getSpecialAttribute("pokeLookDir") or DIRECTION_SOUTH)
 		if summonBoost >= maxBoost then
 			doStartAurea(monster)

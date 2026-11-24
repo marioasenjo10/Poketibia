@@ -6,6 +6,14 @@ function onAdvance(player, skill, oldLevel, newLevel)
 	local summon = player:getSummon()
 	if summon and summon:isPokemon() then
 		summon:setMaxHealth(summon:getTotalHealth())
+		-- al subir de nivel el Pokemon activo se cura del todo (ayuda mucho al principio)
+		summon:addHealth(summon:getMaxHealth() - summon:getHealth())
+		local ball = player:getUsingBall()
+		if ball and ball:isPokeball() then
+			ball:setSpecialAttribute("pokeHealth", summon:getHealth())
+			ball:setSpecialAttribute("pokeMaxHealth", summon:getMaxHealth())
+		end
+		player:refreshPokemonBar({}, {})
 		summon:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 	end
 	return true

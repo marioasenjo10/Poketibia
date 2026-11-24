@@ -1,0 +1,10 @@
+Module
+  name: game_tasks
+  description: Panel de tareas (sustituye al quest log) y seguimiento de la tarea activa
+  author: Poketibia
+  autoload: true
+  autoload-priority: 1000
+  scripts: [ tasks ]
+  sandboxed: true
+  @onLoad: init()
+  @onUnload: terminate()

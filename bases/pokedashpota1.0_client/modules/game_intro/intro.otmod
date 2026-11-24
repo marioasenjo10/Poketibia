@@ -1,0 +1,10 @@
+Module
+  name: game_intro
+  description: Escena inicial del Profesor Oak con eleccion del Pokemon inicial (ilustraciones de la Pokedex)
+  author: Poketibia
+  autoload: true
+  autoload-priority: 1000
+  scripts: [ intro ]
+  sandboxed: true
+  @onLoad: init()
+  @onUnload: terminate()
