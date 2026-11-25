@@ -11613,8 +11613,7 @@
 	<item id="2149" article="a" name="small emerald">
 		<attribute key="weight" value="10" />
 	</item>
-	<item id="2150" article="a" name="fragmento runico">
-		<attribute key="plural" value="fragmentos runicos" />
+	<item id="2150" article="a" name="fragmento runico" plural="fragmentos runicos">
 		<attribute key="description" value="Con 10 y una runa en blanco se inscribe una runa (di !runas)." />
 		<attribute key="weight" value="10" />
 	</item>
