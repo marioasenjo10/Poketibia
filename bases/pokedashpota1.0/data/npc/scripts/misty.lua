@@ -9,7 +9,7 @@ local pokemons =
 	[1] = {name = "Shiny Staryu", level = 28, hp = 3.5, damage = 1.6},
 	[2] = {name = "Golduck", level = 29, hp = 3.5, damage = 1.7},
 	[3] = {name = "Quagsire", level = 29, hp = 4, damage = 1.6},
-	[4] = {name = "Starmie", level = 32, hp = 5.5, damage = 2.1},
+	[4] = {name = "Starmie", level = 32, hp = 4.5, damage = 2.0},
 }
 
 local keywordHandler = KeywordHandler:new()

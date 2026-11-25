@@ -38,7 +38,7 @@ Para probar un gimnasio suelto: `/progreso ir <id del gimnasio>` + `/progreso ni
 | Líder | Ciudad | Tareas antes | Equipo | Tope hasta ganar | Probar |
 |---|---|---|---|---|---|
 | Brock | Plateada | 15 Geodude | Geodude 20, Onix 22 | 20 | Onix más fuerte que antes |
-| Misty | Celeste | Clefairy (al este de Plateada), llegar, 15 Psyduck (opcional) | Shiny Staryu 28, Golduck 29, Quagsire 29, Starmie 32 | 30 | Clefairy se encuentra y se captura |
+| Misty | Celeste | Clefairy (al este de Plateada), llegar, 15 Psyduck (opcional) | Shiny Staryu 28, Golduck 29, Quagsire 29, Starmie 32 (vida x4,5) | 30 | Clefairy se encuentra y se captura |
 | Lt. Surge | Carmín | Diglett/Sandshrew (este de Celeste), llegar, 15 Voltorb/Magnemite | Voltorb 36, Magnemite 38, Raichu 40 | 40 | Los de Tierra no reciben daño eléctrico |
 | Erika | Azulona | Fuego/Volador/Veneno/Bicho, llegar, 15 de tipo Planta | Tangela 46, Weepinbell 48, Vileplume 50 | 50 | |
 | Sabrina | Azafrán | Gastly (Torre de Lavanda), 15 de tipo Psíquico | Kadabra 56, Mr. Mime 58, Alakazam 60 | 60 | Los Gengar de la torre no son demasiado |
