@@ -218,7 +218,7 @@ progressionTasks = {
 	{
 		id = "misty", kind = "badge", badge = "cascadeBadge", giver = "Misty, Lider de Gimnasio",
 		title = "La Medalla Cascada",
-		text = "Desafia a Misty en el Gimnasio de Ciudad Celeste. Sus Pokemon son Staryu y Starmie. Recomendado: nivel 28-30 y un Pokemon de tipo Planta o Electrico.",
+		text = "Desafia a Misty en el Gimnasio de Ciudad Celeste. Sus Pokemon son Shiny Staryu, Golduck, Quagsire y Starmie. Recomendado: nivel 30 y Pokemon de tipo Planta o Electrico (ojo: Quagsire es inmune a la electricidad).",
 		reward = {exp = 0, money = 5000},
 		rewardText = "Medalla Cascada, sin tope de nivel 30 y +5% de dano y defensa a tus Pokemon de tipo Agua",
 		map = {{1095, 896, 7, "Misty, Gimnasio de Ciudad Celeste"}},

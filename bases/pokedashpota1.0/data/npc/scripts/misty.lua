@@ -5,8 +5,11 @@ local storage = quests.cascadeBadge.prizes[1].uid
 -- damage: multiplicador de dano. Valores calculados con el simulador de combate.
 local pokemons =
 {
-	[1] = {name = "Staryu", level = 28, hp = 3, damage = 1.5},
-	[2] = {name = "Starmie", level = 30, hp = 4, damage = 1.75},
+	-- reforzado tras probarlo: con un Gloom se ganaba facil a Staryu y Starmie solos
+	[1] = {name = "Shiny Staryu", level = 28, hp = 3.5, damage = 1.6},
+	[2] = {name = "Golduck", level = 29, hp = 3.5, damage = 1.7},
+	[3] = {name = "Quagsire", level = 29, hp = 4, damage = 1.6},
+	[4] = {name = "Starmie", level = 32, hp = 5.5, damage = 2.1},
 }
 
 local keywordHandler = KeywordHandler:new()
