@@ -32,6 +32,14 @@ Lo pendiente, por bloques. Lo que ya está hecho y falta probar está en [tools/
 - [ ] Runas (`lib/core/runes.lua`) y premio semanal (`lib/core/weeklyquests.lua`).
 - [ ] Sala de Agatha en la Liga: la posición a la que manda Bruno al ganar está calculada, comprobar que no es una pared.
 
+## Drops de los Pokémon
+
+- [ ] **Revisar los drops** de todos los Pokémon (qué sueltan, cantidades y probabilidades).
+- [ ] **Rediseñar los objetos de los shiny**: ahora son versiones muy pobres de los objetos normales. Por ejemplo,
+  «shiny charizard wing» es el ala de Zubat con un borde dorado, y así casi todos. Para cada uno: un dibujo propio
+  que encaje con el Pokémon (el del Shiny Charizard, un ala de Charizard negra) y un nombre mejor.
+  Herramientas: `tools/pokeassets/SpriteSwap.cs` (cambia el dibujo de un objeto) e `IconCut.cs`.
+
 ## Mapa y spawns
 
 - [ ] Kanto, pisos altos: siguen los Johto fuertes (≈90 Steelix, Tyranitar…). Decidir si se quitan.
