@@ -296,7 +296,35 @@ local christmasPokes =
 		},
 }
 
+-- Respawn: no aparece delante de un jugador que camina hacia alli (ni pegado a el); se reintenta mas
+-- tarde. Detras o a los lados si. Distancias en casillas.
+spawnFrontBlockDistance = 7
+spawnCloseBlockDistance = 2
+
+local function blockedByPlayerInFront(position)
+	for _, player in ipairs(Game.getSpectators(position, false, true, 8, 8, 6, 6)) do
+		local pos = player:getPosition()
+		if pos.z == position.z then
+			local dx, dy = position.x - pos.x, position.y - pos.y
+			local dist = math.max(math.abs(dx), math.abs(dy))
+			if dist <= spawnCloseBlockDistance then
+				return true
+			end
+			local dir = player:getDirection()
+			local ahead = (dir == DIRECTION_NORTH and -dy) or (dir == DIRECTION_SOUTH and dy) or
+				(dir == DIRECTION_EAST and dx) or (dir == DIRECTION_WEST and -dx) or 0
+			if ahead > 0 and dist <= spawnFrontBlockDistance then
+				return true
+			end
+		end
+	end
+	return false
+end
+
 function Monster:onSpawn(position, startup, artificial)
+	if not startup and not artificial and blockedByPlayerInFront(position) then
+		return false
+	end
 	if not artificial then
 		local name = self:getName()
 		local monsterType = MonsterType(name)

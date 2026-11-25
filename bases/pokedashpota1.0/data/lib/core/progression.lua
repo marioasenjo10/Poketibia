@@ -561,7 +561,11 @@ local function mapText(text)
 	return (tostring(text or ""):gsub("[|:;\n\r]", " "))
 end
 
-function taskMapPoints(task)
+-- con jugador, de las zonas de un Pokemon solo se mandan las mas cercanas a el (el mapa se centraba en
+-- zonas lejanas de la superficie aunque hubiera una al lado en otro piso, p. ej. los Clefairy de Mt. Moon)
+TASK_MAP_NEAREST_ZONES = 3
+
+function taskMapPoints(task, player)
 	local parts = {}
 	local icon = ""
 	if task.map then
@@ -569,14 +573,28 @@ function taskMapPoints(task)
 			parts[#parts + 1] = p[1] .. ":" .. p[2] .. ":" .. p[3] .. ":" .. mapText(p[4] or task.title)
 		end
 	elseif (task.kind == "catch" or task.kind == "defeat") and task.species and pokedexGetLocationString then
+		local zones = {}
 		for _, species in ipairs(task.species) do
 			for zone in pokedexGetLocationString(species):gmatch("[^;]+") do
 				local x, y, z, count, town = zone:match("^(%-?%d+):(%-?%d+):(%-?%d+):(%d+):(.*)$")
 				if x then
-					parts[#parts + 1] = x .. ":" .. y .. ":" .. z .. ":" ..
-						mapText(species .. ": " .. count .. (town ~= "" and (" cerca de " .. town) or ""))
+					zones[#zones + 1] = {x = tonumber(x), y = tonumber(y), z = tonumber(z),
+						text = mapText(species .. ": " .. count .. (town ~= "" and (" cerca de " .. town) or ""))}
 				end
 			end
+		end
+		if player then
+			local pos = player:getPosition()
+			for _, zone in ipairs(zones) do
+				zone.dist = math.max(math.abs(zone.x - pos.x), math.abs(zone.y - pos.y)) + math.abs(zone.z - pos.z) * 15
+			end
+			table.sort(zones, function(a, b) return a.dist < b.dist end)
+			while #zones > TASK_MAP_NEAREST_ZONES do
+				table.remove(zones)
+			end
+		end
+		for _, zone in ipairs(zones) do
+			parts[#parts + 1] = zone.x .. ":" .. zone.y .. ":" .. zone.z .. ":" .. zone.text
 		end
 		icon = task.species[1]
 	elseif task.kind == "reach" then
@@ -646,7 +664,7 @@ function Player.sendTasks(self)
 			local progress = state == 2 and total or taskProgress(self, index)
 			local mapPoints, mapIcon = "", ""
 			if state == 1 then
-				mapPoints, mapIcon = taskMapPoints(task)
+				mapPoints, mapIcon = taskMapPoints(task, self)
 			end
 			lines[#lines + 1] = table.concat({index, state, task.kind, clean(task.giver), clean(task.title),
 				clean(task.text), progress, total, clean(rewardText(task)), mapPoints, mapIcon}, "|")
@@ -677,7 +695,7 @@ function progressionSendTaskDone(player, task, index)
 	end
 	local fields = {clean(task.title), clean(rewardText(task))}
 	if nextIndex then
-		local points = taskMapPoints(nextTask)
+		local points = taskMapPoints(nextTask, player)
 		fields[#fields + 1] = nextTask.kind
 		fields[#fields + 1] = clean(nextTask.giver)
 		fields[#fields + 1] = clean(nextTask.title)

@@ -411,6 +411,15 @@ function Player:onGainExperience(source, exp, rawExp)
 		self:updateQuestLog()
 	end
 
+	-- salvaje evolucionado: es mas fuerte (vida y dano x trainerLevelCurve de su nivel de fuerza) y da mas
+	-- experiencia en proporcion. Los basicos (fuerza 0, vida x wildBaseHealthFactor) se quedan igual.
+	if source:isMonster() and not source:getMaster() and source.getPowerLevel then
+		local power = source:getPowerLevel()
+		if power and power > 0 and trainerLevelCurve then
+			exp = exp * trainerLevelCurve(power) / math.sqrt(wildBaseHealthFactor or 1)
+		end
+	end
+
 	-- runa de experiencia del Pokemon que esta fuera (lib/core/runes.lua)
 	if getSummonRuneBonus then
 		local summon = self:getSummons()[1]

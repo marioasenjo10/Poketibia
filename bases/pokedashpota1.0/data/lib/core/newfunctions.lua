@@ -50,7 +50,9 @@ pokemonRequiredLevels = {
 	metapod = 10, kakuna = 10, silcoon = 10, cascoon = 10,
 	-- etapas intermedias comunes
 	pidgeotto = 20, staravia = 20, skiploom = 20,
-	flaaffy = 25, gloom = 25, weepinbell = 25, nidorina = 25, nidorino = 25,
+	-- salen al principio pero son fuertes: no se pueden usar hasta el nivel 20
+	gloom = 20, geodude = 20, onix = 20,
+	flaaffy = 25, weepinbell = 25, nidorina = 25, nidorino = 25,
 	golbat = 30, poliwhirl = 30, kirlia = 30, roselia = 30, lombre = 30, nuzleaf = 30,
 	loudred = 30, luxio = 30, wormadam = 30,
 	machoke = 35, graveler = 35, kadabra = 35, haunter = 35, seadra = 35, vigoroth = 35, sealeo = 35,
@@ -88,6 +90,9 @@ shinyExtraLevel = 20
 -- tiene la vida y el dano del Golem de un entrenador de nivel 70.
 wildPowerFromSpecies = true
 wildPowerFactor = 1.0
+-- fuerza del salvaje distinta del nivel para usarlo (si no esta, se usa el nivel requerido).
+-- Geodude pide nivel 20 para usarse pero el salvaje sigue siendo de nivel 0 (tarea antes de Brock).
+wildPowerLevels = {geodude = 0}
 wildBaseHealthFactor = 0.75 -- vida de las formas base salvajes (nivel 0)
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
@@ -2324,7 +2329,11 @@ function Monster.getPowerLevel(self)
 	if MonsterType(self:getName()):dexEntry() <= 0 then
 		return self:getLevel() -- monstruos que no son pokemon
 	end
-	-- salvajes: fuerza del nivel que pide su especie (ver wildPowerFromSpecies)
+	-- salvajes: fuerza del nivel que pide su especie (ver wildPowerFromSpecies) o la de wildPowerLevels
+	local override = wildPowerLevels and wildPowerLevels[self:getName():lower():gsub("^shiny ", "")]
+	if override then
+		return override
+	end
 	if wildPowerFromSpecies and getPokemonRequiredLevel then
 		return math.floor(getPokemonRequiredLevel(self:getName()) * wildPowerFactor)
 	end
