@@ -43,6 +43,7 @@
 
 	</moves>
 	<evolutions>
+		<evolution name="Shiny Porygon2" level="25" chance="60" itemName="crystal stone" count="5"/>
 
 	</evolutions>
 	<attacks>

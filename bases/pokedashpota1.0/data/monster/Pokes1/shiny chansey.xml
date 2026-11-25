@@ -45,6 +45,7 @@
 
 	</moves>
 	<evolutions>
+		<evolution name="Shiny Blissey" level="30" chance="40" itemName="heart stone" count="5"/>
 
 	</evolutions>
 	<attacks>

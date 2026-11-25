@@ -43,6 +43,8 @@
 	</moves>
 	<evolutions>
 		<evolution name="Shiny Hitmontop" level="30" chance="20" itemName="punch stone" count="5"/>
+		<evolution name="Shiny Hitmonlee" level="30" chance="20" itemName="punch stone" count="5"/>
+		<evolution name="Shiny Hitmonchan" level="30" chance="20" itemName="punch stone" count="5"/>
 
 	</evolutions>
 	<attacks>
