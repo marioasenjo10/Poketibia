@@ -416,7 +416,9 @@ function Player:onGainExperience(source, exp, rawExp)
 	if source:isMonster() and not source:getMaster() and source.getPowerLevel then
 		local power = source:getPowerLevel()
 		if power and power > 0 and trainerLevelCurve then
-			exp = exp * trainerLevelCurve(power) / math.sqrt(wildBaseHealthFactor or 1)
+			-- el extra se suaviza con wildExpStrengthExponent (1 = proporcional a la fuerza; 0.6 = Gloom ~x1.9)
+			local strength = trainerLevelCurve(power) / math.sqrt(wildBaseHealthFactor or 1)
+			exp = exp * strength ^ (wildExpStrengthExponent or 0.6)
 		end
 	end
 

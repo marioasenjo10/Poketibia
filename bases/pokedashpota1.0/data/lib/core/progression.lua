@@ -70,6 +70,9 @@ progressionLevelCaps = {
 -- valga siempre 1/expKillsPerLevel de un nivel. Nunca baja de los stages de data/XML/stages.xml.
 --   Subes demasiado rapido al probar -> sube expKillsPerLevel. Demasiado lento -> bajalo.
 expKillsPerLevel = 12
+-- Salvajes evolucionados: dan mas experiencia segun su fuerza (events/scripts/player.lua).
+-- Extra = (fuerza) ^ este numero. 1 = proporcional (Gloom x2.9); 0.6 = suavizado (Gloom x1.9, ~4000 a nivel 22).
+wildExpStrengthExponent = 0.6
 expReferenceBase = 33
 -- Capturas (actions/scripts/poke/catch.lua): la primera de cada especie da esta fraccion de tu nivel
 -- actual x el factor de su tier (T7 x1, T6 x2 ... T1 x8, legendario x15). Las repetidas, el 20 %.
