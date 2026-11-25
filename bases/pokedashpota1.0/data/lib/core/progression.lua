@@ -111,7 +111,7 @@ progressionTasks = {
 	{
 		id = "pewter_geodude", kind = "defeat", species = {"Geodude"}, count = 15, giver = "Brock, Lider de Gimnasio",
 		title = "Entrenamiento de roca",
-		text = "Antes de retarme, demuestra que sabes luchar contra el tipo Roca: derrota 15 Geodude en los alrededores de Ciudad Plateada. Pulsa Ver en el mapa para saber donde estan.",
+		text = "Antes de retarme, demuestra que sabes luchar contra el tipo Roca: derrota 15 Geodude en los alrededores de Ciudad Plateada. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Brock directamente.)",
 		reward = {exp = 14000, money = 1000},
 	},
 	{
@@ -138,7 +138,7 @@ progressionTasks = {
 	{
 		id = "cerulean_psyduck", kind = "defeat", species = {"Psyduck"}, count = 15, giver = "Misty, Lider de Gimnasio",
 		title = "Entrenamiento de agua",
-		text = "Antes de retarme, demuestra que sabes plantar cara al tipo Agua: derrota 15 Psyduck en los alrededores de Ciudad Celeste. Pulsa Ver en el mapa para saber donde estan.",
+		text = "Antes de retarme, demuestra que sabes plantar cara al tipo Agua: derrota 15 Psyduck en los alrededores de Ciudad Celeste. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Misty directamente.)",
 		reward = {exp = 30000, money = 2000},
 	},
 	{
@@ -645,12 +645,30 @@ function progressionOnBadge(player, badgeKey)
 	if not player:isOnProgression() then
 		return
 	end
-	local index, task = progressionGetActiveTask(player)
-	if index and task.kind == "badge" and task.badge == badgeKey then
-		checkTaskDone(player, index)
-	else
-		player:sendTasks() -- el tope de nivel ha cambiado
+	-- si se ha retado al lider sin terminar las tareas previas (los 15 Geodude...), ganar la medalla
+	-- las da por cumplidas, con su recompensa, hasta la tarea del gimnasio incluida
+	local badgeIndex
+	for index, task in ipairs(progressionTasks) do
+		if task.kind == "badge" and task.badge == badgeKey then
+			badgeIndex = index
+			break
+		end
 	end
+	if not badgeIndex then
+		player:sendTasks() -- el tope de nivel ha cambiado
+		return
+	end
+	for _ = 1, #progressionTasks do
+		local index, task = progressionGetActiveTask(player)
+		if not index or index > badgeIndex then
+			break
+		end
+		if index < badgeIndex then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Con la victoria sobre el lider se da por cumplida: " .. task.title)
+		end
+		completeTask(player, index)
+	end
+	player:sendTasks()
 end
 
 -- ===================== Tope de nivel =====================

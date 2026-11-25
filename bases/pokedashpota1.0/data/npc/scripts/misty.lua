@@ -39,10 +39,8 @@ local function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'si') or msgcontains(msg, 'sim') then
 		local player = Player(cid)
 		if player then
-			if player:getStorageValue(storage) <= 0 and progressionIsTaskDone and not progressionIsTaskDone(player, "cerulean_psyduck") then
-				selfSay('Aun no. Antes demuestrame que sabes plantar cara al tipo Agua: derrota 15 Psyduck en los alrededores de Ciudad Celeste.', cid)
-				npcHandler:releaseFocus(cid)
-			elseif player:getStorageValue(storage) <= 0 then
+			-- se puede retar sin la tarea previa: al ganar se completa sola (progressionOnBadge)
+			if player:getStorageValue(storage) <= 0 then
 				selfSay('Mi estrategia es ir con todo con mis Pokemon de Agua. Preparate!', cid)
 				npcHandler.topic[cid] = 1
 				npcHandler:setMaxIdleTime(600)

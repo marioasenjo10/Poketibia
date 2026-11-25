@@ -40,10 +40,8 @@ local function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'si') or msgcontains(msg, 'sim') then
 		local player = Player(cid)
 		if player then
-			if player:getStorageValue(storage) <= 0 and progressionIsTaskDone and not progressionIsTaskDone(player, "pewter_geodude") then
-				selfSay('Aun no. Antes demuestrame que sabes luchar contra el tipo Roca: derrota 15 Geodude en los alrededores de Ciudad Plateada.', cid)
-				npcHandler:releaseFocus(cid)
-			elseif player:getStorageValue(storage) <= 0 then
+			-- se puede retar sin la tarea previa: al ganar se completa sola (progressionOnBadge)
+			if player:getStorageValue(storage) <= 0 then
 				selfSay('Muy bien! Ensename de que estas hecho!', cid)
 				npcHandler.topic[cid] = 1
 				npcHandler:setMaxIdleTime(600)
