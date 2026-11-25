@@ -82,5 +82,6 @@
 	<talkaction words="!p" separator=" " script="usesummon.lua" />
 	<talkaction words="smartcombo" separator=" " script="smartcombo.lua" />
 	<talkaction words="pokedexview" separator=" " script="pokedexview.lua" />
+	<talkaction words="pokemarket" separator=" " script="pokemarket.lua" />
 	<talkaction words="progressionintro" separator=" " script="progressionintro.lua" />
 </talkactions>

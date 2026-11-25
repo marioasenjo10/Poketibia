@@ -80,3 +80,20 @@ python tools/combatsim/expcurve.py 2     # 2 derrotas por minuto
 Los valores de cada gimnasio (nivel, vida ×, daño ×) están al principio de su script en
 `bases/pokedashpota1.0/data/npc/scripts/<lider>.lua`. Las tareas y recompensas, en
 `bases/pokedashpota1.0/data/lib/core/progression.lua`.
+
+## Mercado global
+
+Botón **Mercado** (bolsa azul) en el menú de arriba. Solo se abre cerca de un tendero (icono de la
+bolsa en el mapa); los GM pueden abrirlo en cualquier sitio. Para probar compra y venta hacen falta
+dos personajes (no se puede comprar lo propio): por ejemplo Claude Tester Dos y GOD Pota.
+
+- [ ] **Vender** un objeto apilable (pociones, balls) indicando cantidad y precio: desaparece de la mochila.
+- [ ] **Vender** un Pokémon: el que tienes fuera no sale en la lista.
+- [ ] **Comprar** con otro personaje: cobra del banco y va a **Recibidos**; al vendedor le llega el dinero
+  (menos el 5 %) aunque esté desconectado, y un aviso en sus Recibidos.
+- [ ] **Recoger** en Recibidos: el Pokémon conserva boost, vida y cariño.
+- [ ] **Mis ofertas → Cancelar**: vuelve a Recibidos. Las ofertas caducan a los 7 días.
+- [ ] Categorías, búsqueda y páginas.
+
+Ajustes al principio de `bases/pokedashpota1.0/data/lib/core/pokemarket.lua` (comisión, duración, máximo de
+ofertas, distancia a la tienda). Tablas en la base de datos: `pkd_market_offers` y `pkd_market_locker`.

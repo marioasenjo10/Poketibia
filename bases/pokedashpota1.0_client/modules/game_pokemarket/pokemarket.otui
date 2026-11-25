@@ -1,0 +1,489 @@
+// Mercado global: pestanas Comprar / Vender / Mis ofertas / Recibidos.
+// Las filas se rellenan desde pokemarket.lua (las columnas se colocan por codigo).
+
+MarketTab < UIButton
+  size: 120 28
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  image-color: #2c3039
+  font: poppins-semibold-13px
+  color: #c9d1dc
+  text-align: center
+  focusable: false
+
+  $hover:
+    image-color: #3a3f47
+
+  $on:
+    image-color: #1e88e5
+    color: #ffffff
+
+MarketButton < UIButton
+  height: 30
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  image-color: #1e88e5
+  font: poppins-semibold-13px
+  color: #ffffff
+  text-align: center
+  focusable: false
+
+  $hover:
+    image-color: #42a5f5
+
+  $pressed:
+    image-color: #1565c0
+
+  $disabled:
+    image-color: #3a3f47
+    color: #8b95a5
+
+MarketPageButton < UIButton
+  size: 64 24
+  font: poppins-12px
+  color: #c9d1dc
+  text-align: center
+  focusable: false
+
+  $hover:
+    color: #ffffff
+
+  $disabled:
+    color: #4a515c
+
+MarketCategory < UIButton
+  height: 26
+  text-align: left
+  text-offset: 12 0
+  font: poppins-12px
+  color: #c9d1dc
+  background-color: #00000000
+  focusable: false
+
+  $hover:
+    background-color: #ffffff10
+
+  $on:
+    background-color: #1e88e540
+    color: #ffffff
+
+MarketEdit < TextEdit
+  height: 26
+  font: poppins-12px
+  color: #ffffff
+  background-color: #14161b
+  border-width: 1
+  border-color: #2c3039
+  text-offset: 6 5
+
+MarketHeaderLabel < Label
+  font: poppins-semibold-11px
+  color: #8b95a5
+  phantom: true
+
+MarketCell < Label
+  font: poppins-12px
+  color: #ffffff
+  phantom: true
+  text-auto-resize: false
+
+// fila de cualquier tabla del mercado
+MarketRow < UIWidget
+  height: 38
+  background-color: #1b1e24
+  border-width: 1
+  border-color: #23262d
+  focusable: false
+
+  $hover:
+    background-color: #21252c
+
+  $on:
+    background-color: #1e3a5f
+    border-color: #1e88e5
+
+  UIItem
+    id: item
+    size: 32 32
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 44
+    virtual: true
+    phantom: true
+
+  UIWidget
+    id: pokemon
+    size: 30 30
+    anchors.verticalCenter: parent.verticalCenter
+    anchors.left: parent.left
+    margin-left: 45
+    phantom: true
+    visible: false
+
+UIWindow
+  id: marketWindow
+  size: 820 560
+  anchors.centerIn: parent
+  image-source: /game_pokedex/images/panel
+  image-border: 16
+  @onEscape: modules.game_pokemarket.hide()
+
+  UIWidget
+    id: titleIcon
+    size: 24 24
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 12
+    margin-left: 14
+    image-source: /images/topmenu/market
+    phantom: true
+
+  Label
+    id: windowTitle
+    anchors.left: titleIcon.right
+    anchors.verticalCenter: titleIcon.verticalCenter
+    margin-left: 8
+    font: poppins-bold-16px
+    color: #ffffff
+    text: Mercado
+    text-auto-resize: true
+    phantom: true
+
+  Label
+    id: balanceLabel
+    anchors.right: closeButton.left
+    anchors.verticalCenter: titleIcon.verticalCenter
+    margin-right: 18
+    font: poppins-semibold-13px
+    color: #f2c14e
+    text-auto-resize: true
+    phantom: true
+
+  UIButton
+    id: closeButton
+    size: 16 16
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 16
+    margin-right: 16
+    image-source: /game_pokemonmoves/images/close
+    focusable: false
+    @onClick: modules.game_pokemarket.hide()
+
+    $hover:
+      image-source: /game_pokemonmoves/images/close_hover
+
+  MarketTab
+    id: tabBuy
+    anchors.top: titleIcon.bottom
+    anchors.left: parent.left
+    margin-top: 12
+    margin-left: 14
+    text: Comprar
+    @onClick: modules.game_pokemarket.selectTab('buy')
+
+  MarketTab
+    id: tabSell
+    anchors.top: tabBuy.top
+    anchors.left: tabBuy.right
+    margin-left: 6
+    text: Vender
+    @onClick: modules.game_pokemarket.selectTab('sell')
+
+  MarketTab
+    id: tabMine
+    anchors.top: tabBuy.top
+    anchors.left: tabSell.right
+    margin-left: 6
+    text: Mis ofertas
+    @onClick: modules.game_pokemarket.selectTab('mine')
+
+  MarketTab
+    id: tabLocker
+    anchors.top: tabBuy.top
+    anchors.left: tabMine.right
+    margin-left: 6
+    width: 140
+    text: Recibidos
+    @onClick: modules.game_pokemarket.selectTab('locker')
+
+  // ---------- cuerpo comun: categorias a la izquierda (solo en Comprar) y tabla ----------
+  UIWidget
+    id: categoryPanel
+    anchors.top: tabBuy.bottom
+    anchors.left: parent.left
+    anchors.bottom: statusLabel.top
+    margin-top: 12
+    margin-left: 14
+    margin-bottom: 8
+    width: 150
+    background-color: #14161b
+    layout:
+      type: verticalBox
+      spacing: 2
+
+  MarketEdit
+    id: searchEdit
+    anchors.top: tabBuy.bottom
+    anchors.left: categoryPanel.right
+    anchors.right: searchButton.left
+    margin-top: 12
+    margin-left: 12
+    margin-right: 6
+
+  Label
+    id: searchHint
+    anchors.fill: searchEdit
+    text-offset: 8 5
+    font: poppins-12px
+    color: #6c7a8d
+    text: Buscar por nombre...
+    phantom: true
+
+  MarketButton
+    id: searchButton
+    anchors.top: searchEdit.top
+    anchors.right: parent.right
+    margin-right: 14
+    height: 26
+    width: 80
+    text: Buscar
+    @onClick: modules.game_pokemarket.doSearch()
+
+  UIWidget
+    id: header
+    anchors.top: searchEdit.bottom
+    anchors.left: categoryPanel.right
+    anchors.right: parent.right
+    margin-top: 8
+    margin-left: 12
+    margin-right: 14
+    height: 22
+    background-color: #14161b
+
+  ScrollablePanel
+    id: rowList
+    anchors.top: header.bottom
+    anchors.left: header.left
+    anchors.right: rowScroll.left
+    anchors.bottom: footer.top
+    margin-top: 4
+    margin-right: 4
+    margin-bottom: 8
+    vertical-scrollbar: rowScroll
+    layout:
+      type: verticalBox
+      spacing: 3
+
+  VerticalScrollBar
+    id: rowScroll
+    anchors.top: rowList.top
+    anchors.bottom: rowList.bottom
+    anchors.right: parent.right
+    margin-right: 14
+    step: 40
+    pixels-scroll: true
+
+  Label
+    id: emptyLabel
+    anchors.centerIn: rowList
+    font: poppins-12px
+    color: #8b95a5
+    text-auto-resize: true
+    visible: false
+
+  // ---------- pie: paginas + cantidad + boton de accion ----------
+  UIWidget
+    id: footer
+    anchors.left: header.left
+    anchors.right: header.right
+    anchors.bottom: statusLabel.top
+    margin-bottom: 6
+    height: 34
+
+    MarketPageButton
+      id: firstButton
+      anchors.left: parent.left
+      anchors.verticalCenter: parent.verticalCenter
+      text: << Primera
+      @onClick: modules.game_pokemarket.gotoPage('first')
+
+    MarketPageButton
+      id: prevButton
+      anchors.left: firstButton.right
+      anchors.verticalCenter: parent.verticalCenter
+      text: < Anterior
+      width: 74
+      @onClick: modules.game_pokemarket.gotoPage('prev')
+
+    Label
+      id: pageLabel
+      anchors.left: prevButton.right
+      anchors.verticalCenter: parent.verticalCenter
+      width: 70
+      text-align: center
+      font: poppins-semibold-13px
+      color: #ffffff
+
+    MarketPageButton
+      id: nextButton
+      anchors.left: pageLabel.right
+      anchors.verticalCenter: parent.verticalCenter
+      text: Siguiente >
+      width: 74
+      @onClick: modules.game_pokemarket.gotoPage('next')
+
+    MarketPageButton
+      id: lastButton
+      anchors.left: nextButton.right
+      anchors.verticalCenter: parent.verticalCenter
+      text: Ultima >>
+      @onClick: modules.game_pokemarket.gotoPage('last')
+
+    MarketButton
+      id: actionButton
+      anchors.right: parent.right
+      anchors.verticalCenter: parent.verticalCenter
+      width: 150
+      @onClick: modules.game_pokemarket.doAction()
+
+    MarketButton
+      id: secondButton
+      anchors.right: actionButton.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 8
+      width: 130
+      visible: false
+      @onClick: modules.game_pokemarket.doSecondAction()
+
+    MarketEdit
+      id: countEdit
+      anchors.right: actionButton.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 8
+      width: 54
+      text: 1
+
+    Label
+      id: countLabel
+      anchors.right: countEdit.left
+      anchors.verticalCenter: parent.verticalCenter
+      margin-right: 6
+      font: poppins-12px
+      color: #c9d1dc
+      text: Cantidad
+      text-auto-resize: true
+
+  // ---------- formulario de venta (pestana Vender, a la derecha de la lista) ----------
+  UIWidget
+    id: sellForm
+    anchors.top: header.top
+    anchors.right: parent.right
+    anchors.bottom: footer.bottom
+    margin-right: 14
+    width: 250
+    background-color: #14161b
+    visible: false
+
+    UIItem
+      id: sellItem
+      size: 32 32
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 14
+      margin-left: 14
+      virtual: true
+
+    UIWidget
+      id: sellPokemon
+      size: 32 32
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 14
+      margin-left: 14
+      visible: false
+
+    Label
+      id: sellName
+      anchors.left: sellItem.right
+      anchors.verticalCenter: sellItem.verticalCenter
+      anchors.right: parent.right
+      margin-left: 10
+      margin-right: 10
+      font: poppins-semibold-13px
+      color: #ffffff
+      text: Elige algo de la lista
+
+    Label
+      anchors.top: sellItem.bottom
+      anchors.left: parent.left
+      margin-top: 16
+      margin-left: 14
+      font: poppins-12px
+      color: #c9d1dc
+      text: Cantidad
+      text-auto-resize: true
+
+    MarketEdit
+      id: sellCount
+      anchors.top: sellItem.bottom
+      anchors.right: parent.right
+      margin-top: 12
+      margin-right: 14
+      width: 110
+      text: 1
+      @onTextChange: modules.game_pokemarket.updateSellInfo()
+
+    Label
+      anchors.top: sellCount.bottom
+      anchors.left: parent.left
+      margin-top: 14
+      margin-left: 14
+      font: poppins-12px
+      color: #c9d1dc
+      text: Precio por unidad ($)
+      text-auto-resize: true
+
+    MarketEdit
+      id: sellPrice
+      anchors.top: sellCount.bottom
+      anchors.right: parent.right
+      margin-top: 10
+      margin-right: 14
+      width: 110
+      @onTextChange: modules.game_pokemarket.updateSellInfo()
+
+    Label
+      id: sellInfo
+      anchors.top: sellPrice.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin-top: 16
+      margin-left: 14
+      margin-right: 14
+      height: 80
+      font: poppins-12px
+      color: #8b95a5
+      text-wrap: true
+      text-align: topLeft
+
+    MarketButton
+      id: sellButton
+      anchors.bottom: parent.bottom
+      anchors.left: parent.left
+      anchors.right: parent.right
+      margin: 14
+      text: Poner a la venta
+      @onClick: modules.game_pokemarket.doSell()
+
+  Label
+    id: statusLabel
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-left: 16
+    margin-right: 16
+    margin-bottom: 12
+    height: 18
+    font: poppins-12px
+    color: #8b95a5
