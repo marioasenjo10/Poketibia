@@ -267,5 +267,4 @@ UIWidget
 
   BackSlot
     visible: false
-  LegSlot
-    visible: false
+  // la casilla de piernas (slot7) ahora es la BICI de la barra de abajo
