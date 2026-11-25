@@ -1,0 +1,235 @@
+== catches  (nivel 1)
+   uid storageCatchQuest=91000 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== itemTask  (nivel 1)
+   uid storageItemQuest=91014 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== indigoLeague  (nivel 100)
+   uid storageLeagueDone=91007 | SIN COFRE EN EL MAPA
+     objetos: 1x indigo league trophy, 50x crystal coin
+   usado en: npc/scripts/agatha.lua, npc/scripts/blue.lua, npc/scripts/bruno.lua, npc/scripts/lance.lua, npc/scripts/league_doorman.lua, npc/scripts/lorelei.lua, npc/scripts/professor_oak.lua
+== boulderBadge  (nivel 1)
+   uid 92000=92000 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/brock.lua, npc/scripts/simon_the_guard.lua
+== cascadeBadge  (nivel 1)
+   uid 92001=92001 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/misty.lua, npc/scripts/simon_the_guard.lua
+== thunderBadge  (nivel 1)
+   uid 92002=92002 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/lt_surge.lua, npc/scripts/simon_the_guard.lua
+== rainbowBadge  (nivel 1)
+   uid 92003=92003 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/erika.lua, npc/scripts/simon_the_guard.lua
+== soulBadge  (nivel 1)
+   uid 92004=92004 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/koga.lua, npc/scripts/simon_the_guard.lua
+== marshBadge  (nivel 1)
+   uid 92005=92005 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/sabrina.lua, npc/scripts/simon_the_guard.lua
+== volcanoBadge  (nivel 1)
+   uid 92006=92006 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/blaine.lua, npc/scripts/simon_the_guard.lua
+== earthBadge  (nivel 1)
+   uid 92007=92007 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: npc/scripts/giovanni.lua, npc/scripts/simon_the_guard.lua
+== zephyrBadge  (nivel 1)
+   uid 92008=92008 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== hiveBadge  (nivel 1)
+   uid 92009=92009 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== plainBadge  (nivel 1)
+   uid 92010=92010 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== fogBadge  (nivel 1)
+   uid 92011=92011 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== stormBadge  (nivel 1)
+   uid 92012=92012 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== mineralBadge  (nivel 1)
+   uid 92013=92013 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== glacierBadge  (nivel 1)
+   uid 92014=92014 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== risingBadge  (nivel 1)
+   uid 92015=92015 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+== oakRequest  (nivel 150)
+   uid 92016=92016 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: movements/scripts/prerequisite.lua, npc/scripts/professor_oak.lua
+== thePokemaster  (nivel 175)
+   uid 92017=92017 | SIN COFRE EN EL MAPA
+     (sin premio de objetos)
+   usado en: movements/scripts/prerequisite.lua, npc/scripts/professor_oak.lua
+== redRequest  (nivel 175)
+   uid 92018=92018 | SIN COFRE EN EL MAPA
+     objetos: 1x unique ancient stone
+   usado en: npc/scripts/professor_oak.lua, npc/scripts/red.lua
+== cathemAll  (nivel 1)
+   uid 92019=92019 | SIN COFRE EN EL MAPA
+     objetos: 1x ancient hieroglyph
+   usado en: creaturescripts/scripts/login.lua, lib/core/newfunctions.lua, npc/scripts/professor_oak.lua, talkactions/scripts/summon_teleport.lua
+== elderManQuest  (nivel 1)
+   uid 92020=92020 | SIN COFRE EN EL MAPA
+     objetos: 1x unique ancient stone
+   usado en: npc/scripts/elder_man.lua
+== lugia  (nivel 50)
+   uid 10200=10200 | 1079,1180,11 Trade Center (37)
+     objetos: 100x enigma stone, 100x water stone
+== moltres  (nivel 65, vuelve al templo)
+   uid 10201=10201 | 1132,735,8 Cerulean (168)
+     objetos: 300x fire stone
+   usado en: actions/scripts/quests/moltres.lua
+== articuno  (nivel 55, vuelve al templo)
+   uid 10202=10202 | 1313,1695,8 Snow (117)
+     objetos: 2x crystal coin, 100x ice stone
+== zapdos  (nivel 60)
+   uid 10203=10203 | 1806,2191,9 Nostrus (52)
+     objetos: 4x crystal coin, 150x thunder stone
+== poison  (nivel 30)
+   uid 10204=10204 | 1114,903,8 Cerulean (54)
+     objetos: 50x platinum coin, 8x venom stone
+== punch  (nivel 15)
+   uid 10205=10205 | 1772,2108,8 Nostrus (86)
+     objetos: 20x platinum coin, 8x punch stone
+== darkness  (nivel 15)
+   uid 10209=10209 | 1346,841,10 Arcania (146)
+     objetos: 4x darkness stone
+== rock  (nivel 20)
+   uid 10210=10210 | 933,861,4 Cerulean (127)
+     objetos: 4x rock stone
+== enigma  (nivel 25)
+   uid 10211=10211 | 1410,1308,13 R'lyeh (191)
+     objetos: 8x enigma stone, 50x platinum coin
+== rock2  (nivel 25)
+   uid 10212=10212 | 667,853,7 Pewter (53)
+     objetos: 8x rock stone, 30x platinum coin
+== thundershiny  (nivel 90)
+   uid 10213=10213 | 1652,1959,9 Nostrus (206)
+     (sin premio de objetos)
+   uid 10214=10214 | 1650,1959,9 Nostrus (208)
+     (sin premio de objetos)
+== shiningbox  (nivel 200)
+   uid 10215=10215 | 1506,1064,8 Arcania (118)
+     objetos: 1x box 5, 100x crystal coin
+== fire  (nivel 50)
+   uid 10216=10216 | 589,1550,8 Lunna (212)
+     objetos: 70x fire stone
+== subterranea  (nivel 18)
+   uid 10217=10217 | 959,1010,8 Saffron (97)
+     objetos: 1x crystal coin, 5x water stone
+== earth  (nivel 15)
+   uid 10218=10218 | 1274,839,9 Lavender (209)
+     objetos: 50x platinum coin, 2x earth stone
+== firenostrus  (nivel 35)
+   uid 10219=10219 | 662,1545,7 Cinnabar (188)
+     objetos: 50x fire stone
+== rock3  (nivel 20)
+   uid 10220=10220 | 1159,1011,4 Lavender (46)
+     objetos: 5x rock stone, 50x platinum coin
+== annihilator  (nivel 100)
+   uid 10221=10221 | 1417,1291,11 R'lyeh (198)
+     objetos: 5x crystal coin
+   uid 10222=10222 | 1420,1291,11 R'lyeh (201)
+     objetos: 5x crystal coin
+   uid 10223=10223 | 1423,1291,11 R'lyeh (204)
+     objetos: 5x crystal coin
+   usado en: actions/scripts/quests/annihilator.lua
+== darkness2  (nivel 20)
+   uid 10224=10224 | 605,533,14 Pewter (316)
+     objetos: 4x darkness stone, 1x crystal coin
+== enigma2  (nivel 60)
+   uid 10225=10225 | 1735,2008,8 Nostrus (146)
+     objetos: 80x enigma stone, 5x crystal coin
+== shinymoltres  (nivel 95)
+   uid 10226=10226 | 867,1516,14 Cinnabar (116)
+     objetos: 200x fire stone, 5x crystal coin
+== outlandleaf  (nivel 38)
+   uid 10227=10227 | 533,469,12 Outland (298)
+     objetos: 30x leaf stone, 2x crystal coin
+== outlandcelebi  (nivel 65)
+   uid 10228=10228 | 312,580,13 Outland (105)
+     objetos: 80x leaf stone, 4x crystal coin
+== outlandaquatica  (nivel 70)
+   uid 10229=10229 | 423,373,12 Outland (188)
+     objetos: 70x water stone, 3x crystal coin
+== outlandpsiquica  (nivel 55)
+   uid 10230=10230 | 120,568,12 Outland (115)
+     objetos: 80x enigma stone, 2x crystal coin
+== outlandsteel  (nivel 65)
+   uid 10231=10231 | 585,696,11 Pewter (153)
+     objetos: 30x metal coat, 5x crystal coin
+== outlandfire  (nivel 50)
+   uid 10232=10232 | 472,708,12 Eternia (218)
+     objetos: 80x fire stone, 2x crystal coin
+== outlandregirock  (nivel 80)
+   uid 10233=10233 | 457,462,13 Outland (222)
+     objetos: 100x rock stone, 5x crystal coin
+== outlandfight  (nivel 20)
+   uid 10234=10234 | 623,640,13 Pewter (209)
+     objetos: 20x punch stone, 1x crystal coin
+== outlandpoison  (nivel 15)
+   uid 10235=10235 | 79,767,13 Outland (292)
+     objetos: 20x venom stone, 1x crystal coin
+== outlandarticuno  (nivel 60)
+   uid 10236=10236 | 275,945,10 Eternia (102)
+     objetos: 80x ice stone, 3x crystal coin
+== outlandheart  (nivel 25)
+   uid 10237=10237 | 472,929,11 Eternia (95)
+     objetos: 10x heart stone, 50x platinum coin
+== outlandnature  (nivel 45)
+   uid 10238=10238 | 482,863,13 Eternia (105)
+     objetos: 80x leaf stone
+== outlandice  (nivel 30)
+   uid 10239=10239 | 45,955,13 Eternia (332)
+     objetos: 25x ice stone
+== outlandzapdos  (nivel 65)
+   uid 10240=10240 | 252,319,15 Outland (156)
+     objetos: 4x crystal coin, 40x thunder stone
+== mtmoon  (nivel 35)
+   uid 10241=10241 | 776,824,4 Pewter (56)
+     objetos: 1x crystal coin, 30x heart stone
+== lavendermaze  (nivel 35)
+   uid 10242=10242 | 1248,1129,9 Lavender (81)
+     objetos: 1x crystal coin, 30x darkness stone
+== outlandShinyCelebi  (nivel 65)
+   uid 10243=10243 | 340,602,12 Outland (127)
+     objetos: 3x crystal coin, 100x leaf stone
+== mewDungeon  (nivel 175)
+   uid 10244=10244 | 350,642,1 Outland (167)
+     objetos: 10x crystal coin, 1x mew bag
+   usado en: npc/scripts/red.lua
+== ceruleanCave  (nivel 150)
+   uid 10245=10245 | 1179,574,10 Cerulean (329)
+     objetos: 10x crystal coin, 100x crystal stone, 1x mewtwo bag
+   uid 10246=10246 | 1179,578,10 Cerulean (325)
+     objetos: 10x crystal coin, 100x darkness stone, 1x mewtwo bag
+   uid 10247=10247 | 1179,576,10 Cerulean (327)
+     objetos: 10x crystal coin, 100x heart stone, 1x mewtwo bag
+   usado en: npc/scripts/professor_oak.lua
+== coldPortal  (nivel 100, vuelve al templo)
+   uid 10248=10248 | 3158,732,8 Blackthorn (222)
+     objetos: 100x crystal coin, 100x ice stone
+== azaleaQuest  (nivel 30)
+   uid 10249=10249 | 3062,1038,8 Blackthorn (105)
+     objetos: 10x crystal coin
+== latiosLabyrinth  (nivel 80, vuelve al templo)
+   uid 10250=10250 | 2237,1091,8 Cianwood (105)
+     objetos: 50x crystal coin, 50x empty premierball
+== terrorQuest  (nivel 150, vuelve al templo)
+   uid 10251=10251 | 1550,907,9 Arcania (58)
+     objetos: 130x crystal coin, 70x empty premierball, 1x box 4
+== secretSaffron  (nivel 1, vuelve al templo)
+   uid 10252=10252 | 986,1062,8 Saffron (70)
+     objetos: 50x empty ultraball, 20x revive
