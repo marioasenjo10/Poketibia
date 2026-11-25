@@ -44,10 +44,7 @@ function onSay(player, words, param)
 		player:setStorageValue(storageLeagueTime, 0)
 		player:sendTextMessage(MESSAGE_INFO_DESCR, "Ya puedes volver a intentar la Liga.")
 	elseif param == "tareas" then
-		player:showTextDialog(2263, "Tareas de la historia (para /progreso ir <id>):
-
-" .. table.concat(progressionTaskIds(), "
-"))
+		player:showTextDialog(2263, "Tareas de la historia (para /progreso ir <id>):\n\n" .. table.concat(progressionTaskIds(), "\n"))
 	elseif param == "reiniciar" then
 		progressionSetupNewPlayer(player)
 		player:sendTextMessage(MESSAGE_INFO_DESCR, "Progresion reiniciada.")
