@@ -198,7 +198,7 @@ progressionTasks = {
 	{
 		id = "mtmoon_clefairy", kind = "catch", species = {"Clefairy"}, count = 1, giver = "Profesor Oak",
 		title = "La leyenda de Mt. Moon",
-		text = "Dicen que en Mt. Moon, al este de Ciudad Plateada, viven unos Pokemon que llegaron de la luna. Captura un Clefairy. Pulsa Ver en el mapa para saber donde buscar.",
+		text = "Dicen que unos Pokemon llegaron de la luna y viven en los prados al este de Ciudad Plateada, camino de Mt. Moon. Captura un Clefairy. Pulsa Ver en el mapa para saber donde buscar.",
 		reward = {exp = 20000, money = 1500, items = {{id = 26659, count = 40}}},
 	},
 	{
