@@ -16,7 +16,7 @@ for m in re.finditer(r'\n(\w+)\s*=\s*\{\s*\n\s*prizes\s*=\s*\{(.*?)\n\s*level\s*
     for pm in re.finditer(r'uid\s*=\s*([\w]+)\s*,(.*?)badges\s*=\s*\{(.*?)\}', body, re.S):
         uid = pm.group(1)
         items = re.findall(r'item\s*=\s*"([^"]+)"\s*,\s*count\s*=\s*(\d+)', pm.group(2))
-        pokes = re.findall(r'name\s*=\s*"([^"]+)"\s*,\s*boost\s*=\s*(\d+)', pm.group(2))
+        pokes = re.findall(r'name\s*=\s*"([^"]+)"[^}]*?boost\s*=\s*(\d+)', pm.group(2))
         prizes.append(dict(uid=uid, items=items, pokes=pokes))
     quests[key] = dict(level=level, teleport=tp, prizes=prizes)
     if key == 'terrorQuest' or len(quests) > 200:

@@ -117,9 +117,9 @@
      objetos: 8x rock stone, 30x platinum coin
 == thundershiny  (nivel 90)
    uid 10213=10213 | 1652,1959,9 Nostrus (206)
-     (sin premio de objetos)
+     pokemon: Shiny Electabuzz +5
    uid 10214=10214 | 1650,1959,9 Nostrus (208)
-     (sin premio de objetos)
+     pokemon: Shiny Jolteon +5
 == shiningbox  (nivel 200)
    uid 10215=10215 | 1506,1064,8 Arcania (118)
      objetos: 1x box 5, 100x crystal coin
@@ -141,10 +141,13 @@
 == annihilator  (nivel 100)
    uid 10221=10221 | 1417,1291,11 R'lyeh (198)
      objetos: 5x crystal coin
+     pokemon: Shiny Porygon +10
    uid 10222=10222 | 1420,1291,11 R'lyeh (201)
      objetos: 5x crystal coin
+     pokemon: Shiny Hypno +10
    uid 10223=10223 | 1423,1291,11 R'lyeh (204)
      objetos: 5x crystal coin
+     pokemon: Shiny Alakazam +10
    usado en: actions/scripts/quests/annihilator.lua
 == darkness2  (nivel 20)
    uid 10224=10224 | 605,533,14 Pewter (316)
