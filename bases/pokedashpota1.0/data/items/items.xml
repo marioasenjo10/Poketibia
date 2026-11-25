@@ -40550,26 +40550,26 @@
 	<item id="30035" name="tea" />
 	<item id="30043" name="mead" />
 	<!-- Objetos de evolucion shiny (ver data/lib/core/shinyevolution.lua) -->
-	<item id="46001" article="a" name="shiny abomasnow seed">
-		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Abomasnow. Use it on your Shiny Snover to evolve it into Shiny Abomasnow." />
+	<item id="46001" article="an" name="orbe de evolucion mitico">
+		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46002" article="a" name="shiny aggron piece of steel">
-		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Aggron. Use it on your Shiny Lairon to evolve it into Shiny Aggron." />
+	<item id="46002" article="an" name="orbe de evolucion legendario">
+		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46003" article="a" name="shiny altaria feather">
-		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Altaria. Use it on your Shiny Swablu to evolve it into Shiny Altaria." />
+	<item id="46003" article="an" name="orbe de evolucion ultra raro">
+		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46004" article="a" name="shiny ambipom comb">
-		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Ambipom. Use it on your Shiny Aipom to evolve it into Shiny Ambipom." />
+	<item id="46004" article="an" name="orbe de evolucion super raro">
+		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46005" article="a" name="shiny ampharos magnetic tail">
-		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Ampharos. Use it on your Shiny Flaaffy to evolve it into Shiny Ampharos." />
+	<item id="46005" article="an" name="orbe de evolucion de plata">
+		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46006" article="a" name="shiny arbok giant snake tail">
-		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Arbok. Use it on your Shiny Ekans to evolve it into Shiny Arbok." />
+	<item id="46006" article="an" name="orbe de evolucion verde">
+		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46007" article="a" name="shiny arcanine giant piece of fur">
-		<attribute key="description" value="Shiny evolution item (tier 1). An almost impossible drop from a wild Shiny Arcanine. Use it on your Shiny Growlithe to evolve it into Shiny Arcanine." />
+	<item id="46007" article="an" name="orbe de evolucion de bronce">
+		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
 	<item id="46008" article="a" name="shiny ariados spider legs">
 		<attribute key="description" value="Shiny evolution item (tier 2). A very rare drop from a wild Shiny Ariados. Use it on your Shiny Spinarak to evolve it into Shiny Ariados." />

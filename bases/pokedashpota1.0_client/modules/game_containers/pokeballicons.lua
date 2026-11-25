@@ -2,7 +2,8 @@
 -- se dibuja la ilustracion de su pokemon y la pokeball pequena en la esquina.
 -- El cliente no sabe que pokemon lleva cada ball; lo manda el servidor (opcode 72,
 -- creaturescripts/scripts/pokeballicons.lua) cuando cambia algo en las mochilas abiertas:
---   "idContenedor:casilla:idObjeto:nombre:debilitado;..."
+--   "idContenedor:casilla:idObjeto:nombre:debilitado;..."  (debilitado = 2: orbe de evolucion shiny,
+--   se dibuja el holograma de su destino en vez de la ilustracion)
 
 local OPCODE_BALL_ICONS = 72
 local ICON_ID = 'pokeIcon'
@@ -26,9 +27,16 @@ local function clearIcon(itemWidget)
   if icon then icon:destroy() end
 end
 
+-- holograma del shiny al que evoluciona un orbe (generado con tools/pokeassets/ShinyOrbs.ps1)
+local function hologramPath(name)
+  local path = '/game_containers/holograms/' .. name:lower() .. '.png'
+  if g_resources.fileExists(path) then return path end
+  return nil
+end
+
 local function setIcon(itemWidget, entry)
   clearIcon(itemWidget)
-  local path = iconPath(entry.name)
+  local path = entry.hologram and hologramPath(entry.name) or iconPath(entry.name)
   if not path then return end
   local icon = g_ui.createWidget('PokeballIcon', itemWidget)
   icon:setId(ICON_ID)
@@ -37,7 +45,11 @@ local function setIcon(itemWidget, entry)
   if entry.fainted then
     icon:getChildById('pokemon'):setImageColor('#ffffff55')
   end
-  itemWidget:setTooltip(entry.name .. (entry.fainted and ' (debilitado)' or ''))
+  if entry.hologram then
+    itemWidget:setTooltip('Orbe de evoluci\243n: ' .. entry.name)
+  else
+    itemWidget:setTooltip(entry.name .. (entry.fainted and ' (debilitado)' or ''))
+  end
 end
 
 -- vuelve a pintar los iconos de una mochila abierta
@@ -85,7 +97,8 @@ local function onBallIcons(protocol, opcode, buffer)
     if cid then
       cid = tonumber(cid)
       entries[cid] = entries[cid] or {}
-      entries[cid][tonumber(slot)] = { itemId = tonumber(itemId), name = name, fainted = fainted == '1' }
+      -- ultimo campo: 0 normal, 1 debilitado, 2 orbe de evolucion (holograma del shiny)
+      entries[cid][tonumber(slot)] = { itemId = tonumber(itemId), name = name, fainted = fainted == '1', hologram = fainted == '2' }
     end
   end
   -- recordar por nombre lo de cada mochila abierta (tambien las que se han quedado sin pokeballs)

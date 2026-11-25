@@ -35,15 +35,12 @@ Lo pendiente, por bloques. Lo que ya está hecho y falta probar está en [tools/
 ## Drops de los Pokémon
 
 - [ ] **Revisar los drops** de todos los Pokémon (qué sueltan, cantidades y probabilidades).
-- [ ] **Rediseñar los objetos de los shiny**: ahora son versiones muy pobres de los objetos normales. Por ejemplo,
-  «shiny charizard wing» es el ala de Zubat con un borde dorado, y así casi todos. Para cada uno: un dibujo propio
-  que encaje con el Pokémon (el del Shiny Charizard, un ala de Charizard negra) y un nombre mejor.
-  Herramientas: `tools/pokeassets/SpriteSwap.cs` (cambia el dibujo de un objeto) e `IconCut.cs`.
-  Estado y lista completa: `python tools/shinyitems.py` (escribe `tools/shinyitems.txt`). Hay 224 objetos (ids 46001+,
-  `lib/core/shinyevolution.lua`); 24 comparten el dibujo «future orb» y 14 «sandbag».
-- [ ] **15 evoluciones shiny sin objeto** (no se pueden hacer): Kadabra, Alakazam, Hypno, Hitmonlee, Hitmonchan,
-  Electabuzz, Jolteon, Furret, Porygon2, Blissey, Staravia, Staraptor, Vespiquen, Yanmega, Gliscor.
-- [ ] **4 objetos que no sirven**: la fase anterior no existe como shiny (Cascoon, Gengar, Huntail, Ninjask).
+- [x] **Objetos de evolución shiny → orbes** (hecho): 7 orbes por rareza (ids 46001-46007) con el holograma del shiny
+  en la mochila. Probar en el juego: drop, uso, holograma, look y mercado. Ver «Orbes de evolución» en
+  `tools/pruebas-historia.md`. Los objetos antiguos 46008+ ya no se sueltan (siguen sirviendo si alguien tiene uno).
+- [ ] Orbes Mythic, Legendary, Ultra Rare y Super Rare: dibujados pero sin uso (ningún Pokémon de esas rarezas
+  evoluciona de otro). Se pueden usar para megas, ancestrales u otros eventos.
+- [ ] Borrar la copia `Tibia.spr.bak-20261124-222609` (y su `.dat`): no me dejaron borrarla; ya hay una más nueva.
 
 ## Runas: dibujos propios
 

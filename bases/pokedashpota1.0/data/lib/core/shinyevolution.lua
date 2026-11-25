@@ -242,13 +242,110 @@ shinyEvoItems = {
 	[46224] = {target = "Shiny Xatu", item = 27706, tier = 2}, -- feather
 }
 
-shinyEvoByTarget = {}
-for id, entry in pairs(shinyEvoItems) do
-	entry.id = id
-	shinyEvoByTarget[entry.target] = entry
+-- ===================== Orbes de evolucion shiny =====================
+-- En lugar de un objeto distinto por Pokemon, hay 7 orbes (ids 46001-46007). El color depende de la
+-- rareza del shiny al que evoluciona (data/pokemon-tiers-review.csv): Mythic, Legendary, Ultra Rare,
+-- Super Rare, T1 (plata), T2 (verde) y de T3 a T7 bronce. Cada orbe guarda su destino en el atributo
+-- especial "evoTarget"; el cliente dibuja encima el holograma de ese shiny (game_containers/pokeballicons).
+-- La lista de destinos sale de los archivos de los shiny (sus <evolution name="Shiny ...">).
+-- Dibujos: tools/pokeassets/ShinyOrbs.ps1. Los objetos 46008+ (los antiguos) siguen funcionando.
+SHINY_ORB_IDS = {mythic = 46001, legendary = 46002, ultra = 46003, super = 46004, t1 = 46005, t2 = 46006, bronze = 46007}
+SHINY_ORB_NAMES = {mythic = "mitico", legendary = "legendario", ultra = "ultra raro", super = "super raro",
+	t1 = "de plata", t2 = "verde", bronze = "de bronce"}
+shinyOrbByItemId = {}
+for key, id in pairs(SHINY_ORB_IDS) do
+	shinyOrbByItemId[id] = key
 end
 
--- Crea el objeto de evolucion dentro del cadaver si sale la probabilidad. Devuelve el item o nil.
+-- probabilidad de los objetos antiguos (por destino); los ids de los orbes dejan de ser objetos antiguos
+local legacyTier = {}
+for _, entry in pairs(shinyEvoItems) do
+	legacyTier[entry.target] = entry.tier
+end
+for _, id in pairs(SHINY_ORB_IDS) do
+	shinyEvoItems[id] = nil
+end
+
+local ORB_KEY_BY_TIER = {mythic = "mythic", legendary = "legendary", ["ultra rare"] = "ultra", ["super rare"] = "super", t1 = "t1", t2 = "t2"}
+local catchTiers
+
+local function loadCatchTiers()
+	catchTiers = {}
+	local file = io.open("data/pokemon-tiers-review.csv", "rb")
+	if not file then
+		return
+	end
+	for line in file:lines() do
+		local name, tier = line:match('^"?([^,"]+)"?,"?([^,"]+)"?,')
+		if name then
+			catchTiers[name:gsub("^\239\187\191", ""):lower()] = tier:lower()
+		end
+	end
+	file:close()
+end
+
+function shinyOrbKey(target)
+	if not catchTiers then
+		loadCatchTiers()
+	end
+	local base = tostring(target):gsub("^[Ss]hiny ", ""):lower()
+	return ORB_KEY_BY_TIER[catchTiers[base] or ""] or "bronze"
+end
+
+local function loadShinyEvoTargets()
+	local targets, hasShinyEvo = {}, {}
+	local index = io.open("data/monster/monsters.xml", "rb")
+	if not index then
+		print("WARNING! Orbes shiny: no se pudo leer data/monster/monsters.xml")
+		return targets, hasShinyEvo
+	end
+	for line in index:lines() do
+		local name, path = line:match('<monster name="(Shiny [^"]+)" file="([^"]+)"')
+		if name then
+			local file = io.open("data/monster/" .. path, "rb")
+			if file then
+				local content = file:read("*a")
+				file:close()
+				for evolution in content:gmatch('<evolution name="(Shiny [^"]+)"') do
+					targets[evolution] = true
+					hasShinyEvo[name] = true
+				end
+			end
+		end
+	end
+	index:close()
+	return targets, hasShinyEvo
+end
+
+-- shinyEvoByTarget[destino] = {id = orbe, tier = probabilidad (1-3), orb = color}. La usan la Pokedex
+-- y el aviso de "los shiny no evolucionan con piedras" (actions/scripts/poke/evolution.lua).
+do
+	local targets, hasShinyEvo = loadShinyEvoTargets()
+	shinyEvoByTarget = {}
+	local count = 0
+	for target in pairs(targets) do
+		local key = shinyOrbKey(target)
+		local tier = legacyTier[target]
+		if not tier then
+			-- fase intermedia: la mas facil; final: segun la rareza
+			tier = hasShinyEvo[target] and 3 or ((key == "bronze" or key == "t2") and 2 or 1)
+		end
+		shinyEvoByTarget[target] = {id = SHINY_ORB_IDS[key], tier = tier, target = target, orb = key}
+		count = count + 1
+	end
+end
+
+-- a que shiny evoluciona un objeto (orbe o objeto antiguo)
+function getShinyEvoTarget(item)
+	local target = item:getSpecialAttribute("evoTarget")
+	if target then
+		return target
+	end
+	local legacy = shinyEvoItems[item:getId()]
+	return legacy and legacy.target or nil
+end
+
+-- Crea el orbe dentro del cadaver si sale la probabilidad. Devuelve el item o nil.
 function doShinyEvoDrop(creature, corpse)
 	local entry = shinyEvoByTarget[creature:getName()]
 	if not entry or creature:getMaster() then
@@ -258,5 +355,9 @@ function doShinyEvoDrop(creature, corpse)
 	if math.random(1, 100000) > chance * 1000 then
 		return nil
 	end
-	return corpse:addItem(entry.id, 1)
+	local orb = corpse:addItem(entry.id, 1)
+	if orb then
+		orb:setSpecialAttribute("evoTarget", entry.target)
+	end
+	return orb
 end

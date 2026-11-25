@@ -43,6 +43,14 @@ function Player:onLook(thing, position, distance)
 			end
 		end
 	end
+	-- orbe de evolucion shiny: a que shiny evoluciona (lib/core/shinyevolution.lua)
+	if thing:isItem() and shinyOrbByItemId and shinyOrbByItemId[thing:getId()] then
+		local evoTarget = thing:getSpecialAttribute("evoTarget")
+		if evoTarget then
+			description = description .. "\nEvoluciona a: " .. evoTarget .. ". Usalo con tu Pokemon fuera (nivel " ..
+				getPokemonRequiredLevel(evoTarget) .. ")."
+		end
+	end
 	-- runa suelta: que es y como se usa
 	if thing:isItem() and getRuneTypeByItemId and getRuneTypeByItemId(thing:getId()) then
 		local key = getRuneTypeByItemId(thing:getId())

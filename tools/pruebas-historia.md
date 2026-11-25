@@ -119,3 +119,18 @@ y `/i 2150` (GM) se pueden crear para probar.
 - [ ] Simon deja pasar a la Calle Victoria con las 8 medallas y sin límite diario.
 
 Ajustes: `lib/core/runes.lua` (tiers, coste de fabricar) y `lib/core/weeklyquests.lua` (premio semanal).
+
+## Orbes de evolución shiny
+
+Con GM se puede crear un orbe con destino: `/i 46007` (bronce) y luego ponerle el destino no es posible por
+comando; lo más fácil es matar shinys o probar con un orbe soltado. Probar:
+
+- [ ] Un shiny que es evolución (Shiny Charmeleon, Shiny Raichu…) suelta a veces un orbe: bronce (T3-T7), verde (T2)
+  o plata (T1) según su rareza.
+- [ ] En la mochila se ve el holograma del shiny con el orbe pequeño en la esquina; al pasar el ratón,
+  «Orbe de evolución: Shiny X». Al mirarlo: «Evoluciona a: Shiny X».
+- [ ] Usarlo con la fase anterior fuera (Shiny Charmander para un orbe de Shiny Charmeleon): evoluciona.
+  Con otro Pokémon avisa de que no sirve.
+- [ ] En el mercado sale como «Orbe De Evolucion De Bronce (Shiny X)».
+- [ ] Evoluciones arregladas: Shiny Sentret → Shiny Furret, Shiny Tyrogue → Hitmonlee/Hitmonchan,
+  Shiny Porygon → Porygon2, Shiny Chansey → Blissey.

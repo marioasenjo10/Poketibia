@@ -48,6 +48,33 @@ public static class OrbDesign
 		if (big) { c.Set(x - 2, y, WithAlpha(col, 150)); c.Set(x + 2, y, WithAlpha(col, 150)); c.Set(x, y - 2, WithAlpha(col, 150)); c.Set(x, y + 2, WithAlpha(col, 150)); }
 	}
 
+	// Holograma de un Pokemon: su ilustracion en cian translucido con lineas horizontales (cada 3 filas),
+	// para que se vea que es una imagen del Pokemon al que sirve el orbe y no el Pokemon de verdad.
+	public static void Hologram(string srcPath, string dstPath, int size)
+	{
+		using (var src = new Bitmap(srcPath))
+		using (var b = new Bitmap(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+		{
+			using (var g = Graphics.FromImage(b))
+			{
+				g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+				g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+				g.DrawImage(src, 0, 0, size, size);
+			}
+			for (int y = 0; y < size; y++)
+				for (int x = 0; x < size; x++)
+				{
+					var p = b.GetPixel(x, y);
+					if (p.A < 20) { b.SetPixel(x, y, Color.Transparent); continue; }
+					double l = (0.299 * p.R + 0.587 * p.G + 0.114 * p.B) / 255.0;
+					double scan = y % 3 == 0 ? 0.7 : 1.0;
+					int a = (int)Math.Min(255, p.A * 0.82 * scan);
+					b.SetPixel(x, y, Color.FromArgb(a, (int)(110 + 145 * l), (int)(215 + 40 * l), 255));
+				}
+			b.Save(dstPath, System.Drawing.Imaging.ImageFormat.Png);
+		}
+	}
+
 	public static PixelCanvas Orb(string key)
 	{
 		var c = new PixelCanvas(32);

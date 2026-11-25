@@ -173,7 +173,13 @@ local function describe(itemId, special, pokeName, boost)
 end
 
 local function describeItem(item)
-	return describe(item:getId(), specialOf(item), item:getSpecialAttribute("pokeName"), tonumber(item:getSpecialAttribute("pokeBoost")) or 0)
+	local name, category, icon = describe(item:getId(), specialOf(item), item:getSpecialAttribute("pokeName"), tonumber(item:getSpecialAttribute("pokeBoost")) or 0)
+	-- orbe de evolucion shiny: se ve a que shiny evoluciona
+	local evoTarget = shinyOrbByItemId and shinyOrbByItemId[item:getId()] and item:getSpecialAttribute("evoTarget")
+	if evoTarget then
+		name = name .. " (" .. evoTarget .. ")"
+	end
+	return name, category, icon
 end
 
 -- objetos que se pueden vender: mochila (y lo que tenga dentro) y cinturon de Pokemon

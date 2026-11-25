@@ -63,6 +63,50 @@ public static class SpriteSwap
 		return log.ToString();
 	}
 
+	// Varios objetos de una vez (una sola copia de seguridad y una sola escritura del .spr):
+	//   [SpriteSwap]::RunMany(dat, spr, otb, @(46001, 46002), @("a.png", "b.png"), $true)
+	public static string RunMany(string datPath, string sprPath, string otbPath, int[] serverIds, string[] pngPaths, bool dryRun)
+	{
+		if (serverIds.Length != pngPaths.Length) throw new Exception("Hace falta un PNG por objeto");
+		var log = new StringBuilder();
+		var otb = Otb.Load(otbPath);
+		var dat = Dat.Load(datPath);
+		var spr = Spr.Load(sprPath);
+		var data = (byte[])dat.Data.Clone();
+		var added = new List<byte[]>();
+		for (int i = 0; i < serverIds.Length; i++)
+		{
+			OtbItem found = null;
+			foreach (var it in otb.Items) if (it.ServerId == serverIds[i]) { found = it; break; }
+			if (found == null) throw new Exception("El objeto " + serverIds[i] + " no esta en items.otb");
+			if (!dat.Items.ContainsKey(found.ClientId)) throw new Exception("El id de cliente " + found.ClientId + " no existe en Tibia.dat");
+			var thing = dat.Items[found.ClientId];
+			if (thing.Width != 1 || thing.Height != 1) throw new Exception("Solo objetos de 1x1 casillas (" + serverIds[i] + ")");
+			added.Add(Spr.Encode(LoadPixels(pngPaths[i])));
+			uint newId = (uint)(spr.Count + added.Count);
+			foreach (int pos in thing.SpritePositions)
+				Array.Copy(BitConverter.GetBytes(newId), 0, data, pos, 4);
+			log.AppendLine(string.Format("Objeto {0} (cliente {1}) -> sprite {2}", serverIds[i], found.ClientId, newId));
+		}
+		if (dryRun)
+		{
+			log.AppendLine("Prueba OK (no se ha modificado nada).");
+			return log.ToString();
+		}
+		string stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+		File.Copy(datPath, datPath + ".bak-" + stamp);
+		File.Copy(sprPath, sprPath + ".bak-" + stamp);
+		spr.Save(sprPath + ".new", added);
+		File.WriteAllBytes(datPath + ".new", data);
+		Dat.Load(datPath + ".new");
+		var check = Spr.Load(sprPath + ".new");
+		check.Decode((uint)(spr.Count + added.Count));
+		File.Copy(datPath + ".new", datPath, true); File.Delete(datPath + ".new");
+		File.Copy(sprPath + ".new", sprPath, true); File.Delete(sprPath + ".new");
+		log.AppendLine("Guardado. Copias: *.bak-" + stamp);
+		return log.ToString();
+	}
+
 	static byte[] LoadPixels(string path)
 	{
 		using (var src = new Bitmap(path))
