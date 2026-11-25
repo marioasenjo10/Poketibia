@@ -39,6 +39,11 @@ Lo pendiente, por bloques. Lo que ya está hecho y falta probar está en [tools/
   «shiny charizard wing» es el ala de Zubat con un borde dorado, y así casi todos. Para cada uno: un dibujo propio
   que encaje con el Pokémon (el del Shiny Charizard, un ala de Charizard negra) y un nombre mejor.
   Herramientas: `tools/pokeassets/SpriteSwap.cs` (cambia el dibujo de un objeto) e `IconCut.cs`.
+  Estado y lista completa: `python tools/shinyitems.py` (escribe `tools/shinyitems.txt`). Hay 224 objetos (ids 46001+,
+  `lib/core/shinyevolution.lua`); 24 comparten el dibujo «future orb» y 14 «sandbag».
+- [ ] **15 evoluciones shiny sin objeto** (no se pueden hacer): Kadabra, Alakazam, Hypno, Hitmonlee, Hitmonchan,
+  Electabuzz, Jolteon, Furret, Porygon2, Blissey, Staravia, Staraptor, Vespiquen, Yanmega, Gliscor.
+- [ ] **4 objetos que no sirven**: la fase anterior no existe como shiny (Cascoon, Gengar, Huntail, Ninjask).
 
 ## Runas: dibujos propios
 

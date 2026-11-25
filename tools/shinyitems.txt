@@ -1,0 +1,287 @@
+Objetos de evolucion shiny: 224 | evoluciones shiny posibles: 235 | con objeto: 220 | SIN objeto: 15
+
+== Evoluciones shiny SIN objeto (no se pueden hacer)
+  [Kanto] Shiny Abra -> Shiny Kadabra
+  [Kanto] Shiny Kadabra -> Shiny Alakazam
+  [Kanto] Shiny Drowzee -> Shiny Hypno
+  [Kanto] Shiny Tyrogue -> Shiny Hitmonlee
+  [Kanto] Shiny Tyrogue -> Shiny Hitmonchan
+  [Kanto] Shiny Elekid -> Shiny Electabuzz
+  [Kanto] Shiny Eevee -> Shiny Jolteon
+  [Johto] Shiny Sentret -> Shiny Furret
+  [Johto] Shiny Porygon -> Shiny Porygon2
+  [Johto] Shiny Chansey -> Shiny Blissey
+  [Sinnoh+] Shiny Starly -> Shiny Staravia
+  [Sinnoh+] Shiny Staravia -> Shiny Staraptor
+  [Sinnoh+] Shiny Combee -> Shiny Vespiquen
+  [Sinnoh+] Shiny Yanma -> Shiny Yanmega
+  [Sinnoh+] Shiny Gligar -> Shiny Gliscor
+
+== Objetos que no evolucionan a nadie (el target no es evolucion de ningun shiny)
+  46025 shiny cascoon pot of moss bug (target Shiny Cascoon)
+  46069 shiny gengar traces of ghost (target Shiny Gengar)
+  46087 shiny huntail water gem (target Shiny Huntail)
+  46143 shiny ninjask straw (target Shiny Ninjask)
+
+== Dibujos base repetidos (varios objetos shiny con el mismo dibujo)
+  24x future orb (27700): Blaziken, Chansey, Chimecho, Claydol, Combusken, Espeon, Exploud, Flareon, Gardevoir, Grumpig, Kirlia, Linoone, Loudred, Medicham, Metagross, Metang, Mr. Mime, Porygon-Z, Shelgon, Slaking, Sudowoodo, Vaporeon, Vigoroth, Wobbuffet
+  14x sandbag (27685): Camerupt, Flygon, Gastrodon, Hippowdon, Mamoswine, Marshtomp, Piloswine, Pupitar, Rampardos, Rhyperior, Swampert, Tyranitar, Vibrava, Whiscash
+  9x seed (27670): Abomasnow, Breloom, Cradily, Grotle, Grovyle, Lombre, Ludicolo, Sceptile, Tangrowth
+  8x pot of moss bug (27679): Armaldo, Cascoon, Dustox, Kakuna, Kricketune, Metapod, Mothim, Wormadam
+  8x traces of ghost (27710): Banette, Drifblim, Dusclops, Dusknoir, Gengar, Haunter, Honchkrow, Mismagius
+  8x water pendant (27678): Empoleon, Floatzel, Lanturn, Lumineon, Mantine, Politoed, Poliwhirl, Poliwrath
+  7x feather (27706): Altaria, Pelipper, Pidgeot, Pidgeotto, Swellow, Togekiss, Xatu
+  7x water gem (27668): Bibarel, Huntail, Milotic, Prinplup, Sealeo, Wailord, Walrein
+  7x dark gem (27784): Cacturne, Drapion, Mightyena, Nuzleaf, Sharpedo, Shiftry, Umbreon
+  6x piece of steel (27651): Aggron, Bastiodon, Bronzong, Lairon, Magnezone, Probopass
+  6x leaves (27660): Bayleef, Cherrim, Exeggutor, Roserade, Sunflora, Weepinbell
+  4x comb (27687): Ambipom, Lickilicky, Lopunny, Purugly
+  4x straw (27719): Beautifly, Masquerain, Ninjask, Salamence
+  4x microphone (27723): Clefable, Clefairy, Jigglypuff, Wigglytuff
+  4x dragon tooth (27667): Dragonair, Dragonite, Gabite, Garchomp
+  3x yellow flower (27727): Bellossom, Jumpluff, Skiploom
+  3x screw (27671): Electivire, Luxray, Manectric
+  3x kick machine (27715): Hitmontop, Infernape, Monferno
+  3x bottle of poison (27672): Roselia, Skuntank, Toxicroak
+  2x squirtle hull (27666): Blastoise, Wartortle
+  2x crab claw (27713): Crawdaunt, Kingler
+  2x big bat wing (27766): Crobat, Golbat
+  2x red scale (27769): Croconaw, Feraligatr
+  2x electric box (27684): Electrode, Luxio
+  2x poisonous flower (27743): Gloom, Vileplume
+  2x strange rock (27818): Golem, Graveler
+  2x punch machine (27698): Hariyama, Lucario
+  2x bulb (27659): Ivysaur, Venusaur
+  2x seahorse tail (27813): Kingdra, Seadra
+  2x belt of champion (27701): Machamp, Machoke
+  2x male ear (27803): Nidoking, Nidorino
+  2x female ear (27802): Nidoqueen, Nidorina
+  2x bag of pollem (27658): Parasect, Torterra
+  2x hot fur (27795): Quilava, Typhlosion
+  2x horn (27686): Rhydon, Seaking
+
+== Todos los objetos, por region (id | nombre | evoluciona a | tier | dibujo base)
+  [Johto] 46082 | shiny haunter traces of ghost | Shiny Haunter | T3 | traces of ghost
+  [Kanto] 46089 | shiny ivysaur bulb | Shiny Ivysaur | T3 | bulb
+  [Kanto] 46209 | shiny venusaur bulb | Shiny Venusaur | T1 | bulb
+  [Kanto] 46028 | shiny charmeleon fire tail | Shiny Charmeleon | T3 | fire tail
+  [Kanto] 46027 | shiny charizard black wing | Shiny Charizard | T1 | bat wing
+  [Kanto] 46216 | shiny wartortle squirtle hull | Shiny Wartortle | T3 | squirtle hull
+  [Kanto] 46018 | shiny blastoise squirtle hull | Shiny Blastoise | T1 | squirtle hull
+  [Kanto] 46130 | shiny metapod pot of moss bug | Shiny Metapod | T3 | pot of moss bug
+  [Kanto] 46022 | shiny butterfree butterfly wing | Shiny Butterfree | T2 | butterfly wing
+  [Kanto] 46094 | shiny kakuna pot of moss bug | Shiny Kakuna | T3 | pot of moss bug
+  [Kanto] 46015 | shiny beedrill bee sting | Shiny Beedrill | T2 | bee sting
+  [Kanto] 46152 | shiny pidgeotto feather | Shiny Pidgeotto | T3 | feather
+  [Kanto] 46151 | shiny pidgeot feather | Shiny Pidgeot | T1 | feather
+  [Kanto] 46169 | shiny raticate rat tail | Shiny Raticate | T2 | rat tail
+  [Kanto] 46058 | shiny fearow red wing | Shiny Fearow | T2 | red wing
+  [Kanto] 46006 | shiny arbok giant snake tail | Shiny Arbok | T2 | giant snake tail
+  [Kanto] 46153 | shiny pikachu electric rat tail | Shiny Pikachu | T3 | electric rat tail
+  [Kanto] 46166 | shiny raichu strange electric tail | Shiny Raichu | T2 | strange electric tail
+  [Kanto] 46175 | shiny sandslash armadillo claw | Shiny Sandslash | T2 | armadillo claw
+  [Kanto] 46140 | shiny nidorina female ear | Shiny Nidorina | T3 | female ear
+  [Kanto] 46139 | shiny nidoqueen female ear | Shiny Nidoqueen | T1 | female ear
+  [Kanto] 46141 | shiny nidorino male ear | Shiny Nidorino | T3 | male ear
+  [Kanto] 46138 | shiny nidoking male ear | Shiny Nidoking | T1 | male ear
+  [Kanto] 46033 | shiny clefairy microphone | Shiny Clefairy | T3 | microphone
+  [Kanto] 46032 | shiny clefable microphone | Shiny Clefable | T1 | microphone
+  [Kanto] 46142 | shiny ninetales fox tail | Shiny Ninetales | T2 | fox tail
+  [Kanto] 46090 | shiny jigglypuff microphone | Shiny Jigglypuff | T3 | microphone
+  [Kanto] 46221 | shiny wigglytuff microphone | Shiny Wigglytuff | T1 | microphone
+  [Kanto] 46072 | shiny golbat big bat wing | Shiny Golbat | T3 | big bat wing
+  [Kanto] 46071 | shiny gloom poisonous flower | Shiny Gloom | T3 | poisonous flower
+  [Kanto] 46213 | shiny vileplume poisonous flower | Shiny Vileplume | T2 | poisonous flower
+  [Kanto] 46148 | shiny parasect bag of pollem | Shiny Parasect | T2 | bag of pollem
+  [Kanto] 46208 | shiny venomoth moth wing | Shiny Venomoth | T2 | moth wing
+  [Kanto] 46048 | shiny dugtrio piece of diglett | Shiny Dugtrio | T2 | piece of diglett
+  [Kanto] 46150 | shiny persian luck medallion | Shiny Persian | T2 | luck medallion
+  [Kanto] 46073 | shiny golduck psyduck mug | Shiny Golduck | T1 | psyduck mug
+  [Kanto] 46159 | shiny primeape fur | Shiny Primeape | T2 | fur
+  [Kanto] 46007 | shiny arcanine giant piece of fur | Shiny Arcanine | T1 | giant piece of fur
+  [Kanto] 46156 | shiny poliwhirl water pendant | Shiny Poliwhirl | T3 | water pendant
+  [Kanto] 46157 | shiny poliwrath water pendant | Shiny Poliwrath | T1 | water pendant
+  [Kanto] 46113 | shiny machoke belt of champion | Shiny Machoke | T3 | belt of champion
+  [Kanto] 46112 | shiny machamp belt of champion | Shiny Machamp | T1 | belt of champion
+  [Kanto] 46218 | shiny weepinbell leaves | Shiny Weepinbell | T3 | leaves
+  [Kanto] 46211 | shiny victreebel plant tail | Shiny Victreebel | T1 | plant tail
+  [Kanto] 46198 | shiny tentacruel giant ruby | Shiny Tentacruel | T1 | giant ruby
+  [Kanto] 46076 | shiny graveler strange rock | Shiny Graveler | T3 | strange rock
+  [Kanto] 46074 | shiny golem strange rock | Shiny Golem | T1 | strange rock
+  [Kanto] 46168 | shiny rapidash fire horse foot | Shiny Rapidash | T2 | fire horse foot
+  [Kanto] 46187 | shiny slowbro slow tail | Shiny Slowbro | T3 | slow tail
+  [Kanto] 46117 | shiny magneton magnet | Shiny Magneton | T3 | magnet
+  [Kanto] 46042 | shiny dodrio dodrio feather | Shiny Dodrio | T2 | dodrio feather
+  [Kanto] 46041 | shiny dewgong long seal tail | Shiny Dewgong | T1 | long seal tail
+  [Kanto] 46137 | shiny muk sticky hand | Shiny Muk | T1 | sticky hand
+  [Kanto] 46034 | shiny cloyster strange spike | Shiny Cloyster | T2 | strange spike
+  [Kanto] 46069 | shiny gengar traces of ghost | Shiny Gengar | T2 | traces of ghost
+  [Kanto] 46096 | shiny kingler crab claw | Shiny Kingler | T2 | crab claw
+  [Kanto] 46053 | shiny electrode electric box | Shiny Electrode | T2 | electric box
+  [Kanto] 46056 | shiny exeggutor leaves | Shiny Exeggutor | T1 | leaves
+  [Kanto] 46123 | shiny marowak old skull | Shiny Marowak | T2 | old skull
+  [Kanto] 46219 | shiny weezing venom flute | Shiny Weezing | T2 | venom flute
+  [Kanto] 46170 | shiny rhydon horn | Shiny Rhydon | T3 | horn
+  [Kanto] 46026 | shiny chansey future orb | Shiny Chansey | T1 | future orb
+  [Kanto] 46178 | shiny seadra seahorse tail | Shiny Seadra | T3 | seahorse tail
+  [Kanto] 46179 | shiny seaking horn | Shiny Seaking | T1 | horn
+  [Kanto] 46190 | shiny starmie gem star | Shiny Starmie | T2 | gem star
+  [Kanto] 46136 | shiny mr. mime future orb | Shiny Mr. Mime | T2 | future orb
+  [Kanto] 46092 | shiny jynx ice bra | Shiny Jynx | T2 | ice bra
+  [Kanto] 46115 | shiny magmar magma foot | Shiny Magmar | T3 | magma foot
+  [Kanto] 46080 | shiny gyarados gyarados tail | Shiny Gyarados | T1 | gyarados tail
+  [Kanto] 46207 | shiny vaporeon future orb | Shiny Vaporeon | T1 | future orb
+  [Kanto] 46061 | shiny flareon future orb | Shiny Flareon | T2 | future orb
+  [Kanto] 46147 | shiny omastar helix fossil | Shiny Omastar | T2 | helix fossil
+  [Kanto] 46093 | shiny kabutops dome fossil | Shiny Kabutops | T2 | dome fossil
+  [Kanto] 46189 | shiny snorlax bitten apple | Shiny Snorlax | T1 | bitten apple
+  [Kanto] 46044 | shiny dragonair dragon tooth | Shiny Dragonair | T3 | dragon tooth
+  [Kanto] 46045 | shiny dragonite dragon tooth | Shiny Dragonite | T1 | dragon tooth
+  [Johto] 46013 | shiny bayleef leaves | Shiny Bayleef | T3 | leaves
+  [Johto] 46127 | shiny meganium great petals | Shiny Meganium | T1 | great petals
+  [Johto] 46165 | shiny quilava hot fur | Shiny Quilava | T3 | hot fur
+  [Johto] 46203 | shiny typhlosion hot fur | Shiny Typhlosion | T1 | hot fur
+  [Johto] 46039 | shiny croconaw red scale | Shiny Croconaw | T3 | red scale
+  [Johto] 46059 | shiny feraligatr red scale | Shiny Feraligatr | T1 | red scale
+  [Johto] 46144 | shiny noctowl owl feather | Shiny Noctowl | T1 | owl feather
+  [Johto] 46101 | shiny ledian ladybug shell | Shiny Ledian | T2 | ladybug shell
+  [Johto] 46008 | shiny ariados spider legs | Shiny Ariados | T2 | spider legs
+  [Johto] 46038 | shiny crobat big bat wing | Shiny Crobat | T1 | big bat wing
+  [Johto] 46100 | shiny lanturn water pendant | Shiny Lanturn | T1 | water pendant
+  [Johto] 46200 | shiny togetic egg shell | Shiny Togetic | T3 | egg shell
+  [Johto] 46224 | shiny xatu feather | Shiny Xatu | T2 | feather
+  [Johto] 46060 | shiny flaaffy sheep wool | Shiny Flaaffy | T3 | sheep wool
+  [Johto] 46005 | shiny ampharos magnetic tail | Shiny Ampharos | T1 | magnetic tail
+  [Johto] 46016 | shiny bellossom yellow flower | Shiny Bellossom | T2 | yellow flower
+  [Johto] 46122 | shiny marill blue ball tail | Shiny Marill | T3 | blue ball tail
+  [Johto] 46010 | shiny azumarill blue rat ear | Shiny Azumarill | T1 | blue rat ear
+  [Johto] 46192 | shiny sudowoodo future orb | Shiny Sudowoodo | T2 | future orb
+  [Johto] 46155 | shiny politoed water pendant | Shiny Politoed | T1 | water pendant
+  [Johto] 46184 | shiny skiploom yellow flower | Shiny Skiploom | T3 | yellow flower
+  [Johto] 46091 | shiny jumpluff yellow flower | Shiny Jumpluff | T2 | yellow flower
+  [Johto] 46193 | shiny sunflora leaves | Shiny Sunflora | T2 | leaves
+  [Johto] 46164 | shiny quagsire wooper horn | Shiny Quagsire | T1 | wooper horn
+  [Johto] 46055 | shiny espeon future orb | Shiny Espeon | T2 | future orb
+  [Johto] 46205 | shiny umbreon dark gem | Shiny Umbreon | T1 | dark gem
+  [Johto] 46188 | shiny slowking mystic shell hat | Shiny Slowking | T1 | mystic shell hat
+  [Johto] 46222 | shiny wobbuffet future orb | Shiny Wobbuffet | T1 | future orb
+  [Johto] 46064 | shiny forretress piece of shell | Shiny Forretress | T2 | piece of shell
+  [Johto] 46191 | shiny steelix steelix tail | Shiny Steelix | T2 | steelix tail
+  [Johto] 46075 | shiny granbull dog ears | Shiny Granbull | T1 | dog ears
+  [Johto] 46177 | shiny scizor scizor claw | Shiny Scizor | T2 | scizor claw
+  [Johto] 46206 | shiny ursaring bear paw | Shiny Ursaring | T1 | bear paw
+  [Johto] 46114 | shiny magcargo lava shell | Shiny Magcargo | T2 | lava shell
+  [Johto] 46154 | shiny piloswine sandbag | Shiny Piloswine | T3 | sandbag
+  [Johto] 46146 | shiny octillery tentacle | Shiny Octillery | T2 | tentacle
+  [Johto] 46121 | shiny mantine water pendant | Shiny Mantine | T1 | water pendant
+  [Johto] 46086 | shiny houndoom strange bone | Shiny Houndoom | T2 | strange bone
+  [Johto] 46095 | shiny kingdra seahorse tail | Shiny Kingdra | T2 | seahorse tail
+  [Johto] 46043 | shiny donphan rock trunk | Shiny Donphan | T1 | rock trunk
+  [Johto] 46084 | shiny hitmontop kick machine | Shiny Hitmontop | T2 | kick machine
+  [Johto] 46162 | shiny pupitar sandbag | Shiny Pupitar | T3 | sandbag
+  [Johto] 46204 | shiny tyranitar sandbag | Shiny Tyranitar | T1 | sandbag
+  [Hoenn] 46078 | shiny grovyle seed | Shiny Grovyle | T3 | seed
+  [Hoenn] 46176 | shiny sceptile seed | Shiny Sceptile | T2 | seed
+  [Hoenn] 46035 | shiny combusken future orb | Shiny Combusken | T3 | future orb
+  [Hoenn] 46019 | shiny blaziken future orb | Shiny Blaziken | T1 | future orb
+  [Hoenn] 46124 | shiny marshtomp sandbag | Shiny Marshtomp | T3 | sandbag
+  [Hoenn] 46195 | shiny swampert sandbag | Shiny Swampert | T1 | sandbag
+  [Hoenn] 46131 | shiny mightyena dark gem | Shiny Mightyena | T2 | dark gem
+  [Hoenn] 46103 | shiny linoone future orb | Shiny Linoone | T1 | future orb
+  [Hoenn] 46014 | shiny beautifly straw | Shiny Beautifly | T2 | straw
+  [Hoenn] 46025 | shiny cascoon pot of moss bug | Shiny Cascoon | T3 | pot of moss bug
+  [Hoenn] 46051 | shiny dustox pot of moss bug | Shiny Dustox | T2 | pot of moss bug
+  [Hoenn] 46104 | shiny lombre seed | Shiny Lombre | T3 | seed
+  [Hoenn] 46108 | shiny ludicolo seed | Shiny Ludicolo | T1 | seed
+  [Hoenn] 46145 | shiny nuzleaf dark gem | Shiny Nuzleaf | T3 | dark gem
+  [Hoenn] 46183 | shiny shiftry dark gem | Shiny Shiftry | T1 | dark gem
+  [Hoenn] 46196 | shiny swellow feather | Shiny Swellow | T2 | feather
+  [Hoenn] 46149 | shiny pelipper feather | Shiny Pelipper | T2 | feather
+  [Hoenn] 46097 | shiny kirlia future orb | Shiny Kirlia | T3 | future orb
+  [Hoenn] 46067 | shiny gardevoir future orb | Shiny Gardevoir | T2 | future orb
+  [Hoenn] 46125 | shiny masquerain straw | Shiny Masquerain | T2 | straw
+  [Hoenn] 46020 | shiny breloom seed | Shiny Breloom | T2 | seed
+  [Hoenn] 46212 | shiny vigoroth future orb | Shiny Vigoroth | T3 | future orb
+  [Hoenn] 46186 | shiny slaking future orb | Shiny Slaking | T1 | future orb
+  [Hoenn] 46143 | shiny ninjask straw | Shiny Ninjask | T2 | straw
+  [Hoenn] 46106 | shiny loudred future orb | Shiny Loudred | T3 | future orb
+  [Hoenn] 46057 | shiny exploud future orb | Shiny Exploud | T1 | future orb
+  [Hoenn] 46081 | shiny hariyama punch machine | Shiny Hariyama | T1 | punch machine
+  [Hoenn] 46040 | shiny delcatty wool ball | Shiny Delcatty | T2 | wool ball
+  [Hoenn] 46099 | shiny lairon piece of steel | Shiny Lairon | T3 | piece of steel
+  [Hoenn] 46002 | shiny aggron piece of steel | Shiny Aggron | T2 | piece of steel
+  [Hoenn] 46126 | shiny medicham future orb | Shiny Medicham | T2 | future orb
+  [Hoenn] 46120 | shiny manectric screw | Shiny Manectric | T2 | screw
+  [Hoenn] 46172 | shiny roselia bottle of poison | Shiny Roselia | T3 | bottle of poison
+  [Hoenn] 46194 | shiny swalot gosme | Shiny Swalot | T1 | gosme
+  [Hoenn] 46181 | shiny sharpedo dark gem | Shiny Sharpedo | T2 | dark gem
+  [Hoenn] 46214 | shiny wailord water gem | Shiny Wailord | T1 | water gem
+  [Hoenn] 46024 | shiny camerupt sandbag | Shiny Camerupt | T2 | sandbag
+  [Hoenn] 46079 | shiny grumpig future orb | Shiny Grumpig | T1 | future orb
+  [Hoenn] 46210 | shiny vibrava sandbag | Shiny Vibrava | T3 | sandbag
+  [Hoenn] 46063 | shiny flygon sandbag | Shiny Flygon | T1 | sandbag
+  [Hoenn] 46023 | shiny cacturne dark gem | Shiny Cacturne | T2 | dark gem
+  [Hoenn] 46003 | shiny altaria feather | Shiny Altaria | T2 | feather
+  [Hoenn] 46220 | shiny whiscash sandbag | Shiny Whiscash | T1 | sandbag
+  [Hoenn] 46037 | shiny crawdaunt crab claw | Shiny Crawdaunt | T2 | crab claw
+  [Hoenn] 46031 | shiny claydol future orb | Shiny Claydol | T2 | future orb
+  [Hoenn] 46036 | shiny cradily seed | Shiny Cradily | T1 | seed
+  [Hoenn] 46009 | shiny armaldo pot of moss bug | Shiny Armaldo | T2 | pot of moss bug
+  [Hoenn] 46132 | shiny milotic water gem | Shiny Milotic | T1 | water gem
+  [Hoenn] 46011 | shiny banette traces of ghost | Shiny Banette | T2 | traces of ghost
+  [Hoenn] 46049 | shiny dusclops traces of ghost | Shiny Dusclops | T3 | traces of ghost
+  [Hoenn] 46030 | shiny chimecho future orb | Shiny Chimecho | T2 | future orb
+  [Hoenn] 46070 | shiny glalie snowball | Shiny Glalie | T1 | snowball
+  [Hoenn] 46180 | shiny sealeo water gem | Shiny Sealeo | T3 | water gem
+  [Hoenn] 46215 | shiny walrein water gem | Shiny Walrein | T1 | water gem
+  [Hoenn] 46087 | shiny huntail water gem | Shiny Huntail | T2 | water gem
+  [Hoenn] 46182 | shiny shelgon future orb | Shiny Shelgon | T3 | future orb
+  [Hoenn] 46174 | shiny salamence straw | Shiny Salamence | T1 | straw
+  [Hoenn] 46129 | shiny metang future orb | Shiny Metang | T3 | future orb
+  [Hoenn] 46128 | shiny metagross future orb | Shiny Metagross | T1 | future orb
+  [Sinnoh+] 46077 | shiny grotle seed | Shiny Grotle | T3 | seed
+  [Sinnoh+] 46201 | shiny torterra bag of pollem | Shiny Torterra | T1 | bag of pollem
+  [Sinnoh+] 46134 | shiny monferno kick machine | Shiny Monferno | T3 | kick machine
+  [Sinnoh+] 46088 | shiny infernape kick machine | Shiny Infernape | T2 | kick machine
+  [Sinnoh+] 46160 | shiny prinplup water gem | Shiny Prinplup | T3 | water gem
+  [Sinnoh+] 46054 | shiny empoleon water pendant | Shiny Empoleon | T2 | water pendant
+  [Sinnoh+] 46017 | shiny bibarel water gem | Shiny Bibarel | T2 | water gem
+  [Sinnoh+] 46098 | shiny kricketune pot of moss bug | Shiny Kricketune | T2 | pot of moss bug
+  [Sinnoh+] 46110 | shiny luxio electric box | Shiny Luxio | T3 | electric box
+  [Sinnoh+] 46111 | shiny luxray screw | Shiny Luxray | T2 | screw
+  [Sinnoh+] 46173 | shiny roserade leaves | Shiny Roserade | T2 | leaves
+  [Sinnoh+] 46167 | shiny rampardos sandbag | Shiny Rampardos | T1 | sandbag
+  [Sinnoh+] 46012 | shiny bastiodon piece of steel | Shiny Bastiodon | T2 | piece of steel
+  [Sinnoh+] 46223 | shiny wormadam pot of moss bug | Shiny Wormadam | T3 | pot of moss bug
+  [Sinnoh+] 46135 | shiny mothim pot of moss bug | Shiny Mothim | T2 | pot of moss bug
+  [Sinnoh+] 46062 | shiny floatzel water pendant | Shiny Floatzel | T2 | water pendant
+  [Sinnoh+] 46029 | shiny cherrim leaves | Shiny Cherrim | T2 | leaves
+  [Sinnoh+] 46068 | shiny gastrodon sandbag | Shiny Gastrodon | T1 | sandbag
+  [Sinnoh+] 46004 | shiny ambipom comb | Shiny Ambipom | T2 | comb
+  [Sinnoh+] 46047 | shiny drifblim traces of ghost | Shiny Drifblim | T1 | traces of ghost
+  [Sinnoh+] 46105 | shiny lopunny comb | Shiny Lopunny | T2 | comb
+  [Sinnoh+] 46133 | shiny mismagius traces of ghost | Shiny Mismagius | T2 | traces of ghost
+  [Sinnoh+] 46085 | shiny honchkrow traces of ghost | Shiny Honchkrow | T1 | traces of ghost
+  [Sinnoh+] 46163 | shiny purugly comb | Shiny Purugly | T2 | comb
+  [Sinnoh+] 46185 | shiny skuntank bottle of poison | Shiny Skuntank | T1 | bottle of poison
+  [Sinnoh+] 46021 | shiny bronzong piece of steel | Shiny Bronzong | T2 | piece of steel
+  [Sinnoh+] 46065 | shiny gabite dragon tooth | Shiny Gabite | T3 | dragon tooth
+  [Sinnoh+] 46066 | shiny garchomp dragon tooth | Shiny Garchomp | T1 | dragon tooth
+  [Sinnoh+] 46107 | shiny lucario punch machine | Shiny Lucario | T2 | punch machine
+  [Sinnoh+] 46083 | shiny hippowdon sandbag | Shiny Hippowdon | T1 | sandbag
+  [Sinnoh+] 46046 | shiny drapion dark gem | Shiny Drapion | T2 | dark gem
+  [Sinnoh+] 46202 | shiny toxicroak bottle of poison | Shiny Toxicroak | T2 | bottle of poison
+  [Sinnoh+] 46109 | shiny lumineon water pendant | Shiny Lumineon | T2 | water pendant
+  [Sinnoh+] 46001 | shiny abomasnow seed | Shiny Abomasnow | T2 | seed
+  [Sinnoh+] 46217 | shiny weavile ice orb | Shiny Weavile | T2 | ice orb
+  [Sinnoh+] 46118 | shiny magnezone piece of steel | Shiny Magnezone | T2 | piece of steel
+  [Sinnoh+] 46102 | shiny lickilicky comb | Shiny Lickilicky | T1 | comb
+  [Sinnoh+] 46171 | shiny rhyperior sandbag | Shiny Rhyperior | T1 | sandbag
+  [Sinnoh+] 46197 | shiny tangrowth seed | Shiny Tangrowth | T1 | seed
+  [Sinnoh+] 46052 | shiny electivire screw | Shiny Electivire | T2 | screw
+  [Sinnoh+] 46116 | shiny magmortar pot of lava | Shiny Magmortar | T2 | pot of lava
+  [Sinnoh+] 46199 | shiny togekiss feather | Shiny Togekiss | T2 | feather
+  [Sinnoh+] 46119 | shiny mamoswine sandbag | Shiny Mamoswine | T1 | sandbag
+  [Sinnoh+] 46158 | shiny porygon-z future orb | Shiny Porygon-Z | T2 | future orb
+  [Sinnoh+] 46161 | shiny probopass piece of steel | Shiny Probopass | T2 | piece of steel
+  [Sinnoh+] 46050 | shiny dusknoir traces of ghost | Shiny Dusknoir | T2 | traces of ghost
