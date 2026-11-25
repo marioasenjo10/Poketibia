@@ -8075,15 +8075,15 @@
 		<monster name="Geodude" x="11" y="14" z="7" spawntime="60" />
 		<monster name="Gloom" x="-9" y="17" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-11" y="21" z="7" spawntime="60" />
-		<monster name="Oddish" x="-9" y="24" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-12" y="25" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-9" y="24" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-12" y="25" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-10" y="25" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-19" y="26" z="7" spawntime="60" />
 		<monster name="Gloom" x="-16" y="26" z="7" spawntime="60" />
 		<monster name="Gloom" x="-24" y="27" z="7" spawntime="60" />
 		<monster name="Geodude" x="7" y="27" z="7" spawntime="60" />
 		<monster name="Oddish" x="-15" y="28" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-27" y="30" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-27" y="30" z="7" spawntime="60" />
 		<monster name="Gloom" x="-18" y="30" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="2941" centery="833" centerz="7" radius="1">
@@ -8909,22 +8909,22 @@
 	</spawn>
 	<spawn centerx="888" centery="880" centerz="7" radius="30">
 		<monster name="Geodude" x="-25" y="-10" z="7" spawntime="60" />
-		<monster name="Oddish" x="0" y="-6" z="7" spawntime="60" />
+		<monster name="Clefairy" x="0" y="-6" z="7" spawntime="60" />
 		<monster name="Caterpie" x="4" y="-6" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="4" y="-5" z="7" spawntime="60" />
 		<monster name="Caterpie" x="4" y="-3" z="7" spawntime="60" />
 		<monster name="Geodude" x="-25" y="1" z="7" spawntime="60" />
 		<monster name="Caterpie" x="-1" y="3" z="7" spawntime="60" />
 		<monster name="Oddish" x="19" y="4" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="22" y="4" z="7" spawntime="60" />
+		<monster name="Clefairy" x="22" y="4" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="1" y="5" z="7" spawntime="60" />
 		<monster name="Oddish" x="-3" y="8" z="7" spawntime="60" />
 		<monster name="Caterpie" x="21" y="9" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="16" y="10" z="7" spawntime="60" />
 		<monster name="Furret" x="17" y="10" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-5" y="11" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-5" y="11" z="7" spawntime="60" />
 		<monster name="Rattata" x="8" y="11" z="7" spawntime="60" />
-		<monster name="Oddish" x="21" y="11" z="7" spawntime="60" />
+		<monster name="Clefairy" x="21" y="11" z="7" spawntime="60" />
 		<monster name="Caterpie" x="28" y="11" z="7" spawntime="60" />
 		<monster name="Oddish" x="7" y="13" z="7" spawntime="60" />
 		<monster name="Rattata" x="12" y="14" z="7" spawntime="60" />
@@ -8935,8 +8935,8 @@
 		<monster name="Bellsprout" x="-13" y="20" z="7" spawntime="60" />
 		<monster name="Rattata" x="-2" y="22" z="7" spawntime="60" />
 		<monster name="Rattata" x="2" y="22" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="9" y="22" z="7" spawntime="60" />
-		<monster name="Oddish" x="19" y="22" z="7" spawntime="60" />
+		<monster name="Clefairy" x="9" y="22" z="7" spawntime="60" />
+		<monster name="Clefairy" x="19" y="22" z="7" spawntime="60" />
 		<monster name="Gloom" x="4" y="23" z="7" spawntime="60" />
 		<monster name="Furret" x="-26" y="24" z="7" spawntime="60" />
 		<monster name="Oddish" x="-13" y="25" z="7" spawntime="60" />
@@ -9071,7 +9071,7 @@
 	</spawn>
 	<spawn centerx="853" centery="888" centerz="7" radius="30">
 		<monster name="Gloom" x="-29" y="-26" z="7" spawntime="60" />
-		<monster name="Oddish" x="-26" y="-25" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-26" y="-25" z="7" spawntime="60" />
 		<monster name="Oddish" x="-16" y="-24" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-29" y="-22" z="7" spawntime="60" />
 		<monster name="Gloom" x="-22" y="-22" z="7" spawntime="60" />
@@ -9081,14 +9081,14 @@
 		<monster name="Geodude" x="-10" y="5" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-2" y="19" z="7" spawntime="60" />
 		<monster name="Oddish" x="2" y="20" z="7" spawntime="60" />
-		<monster name="Oddish" x="-20" y="22" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-19" y="22" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-20" y="22" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-19" y="22" z="7" spawntime="60" />
 		<monster name="Gloom" x="-13" y="22" z="7" spawntime="60" />
 		<monster name="Oddish" x="-28" y="25" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="1" y="26" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-27" y="27" z="7" spawntime="60" />
 		<monster name="Oddish" x="-9" y="27" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="-11" y="28" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-11" y="28" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="3009" centery="888" centerz="7" radius="1">
 		<monster name="Walrein" x="0" y="-1" z="7" spawntime="180" />
@@ -9219,7 +9219,7 @@
 		<npc name="Misty" x="0" y="-2" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="955" centery="899" centerz="7" radius="20">
-		<monster name="Oddish" x="-6" y="-15" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-6" y="-15" z="7" spawntime="60" />
 		<monster name="Oddish" x="-15" y="-10" z="7" spawntime="60" />
 		<monster name="Oddish" x="17" y="6" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="17" y="11" z="7" spawntime="60" />
@@ -9291,10 +9291,10 @@
 		<monster name="Bellsprout" x="-20" y="16" z="7" spawntime="60" />
 		<monster name="Oddish" x="23" y="16" z="7" spawntime="60" />
 		<monster name="Sentret" x="3" y="19" z="7" spawntime="60" />
-		<monster name="Oddish" x="10" y="19" z="7" spawntime="60" />
+		<monster name="Clefairy" x="10" y="19" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-6" y="20" z="7" spawntime="60" />
 		<monster name="Sentret" x="23" y="21" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="11" y="22" z="7" spawntime="60" />
+		<monster name="Clefairy" x="11" y="22" z="7" spawntime="60" />
 		<monster name="Caterpie" x="18" y="22" z="7" spawntime="60" />
 		<monster name="Oddish" x="1" y="25" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="6" y="25" z="7" spawntime="60" />
@@ -9364,10 +9364,10 @@
 		<monster name="Caterpie" x="14" y="-14" z="7" spawntime="60" />
 		<monster name="Caterpie" x="16" y="-10" z="7" spawntime="60" />
 		<monster name="Gloom" x="12" y="-6" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="19" y="-4" z="7" spawntime="60" />
+		<monster name="Clefairy" x="19" y="-4" z="7" spawntime="60" />
 		<monster name="Caterpie" x="16" y="-3" z="7" spawntime="60" />
 		<monster name="Oddish" x="14" y="0" z="7" spawntime="60" />
-		<monster name="Oddish" x="23" y="0" z="7" spawntime="60" />
+		<monster name="Clefairy" x="23" y="0" z="7" spawntime="60" />
 		<monster name="Paras" x="9" y="3" z="7" spawntime="60" />
 		<monster name="Paras" x="13" y="3" z="7" spawntime="60" />
 		<monster name="Gloom" x="1" y="5" z="7" spawntime="60" />
@@ -9442,7 +9442,7 @@
 		<monster name="Marowak" x="-11" y="16" z="7" spawntime="60" />
 		<monster name="Marowak" x="-6" y="16" z="7" spawntime="60" />
 		<monster name="Marowak" x="-3" y="16" z="7" spawntime="60" />
-		<monster name="Bellsprout" x="18" y="16" z="7" spawntime="60" />
+		<monster name="Clefairy" x="18" y="16" z="7" spawntime="60" />
 		<monster name="Marowak" x="-13" y="17" z="7" spawntime="60" />
 		<monster name="Marowak" x="-1" y="17" z="7" spawntime="60" />
 		<monster name="Marowak" x="-13" y="19" z="7" spawntime="60" />
@@ -9519,7 +9519,7 @@
 		<monster name="Venusaur" x="2" y="-1" z="7" spawntime="180" />
 	</spawn>
 	<spawn centerx="771" centery="919" centerz="7" radius="30">
-		<monster name="Oddish" x="-10" y="-8" z="7" spawntime="60" />
+		<monster name="Clefairy" x="-10" y="-8" z="7" spawntime="60" />
 		<monster name="Bellsprout" x="-10" y="-6" z="7" spawntime="60" />
 		<monster name="Sentret" x="-11" y="-2" z="7" spawntime="60" />
 		<monster name="Oddish" x="-26" y="14" z="7" spawntime="60" />
