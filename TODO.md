@@ -40,6 +40,14 @@ Lo pendiente, por bloques. Lo que ya está hecho y falta probar está en [tools/
   que encaje con el Pokémon (el del Shiny Charizard, un ala de Charizard negra) y un nombre mejor.
   Herramientas: `tools/pokeassets/SpriteSwap.cs` (cambia el dibujo de un objeto) e `IconCut.cs`.
 
+## Runas: dibujos propios
+
+- [ ] **Rediseñar las runas** para que no sean las de Tibia: ahora usan los dibujos de great fireball (Ataque),
+  magic wall (Defensa), intense healing (Vida), holy missile (Experiencia) y sudden death (Crítica), además de la
+  runa en blanco (2260) y la amatista pequeña como fragmento rúnico (2150). Un dibujo propio por tipo, que se
+  distinga de un vistazo (y si se puede, que el tier se note). Ids en `lib/core/runes.lua`; se cambian con
+  `tools/pokeassets/SpriteSwap.cs`.
+
 ## Mapa y spawns
 
 - [ ] Kanto, pisos altos: siguen los Johto fuertes (≈90 Steelix, Tyranitar…). Decidir si se quitan.
