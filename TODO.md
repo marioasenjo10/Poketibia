@@ -47,6 +47,11 @@ Lo pendiente, por bloques. Lo que ya está hecho y falta probar está en [tools/
   runa en blanco (2260) y la amatista pequeña como fragmento rúnico (2150). Un dibujo propio por tipo, que se
   distinga de un vistazo (y si se puede, que el tier se note). Ids en `lib/core/runes.lua`; se cambian con
   `tools/pokeassets/SpriteSwap.cs`.
+- [ ] **Fragmentos de varios materiales** en lugar de uno solo (ahora: amatista pequeña, 2150). Idea: el diamante y
+  otros materiales para construir runas. Propuesta a confirmar: cada material decide el tipo de runa en vez del azar
+  (rubí → Ataque, zafiro → Defensa, esmeralda → Vida, topacio → Experiencia, amatista → Crítica) y el diamante sirve
+  para subir de tier o para fabricar runas de tier alto. Las gemas pequeñas de Tibia (2145 diamante, 2146 zafiro,
+  2147 rubí, 2149 esmeralda, 2150 amatista) son apilables y no se usan; también necesitarían dibujo propio.
 
 ## Mapa y spawns
 
