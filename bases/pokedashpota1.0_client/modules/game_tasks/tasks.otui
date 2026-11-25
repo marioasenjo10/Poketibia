@@ -9,6 +9,23 @@ TaskKindChip < Label
   text-align: center
   phantom: true
 
+TaskMapButton < UIButton
+  size: 112 22
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  image-color: #1e88e5
+  font: poppins-semibold-11px
+  color: #ffffff
+  text: Ver en el mapa
+  text-align: center
+  focusable: false
+
+  $hover:
+    image-color: #42a5f5
+
+  $pressed:
+    image-color: #1565c0
+
 TaskProgress < UIWidget
   height: 8
   background-color: #2c3039
@@ -111,14 +128,22 @@ TaskCard < UIWidget
   Label
     id: reward
     anchors.left: parent.left
-    anchors.right: parent.right
+    anchors.right: mapButton.left
     anchors.bottom: progress.top
     margin-left: 12
-    margin-right: 12
+    margin-right: 8
     margin-bottom: 6
     font: poppins-12px
     color: #f2c14e
     phantom: true
+
+  // solo en la tarea activa si el servidor manda puntos: abre el mapa grande con las marcas
+  TaskMapButton
+    id: mapButton
+    anchors.right: parent.right
+    anchors.verticalCenter: reward.verticalCenter
+    margin-right: 12
+    visible: false
 
 // seguimiento de la tarea activa, arriba a la izquierda del mapa
 TaskTracker < UIWidget

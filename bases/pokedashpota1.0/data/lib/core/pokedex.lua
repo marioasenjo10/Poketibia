@@ -242,6 +242,12 @@ local function getPokedexLocations(name)
 	return table.concat(parts, ";"), fromBase, #points
 end
 
+-- zonas donde aparece un Pokemon salvaje, "x:y:z:cantidad:ciudad;..." (lo usan las tareas)
+function pokedexGetLocationString(name)
+	local ok, locations = pcall(getPokedexLocations, name)
+	return ok and locations or ""
+end
+
 -- ===================== Mensajes =====================
 
 local function dexNumbers()

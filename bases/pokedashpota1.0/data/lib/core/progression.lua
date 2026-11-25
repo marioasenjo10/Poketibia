@@ -37,6 +37,7 @@ progressionStarterItems = {
 -- Tope de nivel: hasta tener la medalla no se pasa de maxLevel
 progressionLevelCaps = {
 	{badge = "boulderBadge", maxLevel = 20, medal = "Medalla Roca", leader = "Brock", city = "Ciudad Plateada"},
+	{badge = "cascadeBadge", maxLevel = 30, medal = "Medalla Cascada", leader = "Misty", city = "Ciudad Celeste"},
 }
 
 -- Tareas de historia, en orden. kind: talk | reach | catch | defeat | badge
@@ -45,18 +46,23 @@ progressionLevelCaps = {
 --   reach: town = parte del nombre de la ciudad (minusculas)
 --   badge: badge = clave en quests (newfunctions.lua)
 -- reward: exp, money (banco) e items {id, count}
+-- map (opcional): puntos para el boton "Ver en el mapa" del panel de Tareas, {{x, y, z, texto}}.
+--   Sin map: catch/defeat con species usan los spawns de la Pokedex y reach la ciudad.
+-- IMPORTANTE: las tareas nuevas van siempre al FINAL (el indice es la clave guardada en storage).
 progressionTasks = {
 	{
 		id = "oak_lab", kind = "talk", giver = "Profesor Oak",
 		title = "El laboratorio del Profesor Oak",
 		text = "Habla con el Profesor Oak en su laboratorio de Pueblo Paleta. Tiene algo importante para ti.",
 		rewardText = "Tu primer Pokemon, 100 Poke Balls y 20 pociones",
+		map = {{720, 1193, 7, "Profesor Oak"}},
 	},
 	{
 		id = "julie_meet", kind = "talk", npc = "Julie", giver = "Profesor Oak",
 		title = "Conoce a Julie",
 		text = "Julie, del club de capturadores, esta en el Centro Pokemon de Pueblo Paleta. Ella te ensenara a capturar Pokemon. Ve a hablar con ella (di hi).",
 		reward = {exp = 500},
+		map = {{690, 1190, 7, "Julie"}},
 	},
 	{
 		id = "julie_rattata", kind = "catch", species = {"Rattata"}, count = 2, giver = "Julie, del club de capturadores",
@@ -91,9 +97,9 @@ progressionTasks = {
 		reward = {exp = 5000, money = 500},
 	},
 	{
-		id = "forest_defeat", kind = "defeat", count = 25, giver = "Guardabosques del Bosque Verde",
+		id = "forest_defeat", kind = "defeat", count = 15, giver = "Guardabosques del Bosque Verde",
 		title = "Limpia el Bosque Verde",
-		text = "Los Pokemon salvajes del Bosque Verde estan muy alterados. Derrota a 25 en la Ruta 2 o en el bosque, camino de Ciudad Plateada.",
+		text = "Los Pokemon salvajes del Bosque Verde estan muy alterados. Derrota a 15 en la Ruta 2 o en el bosque, camino de Ciudad Plateada.",
 		reward = {exp = 10000, money = 800, items = {{id = 27642, count = 10}}},
 	},
 	{
@@ -105,7 +111,7 @@ progressionTasks = {
 	{
 		id = "pewter_geodude", kind = "defeat", species = {"Geodude"}, count = 15, giver = "Brock, Lider de Gimnasio",
 		title = "Entrenamiento de roca",
-		text = "Antes de retarme, demuestra que sabes luchar contra el tipo Roca: derrota 15 Geodude en los alrededores de Ciudad Plateada.",
+		text = "Antes de retarme, demuestra que sabes luchar contra el tipo Roca: derrota 15 Geodude en los alrededores de Ciudad Plateada. Pulsa Ver en el mapa para saber donde estan.",
 		reward = {exp = 14000, money = 1000},
 	},
 	{
@@ -113,9 +119,130 @@ progressionTasks = {
 		title = "La Medalla Roca",
 		text = "Desafia a Brock en el Gimnasio de Ciudad Plateada. Sus Pokemon son Geodude y Onix. Recomendado: nivel 18-20 y un Pokemon de tipo Agua, Planta o Lucha.",
 		reward = {exp = 0, money = 3000},
-		rewardText = "Medalla Roca y sin tope de nivel 20",
+		rewardText = "Medalla Roca, sin tope de nivel 20 y +5% de dano y defensa a tus Pokemon de tipo Roca",
+		map = {{699, 823, 7, "Brock, Gimnasio de Ciudad Plateada"}},
+	},
+	-- ===== Ruta a Ciudad Celeste (Misty) =====
+	{
+		id = "mtmoon_clefairy", kind = "catch", species = {"Clefairy"}, count = 1, giver = "Profesor Oak",
+		title = "La leyenda de Mt. Moon",
+		text = "Dicen que en Mt. Moon, al este de Ciudad Plateada, viven unos Pokemon que llegaron de la luna. Captura un Clefairy. Pulsa Ver en el mapa para saber donde buscar.",
+		reward = {exp = 20000, money = 1500, items = {{id = 26659, count = 40}}},
+	},
+	{
+		id = "go_cerulean", kind = "reach", town = "cerulean", giver = "Profesor Oak",
+		title = "Rumbo a Ciudad Celeste",
+		text = "Cruza Mt. Moon y sigue por la Ruta 4 hacia el este hasta Ciudad Celeste. Alli te espera Misty, la Lider de Gimnasio.",
+		reward = {exp = 20000, money = 1500, items = {{id = 27642, count = 15}}},
+	},
+	{
+		id = "cerulean_psyduck", kind = "defeat", species = {"Psyduck"}, count = 15, giver = "Misty, Lider de Gimnasio",
+		title = "Entrenamiento de agua",
+		text = "Antes de retarme, demuestra que sabes plantar cara al tipo Agua: derrota 15 Psyduck en los alrededores de Ciudad Celeste. Pulsa Ver en el mapa para saber donde estan.",
+		reward = {exp = 30000, money = 2000},
+	},
+	{
+		id = "misty", kind = "badge", badge = "cascadeBadge", giver = "Misty, Lider de Gimnasio",
+		title = "La Medalla Cascada",
+		text = "Desafia a Misty en el Gimnasio de Ciudad Celeste. Sus Pokemon son Staryu y Starmie. Recomendado: nivel 28-30 y un Pokemon de tipo Planta o Electrico.",
+		reward = {exp = 0, money = 5000},
+		rewardText = "Medalla Cascada, sin tope de nivel 30 y +5% de dano y defensa a tus Pokemon de tipo Agua",
+		map = {{1095, 896, 7, "Misty, Gimnasio de Ciudad Celeste"}},
 	},
 }
+
+-- ===================== Bono de las medallas =====================
+-- Cada medalla da a los Pokemon del jugador de ese tipo +5% de dano y +5% de aguante
+-- (el dano que reciben se divide entre 1.05). Se aplica en creaturescripts/scripts/monsterhealthchange.lua.
+-- Vale para todos los jugadores con la medalla, sigan o no la historia nueva.
+badgeBonusPercent = 0.05
+badgeBonuses = {
+	{badge = "boulderBadge", type = "rock", typeName = "Roca", medal = "Medalla Roca"},
+	{badge = "cascadeBadge", type = "water", typeName = "Agua", medal = "Medalla Cascada"},
+	{badge = "thunderBadge", type = "electric", typeName = "Electrico", medal = "Medalla Trueno"},
+	{badge = "rainbowBadge", type = "grass", typeName = "Planta", medal = "Medalla Arcoiris"},
+	{badge = "soulBadge", type = "poison", typeName = "Veneno", medal = "Medalla Alma"},
+	{badge = "marshBadge", type = "psychic", typeName = "Psiquico", medal = "Medalla Pantano"},
+	{badge = "volcanoBadge", type = "fire", typeName = "Fuego", medal = "Medalla Volcan"},
+	{badge = "earthBadge", type = "ground", typeName = "Tierra", medal = "Medalla Tierra"},
+	{badge = "zephyrBadge", type = "flying", typeName = "Volador", medal = "Medalla Cefiro"},
+	{badge = "hiveBadge", type = "bug", typeName = "Bicho", medal = "Medalla Colmena"},
+	{badge = "plainBadge", type = "normal", typeName = "Normal", medal = "Medalla Llanura"},
+	{badge = "fogBadge", type = "ghost", typeName = "Fantasma", medal = "Medalla Niebla"},
+	{badge = "stormBadge", type = "fighting", typeName = "Lucha", medal = "Medalla Tormenta"},
+	{badge = "mineralBadge", type = "steel", typeName = "Acero", medal = "Medalla Mineral"},
+	{badge = "glacierBadge", type = "ice", typeName = "Hielo", medal = "Medalla Glaciar"},
+	{badge = "risingBadge", type = "dragon", typeName = "Dragon", medal = "Medalla Dragon"},
+}
+
+local function hasBadge(player, badgeKey)
+	local quest = quests and quests[badgeKey]
+	return quest and player:getStorageValue(quest.prizes[1].uid) > 0 or false
+end
+
+function getBadgeBonusByKey(badgeKey)
+	for _, bonus in ipairs(badgeBonuses) do
+		if bonus.badge == badgeKey then
+			return bonus
+		end
+	end
+	return nil
+end
+
+-- fraccion extra (0.05 por medalla) para un Pokemon del jugador con esos tipos
+function getBadgeTypeBonus(player, race1, race2)
+	if not player or not player:isPlayer() then
+		return 0
+	end
+	local total = 0
+	for _, bonus in ipairs(badgeBonuses) do
+		if (bonus.type == race1 or bonus.type == race2) and hasBadge(player, bonus.badge) then
+			total = total + badgeBonusPercent
+		end
+	end
+	return total
+end
+
+-- ventana con las medallas del jugador y sus bonos (talkaction !medallas)
+function Player.sendBadgeBonuses(self)
+	local percent = math.floor(badgeBonusPercent * 100 + 0.5)
+	local lines = {}
+	for _, bonus in ipairs(badgeBonuses) do
+		if hasBadge(self, bonus.badge) then
+			lines[#lines + 1] = "- " .. bonus.medal .. ": +" .. percent .. "% de dano y defensa a tus Pokemon de tipo " .. bonus.typeName
+		end
+	end
+	local message
+	if #lines == 0 then
+		message = "Aun no tienes medallas.\n\nCada Lider de Gimnasio que derrotes te dara una medalla, y cada medalla hace " ..
+			"mas fuertes a tus Pokemon de su tipo (+" .. percent .. "% de dano y defensa). La primera es la de Brock, en Ciudad Plateada."
+	else
+		message = "Tus medallas:\n\n" .. table.concat(lines, "\n") ..
+			"\n\nLos bonos se suman: un Pokemon de dos tipos puede llevar el de dos medallas."
+	end
+	local window = ModalWindow(6120, "Medallas", message)
+	window:addButton(1, "Cerrar")
+	window:setDefaultEnterButton(1)
+	window:setDefaultEscapeButton(1)
+	window:sendToPlayer(self)
+end
+
+-- ventana al ganar una medalla (la llama progressionOnBadge, tambien fuera de la historia)
+local function announceBadgeBonus(player, badgeKey)
+	local bonus = getBadgeBonusByKey(badgeKey)
+	if not bonus then
+		return
+	end
+	local percent = math.floor(badgeBonusPercent * 100 + 0.5)
+	local window = ModalWindow(6121, bonus.medal .. "!",
+		"Has conseguido la " .. bonus.medal .. "!\n\n" ..
+		"A partir de ahora tus Pokemon de tipo " .. bonus.typeName .. " hacen un " .. percent .. "% mas de dano " ..
+		"y aguantan un " .. percent .. "% mas.\n\nDi !medallas para ver todas tus medallas y sus bonos.")
+	window:addButton(1, "Genial!")
+	window:setDefaultEnterButton(1)
+	window:setDefaultEscapeButton(1)
+	window:sendToPlayer(player)
+end
 
 -- dano extra de los Pokemon de gimnasio (id de la criatura -> multiplicador)
 gymSummonDamage = gymSummonDamage or {}
@@ -189,6 +316,41 @@ local function findTown(key)
 	return nil
 end
 
+local checkTaskDone
+
+-- puntos del boton "Ver en el mapa": "x:y:z:texto;..." y el nombre del Pokemon para el icono
+local function mapText(text)
+	return (tostring(text or ""):gsub("[|:;\n\r]", " "))
+end
+
+function taskMapPoints(task)
+	local parts = {}
+	local icon = ""
+	if task.map then
+		for _, p in ipairs(task.map) do
+			parts[#parts + 1] = p[1] .. ":" .. p[2] .. ":" .. p[3] .. ":" .. mapText(p[4] or task.title)
+		end
+	elseif (task.kind == "catch" or task.kind == "defeat") and task.species and pokedexGetLocationString then
+		for _, species in ipairs(task.species) do
+			for zone in pokedexGetLocationString(species):gmatch("[^;]+") do
+				local x, y, z, count, town = zone:match("^(%-?%d+):(%-?%d+):(%-?%d+):(%d+):(.*)$")
+				if x then
+					parts[#parts + 1] = x .. ":" .. y .. ":" .. z .. ":" ..
+						mapText(species .. ": " .. count .. (town ~= "" and (" cerca de " .. town) or ""))
+				end
+			end
+		end
+		icon = task.species[1]
+	elseif task.kind == "reach" then
+		local town = findTown(task.town)
+		if town then
+			local pos = town:getTemplePosition()
+			parts[#parts + 1] = pos.x .. ":" .. pos.y .. ":" .. pos.z .. ":" .. mapText(town:getName())
+		end
+	end
+	return table.concat(parts, ";"), mapText(icon)
+end
+
 -- ===================== Envio al cliente =====================
 -- Formato: primera linea "cap|nivel|texto" (nivel 0 = sin tope), despues una tarea por linea:
 -- indice|estado(1 activa, 2 hecha)|tipo|quien|titulo|texto|progreso|total|recompensa
@@ -203,6 +365,23 @@ function Player.sendTasks(self)
 		progressionActivateNext(self, activeIndex)
 		return
 	end
+	-- medalla o ciudad conseguida por otro camino (GM, antes de existir la tarea...)
+	if activeIndex and (activeTask.kind == "badge" or activeTask.kind == "reach") and checkTaskDone(self, activeIndex) then
+		return
+	end
+	-- sin tarea activa pero con tareas nuevas despues de la ultima hecha (se anaden al final)
+	if not activeIndex then
+		local lastDone = 0
+		for index = 1, #progressionTasks do
+			if taskState(self, index) == 2 then
+				lastDone = index
+			end
+		end
+		if lastDone > 0 and lastDone < #progressionTasks then
+			progressionActivateNext(self, lastDone)
+			return
+		end
+	end
 	local lines = {}
 	local cap = progressionGetLevelCap(self)
 	if cap then
@@ -215,15 +394,18 @@ function Player.sendTasks(self)
 		if (state == 1 or state == 2) and not task.disabled then
 			local total = task.count or 1
 			local progress = state == 2 and total or taskProgress(self, index)
+			local mapPoints, mapIcon = "", ""
+			if state == 1 then
+				mapPoints, mapIcon = taskMapPoints(task)
+			end
 			lines[#lines + 1] = table.concat({index, state, task.kind, clean(task.giver), clean(task.title),
-				clean(task.text), progress, total, clean(rewardText(task))}, "|")
+				clean(task.text), progress, total, clean(rewardText(task)), mapPoints, mapIcon}, "|")
 		end
 	end
 	self:sendExtendedOpcode(OPCODE_TASKS, table.concat(lines, "\n"))
 end
 
 -- ===================== Estados =====================
-local checkTaskDone
 
 local function activateTask(player, index)
 	local task = progressionTasks[index]
@@ -459,6 +641,7 @@ function progressionOnTownDiscovered(player)
 end
 
 function progressionOnBadge(player, badgeKey)
+	announceBadgeBonus(player, badgeKey)
 	if not player:isOnProgression() then
 		return
 	end

@@ -1,7 +1,8 @@
 -- Panel de Tareas (sustituye al quest log) y seguimiento de la tarea activa sobre el mapa.
 -- El servidor manda todas las tareas por el opcode 90 (data/lib/core/progression.lua):
 --   primera linea: cap|nivel|texto (nivel 0 = sin tope)
---   resto: indice|estado(1 activa, 2 hecha)|tipo|quien|titulo|texto|progreso|total|recompensa
+--   resto: indice|estado(1 activa, 2 hecha)|tipo|quien|titulo|texto|progreso|total|recompensa|mapa|icono
+--   mapa (opcional): "x:y:z:texto;..." puntos para el boton "Ver en el mapa"; icono: Pokemon del marcador
 -- El cliente solo muestra: no tiene que pedir nada al servidor.
 
 local OPCODE_TASKS = 90
@@ -49,6 +50,31 @@ local function split(text, sep)
     parts[#parts + 1] = part
   end
   return parts
+end
+
+local function parseMapPoints(text)
+  local points = {}
+  for part in (text or ''):gmatch('[^;]+') do
+    local x, y, z, label = part:match('^(%-?%d+):(%-?%d+):(%-?%d+):(.*)$')
+    if x then
+      points[#points + 1] = {x = tonumber(x), y = tonumber(y), z = tonumber(z), text = label}
+    end
+  end
+  return points
+end
+
+local function mapIconFor(name)
+  if not name or name == '' then return nil end
+  local path = '/game_pokemonbar/bar_icon/' .. name:lower() .. '.png'
+  if g_resources.fileExists(path) then return path end
+  return nil
+end
+
+function showTaskOnMap(task)
+  local minimap = modules.game_minimap
+  if not task or #task.mapPoints == 0 or not minimap or not minimap.showPositions then return end
+  hide()
+  minimap.showPositions(task.mapPoints, task.title, mapIconFor(task.mapIcon))
 end
 
 -- ===================== Seguimiento sobre el mapa =====================
@@ -117,6 +143,9 @@ local function render()
     card:getChildById('text'):setText(task.text)
     card:getChildById('reward'):setText(task.reward ~= '' and ('Recompensa: ' .. task.reward) or '')
     card:getChildById('progressLabel'):setText(task.progress .. '/' .. task.total)
+    local mapButton = card:getChildById('mapButton')
+    mapButton:setVisible(not done and #task.mapPoints > 0)
+    mapButton.onClick = function() showTaskOnMap(task) end
     card:setBorderColor(done and '#2c3039' or kind.color)
     card:setOpacity(done and 0.7 or 1.0)
     -- el ancho de la barra se conoce despues del layout
@@ -148,6 +177,7 @@ function onTasksOpcode(protocol, opcode, buffer)
       tasks[#tasks + 1] = {
         index = tonumber(f[1]) or 0, state = tonumber(f[2]) or 1, kind = f[3], giver = f[4],
         title = f[5], text = f[6], progress = tonumber(f[7]) or 0, total = tonumber(f[8]) or 1, reward = f[9],
+        mapPoints = parseMapPoints(f[10]), mapIcon = f[11] or '',
       }
     end
   end

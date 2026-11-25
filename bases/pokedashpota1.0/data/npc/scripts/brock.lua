@@ -6,7 +6,8 @@ local storage = quests.boulderBadge.prizes[1].uid
 local pokemons =
 {
 	[1] = {name = "Geodude", level = 20, hp = 3, damage = 1.5},
-	[2] = {name = "Onix", level = 20, hp = 3, damage = 1.5},
+	-- Onix algo mas duro que Geodude: es el Pokemon fuerte de Brock
+	[2] = {name = "Onix", level = 22, hp = 4, damage = 1.75},
 }
 
 local keywordHandler = KeywordHandler:new()

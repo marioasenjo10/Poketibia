@@ -143,6 +143,21 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		localDamageMultiplier = localDamageMultiplier * gymSummonDamage[attacker:getId()]
 	end
 
+	-- medallas: +5% de dano a los Pokemon del jugador de su tipo y +5% de aguante (lib/core/progression.lua)
+	if getBadgeTypeBonus then
+		if attacker:isPokemon() then
+			local attackerType = MonsterType(attacker:getName())
+			if attackerType then
+				localDamageMultiplier = localDamageMultiplier *
+					(1 + getBadgeTypeBonus(attacker:getMaster(), attackerType:getRaceName(), attackerType:getRace2Name()))
+			end
+		end
+		if creature:isPokemon() then
+			localDamageMultiplier = localDamageMultiplier /
+				(1 + getBadgeTypeBonus(creature:getMaster(), defenderRace, defenderRace2))
+		end
+	end
+
 	if math.random(1, 100) <= criticalProbability then
 		localDamageMultiplier = localDamageMultiplier * 1.5
 		Game.sendAnimatedText(creature:getPosition(), "CRITICAL", TEXTCOLOR_RED)

@@ -56,6 +56,7 @@ Los marcados con (?) no están probados todavía.
 | Comando | Qué hace |
 |---|---|
 | `!commands` / `!comandos` | Lista de comandos en el juego |
+| `!medallas` / `!badges` | Tus medallas y el bono que da cada una (+5% de daño y defensa a tus Pokémon de su tipo) |
 | `m1` ... `m12` | Ataques de tu Pokémon (también desde la barra) |
 | `!p` | Usar tu Pokémon (?) |
 | `!teleport ciudad` | Teletransporte con tu Pokémon (?) |
