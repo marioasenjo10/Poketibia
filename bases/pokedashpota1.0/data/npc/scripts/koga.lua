@@ -1,4 +1,6 @@
 local storage = quests.soulBadge.prizes[1].uid
+-- revancha amistosa: si ya tienes la medalla se puede volver a luchar, sin premio
+local rematch = {}
 -- Sexto gimnasio (medalla Alma). Pensado para un entrenador de nivel ~70:
 -- con un Pokemon de tipo Psiquico o Tierra se gana justo.
 -- level: nivel de fuerza (misma curva que el entrenador) | hp: multiplicador de vida
@@ -37,6 +39,17 @@ local function creatureSayCallback(cid, type, msg)
 	if msgcontains(msg, 'bye') or msgcontains(msg, 'adios') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') then
 		selfSay('Vuelve cuando estes preparado.', cid)
 		npcHandler:releaseFocus(cid)
+	elseif msgcontains(msg, 'revancha') then
+		local player = Player(cid)
+		if player and player:getStorageValue(storage) > 0 then
+			selfSay('Revancha amistosa, sin premio. Veamos si sigues en forma!', cid)
+			rematch[cid] = true
+			npcHandler.topic[cid] = 1
+			npcHandler:setMaxIdleTime(600)
+			player:setDuelWithNpc()
+		elseif player then
+			selfSay('Primero tienes que ganarme de verdad. Quieres desafiarme? {si}', cid)
+		end
 	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'si') or msgcontains(msg, 'sim') then
 		local player = Player(cid)
 		if player then
@@ -47,8 +60,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:setMaxIdleTime(600)
 				player:setDuelWithNpc()
 			else
-				selfSay('Ya me derrotaste. Blaine te espera en Isla Canela, pero solo se llega por mar.', cid)
-				npcHandler:releaseFocus(cid)
+				selfSay('Ya me derrotaste. Blaine te espera en Isla Canela, pero solo se llega por mar. Si quieres, una {revancha} amistosa, sin premio.', cid)
 			end
 		end
 	end
@@ -56,6 +68,7 @@ local function creatureSayCallback(cid, type, msg)
 end
 
 local function creatureOnReleaseFocusCallback(cid)
+	rematch[cid] = nil
 	local npc = Npc()
 	if hasSummons(npc) then
 		local monster = npc:getSummons()[1]
@@ -115,10 +128,15 @@ local function creatureOnThinkCallback()
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()
 					else
-						selfSay('Humph! Has demostrado tu valia, ' .. player:getName() .. ". Toma la Medalla Alma.", cid)
-						player:giveQuestPrize(storage)
-						if progressionOnBadge then
-							progressionOnBadge(player, "soulBadge")
+						if rematch[cid] then
+							selfSay('Buen combate, ' .. player:getName() .. '. Sigues siendo muy fuerte.', cid)
+							rematch[cid] = nil
+						else
+							selfSay('Humph! Has demostrado tu valia, ' .. player:getName() .. ". Toma la Medalla Alma.", cid)
+							player:giveQuestPrize(storage)
+							if progressionOnBadge then
+								progressionOnBadge(player, "soulBadge")
+							end
 						end
 						npcHandler:releaseFocus(cid)
 					end

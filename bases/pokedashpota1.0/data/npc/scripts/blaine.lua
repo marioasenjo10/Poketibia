@@ -1,4 +1,6 @@
 local storage = quests.volcanoBadge.prizes[1].uid
+-- revancha amistosa: si ya tienes la medalla se puede volver a luchar, sin premio
+local rematch = {}
 -- Septimo gimnasio (medalla Volcan). Pensado para un entrenador de nivel ~80:
 -- con un Pokemon de tipo Agua, Tierra o Roca se gana justo.
 -- level: nivel de fuerza (misma curva que el entrenador) | hp: multiplicador de vida
@@ -37,6 +39,17 @@ local function creatureSayCallback(cid, type, msg)
 	if msgcontains(msg, 'bye') or msgcontains(msg, 'adios') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') then
 		selfSay('Vuelve cuando estes preparado.', cid)
 		npcHandler:releaseFocus(cid)
+	elseif msgcontains(msg, 'revancha') then
+		local player = Player(cid)
+		if player and player:getStorageValue(storage) > 0 then
+			selfSay('Revancha amistosa, sin premio. Veamos si sigues en forma!', cid)
+			rematch[cid] = true
+			npcHandler.topic[cid] = 1
+			npcHandler:setMaxIdleTime(600)
+			player:setDuelWithNpc()
+		elseif player then
+			selfSay('Primero tienes que ganarme de verdad. Quieres desafiarme? {si}', cid)
+		end
 	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'si') or msgcontains(msg, 'sim') then
 		local player = Player(cid)
 		if player then
@@ -47,8 +60,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:setMaxIdleTime(600)
 				player:setDuelWithNpc()
 			else
-				selfSay('Ya me derrotaste. Dicen que el gimnasio de Ciudad Verde por fin ha abierto. Su Lider es muy misterioso...', cid)
-				npcHandler:releaseFocus(cid)
+				selfSay('Ya me derrotaste. Dicen que el gimnasio de Ciudad Verde por fin ha abierto. Su Lider es muy misterioso... Si quieres, una {revancha} amistosa, sin premio.', cid)
 			end
 		end
 	end
@@ -56,6 +68,7 @@ local function creatureSayCallback(cid, type, msg)
 end
 
 local function creatureOnReleaseFocusCallback(cid)
+	rematch[cid] = nil
 	local npc = Npc()
 	if hasSummons(npc) then
 		local monster = npc:getSummons()[1]
@@ -115,10 +128,15 @@ local function creatureOnThinkCallback()
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()
 					else
-						selfSay('Increible, ' .. player:getName() .. "! Tus Pokemon han dejado a los mios en cenizas. Llevate la Medalla Volcan!", cid)
-						player:giveQuestPrize(storage)
-						if progressionOnBadge then
-							progressionOnBadge(player, "volcanoBadge")
+						if rematch[cid] then
+							selfSay('Buen combate, ' .. player:getName() .. '. Sigues siendo muy fuerte.', cid)
+							rematch[cid] = nil
+						else
+							selfSay('Increible, ' .. player:getName() .. "! Tus Pokemon han dejado a los mios en cenizas. Llevate la Medalla Volcan!", cid)
+							player:giveQuestPrize(storage)
+							if progressionOnBadge then
+								progressionOnBadge(player, "volcanoBadge")
+							end
 						end
 						npcHandler:releaseFocus(cid)
 					end

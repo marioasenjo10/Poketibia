@@ -1,4 +1,6 @@
 local storage = quests.boulderBadge.prizes[1].uid
+-- revancha amistosa: si ya tienes la medalla se puede volver a luchar, sin premio
+local rematch = {}
 -- Primer gimnasio (medalla Roca). Pensado para un entrenador de nivel ~20:
 -- con ventaja de tipo (Agua, Planta, Lucha) se gana justo; Charmander o Pikachu solos pierden.
 -- level: nivel de fuerza (misma curva que el entrenador) | hp: multiplicador de vida
@@ -37,6 +39,17 @@ local function creatureSayCallback(cid, type, msg)
 	if msgcontains(msg, 'bye') or msgcontains(msg, 'adios') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') then
 		selfSay('Vuelve cuando estes preparado.', cid)
 		npcHandler:releaseFocus(cid)
+	elseif msgcontains(msg, 'revancha') then
+		local player = Player(cid)
+		if player and player:getStorageValue(storage) > 0 then
+			selfSay('Revancha amistosa, sin premio. Veamos si sigues en forma!', cid)
+			rematch[cid] = true
+			npcHandler.topic[cid] = 1
+			npcHandler:setMaxIdleTime(600)
+			player:setDuelWithNpc()
+		elseif player then
+			selfSay('Primero tienes que ganarme de verdad. Quieres desafiarme? {si}', cid)
+		end
 	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'si') or msgcontains(msg, 'sim') then
 		local player = Player(cid)
 		if player then
@@ -47,8 +60,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:setMaxIdleTime(600)
 				player:setDuelWithNpc()
 			else
-				selfSay('Ya me derrotaste. Sigue tu camino hacia Ciudad Celeste!', cid)
-				npcHandler:releaseFocus(cid)
+				selfSay('Ya me derrotaste. Sigue tu camino hacia Ciudad Celeste! Si quieres, una {revancha} amistosa, sin premio.', cid)
 			end
 		end
 	end
@@ -56,6 +68,7 @@ local function creatureSayCallback(cid, type, msg)
 end
 
 local function creatureOnReleaseFocusCallback(cid)
+	rematch[cid] = nil
 	local npc = Npc()
 	if hasSummons(npc) then
 		local monster = npc:getSummons()[1]
@@ -115,10 +128,15 @@ local function creatureOnThinkCallback()
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()
 					else
-						selfSay('Te subestime, ' .. player:getName() .. ". Como prueba de tu victoria, toma la Medalla Roca!", cid)
-						player:giveQuestPrize(storage)
-						if progressionOnBadge then
-							progressionOnBadge(player, "boulderBadge")
+						if rematch[cid] then
+							selfSay('Buen combate, ' .. player:getName() .. '. Sigues siendo muy fuerte.', cid)
+							rematch[cid] = nil
+						else
+							selfSay('Te subestime, ' .. player:getName() .. ". Como prueba de tu victoria, toma la Medalla Roca!", cid)
+							player:giveQuestPrize(storage)
+							if progressionOnBadge then
+								progressionOnBadge(player, "boulderBadge")
+							end
 						end
 						npcHandler:releaseFocus(cid)
 					end
