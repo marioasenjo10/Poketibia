@@ -11,6 +11,7 @@ local CATEGORIES = {
   {id = 'balls', text = 'Pok\233 Balls'},
   {id = 'stones', text = 'Piedras'},
   {id = 'potions', text = 'Pociones'},
+  {id = 'runas', text = 'Runas'},
   {id = 'otros', text = 'Otros'},
 }
 
@@ -25,7 +26,7 @@ local COLUMNS = {
     {'Fecha', 508, 80, 'right'}},
 }
 
-local CATEGORY_NAMES = {pokemon = 'Pok\233mon', balls = 'Pok\233 Ball', stones = 'Piedra', potions = 'Poci\243n', otros = 'Otro'}
+local CATEGORY_NAMES = {pokemon = 'Pok\233mon', balls = 'Pok\233 Ball', stones = 'Piedra', potions = 'Poci\243n', runas = 'Runa', otros = 'Otro'}
 
 window = nil
 marketButton = nil

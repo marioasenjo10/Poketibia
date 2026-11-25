@@ -2,6 +2,13 @@
 <actions>
 	<!-- Quests -->
 	<action itemid="1740" script="quests/quests.lua" />
+	<!-- runas de Pokemon (lib/core/runes.lua): se usan sobre una Pokeball -->
+	<action itemid="2304" script="runes/apply.lua" />
+	<action itemid="2293" script="runes/apply.lua" />
+	<action itemid="2265" script="runes/apply.lua" />
+	<action itemid="2295" script="runes/apply.lua" />
+	<action itemid="2268" script="runes/apply.lua" />
+	<action itemid="2260" script="runes/apply.lua" />
 	<action fromid="1747" toid="1749" script="quests/quests.lua" />
 	<action fromid="1353" toid="1355" script="quests/quests.lua" />
 	<action itemid="1407" script="quests/quests.lua" />

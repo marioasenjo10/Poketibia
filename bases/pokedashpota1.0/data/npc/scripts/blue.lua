@@ -85,10 +85,6 @@ local function creatureSayCallback(cid, type, msg)
 		if not player:isOnLeague() then
 			selfSay('No estas participando en la Liga. Habla con el portero de la entrada.', cid)
 			npcHandler:releaseFocus(cid)
-		elseif isChampion and player:getStorageValue(quests.indigoLeague.prizes[1].uid) > 0 then
-			selfSay('Ya eres el campeon. No hay nada que demostrar.', cid)
-			npcHandler:releaseFocus(cid)
-			leaveLeague(player)
 		else
 			selfSay('Los dos sabemos como va a acabar esto... pero si de verdad quieres intentarlo...', cid)
 			npcHandler.topic[cid] = 1
@@ -134,11 +130,19 @@ end
 local function onVictory(player, cid)
 	if isChampion then
 		selfSay('NO! IMPOSIBLE! Has derrotado a mi mejor equipo... Aunque me cueste admitirlo, eres el nuevo Campeon de la Liga. Enhorabuena.', cid)
-		player:giveQuestPrize(quests.indigoLeague.prizes[1].uid)
-		if progressionOnBadge then
-			progressionOnBadge(player, "indigoLeague")
+		-- la primera vez: trofeo y tarea de la historia; todas las semanas: premio semanal de nivel 100
+		local firstWin = player:getStorageValue(quests.indigoLeague.prizes[1].uid) <= 0
+		if firstWin then
+			player:giveQuestPrize(quests.indigoLeague.prizes[1].uid)
+			if progressionOnBadge then
+				progressionOnBadge(player, "indigoLeague")
+			end
 		end
-		Game.broadcastMessage(player:getName() .. " ha derrotado al Alto Mando y es el nuevo Campeon de la Liga Pokemon!", MESSAGE_EVENT_ADVANCE)
+		if giveWeeklyReward then
+			giveWeeklyReward(player, quests.indigoLeague.level, "Liga Pokemon")
+		end
+		Game.broadcastMessage(player:getName() .. (firstWin and " ha derrotado al Alto Mando y es el nuevo Campeon de la Liga Pokemon!" or
+			" ha vuelto a ganar la Liga Pokemon esta semana!"), MESSAGE_EVENT_ADVANCE)
 		leaveLeague(player)
 	else
 		selfSay('NO! IMPOSIBLE! Has derrotado a mi mejor equipo... Aunque me cueste admitirlo, eres el nuevo Campeon de la Liga. Enhorabuena.', cid)

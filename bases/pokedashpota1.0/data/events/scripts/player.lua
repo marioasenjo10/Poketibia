@@ -35,6 +35,21 @@ function Player:onLook(thing, position, distance)
 		if pokeName ~= nil and healthStr ~= nil then
 			description = string.format("%s\nIt contains a %s. Required level: %s. Boost: +%s. %s", description, pokeName, getPokemonRequiredLevel(pokeName), pokeBoost, healthStr)
 		end
+		-- runas de la Pokeball (lib/core/runes.lua)
+		if pokeName and describeBallRunes then
+			local runes = describeBallRunes(thing)
+			if #runes > 0 then
+				description = description .. "\nRunas: " .. table.concat(runes, ", ") .. "."
+			end
+		end
+	end
+	-- runa suelta: que es y como se usa
+	if thing:isItem() and getRuneTypeByItemId and getRuneTypeByItemId(thing:getId()) then
+		local key = getRuneTypeByItemId(thing:getId())
+		local tier = tonumber(thing:getSpecialAttribute("runeTier")) or 1
+		description = "Ves una " .. runeLabel(key, tier) .. ": " .. runeEffectText(key, tier) ..
+			" para el Pokemon de la Pokeball donde la pongas.\nUsala sobre una Pokeball (maximo " .. RUNE_MAX_PER_BALL ..
+			" runas de tipos distintos). Di !runas para fusionarlas o quitarlas."
 	end
 	if thing:isPlayer() and thing ~= self then
 		if thing:getAccountType() == ACCOUNT_TYPE_TUTOR then
@@ -386,6 +401,14 @@ function Player:onGainExperience(source, exp, rawExp)
 	-- Update questlog
 	if exp + self:getExperience() >= getNeededExp(self:getLevel() + 1) then
 		self:updateQuestLog()
+	end
+
+	-- runa de experiencia del Pokemon que esta fuera (lib/core/runes.lua)
+	if getSummonRuneBonus then
+		local summon = self:getSummons()[1]
+		if summon then
+			exp = exp * (1 + getSummonRuneBonus(summon, "exp"))
+		end
 	end
 
 	-- Vocation buff

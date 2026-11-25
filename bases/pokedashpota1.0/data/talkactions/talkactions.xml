@@ -58,6 +58,7 @@
 	<talkaction words="!tutorial" script="tutorial.lua" />
 	<talkaction words="!teleport" separator=" " script="summon_teleport.lua" />
 	<talkaction words="!medallas" script="medallas.lua" />
+	<talkaction words="!runas" script="runas.lua" />
 	<talkaction words="!badges" script="medallas.lua" />
 	<talkaction words="!comandos" script="commands.lua" />
 	<talkaction words="!commands" script="commands.lua" />

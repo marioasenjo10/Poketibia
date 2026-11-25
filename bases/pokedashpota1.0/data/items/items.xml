@@ -11613,7 +11613,9 @@
 	<item id="2149" article="a" name="small emerald">
 		<attribute key="weight" value="10" />
 	</item>
-	<item id="2150" article="a" name="small amethyst">
+	<item id="2150" article="a" name="fragmento runico">
+		<attribute key="plural" value="fragmentos runicos" />
+		<attribute key="description" value="Con 10 y una runa en blanco se inscribe una runa (di !runas)." />
 		<attribute key="weight" value="10" />
 	</item>
 	<item id="2151" article="a" name="talon">
@@ -12122,8 +12124,8 @@
 	<item fromid="2257" toid="2259" name="stone rubbish">
 		<attribute key="weight" value="980" />
 	</item>
-	<item id="2260" article="a" name="blank rune">
-		<attribute key="type" value="rune" />
+	<item id="2260" article="a" name="runa en blanco">
+		<attribute key="description" value="Se usa para inscribir runas (di !runas). La dan las quests semanales y la Liga." />
 		<attribute key="weight" value="210" />
 	</item>
 	<item id="2261" article="a" name="destroy field rune">
@@ -12142,11 +12144,8 @@
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
-	<item id="2265" article="an" name="intense healing rune">
-		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adura gran" />
+	<item id="2265" article="a" name="runa de vida">
 		<attribute key="weight" value="210" />
-		<attribute key="charges" value="1" />
 	</item>
 	<item id="2266" article="an" name="cure poison rune">
 		<attribute key="type" value="rune" />
@@ -12154,11 +12153,8 @@
 		<attribute key="weight" value="210" />
 		<attribute key="charges" value="1" />
 	</item>
-	<item id="2268" article="a" name="sudden death rune">
-		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori gran mort" />
+	<item id="2268" article="a" name="runa critica">
 		<attribute key="weight" value="70" />
-		<attribute key="charges" value="3" />
 	</item>
 	<item id="2269" article="a" name="wild growth rune">
 		<attribute key="type" value="rune" />
@@ -12246,21 +12242,15 @@
 		<attribute key="weight" value="21" />
 		<attribute key="charges" value="10" />
 	</item>
-	<item id="2293" article="a" name="magic wall rune">
-		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adevo grav tera" />
+	<item id="2293" article="a" name="runa de defensa">
 		<attribute key="weight" value="70" />
-		<attribute key="charges" value="3" />
 	</item>
 	<item id="2294" article="a" name="spell rune">
 		<attribute key="type" value="rune" />
 		<attribute key="weight" value="120" />
 	</item>
-	<item id="2295" article="a" name="holy missile rune">
-		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori san" />
+	<item id="2295" article="a" name="runa de experiencia">
 		<attribute key="weight" value="42" />
-		<attribute key="charges" value="5" />
 	</item>
 	<item fromid="2296" toid="2300" article="a" name="spell rune">
 		<attribute key="type" value="rune" />
@@ -12284,11 +12274,8 @@
 		<attribute key="weight" value="52" />
 		<attribute key="charges" value="4" />
 	</item>
-	<item id="2304" article="a" name="great fireball rune">
-		<attribute key="type" value="rune" />
-		<attribute key="runeSpellName" value="adori mas flam" />
+	<item id="2304" article="a" name="runa de ataque">
 		<attribute key="weight" value="52" />
-		<attribute key="charges" value="4" />
 	</item>
 	<item id="2305" article="a" name="fire bomb rune">
 		<attribute key="type" value="rune" />

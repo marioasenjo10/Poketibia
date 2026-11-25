@@ -97,3 +97,25 @@ dos personajes (no se puede comprar lo propio): por ejemplo Claude Tester Dos y 
 
 Ajustes al principio de `bases/pokedashpota1.0/data/lib/core/pokemarket.lua` (comisión, duración, máximo de
 ofertas, distancia a la tienda). Tablas en la base de datos: `pkd_market_offers` y `pkd_market_locker`.
+
+## Runas
+
+Se consiguen con las quests semanales y la Liga (runas en blanco y fragmentos rúnicos). Con `/i 2260`
+y `/i 2150` (GM) se pueden crear para probar.
+
+- [ ] `!runas` → **Fabricar**: 1 runa en blanco + 10 fragmentos = runa de tier I al azar.
+- [ ] Usar la runa sobre una Pokéball con Pokémon: al mirarla sale «Runas: ...». Máximo 3, de tipos distintos.
+- [ ] Guardar y sacar el Pokémon: la de Vida sube su vida máxima; Ataque y Defensa se notan en combate.
+- [ ] `!runas` → **Fusionar** 3 iguales → una del tier siguiente. **Quitar** devuelve la runa a la mochila.
+- [ ] Las runas de Tibia usadas (great fireball, magic wall, intense healing, holy missile, sudden death)
+  ya no lanzan hechizos.
+
+## Quests semanales
+
+- [ ] Un cofre de quest (por ejemplo el de Mt. Moon, nivel 25): premio semanal (banco, experiencia,
+  fragmentos y una runa en blanco) y como mucho 3 piedras. Al repetirlo, «Vuelve dentro de X».
+- [ ] La Liga: una vez por semana, ganes o pierdas; cada victoria da el premio de nivel 100.
+- [ ] Moltres con 1 jugador; Annihilator con 2 (con 1 debe avisar).
+- [ ] Simon deja pasar a la Calle Victoria con las 8 medallas y sin límite diario.
+
+Ajustes: `lib/core/runes.lua` (tiers, coste de fabricar) y `lib/core/weeklyquests.lua` (premio semanal).

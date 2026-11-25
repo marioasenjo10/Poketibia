@@ -21,7 +21,7 @@ pokeMarket = {
 	pageSize = 10,
 	maxPrice = 999999999,
 	shopRadius = 8,                -- distancia maxima a un tendero para usar el mercado
-	categories = {"todo", "pokemon", "balls", "stones", "potions", "otros"},
+	categories = {"todo", "pokemon", "balls", "stones", "potions", "runas", "otros"},
 }
 
 local SEP = "|"
@@ -162,6 +162,8 @@ local function describe(itemId, special, pokeName, boost)
 	local category = "otros"
 	if emptyBallIds[itemId] then
 		category = "balls"
+	elseif (getRuneTypeByItemId and getRuneTypeByItemId(itemId)) or itemId == RUNE_BLANK_ID or itemId == RUNE_FRAGMENT_ID then
+		category = "runas"
 	elseif lower:find("stone", 1, true) then
 		category = "stones"
 	elseif lower:find("potion", 1, true) or lower:find("revive", 1, true) or lower:find("elixir", 1, true) then

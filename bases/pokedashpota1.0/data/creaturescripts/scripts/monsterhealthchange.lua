@@ -158,7 +158,19 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 		end
 	end
 
-	if math.random(1, 100) <= criticalProbability then
+	-- runas de la Pokeball (lib/core/runes.lua): ataque del que pega y defensa del que recibe
+	local runeCrit = 0
+	if getSummonRuneBonus then
+		if attacker:isPokemon() then
+			localDamageMultiplier = localDamageMultiplier * (1 + getSummonRuneBonus(attacker, "atk"))
+			runeCrit = getSummonRuneBonus(attacker, "crit")
+		end
+		if creature:isPokemon() then
+			localDamageMultiplier = localDamageMultiplier / (1 + getSummonRuneBonus(creature, "def"))
+		end
+	end
+
+	if math.random(1, 100) <= criticalProbability + runeCrit then
 		localDamageMultiplier = localDamageMultiplier * 1.5
 		Game.sendAnimatedText(creature:getPosition(), "CRITICAL", TEXTCOLOR_RED)
 	else

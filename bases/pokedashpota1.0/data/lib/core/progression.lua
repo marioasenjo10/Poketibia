@@ -360,9 +360,9 @@ progressionTasks = {
 		id = "victory_road", kind = "defeat", species = {"Graveler", "Machoke", "Golbat", "Onix", "Rhyhorn", "Arbok"}, count = 25,
 		giver = "Profesor Oak",
 		title = "La Calle Victoria",
-		text = "Tienes las 8 medallas! Para entrar en la Liga Pokemon necesitas nivel 100. Entre Ciudad Verde y la Meseta Anil, al oeste, esta la Calle Victoria: derrota 25 de sus Pokemon (Graveler, Machoke, Golbat, Onix, Rhyhorn, Arbok).",
+		text = "Tienes las 8 medallas! Para entrar en la Liga Pokemon necesitas nivel 100. Al oeste de Ciudad Verde, Simon el guardia te dejara pasar a la Calle Victoria: derrota 25 de sus Pokemon (Graveler, Machoke, Golbat, Onix, Rhyhorn, Arbok).",
 		reward = {exp = 1082000, money = 10000, items = {{id = 27642, count = 30}}},
-		map = {{478, 1087, 8, "Calle Victoria (subterraneo -1)"}, {430, 1117, 9, "Calle Victoria (subterraneo -2)"}},
+		map = {{538, 1094, 7, "Simon, entrada de la Calle Victoria"}, {478, 1087, 8, "Calle Victoria (subterraneo -1)"}, {430, 1117, 9, "Calle Victoria (subterraneo -2)"}},
 	},
 	{
 		id = "league", kind = "badge", badge = "indigoLeague", giver = "Profesor Oak",

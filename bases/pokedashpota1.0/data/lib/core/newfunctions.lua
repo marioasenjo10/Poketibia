@@ -698,7 +698,7 @@ poison = {
 				}
 			}
 		},
-		level = 30, 
+		level = 28, -- Ciudad Celeste (tramo 20-30) 
 		teleportCP = 0
 	},
 
@@ -793,7 +793,7 @@ rock = {
 				}
 			}
 		},
-		level = 20, 
+		level = 22, -- entre Plateada y Celeste (tramo 20-30) 
 		teleportCP = 0
 	},
 
@@ -829,7 +829,7 @@ rock2 = {
 				}
 			}
 		},
-		level = 25, 
+		level = 18, -- junto a Ciudad Plateada: antes de Brock (tope 20) 
 		teleportCP = 0
 	},
 
@@ -909,7 +909,7 @@ subterranea = {
 				}
 			}
 		},
-		level = 18, 
+		level = 35, -- Ciudad Azafran (tramo 30-40) 
 		teleportCP = 0
 	},
 
@@ -927,7 +927,7 @@ earth = {
 				}
 			}
 		},
-		level = 15, 
+		level = 32, -- al noreste de Celeste (tramo 30-40) 
 		teleportCP = 0
 	},
 
@@ -944,7 +944,7 @@ firenostrus = {
 				}
 			}
 		},
-		level = 35, 
+		level = 75, -- cerca de Isla Canela (tramo 70-80) 
 		teleportCP = 0
 	},
 
@@ -962,7 +962,7 @@ rock3 = {
 				}
 			}
 		},
-		level = 20, 
+		level = 50, -- Pueblo Lavanda (tramo 50-60, con Sabrina) 
 		teleportCP = 0
 	},
 
@@ -1324,7 +1324,7 @@ mtmoon = {
 				}
 			}
 		},
-		level = 35, 
+		level = 25, -- Mt. Moon se cruza en el tramo 20-30 
 		teleportCP = 0
 	},
 
@@ -1342,7 +1342,7 @@ lavendermaze = {
 				}
 			}
 		},
-		level = 35, 
+		level = 55, -- Pueblo Lavanda (tramo 50-60) 
 		teleportCP = 0
 	},
 
@@ -1511,7 +1511,7 @@ secretSaffron = {
 				}
 			}
 		},
-		level = 1, 
+		level = 35, -- Ciudad Azafran (antes nivel 1) 
 		teleportCP = 1
 	},
 
@@ -2717,6 +2717,11 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			doStartAurea(monster)
 		end
 		local maxHealth = monster:getTotalHealth()
+		-- runas de la Pokeball (lib/core/runes.lua): se guardan para el combate y la de vida suma aqui
+		if cacheSummonRunes then
+			cacheSummonRunes(monster, ball)
+			maxHealth = math.floor(maxHealth * (1 + getSummonRuneBonus(monster, "hp")))
+		end
 		monster:setMaxHealth(maxHealth)
 		monster:setHealth(math.min(health, maxHealth))
 		monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
@@ -3385,81 +3390,89 @@ function Player:increaseDuelWithNpcStatus()
 	return true
 end
 
+-- Premio de una quest (cofres con uniqueid = uid del premio, y NPC como los lideres de gimnasio).
+-- Si la quest tiene varios premios (varios cofres), solo se puede coger uno.
+-- Las de cofre son semanales (lib/core/weeklyquests.lua): se guarda la fecha y se pueden repetir
+-- a los 7 dias con el premio semanal; los Pokemon y objetos especiales, solo la primera vez.
 function Player:giveQuestPrize(uid, ignore)
-	local playerCap = self:getFreeCapacity()
-	local totalWeight = 0
-	if ignore == nil then ignore = false end
-
 	for key, value in pairs(quests) do
 		for j = 1, #value.prizes do
 			if uid == value.prizes[j].uid then
-				if self:getLevel() >= value.level then
-					local questDone = false
-					for k = 1, #value.prizes do
-						if self:getStorageValue(value.prizes[k].uid) > 0 then
-							questDone = true
-						end
+				if self:getLevel() < value.level then
+					self:sendTextMessage(MESSAGE_INFO_DESCR, "Necesitas nivel " .. value.level .. " para abrirlo.")
+					return true
+				end
+				local weekly = isWeeklyQuest and isWeeklyQuest(key, value) and not ignore
+				local firstTime = true
+				for k = 1, #value.prizes do
+					if self:getStorageValue(value.prizes[k].uid) > 0 then
+						firstTime = false
 					end
-					if ignore == true then questDone = false end
-					if questDone == false then
-						for i = 1, #value.prizes[j].items do
-							totalWeight = totalWeight + ItemType(value.prizes[j].items[i].item):getWeight()
+				end
+				if ignore then
+					firstTime = true
+				end
+				if weekly and not firstTime then
+					local wait = weeklyQuestWait(self, value)
+					if wait > 0 then
+						self:sendTextMessage(MESSAGE_INFO_DESCR, "Esta vacio. Vuelve dentro de " .. formatWait(wait) .. ".")
+						return true
+					end
+				elseif not firstTime then
+					self:sendTextMessage(MESSAGE_INFO_DESCR, "Esta vacio.")
+					return true
+				end
+
+				if value.teleportCP == 1 then
+					self:teleportTo(self:getTown():getTemplePosition())
+				end
+				local prize = value.prizes[j]
+				if firstTime then
+					for i = 1, #prize.pokes do
+						local dp = 1
+						local container = self:getSlotItem(CONST_SLOT_BACKPACK)
+						if container and container:getEmptySlots() > 0 then
+							dp = 0
 						end
-						if playerCap >= totalWeight then
-							if value.teleportCP == 1 then
-								self:teleportTo(self:getTown():getTemplePosition())
-							end
-							for i = 1, #value.prizes[j].pokes do
-								local dp = 1
-								local container = self:getSlotItem(CONST_SLOT_BACKPACK)							
-								if self:getFreeCapacity() >= 1 and container and container:getEmptySlots() > 0 then
-									dp = 0
-								end
-								doAddPokeball(self:getId(), value.prizes[j].pokes[i].name, value.prizes[j].pokes[i].boost, getBallKey(balls.ultraball.usedOn), dp, 0)
-								local msg = 'You have found: ' .. value.prizes[j].pokes[i].name .. ', boost ' .. value.prizes[j].pokes[i].boost .. '.'
-								if dp == 1 then
-									msg = msg .. " It was sent do CP because you do not have enough capacity."
-								end
-								self:sendTextMessage(MESSAGE_INFO_DESCR, msg)
-
-							end
-							
-							for i = 1, #value.prizes[j].items do
-								self:addItem(value.prizes[j].items[i].item, value.prizes[j].items[i].count)
-								self:sendTextMessage(MESSAGE_INFO_DESCR, 'You have found: ' .. value.prizes[j].items[i].count .. " " .. ItemType(value.prizes[j].items[i].item):getName() .. '.')
-							end
-
-							for i = 1, #value.prizes[j].badges do
-								local item = self:getItemById(value.prizes[j].badges[i].remove, true)
-								if item then
-									item:transform(value.prizes[j].badges[i].add)
-									self:sendTextMessage(MESSAGE_INFO_DESCR, 'You have found: ' .. ItemType(value.prizes[j].badges[i].add):getName() .. '.')
-								else
-									print("WARNING! Player " .. self:getName() .. " with problems while adding " .. ItemType(value.prizes[j].badges[i].add):getName() .. ".")
-								end
-							end
-							self:setStorageValue(uid, 1)
-							for k = 1, #value.prizes do
-								if self:getStorageValue(value.prizes[k].uid) <= 0 then
-									self:setStorageValue(value.prizes[k].uid, 1)
-								end
-							end
-						else
-							self:sendTextMessage(MESSAGE_INFO_DESCR, 'Too heavy for you.')
+						doAddPokeball(self:getId(), prize.pokes[i].name, prize.pokes[i].boost, getBallKey(balls.ultraball.usedOn), dp, 0)
+						local msg = "Has encontrado: " .. prize.pokes[i].name .. " +" .. prize.pokes[i].boost .. "."
+						if dp == 1 then
+							msg = msg .. " Se ha enviado al PC porque no te cabe en la mochila."
 						end
+						self:sendTextMessage(MESSAGE_INFO_DESCR, msg)
+					end
+				end
 
+				local items = weekly and weeklyFilterItems(prize.items, firstTime) or prize.items
+				for i = 1, #items do
+					self:addItem(items[i].item, items[i].count)
+					self:sendTextMessage(MESSAGE_INFO_DESCR, "Has encontrado: " .. items[i].count .. " " .. ItemType(items[i].item):getName() .. ".")
+				end
+
+				for i = 1, #prize.badges do
+					local item = self:getItemById(prize.badges[i].remove, true)
+					if item then
+						item:transform(prize.badges[i].add)
+						self:sendTextMessage(MESSAGE_INFO_DESCR, "Has conseguido: " .. ItemType(prize.badges[i].add):getName() .. ".")
 					else
-						self:sendTextMessage(MESSAGE_INFO_DESCR, "It is empty.")
+						print("WARNING! Player " .. self:getName() .. " with problems while adding " .. ItemType(prize.badges[i].add):getName() .. ".")
 					end
-				else
-					self:sendTextMessage(MESSAGE_INFO_DESCR, "You need level " .. value.level .. " to open.")
+				end
+
+				if weekly then
+					giveWeeklyReward(self, value.level, "Quest de nivel " .. value.level)
+				end
+				-- semanal: se guarda la fecha; normal: 1. En los dos casos cuenta como hecha (> 0)
+				local mark = weekly and os.time() or 1
+				for k = 1, #value.prizes do
+					self:setStorageValue(value.prizes[k].uid, mark)
 				end
 				return true
 			end
 		end
 	end
 
-	self:sendTextMessage(MESSAGE_INFO_DESCR, "It is empty.")
+	self:sendTextMessage(MESSAGE_INFO_DESCR, "Esta vacio.")
 	return false
 end
 

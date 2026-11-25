@@ -1,5 +1,6 @@
 -- Portero de la Liga Pokemon (Meseta Anil). Pide las 8 medallas de Kanto y el nivel de la quest
--- indigoLeague (lib/core/newfunctions.lua), y deja intentarlo una vez cada leagueCooldownHours.
+-- indigoLeague (lib/core/newfunctions.lua), y deja intentarlo una vez por semana (ganes o pierdas).
+-- Los campeones pueden volver cada semana: cada victoria da el premio semanal (lib/core/weeklyquests.lua).
 -- Dentro: 25 pociones y 5 revivir por intento (Player:canUsePotionOnLeague / canUseReviveOnLeague).
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
@@ -10,7 +11,7 @@ function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()				npcHandler:onThink()					end
 
-local leagueCooldownHours = 20
+local leagueCooldownHours = 7 * 24
 local leagueEntrance = Position(254, 1071, 7) -- sala de Lorelei
 
 local function missingBadges(player)
@@ -34,11 +35,6 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	if (msgcontains(msg, "si") or msgcontains(msg, "yes") or msgcontains(msg, "liga")) and npcHandler.topic[cid] == 0 then
-		if player:getStorageValue(quests.indigoLeague.prizes[1].uid) > 0 then
-			npcHandler:say("Ya eres el Campeon de la Liga! Tu nombre esta en el Salon de la Fama.", cid)
-			npcHandler:releaseFocus(cid)
-			return true
-		end
 		local missing = missingBadges(player)
 		if #missing > 0 then
 			npcHandler:say("Para entrar en la Liga necesitas las 8 medallas de Kanto. Te faltan " .. #missing ..
@@ -50,8 +46,8 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:releaseFocus(cid)
 		else
 			npcHandler:say("Seguro que estas preparado? Lucharas contra los cuatro del Alto Mando y el campeon, uno tras otro, " ..
-				"con solo 25 pociones y 5 revivir. Si pierdes, tendras que esperar " .. leagueCooldownHours ..
-				" horas para volver a intentarlo. {si} / {no}", cid)
+				"con solo 25 pociones y 5 revivir. Solo se puede intentar una vez por semana, ganes o pierdas. " ..
+				"Cada victoria da el premio semanal: $200.000, experiencia y materiales de runas. {si} / {no}", cid)
 			npcHandler.topic[cid] = 1
 		end
 	elseif (msgcontains(msg, "si") or msgcontains(msg, "yes")) and npcHandler.topic[cid] == 1 then
@@ -64,9 +60,7 @@ local function creatureSayCallback(cid, type, msg)
 			leagueEntrance:sendMagicEffect(CONST_ME_TELEPORT)
 			player:setOnLeague()
 		else
-			local hours = math.floor(remaining / 3600)
-			local minutes = math.ceil((remaining % 3600) / 60)
-			npcHandler:say("Aun tienes que descansar. Vuelve dentro de " .. hours .. " h y " .. minutes .. " min.", cid)
+			npcHandler:say("Ya has intentado la Liga esta semana. Vuelve dentro de " .. formatWait(remaining) .. ".", cid)
 		end
 		npcHandler:releaseFocus(cid)
 	elseif msgcontains(msg, "no") then
