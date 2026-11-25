@@ -288,8 +288,11 @@ function shinyOrbKey(target)
 	if not catchTiers then
 		loadCatchTiers()
 	end
-	local base = tostring(target):gsub("^[Ss]hiny ", ""):lower()
-	return ORB_KEY_BY_TIER[catchTiers[base] or ""] or "bronze"
+	-- la tabla tiene fila propia para cada shiny (Shiny Dragonite es Mythic aunque Dragonite sea T2);
+	-- si no la hay, se usa la del Pokemon normal
+	local full = tostring(target):lower()
+	local base = full:gsub("^shiny ", "")
+	return ORB_KEY_BY_TIER[catchTiers[full] or catchTiers[base] or ""] or "bronze"
 end
 
 local function loadShinyEvoTargets()

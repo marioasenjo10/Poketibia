@@ -75,6 +75,36 @@ public static class OrbDesign
 		}
 	}
 
+	// Holograma teñido del color del orbe: la luminosidad de la ilustracion va de un tono medio a uno claro
+	// de la paleta del orbe, translucido y con lineas cada 3 filas.
+	public static void HologramTinted(string srcPath, string dstPath, int size, string key)
+	{
+		var ramp = Ramp(key);
+		Color lo = ramp[2], hi = ramp[4];
+		using (var src = new Bitmap(srcPath))
+		using (var b = new Bitmap(size, size, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+		{
+			using (var g = Graphics.FromImage(b))
+			{
+				g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+				g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+				g.DrawImage(src, 0, 0, size, size);
+			}
+			for (int y = 0; y < size; y++)
+				for (int x = 0; x < size; x++)
+				{
+					var p = b.GetPixel(x, y);
+					if (p.A < 20) { b.SetPixel(x, y, Color.Transparent); continue; }
+					double l = (0.299 * p.R + 0.587 * p.G + 0.114 * p.B) / 255.0;
+					double t = Math.Min(1, 0.25 + l * 0.9);
+					double scan = y % 3 == 0 ? 0.7 : 1.0;
+					int a = (int)Math.Min(255, p.A * 0.85 * scan);
+					b.SetPixel(x, y, Color.FromArgb(a, (int)(lo.R + (hi.R - lo.R) * t), (int)(lo.G + (hi.G - lo.G) * t), (int)(lo.B + (hi.B - lo.B) * t)));
+				}
+			b.Save(dstPath, System.Drawing.Imaging.ImageFormat.Png);
+		}
+	}
+
 	public static PixelCanvas Orb(string key)
 	{
 		var c = new PixelCanvas(32);

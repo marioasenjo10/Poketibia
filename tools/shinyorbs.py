@@ -26,7 +26,9 @@ for line in open(os.path.join(ROOT, 'pokemon-tiers-review.csv'), encoding='utf-8
 COLOR = {'mythic': 'mythic', 'legendary': 'legendary', 'ultra rare': 'ultra', 'super rare': 'super', 't1': 't1', 't2': 't2'}
 
 def color(target):
-    return COLOR.get(tiers.get(target[6:].lower(), '').lower(), 'bronze')
+    # fila propia del shiny (Shiny Dragonite = Mythic); si no, la del Pokemon normal
+    tier = tiers.get(target.lower()) or tiers.get(target[6:].lower(), '')
+    return COLOR.get(tier.lower(), 'bronze')
 
 if '--names' in sys.argv:
     for t in targets:
