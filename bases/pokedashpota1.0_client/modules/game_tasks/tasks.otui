@@ -26,6 +26,161 @@ TaskMapButton < UIButton
   $pressed:
     image-color: #1565c0
 
+// ventana de "mision completada" y la siguiente (opcode 92). Los textos se ponen desde tasks.lua
+TaskDoneButton < UIButton
+  size: 130 30
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  image-color: #43a047
+  font: poppins-semibold-13px
+  color: #ffffff
+  text-align: center
+  focusable: false
+
+  $hover:
+    image-color: #5cbf60
+
+  $pressed:
+    image-color: #2e7d32
+
+TaskDoneWindow < UIWidget
+  size: 460 330
+  anchors.centerIn: parent
+  image-source: /game_pokedex/images/panel
+  image-border: 16
+  focusable: true
+
+  Label
+    id: doneHeader
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 18
+    text-align: center
+    font: poppins-bold-16px
+    color: #f2c14e
+    phantom: true
+
+  Label
+    id: doneTitle
+    anchors.top: doneHeader.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+    text-align: center
+    font: poppins-semibold-13px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: doneReward
+    anchors.top: doneTitle.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 24
+    margin-right: 24
+    height: 34
+    text-align: center
+    text-wrap: true
+    font: poppins-12px
+    color: #f2c14e
+    phantom: true
+
+  UIWidget
+    id: separator
+    anchors.top: doneReward.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-left: 20
+    margin-right: 20
+    height: 1
+    background-color: #2c3039
+    phantom: true
+
+  Label
+    id: nextHeader
+    anchors.top: separator.bottom
+    anchors.left: parent.left
+    margin-top: 10
+    margin-left: 22
+    font: poppins-semibold-11px
+    color: #8b95a5
+    text-auto-resize: true
+    phantom: true
+
+  UICreature
+    id: giver
+    size: 72 72
+    anchors.top: nextHeader.bottom
+    anchors.left: parent.left
+    margin-top: 6
+    margin-left: 16
+    phantom: true
+
+  TaskKindChip
+    id: nextKind
+    anchors.top: nextHeader.bottom
+    anchors.left: giver.right
+    margin-top: 8
+    margin-left: 8
+
+  Label
+    id: nextGiver
+    anchors.left: nextKind.right
+    anchors.verticalCenter: nextKind.verticalCenter
+    anchors.right: parent.right
+    margin-left: 8
+    margin-right: 20
+    font: poppins-12px
+    color: #8b95a5
+    phantom: true
+
+  Label
+    id: nextTitle
+    anchors.top: nextKind.bottom
+    anchors.left: nextKind.left
+    anchors.right: parent.right
+    margin-top: 6
+    margin-right: 20
+    height: 22
+    font: poppins-bold-16px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: nextText
+    anchors.top: nextTitle.bottom
+    anchors.left: nextKind.left
+    anchors.right: parent.right
+    anchors.bottom: continueButton.top
+    margin-top: 4
+    margin-right: 20
+    margin-bottom: 10
+    font: poppins-12px
+    color: #c9d1dc
+    text-wrap: true
+    text-align: topLeft
+    phantom: true
+
+  TaskDoneButton
+    id: continueButton
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    margin-right: 20
+    margin-bottom: 16
+    text: Continuar
+
+  TaskMapButton
+    id: mapButton
+    size: 130 30
+    font: poppins-semibold-13px
+    anchors.right: continueButton.left
+    anchors.bottom: parent.bottom
+    margin-right: 10
+    margin-bottom: 16
+
 TaskProgress < UIWidget
   height: 8
   background-color: #2c3039

@@ -16,6 +16,21 @@ PROGRESSION_TASK_STATE = 96100     -- + indice de tarea: 1 activa, 2 completada
 PROGRESSION_TASK_PROGRESS = 96300  -- + indice de tarea: progreso (capturas...)
 
 OPCODE_TASKS = 90
+OPCODE_TASK_DONE = 92 -- ventana de "mision completada" + la siguiente (cliente: game_tasks)
+
+-- aspecto de quien da cada mision (para la ventana): el principio del texto "giver" -> outfit del NPC
+progressionGiverOutfits = {
+	{prefix = "Profesor Oak", look = {1987}},
+	{prefix = "Julie", look = {138, 96, 118, 81, 95}},
+	{prefix = "Brock", look = {2593}},
+	{prefix = "Misty", look = {2715}},
+	{prefix = "Teniente Surge", look = {2602}},
+	{prefix = "Erika", look = {2598}},
+	{prefix = "Sabrina", look = {2601}},
+	{prefix = "Koga", look = {2595}},
+	{prefix = "Blaine", look = {2591}},
+	{prefix = "Giovanni", look = {2600}},
+}
 OPCODE_INTRO = 91 -- escena de Oak en el cliente (modules/game_intro)
 
 -- Posicion del Profesor Oak (map-spawn.xml) y ciudad inicial
@@ -640,6 +655,41 @@ function Player.sendTasks(self)
 	self:sendExtendedOpcode(OPCODE_TASKS, table.concat(lines, "\n"))
 end
 
+-- ventana de mision completada: "titulo|recompensa|tipo|quien|titulo|texto|aspecto|mapa" de la siguiente
+-- (los campos de la siguiente van vacios si no queda ninguna). El cliente las pone en cola.
+local function giverLook(giver)
+	for _, entry in ipairs(progressionGiverOutfits) do
+		if tostring(giver):sub(1, #entry.prefix) == entry.prefix then
+			return table.concat(entry.look, ",")
+		end
+	end
+	return ""
+end
+
+function progressionSendTaskDone(player, task, index)
+	local nextIndex = index + 1
+	while progressionTasks[nextIndex] and progressionTasks[nextIndex].disabled do
+		nextIndex = nextIndex + 1
+	end
+	local nextTask = progressionTasks[nextIndex]
+	if not nextTask then
+		nextIndex = nil
+	end
+	local fields = {clean(task.title), clean(rewardText(task))}
+	if nextIndex then
+		local points = taskMapPoints(nextTask)
+		fields[#fields + 1] = nextTask.kind
+		fields[#fields + 1] = clean(nextTask.giver)
+		fields[#fields + 1] = clean(nextTask.title)
+		fields[#fields + 1] = clean(nextTask.text)
+		fields[#fields + 1] = giverLook(nextTask.giver)
+		fields[#fields + 1] = points ~= "" and "1" or "0"
+	else
+		for _ = 1, 6 do fields[#fields + 1] = "" end
+	end
+	player:sendExtendedOpcode(OPCODE_TASK_DONE, table.concat(fields, "|"))
+end
+
 -- ===================== Estados =====================
 
 local function activateTask(player, index)
@@ -676,6 +726,8 @@ local function completeTask(player, index)
 	end
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Tarea completada: " .. task.title .. "! Recompensa: " .. rewardText(task))
 	player:getPosition():sendMagicEffect(CONST_ME_FIREWORK_YELLOW)
+	-- el aviso va antes de activar la siguiente: si esa se completa sola, su aviso llega despues (en orden)
+	progressionSendTaskDone(player, task, index)
 	progressionActivateNext(player, index)
 end
 

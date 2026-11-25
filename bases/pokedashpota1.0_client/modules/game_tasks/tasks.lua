@@ -204,11 +204,107 @@ function toggle()
   if window:isVisible() then hide() else show() end
 end
 
+-- ===================== Mision completada (opcode 92) =====================
+-- El servidor (progressionSendTaskDone) manda: titulo|recompensa|tipo|quien|titulo|texto|aspecto|mapa
+-- de la mision hecha y la siguiente. Si llegan varias seguidas se ensenan en cola.
+local OPCODE_TASK_DONE = 92
+local doneWindow = nil
+local doneQueue = {}
+local fadeEvent = nil
+
+local function fadeIn(widget)
+  if fadeEvent then removeEvent(fadeEvent) fadeEvent = nil end
+  local step = 0
+  local function tick()
+    step = step + 1
+    widget:setOpacity(math.min(1, step / 8))
+    if step < 8 then fadeEvent = scheduleEvent(tick, 25) else fadeEvent = nil end
+  end
+  widget:setOpacity(0)
+  tick()
+end
+
+local function activeTask()
+  for _, task in ipairs(tasks) do
+    if task.state == 1 then return task end
+  end
+  return nil
+end
+
+local function createDoneWindow()
+  doneWindow = g_ui.createWidget('TaskDoneWindow', rootWidget)
+  doneWindow:hide()
+  doneWindow:getChildById('continueButton').onClick = function() showNextDone() end
+  doneWindow:getChildById('mapButton').onClick = function()
+    doneQueue = {}
+    doneWindow:hide()
+    local task = activeTask()
+    if task then showTaskOnMap(task) end
+  end
+  doneWindow.onKeyPress = function(widget, keyCode)
+    if keyCode == KeyEscape or keyCode == KeyEnter then
+      showNextDone()
+      return true
+    end
+    return false
+  end
+end
+
+function showNextDone()
+  local d = table.remove(doneQueue, 1)
+  if not d then
+    if doneWindow then doneWindow:hide() end
+    return
+  end
+  if not doneWindow then createDoneWindow() end
+  local w = doneWindow
+  w:getChildById('doneHeader'):setText('\161MISI\211N COMPLETADA!')
+  w:getChildById('doneTitle'):setText(d.title)
+  w:getChildById('doneReward'):setText(d.reward ~= '' and ('Recompensa: ' .. d.reward) or '')
+  local hasNext = d.nextTitle ~= ''
+  for _, id in ipairs({'separator', 'nextHeader', 'giver', 'nextKind', 'nextGiver', 'nextTitle', 'nextText'}) do
+    w:getChildById(id):setVisible(hasNext)
+  end
+  w:getChildById('mapButton'):setVisible(hasNext and d.hasMap)
+  if hasNext then
+    w:getChildById('nextHeader'):setText('SIGUIENTE MISI\211N')
+    local kind = KINDS[d.kind] or KINDS.talk
+    setChip(w:getChildById('nextKind'), kind.text, kind.color)
+    w:getChildById('nextGiver'):setText(d.giver)
+    w:getChildById('nextTitle'):setText(d.nextTitle)
+    w:getChildById('nextText'):setText(d.nextText)
+    local giver = w:getChildById('giver')
+    if d.look ~= '' then
+      local look = split(d.look, ',')
+      giver:setOutfit({ type = tonumber(look[1]) or 0, head = tonumber(look[2]) or 0, body = tonumber(look[3]) or 0,
+        legs = tonumber(look[4]) or 0, feet = tonumber(look[5]) or 0 })
+    else
+      giver:hide()
+    end
+  end
+  w:getChildById('continueButton'):setText(#doneQueue > 0 and 'Siguiente' or 'Continuar')
+  w:show()
+  w:raise()
+  w:focus()
+  fadeIn(w)
+end
+
+function onTaskDoneOpcode(protocol, opcode, buffer)
+  local f = split(buffer or '', '|')
+  table.insert(doneQueue, { title = f[1] or '', reward = f[2] or '', kind = f[3] or '', giver = f[4] or '',
+    nextTitle = f[5] or '', nextText = f[6] or '', look = f[7] or '', hasMap = f[8] == '1' })
+  if not doneWindow or not doneWindow:isVisible() then
+    showNextDone()
+  end
+end
+
 function onGameEnd()
   hide()
   tasks = {}
   capInfo = nil
   if tracker then tracker:hide() end
+  doneQueue = {}
+  if doneWindow then doneWindow:hide() end
 end
 
 function init()
@@ -228,11 +324,15 @@ function init()
 
   createTracker()
   ProtocolGame.registerExtendedOpcode(OPCODE_TASKS, onTasksOpcode)
+  ProtocolGame.registerExtendedOpcode(OPCODE_TASK_DONE, onTaskDoneOpcode)
   connect(g_game, { onGameEnd = onGameEnd })
 end
 
 function terminate()
   ProtocolGame.unregisterExtendedOpcode(OPCODE_TASKS)
+  ProtocolGame.unregisterExtendedOpcode(OPCODE_TASK_DONE)
+  if fadeEvent then removeEvent(fadeEvent) fadeEvent = nil end
+  if doneWindow then doneWindow:destroy() doneWindow = nil end
   disconnect(g_game, { onGameEnd = onGameEnd })
   if tracker then tracker:destroy() tracker = nil end
   window:destroy()
