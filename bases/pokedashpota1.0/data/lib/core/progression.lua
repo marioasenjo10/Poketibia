@@ -46,6 +46,37 @@ progressionLevelCaps = {
 	{badge = "earthBadge", maxLevel = 90, medal = "Medalla Tierra", leader = "Giovanni", city = "Ciudad Verde"},
 }
 
+-- ===================== Experiencia =====================
+-- Objetivo: ~30 minutos de juego entre gimnasios (10 niveles), contando tareas, capturas y caza.
+-- Herramienta para ver el reparto por tramo: python tools/combatsim/expcurve.py [derrotas_por_minuto]
+--
+-- Derrotas: la experiencia de un salvaje es su experiencia base x multiplicador. El multiplicador
+-- crece con el nivel del entrenador para que un Pokemon "normal" (experiencia base expReferenceBase)
+-- valga siempre 1/expKillsPerLevel de un nivel. Nunca baja de los stages de data/XML/stages.xml.
+--   Subes demasiado rapido al probar -> sube expKillsPerLevel. Demasiado lento -> bajalo.
+expKillsPerLevel = 12
+expReferenceBase = 33
+-- Capturas (actions/scripts/poke/catch.lua): la primera de cada especie da esta fraccion de tu nivel
+-- actual x el factor de su tier (T7 x1, T6 x2 ... T1 x8, legendario x15). Las repetidas, el 20 %.
+catchExpLevelFraction = 0.10
+
+local function experienceForLevel(level)
+	return getNeededExp(level + 1) - getNeededExp(level)
+end
+
+function getExperienceMultiplier(level)
+	local multiplier = Game.getExperienceStage(level)
+	if expKillsPerLevel and expKillsPerLevel > 0 then
+		multiplier = math.max(multiplier, experienceForLevel(level) / (expKillsPerLevel * expReferenceBase))
+	end
+	return multiplier
+end
+
+-- experiencia de la primera captura de una especie (sin tier = x1)
+function getCatchLevelExperience(level, tierFactor)
+	return math.floor(experienceForLevel(level) * catchExpLevelFraction * (tierFactor or 1))
+end
+
 -- Gimnasios de Kanto en orden: el primero sin medalla sale en el mapa como "siguiente gimnasio".
 -- No es el orden oficial: Sabrina va antes que Koga porque Ciudad Fucsia queda muy lejos.
 -- (opcode 75, cliente game_minimap). npc = nombre del lider en map-spawn.xml.
@@ -175,19 +206,19 @@ progressionTasks = {
 		id = "cerulean_ground", kind = "catch", species = {"Diglett", "Sandshrew"}, count = 1, giver = "Profesor Oak",
 		title = "Tierra contra el rayo",
 		text = "El siguiente Lider, el Teniente Surge, usa Pokemon de tipo Electrico, y a los de tipo Tierra la electricidad no les hace nada. Al este de Ciudad Celeste hay muchos Diglett y Sandshrew: captura uno. Pulsa Ver en el mapa para saber donde estan.",
-		reward = {exp = 30000, money = 2000, items = {{id = 26688, count = 20}}},
+		reward = {exp = 41000, money = 2000, items = {{id = 26688, count = 20}}},
 	},
 	{
 		id = "go_vermilion", kind = "reach", town = "vermilion", giver = "Profesor Oak",
 		title = "Rumbo a Ciudad Carmin",
 		text = "Ve hacia el sur, pasando por Ciudad Azafran, hasta Ciudad Carmin, el gran puerto de Kanto. Alli esta el gimnasio del Teniente Surge.",
-		reward = {exp = 30000, money = 2000, items = {{id = 27642, count = 15}}},
+		reward = {exp = 41000, money = 2000, items = {{id = 27642, count = 15}}},
 	},
 	{
 		id = "vermilion_electric", kind = "defeat", species = {"Voltorb", "Magnemite"}, count = 15, giver = "Teniente Surge, Lider de Gimnasio",
 		title = "Entrenamiento electrico",
 		text = "Antes de retarme, demuestra que no te asusta la electricidad: derrota 15 Voltorb o Magnemite, entre Ciudad Celeste y Ciudad Azafran. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar al Teniente Surge directamente.)",
-		reward = {exp = 40000, money = 3000},
+		reward = {exp = 55000, money = 3000},
 	},
 	{
 		id = "surge", kind = "badge", badge = "thunderBadge", giver = "Teniente Surge, Lider de Gimnasio",
@@ -203,20 +234,20 @@ progressionTasks = {
 		species = {"Koffing", "Ekans", "Grimer"}, count = 1, giver = "Profesor Oak",
 		title = "Contra las plantas",
 		text = "La siguiente Lider, Erika, usa Pokemon de tipo Planta. Los de tipo Fuego, Volador, Veneno o Bicho les hacen mucho dano. Captura uno: al sureste de Ciudad Azulona hay Koffing, Ekans y Grimer, y por todo Kanto hay Pidgey y Spearow.",
-		reward = {exp = 40000, money = 3000, items = {{id = 26688, count = 20}}},
+		reward = {exp = 72000, money = 3000, items = {{id = 26688, count = 20}}},
 	},
 	{
 		id = "go_celadon", kind = "reach", town = "celadon", giver = "Profesor Oak",
 		title = "Rumbo a Ciudad Azulona",
 		text = "Ve hacia el oeste desde Ciudad Azafran hasta Ciudad Azulona, la ciudad de los grandes almacenes. Alli esta el gimnasio de Erika.",
-		reward = {exp = 40000, money = 3000, items = {{id = 27642, count = 20}}},
+		reward = {exp = 72000, money = 3000, items = {{id = 27642, count = 20}}},
 	},
 	{
 		id = "celadon_grass", kind = "defeat", types = {"grass"}, species = {"Tangela", "Oddish", "Bellsprout"}, count = 15,
 		giver = "Erika, Lider de Gimnasio",
 		title = "Entrenamiento de planta",
 		text = "Antes de retarme, demuestra que sabes tratar con el tipo Planta: derrota 15 Pokemon de tipo Planta (Tangela, Oddish, Bellsprout...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Erika directamente.)",
-		reward = {exp = 50000, money = 4000},
+		reward = {exp = 89000, money = 4000},
 	},
 	{
 		id = "erika", kind = "badge", badge = "rainbowBadge", giver = "Erika, Lider de Gimnasio",
@@ -231,14 +262,14 @@ progressionTasks = {
 		id = "lavender_gastly", kind = "catch", species = {"Gastly"}, count = 1, giver = "Profesor Oak",
 		title = "La Torre Pokemon",
 		text = "Sabrina, la Lider de Ciudad Azafran, usa Pokemon Psiquicos y es muy fuerte. Los Pokemon de tipo Fantasma y Bicho son los que mejor le plantan cara. Ve a la Torre Pokemon de Pueblo Lavanda y captura un Gastly. Ojo: como tambien es de tipo Veneno, los ataques psiquicos le hacen mucho dano, asi que no lo dejes solo. Cuidado con los Gengar de los pisos altos!",
-		reward = {exp = 50000, money = 4000, items = {{id = 26688, count = 20}}},
+		reward = {exp = 160000, money = 4000, items = {{id = 26688, count = 20}}},
 	},
 	{
 		id = "saffron_psychic", kind = "defeat", types = {"psychic"}, species = {"Exeggcute", "Slowpoke"}, count = 15,
 		giver = "Sabrina, Lider de Gimnasio",
 		title = "Entrenamiento psiquico",
 		text = "Ya sabia que vendrias. Antes de retarme, derrota 15 Pokemon de tipo Psiquico (Exeggcute, Slowpoke, Abra...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Sabrina directamente.)",
-		reward = {exp = 60000, money = 5000},
+		reward = {exp = 192000, money = 5000},
 	},
 	{
 		id = "sabrina", kind = "badge", badge = "marshBadge", giver = "Sabrina, Lider de Gimnasio",
@@ -254,20 +285,20 @@ progressionTasks = {
 		species = {"Exeggcute", "Slowpoke", "Diglett", "Sandshrew"}, count = 1, giver = "Profesor Oak",
 		title = "Contra el veneno",
 		text = "El siguiente Lider, Koga, es un maestro ninja del tipo Veneno. Los Pokemon de tipo Psiquico y Tierra son los que mejor le plantan cara. Captura uno nuevo (Exeggcute, Slowpoke, Diglett, Sandshrew...).",
-		reward = {exp = 60000, money = 5000, items = {{id = 26688, count = 25}}},
+		reward = {exp = 157000, money = 5000, items = {{id = 26688, count = 25}}},
 	},
 	{
 		id = "go_fuchsia", kind = "reach", town = "fuchsia", giver = "Profesor Oak",
 		title = "Rumbo a Ciudad Fucsia",
 		text = "Ciudad Fucsia esta en el sureste de Kanto, junto a la Zona Safari. El camino es largo: llevate pociones. Pulsa Ver en el mapa para ver donde esta.",
-		reward = {exp = 60000, money = 5000, items = {{id = 27642, count = 25}}},
+		reward = {exp = 157000, money = 5000, items = {{id = 27642, count = 25}}},
 	},
 	{
 		id = "fuchsia_poison", kind = "defeat", types = {"poison"}, species = {"Koffing", "Grimer", "Ekans", "Venonat"}, count = 15,
 		giver = "Koga, Lider de Gimnasio",
 		title = "Entrenamiento venenoso",
 		text = "Fu fu fu. Antes de retarme, demuestra que resistes el veneno: derrota 15 Pokemon de tipo Veneno (Koffing, Grimer, Ekans...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Koga directamente.)",
-		reward = {exp = 70000, money = 6000},
+		reward = {exp = 183000, money = 6000},
 	},
 	{
 		id = "koga", kind = "badge", badge = "soulBadge", giver = "Koga, Lider de Gimnasio",
@@ -283,20 +314,20 @@ progressionTasks = {
 		giver = "Profesor Oak",
 		title = "Aprende a surfear",
 		text = "Blaine, el Lider de Isla Canela, usa Pokemon de Fuego, y su isla solo se alcanza por mar. Captura un Pokemon de Agua que sepa surfear: Staryu, Tentacool, Poliwag o Goldeen. Puedes ver en la Pokedex que Pokemon tienen Surf.",
-		reward = {exp = 70000, money = 6000, items = {{id = 26688, count = 25}}},
+		reward = {exp = 212000, money = 6000, items = {{id = 26688, count = 25}}},
 	},
 	{
 		id = "go_cinnabar", kind = "reach", town = "cinnabar", giver = "Profesor Oak",
 		title = "Rumbo a Isla Canela",
 		text = "Saca tu Pokemon que sabe surfear y camina hacia el agua: te subiras a el. Desde Pueblo Paleta, navega hacia el sur hasta Isla Canela.",
-		reward = {exp = 70000, money = 6000, items = {{id = 27642, count = 25}}},
+		reward = {exp = 212000, money = 6000, items = {{id = 27642, count = 25}}},
 	},
 	{
 		id = "cinnabar_fire", kind = "defeat", types = {"fire"}, species = {"Growlithe", "Vulpix", "Ponyta"}, count = 15,
 		giver = "Blaine, Lider de Gimnasio",
 		title = "Entrenamiento de fuego",
 		text = "Ja! Antes de retarme, a ver si aguantas el calor: derrota 15 Pokemon de tipo Fuego en Isla Canela (Growlithe, Vulpix, Ponyta...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Blaine directamente.)",
-		reward = {exp = 80000, money = 7000},
+		reward = {exp = 243000, money = 7000},
 	},
 	{
 		id = "blaine", kind = "badge", badge = "volcanoBadge", giver = "Blaine, Lider de Gimnasio",
@@ -312,7 +343,7 @@ progressionTasks = {
 		giver = "Profesor Oak",
 		title = "El ultimo gimnasio",
 		text = "El gimnasio de Ciudad Verde por fin ha abierto. Su Lider, Giovanni, usa Pokemon de tipo Tierra. Preparate derrotando 15 Pokemon de tipo Tierra (al este de Ciudad Celeste hay muchos). Los de Agua, Planta y Hielo les hacen mucho dano. (Si te ves fuerte, puedes retar a Giovanni directamente.)",
-		reward = {exp = 90000, money = 8000},
+		reward = {exp = 862000, money = 8000},
 	},
 	{
 		id = "giovanni", kind = "badge", badge = "earthBadge", giver = "Giovanni, Lider de Gimnasio",

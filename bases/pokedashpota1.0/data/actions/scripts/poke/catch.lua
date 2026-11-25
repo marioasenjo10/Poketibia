@@ -260,7 +260,12 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		local maxExpShiny = getNeededExp(playerLevel + 5) - getNeededExp(playerLevel)
 
 		local catchTier = getCatchTier(name:gsub("^Shiny ", ""))
-		local firstCatchExp = (catchExpBase + catchExpPerRequiredLevel * getPokemonRequiredLevel(name)) * (catchTier and catchExpTierFactor[catchTier] or 1)
+		local tierFactor = catchTier and catchExpTierFactor[catchTier] or 1
+		local firstCatchExp = (catchExpBase + catchExpPerRequiredLevel * getPokemonRequiredLevel(name)) * tierFactor
+		-- lo que crece con el nivel (lib/core/progression.lua): una fraccion del nivel actual x tier
+		if getCatchLevelExperience then
+			firstCatchExp = math.max(firstCatchExp, getCatchLevelExperience(playerLevel, tierFactor))
+		end
 		local givenExp = firstCatchExp
 		if msgcontains(name, 'Shiny') and player:getStorageValue(storageCatch) == -1 then
 			givenExp = firstCatchExp * catchExpFirstShinyFactor

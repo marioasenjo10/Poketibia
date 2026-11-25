@@ -368,7 +368,8 @@ function Player:onGainExperience(source, exp, rawExp)
 	end
 
 	-- Apply experience stage multiplier
-	exp = exp * Game.getExperienceStage(self:getLevel())
+	-- (crece con el nivel del entrenador, ver getExperienceMultiplier en lib/core/progression.lua)
+	exp = exp * (getExperienceMultiplier and getExperienceMultiplier(self:getLevel()) or Game.getExperienceStage(self:getLevel()))
 
 	-- Stamina modifier
 	if configManager.getBoolean(configKeys.STAMINA_SYSTEM) then
