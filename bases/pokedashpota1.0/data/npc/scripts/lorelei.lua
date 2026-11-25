@@ -1,6 +1,7 @@
 -- Lorelei, del Alto Mando (tipo Hielo) de la Liga Pokemon (combate 1 de 5). Script generado con la misma plantilla
 -- para todo el Alto Mando y el campeon: solo cambian el equipo, los textos y a donde se pasa al ganar.
 -- level: nivel de fuerza | hp: multiplicador de vida | damage: multiplicador de dano.
+-- El ultimo (el "as") es shiny: +25% a todas sus estadisticas (shinyStatMultiplier).
 local exitPosition = Position(264, 1074, 7)   -- fuera de la Liga, junto al portero
 local nextPosition = Position(239, 1071, 7) -- sala de Bruno
 local isChampion = false
@@ -10,7 +11,7 @@ local pokemons =
 	[2] = {name = "Cloyster", level = 92, hp = 3, damage = 1.6},
 	[3] = {name = "Slowbro", level = 93, hp = 3, damage = 1.6},
 	[4] = {name = "Jynx", level = 93, hp = 3, damage = 1.6},
-	[5] = {name = "Lapras", level = 94, hp = 3.5, damage = 1.7},
+	[5] = {name = "Shiny Lapras", level = 94, hp = 3.5, damage = 1.7},
 }
 
 local keywordHandler = KeywordHandler:new()

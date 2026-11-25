@@ -1,6 +1,7 @@
 -- Agatha, del Alto Mando (tipo Fantasma) de la Liga Pokemon (combate 3 de 5). Script generado con la misma plantilla
 -- para todo el Alto Mando y el campeon: solo cambian el equipo, los textos y a donde se pasa al ganar.
 -- level: nivel de fuerza | hp: multiplicador de vida | damage: multiplicador de dano.
+-- El ultimo (el "as") es shiny: +25% a todas sus estadisticas (shinyStatMultiplier).
 local exitPosition = Position(264, 1074, 7)   -- fuera de la Liga, junto al portero
 local nextPosition = Position(206, 1071, 7) -- sala de Lance
 local isChampion = false
@@ -9,7 +10,7 @@ local pokemons =
 	[1] = {name = "Gengar", level = 95, hp = 3, damage = 1.6},
 	[2] = {name = "Golbat", level = 95, hp = 3, damage = 1.6},
 	[3] = {name = "Arbok", level = 96, hp = 3, damage = 1.6},
-	[4] = {name = "Gengar", level = 97, hp = 3.5, damage = 1.7},
+	[4] = {name = "Shiny Gengar", level = 97, hp = 3.5, damage = 1.7},
 }
 
 local keywordHandler = KeywordHandler:new()

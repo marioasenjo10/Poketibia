@@ -1,6 +1,7 @@
 -- Lance, lider del Alto Mando (tipo Dragon) de la Liga Pokemon (combate 4 de 5). Script generado con la misma plantilla
 -- para todo el Alto Mando y el campeon: solo cambian el equipo, los textos y a donde se pasa al ganar.
 -- level: nivel de fuerza | hp: multiplicador de vida | damage: multiplicador de dano.
+-- El ultimo (el "as") es shiny: +25% a todas sus estadisticas (shinyStatMultiplier).
 local exitPosition = Position(264, 1074, 7)   -- fuera de la Liga, junto al portero
 local nextPosition = Position(194, 1071, 7) -- sala del campeon
 local isChampion = false
@@ -10,7 +11,7 @@ local pokemons =
 	[2] = {name = "Dragonair", level = 97, hp = 3, damage = 1.7},
 	[3] = {name = "Dragonair", level = 98, hp = 3, damage = 1.7},
 	[4] = {name = "Aerodactyl", level = 98, hp = 3, damage = 1.7},
-	[5] = {name = "Dragonite", level = 100, hp = 4, damage = 1.8},
+	[5] = {name = "Shiny Dragonite", level = 100, hp = 4, damage = 1.8},
 }
 
 local keywordHandler = KeywordHandler:new()

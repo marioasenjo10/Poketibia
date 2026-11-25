@@ -50,15 +50,15 @@ Para probar un gimnasio suelto: `/progreso ir <id del gimnasio>` + `/progreso ni
 
 Tras Giovanni: derrotar 25 Pokémon de la Calle Victoria (oeste de Ciudad Verde, subterráneos -1 y -2)
 y llegar a nivel 100. El portero de la Meseta Añil pide las 8 medallas y nivel 100. Dentro, uno tras
-otro, con 25 pociones y 5 revivir en total:
+otro, con 25 pociones y 5 revivir en total. El último de cada uno es shiny (+25% a todo); Blue lleva dos:
 
 | Combate | Equipo |
 |---|---|
-| Lorelei (Hielo) | Dewgong 92, Cloyster 92, Slowbro 93, Jynx 93, Lapras 94 |
-| Bruno (Lucha) | Onix 93, Hitmonchan 94, Hitmonlee 94, Onix 95, Machamp 96 |
-| Agatha (Fantasma) | Gengar 95, Golbat 95, Arbok 96, Gengar 97 |
-| Lance (Dragón) | Gyarados 97, Dragonair 97, Dragonair 98, Aerodactyl 98, Dragonite 100 |
-| Blue (campeón) | Pidgeot 98, Alakazam 99, Rhydon 99, Exeggutor 100, Gyarados 100, Arcanine 102 |
+| Lorelei (Hielo) | Dewgong 92, Cloyster 92, Slowbro 93, Jynx 93, **Shiny Lapras** 94 |
+| Bruno (Lucha) | Onix 93, Hitmonchan 94, Hitmonlee 94, Onix 95, **Shiny Machamp** 96 |
+| Agatha (Fantasma) | Gengar 95, Golbat 95, Arbok 96, **Shiny Gengar** 97 |
+| Lance (Dragón) | Gyarados 97, Dragonair 97, Dragonair 98, Aerodactyl 98, **Shiny Dragonite** 100 |
+| Blue (campeón) | Pidgeot 98, Alakazam 99, Rhydon 99, Exeggutor 100, **Shiny Gyarados** 100, **Shiny Arcanine** 102 |
 
 - [ ] Al ganar a cada uno se pasa a la sala del siguiente (la de Agatha la he calculado; mírala).
 - [ ] Al perder o al decir {rendirme}, fuera de la Liga y 20 horas de espera (`/progreso liga` la quita).

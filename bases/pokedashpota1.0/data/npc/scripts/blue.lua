@@ -1,6 +1,7 @@
 -- Blue, campeon de la Liga de la Liga Pokemon (combate 5 de 5). Script generado con la misma plantilla
 -- para todo el Alto Mando y el campeon: solo cambian el equipo, los textos y a donde se pasa al ganar.
 -- level: nivel de fuerza | hp: multiplicador de vida | damage: multiplicador de dano.
+-- El ultimo (el "as") es shiny; Blue lleva dos: +25% a todas sus estadisticas (shinyStatMultiplier).
 local exitPosition = Position(264, 1074, 7)   -- fuera de la Liga, junto al portero
 local nextPosition = nil
 local isChampion = true
@@ -10,8 +11,8 @@ local pokemons =
 	[2] = {name = "Alakazam", level = 99, hp = 3, damage = 1.7},
 	[3] = {name = "Rhydon", level = 99, hp = 3, damage = 1.7},
 	[4] = {name = "Exeggutor", level = 100, hp = 3, damage = 1.8},
-	[5] = {name = "Gyarados", level = 100, hp = 3.5, damage = 1.8},
-	[6] = {name = "Arcanine", level = 102, hp = 4, damage = 1.9},
+	[5] = {name = "Shiny Gyarados", level = 100, hp = 3.5, damage = 1.8},
+	[6] = {name = "Shiny Arcanine", level = 102, hp = 4, damage = 1.9},
 }
 
 local keywordHandler = KeywordHandler:new()
