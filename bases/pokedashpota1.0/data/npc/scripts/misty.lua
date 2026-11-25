@@ -7,8 +7,8 @@ local pokemons =
 {
 	-- reforzado tras probarlo: con un Gloom se ganaba facil a Staryu y Starmie solos
 	[1] = {name = "Shiny Staryu", level = 28, hp = 3.5, damage = 1.6},
-	[2] = {name = "Golduck", level = 29, hp = 3.5, damage = 1.7},
-	[3] = {name = "Quagsire", level = 29, hp = 4, damage = 1.6},
+	[2] = {name = "Golduck", level = 29, hp = 3.5, damage = 1.8},
+	[3] = {name = "Quagsire", level = 29, hp = 4, damage = 1.8},
 	[4] = {name = "Starmie", level = 32, hp = 4.5, damage = 2.0},
 }
 
