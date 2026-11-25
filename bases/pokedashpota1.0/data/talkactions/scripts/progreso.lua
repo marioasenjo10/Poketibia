@@ -5,6 +5,7 @@
 --   /progreso ir misty    -> salta a esa tarea (anteriores hechas, medallas previas puestas)
 --   /progreso tareas      -> lista de ids de tareas
 --   /progreso nivel 30    -> sube al nivel indicado (respeta el tope de la historia; no baja)
+--   /progreso orbe shiny charmeleon -> orbe de evolucion shiny con ese destino
 --   /progreso liga        -> quita la espera de 20 horas para volver a intentar la Liga
 -- Tambien lo pueden usar las cuentas de prueba de TEST_ACCOUNTS, aunque no sean GM.
 -- cuentas de prueba (servidor local) que pueden usar el comando sin ser GM
@@ -40,6 +41,25 @@ function onSay(player, words, param)
 		end
 		player:sendTextMessage(MESSAGE_INFO_DESCR, "Nivel actual: " .. player:getLevel() ..
 			(player:getLevel() < level and " (lo limita el tope de nivel de la historia)" or ""))
+	elseif param:match("^orbe%s+(.+)$") then
+		-- orbe de evolucion shiny con destino (lib/core/shinyevolution.lua): /progreso orbe shiny charmeleon
+		local wanted = param:match("^orbe%s+(.+)$")
+		local entry
+		for target, e in pairs(shinyEvoByTarget or {}) do
+			if target:lower() == wanted or target:lower() == "shiny " .. wanted then
+				entry = e
+				break
+			end
+		end
+		if not entry then
+			player:sendTextMessage(MESSAGE_INFO_DESCR, "Ningun shiny evoluciona a '" .. wanted .. "'.")
+		else
+			local orb = player:addItem(entry.id, 1)
+			if orb then
+				orb:setSpecialAttribute("evoTarget", entry.target)
+				player:sendTextMessage(MESSAGE_INFO_DESCR, "Orbe " .. SHINY_ORB_NAMES[entry.orb] .. " para " .. entry.target .. ".")
+			end
+		end
 	elseif param == "liga" then
 		player:setStorageValue(storageLeagueTime, 0)
 		player:sendTextMessage(MESSAGE_INFO_DESCR, "Ya puedes volver a intentar la Liga.")

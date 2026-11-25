@@ -122,8 +122,7 @@ Ajustes: `lib/core/runes.lua` (tiers, coste de fabricar) y `lib/core/weeklyquest
 
 ## Orbes de evolución shiny
 
-Con GM se puede crear un orbe con destino: `/i 46007` (bronce) y luego ponerle el destino no es posible por
-comando; lo más fácil es matar shinys o probar con un orbe soltado. Probar:
+Para probar sin cazar: `/progreso orbe shiny charmeleon` crea el orbe que toca con ese destino.
 
 - [ ] Un shiny que es evolución (Shiny Charmeleon, Shiny Raichu…) suelta a veces un orbe: bronce (T3-T7), verde (T2)
   o plata (T1) según su rareza.
