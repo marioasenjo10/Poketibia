@@ -51,16 +51,16 @@ pokemonRequiredLevels = {
 	-- etapas intermedias comunes
 	pidgeotto = 20, staravia = 20, skiploom = 20,
 	-- salen al principio pero son fuertes: no se pueden usar hasta el nivel 20
-	gloom = 20, geodude = 20, onix = 20,
+	gloom = 20, onix = 20, graveler = 20,
 	flaaffy = 25, weepinbell = 25, nidorina = 25, nidorino = 25,
 	golbat = 30, poliwhirl = 30, kirlia = 30, roselia = 30, lombre = 30, nuzleaf = 30,
 	loudred = 30, luxio = 30, wormadam = 30,
-	machoke = 35, graveler = 35, kadabra = 35, haunter = 35, seadra = 35, vigoroth = 35, sealeo = 35,
+	machoke = 35, kadabra = 35, haunter = 35, seadra = 35, vigoroth = 35, sealeo = 35,
 	magneton = 40, chansey = 40, piloswine = 40, lairon = 40, vibrava = 40,
 	slowbro = 45, dusclops = 45,
 	rhydon = 50, porygon2 = 50,
 	-- iniciales
-	ivysaur = 35, charmeleon = 35, wartortle = 35, bayleef = 35, quilava = 35, croconaw = 35,
+	ivysaur = 35, charmeleon = 35, wartortle = 25, bayleef = 35, quilava = 35, croconaw = 35,
 	grovyle = 35, combusken = 35, marshtomp = 35, grotle = 35, monferno = 35, prinplup = 35,
 	-- finales de linea de 2 etapas (por defecto twoStageFinal)
 	raticate = 20, furret = 20,
@@ -91,8 +91,8 @@ shinyExtraLevel = 20
 wildPowerFromSpecies = true
 wildPowerFactor = 1.0
 -- fuerza del salvaje distinta del nivel para usarlo (si no esta, se usa el nivel requerido).
--- Geodude pide nivel 20 para usarse pero el salvaje sigue siendo de nivel 0 (tarea antes de Brock).
-wildPowerLevels = {geodude = 0}
+-- Ejemplo: wildPowerLevels = {graveler = 15}
+wildPowerLevels = {}
 wildBaseHealthFactor = 0.75 -- vida de las formas base salvajes (nivel 0)
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
