@@ -648,6 +648,46 @@ function progressionForceComplete(player, index)
 	completeTask(player, index)
 end
 
+-- Pruebas (GM, /progreso ir <id>): salta a una tarea. Las anteriores quedan hechas sin recompensa
+-- y se ponen las medallas de los gimnasios anteriores (solo el storage, sin el objeto medalla).
+function progressionJumpTo(player, id)
+	local target
+	for index, task in ipairs(progressionTasks) do
+		if task.id == id then
+			target = index
+			break
+		end
+	end
+	if not target then
+		return false
+	end
+	player:setStorageValue(PROGRESSION_STORAGE, 1)
+	player:setStorageValue(PROGRESSION_STARTER_STORAGE, 1)
+	for index, task in ipairs(progressionTasks) do
+		local done = index < target
+		player:setStorageValue(PROGRESSION_TASK_STATE + index, done and 2 or -1)
+		player:setStorageValue(PROGRESSION_TASK_PROGRESS + index, -1)
+		if task.kind == "badge" and quests[task.badge] then
+			player:setStorageValue(quests[task.badge].prizes[1].uid, done and 1 or 0)
+		end
+	end
+	activateTask(player, target)
+	if player.sendNextGym then
+		player:sendNextGym()
+	end
+	return true
+end
+
+function progressionTaskIds()
+	local ids = {}
+	for _, task in ipairs(progressionTasks) do
+		if not task.disabled then
+			ids[#ids + 1] = task.id
+		end
+	end
+	return ids
+end
+
 -- comprueba si una tarea activa ya esta cumplida (al activarla puede estarlo)
 checkTaskDone = function(player, index)
 	local task = progressionTasks[index]
