@@ -548,22 +548,16 @@ function showPositions(positions, title, icon)
     minimapWidget:centerInPosition(marker, marker.pos)
     table.insert(pokedexFlags, marker)
   end
-  local candidates = {}
-  for _, p in ipairs(positions) do
-    if p.z == SURFACE_FLOOR then
-      table.insert(candidates, p)
-    end
-  end
-  if #candidates == 0 then
-    candidates = positions
-  end
+  -- se centra en la zona mas cercana al jugador; cada piso de diferencia cuenta como 15 casillas
+  -- (antes se preferia siempre la superficie y la zona de Mt. Moon, en un piso alto, nunca salia)
+  local candidates = positions
   local best = candidates[1]
   local player = g_game.getLocalPlayer()
   local me = player and player:getPosition()
   if me then
     local bestScore
     for _, p in ipairs(candidates) do
-      local score = math.max(math.abs(p.x - me.x), math.abs(p.y - me.y)) + math.abs(p.z - me.z) * 300
+      local score = math.max(math.abs(p.x - me.x), math.abs(p.y - me.y)) + math.abs(p.z - me.z) * 15
       if not bestScore or score < bestScore then
         best, bestScore = p, score
       end
