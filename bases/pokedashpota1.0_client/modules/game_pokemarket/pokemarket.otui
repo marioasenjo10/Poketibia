@@ -242,8 +242,10 @@ UIWindow
 
   MarketButton
     id: searchButton
-    anchors.top: searchEdit.top
+    // anclado a las pestanas (no al cuadro de busqueda: este se ancla al boton y seria un bucle)
+    anchors.top: tabBuy.bottom
     anchors.right: parent.right
+    margin-top: 12
     margin-right: 14
     height: 26
     width: 80
@@ -277,9 +279,12 @@ UIWindow
 
   VerticalScrollBar
     id: rowScroll
-    anchors.top: rowList.top
-    anchors.bottom: rowList.bottom
+    // mismos anclajes que la tabla, sin anclarse a ella (la tabla se ancla a la barra: seria un bucle)
+    anchors.top: header.bottom
+    anchors.bottom: footer.top
     anchors.right: parent.right
+    margin-top: 4
+    margin-bottom: 8
     margin-right: 14
     step: 40
     pixels-scroll: true
