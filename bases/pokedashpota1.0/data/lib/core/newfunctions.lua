@@ -268,6 +268,7 @@ boulderBadge = {
 			[1] = {
 				uid = 92000,
 				items = {
+					[1] = {item = "rock stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},
@@ -285,6 +286,7 @@ cascadeBadge = {
 			[1] = {
 				uid = 92001,				
 				items = {
+					[1] = {item = "water stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},
@@ -302,6 +304,7 @@ thunderBadge = {
 			[1] = {
 				uid = 92002,				
 				items = {
+					[1] = {item = "thunder stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},
@@ -319,6 +322,7 @@ rainbowBadge = {
 			[1] = {
 				uid = 92003,				
 				items = {
+					[1] = {item = "leaf stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},
@@ -336,6 +340,7 @@ soulBadge = {
 			[1] = {
 				uid = 92004,				
 				items = {
+					[1] = {item = "venom stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},
@@ -353,6 +358,7 @@ marshBadge = {
 			[1] = {
 				uid = 92005,				
 				items = {
+					[1] = {item = "enigma stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},
@@ -370,6 +376,7 @@ volcanoBadge = {
 			[1] = {
 				uid = 92006,				
 				items = {
+					[1] = {item = "fire stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},
@@ -387,6 +394,7 @@ earthBadge = {
 			[1] = {
 				uid = 92007,				
 				items = {
+					[1] = {item = "earth stone", count = 1}, -- piedra de su tipo al ganar al lider
 				},
 				pokes = {
 				},

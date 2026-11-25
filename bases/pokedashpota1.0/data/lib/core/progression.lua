@@ -193,7 +193,7 @@ progressionTasks = {
 		title = "La Medalla Roca",
 		text = "Desafia a Brock en el Gimnasio de Ciudad Plateada. Sus Pokemon son Geodude y Onix. Recomendado: nivel 18-20 y un Pokemon de tipo Agua, Planta o Lucha.",
 		reward = {exp = 0, money = 3000},
-		rewardText = "Medalla Roca, sin tope de nivel 20 y +5% de dano y defensa a tus Pokemon de tipo Roca",
+		rewardText = "Medalla Roca, 1 piedra roca, sin tope de nivel 20 y +5% de dano y defensa a tus Pokemon de tipo Roca",
 		map = {{699, 823, 7, "Brock, Gimnasio de Ciudad Plateada"}},
 	},
 	-- ===== Ruta a Ciudad Celeste (Misty) =====
@@ -220,7 +220,7 @@ progressionTasks = {
 		title = "La Medalla Cascada",
 		text = "Desafia a Misty en el Gimnasio de Ciudad Celeste. Sus Pokemon son Shiny Staryu, Golduck, Quagsire y Starmie. Recomendado: nivel 30 y Pokemon de tipo Planta o Electrico (ojo: Quagsire es inmune a la electricidad).",
 		reward = {exp = 0, money = 5000},
-		rewardText = "Medalla Cascada, sin tope de nivel 30 y +5% de dano y defensa a tus Pokemon de tipo Agua",
+		rewardText = "Medalla Cascada, 1 piedra agua, sin tope de nivel 30 y +5% de dano y defensa a tus Pokemon de tipo Agua",
 		map = {{1095, 896, 7, "Misty, Gimnasio de Ciudad Celeste"}},
 	},
 	-- ===== Ruta a Ciudad Carmin (Teniente Surge) =====
@@ -247,7 +247,7 @@ progressionTasks = {
 		title = "La Medalla Trueno",
 		text = "Desafia al Teniente Surge en el Gimnasio de Ciudad Carmin. Sus Pokemon son Voltorb, Magnemite y Raichu. Recomendado: nivel 38-40 y un Pokemon de tipo Tierra.",
 		reward = {exp = 0, money = 8000},
-		rewardText = "Medalla Trueno, sin tope de nivel 40 y +5% de dano y defensa a tus Pokemon de tipo Electrico",
+		rewardText = "Medalla Trueno, 1 piedra trueno, sin tope de nivel 40 y +5% de dano y defensa a tus Pokemon de tipo Electrico",
 		map = {{1017, 1272, 5, "Teniente Surge, Gimnasio de Ciudad Carmin"}},
 	},
 	-- ===== Ciudad Azulona (Erika) =====
@@ -276,7 +276,7 @@ progressionTasks = {
 		title = "La Medalla Arcoiris",
 		text = "Desafia a Erika en el Gimnasio de Ciudad Azulona. Sus Pokemon son Tangela, Weepinbell y Vileplume. Recomendado: nivel 48-50 y un Pokemon de tipo Fuego, Volador, Veneno o Bicho.",
 		reward = {exp = 0, money = 12000},
-		rewardText = "Medalla Arcoiris, sin tope de nivel 50 y +5% de dano y defensa a tus Pokemon de tipo Planta",
+		rewardText = "Medalla Arcoiris, 1 piedra hoja, sin tope de nivel 50 y +5% de dano y defensa a tus Pokemon de tipo Planta",
 		map = {{843, 1114, 5, "Erika, Gimnasio de Ciudad Azulona"}},
 	},
 	-- ===== Ciudad Azafran (Sabrina) =====
@@ -298,7 +298,7 @@ progressionTasks = {
 		title = "La Medalla Pantano",
 		text = "Desafia a Sabrina en el Gimnasio de Ciudad Azafran. Sus Pokemon son Kadabra, Mr. Mime y Alakazam. Recomendado: nivel 58-60 y un Pokemon de tipo Fantasma o Bicho.",
 		reward = {exp = 0, money = 15000},
-		rewardText = "Medalla Pantano, sin tope de nivel 60 y +5% de dano y defensa a tus Pokemon de tipo Psiquico",
+		rewardText = "Medalla Pantano, 1 piedra enigma, sin tope de nivel 60 y +5% de dano y defensa a tus Pokemon de tipo Psiquico",
 		map = {{1093, 1054, 7, "Sabrina, Gimnasio de Ciudad Azafran"}},
 	},
 	-- ===== Ciudad Fucsia (Koga) =====
@@ -327,7 +327,7 @@ progressionTasks = {
 		title = "La Medalla Alma",
 		text = "Desafia a Koga en el Gimnasio de Ciudad Fucsia. Sus Pokemon son Venomoth, Muk y Weezing. Recomendado: nivel 68-70 y un Pokemon de tipo Psiquico o Tierra.",
 		reward = {exp = 0, money = 18000},
-		rewardText = "Medalla Alma, sin tope de nivel 70 y +5% de dano y defensa a tus Pokemon de tipo Veneno",
+		rewardText = "Medalla Alma, 1 piedra veneno, sin tope de nivel 70 y +5% de dano y defensa a tus Pokemon de tipo Veneno",
 		map = {{1195, 1374, 7, "Koga, Gimnasio de Ciudad Fucsia"}},
 	},
 	-- ===== Isla Canela (Blaine) =====
@@ -356,7 +356,7 @@ progressionTasks = {
 		title = "La Medalla Volcan",
 		text = "Desafia a Blaine en el Gimnasio de Isla Canela. Sus Pokemon son Ninetales, Rapidash y Arcanine. Recomendado: nivel 78-80 y un Pokemon de tipo Agua, Tierra o Roca.",
 		reward = {exp = 0, money = 22000},
-		rewardText = "Medalla Volcan, sin tope de nivel 80 y +5% de dano y defensa a tus Pokemon de tipo Fuego",
+		rewardText = "Medalla Volcan, 1 piedra fuego, sin tope de nivel 80 y +5% de dano y defensa a tus Pokemon de tipo Fuego",
 		map = {{790, 1371, 4, "Blaine, Gimnasio de Isla Canela"}},
 	},
 	-- ===== Ciudad Verde (Giovanni) =====
@@ -372,7 +372,7 @@ progressionTasks = {
 		title = "La Medalla Tierra",
 		text = "Desafia a Giovanni en el Gimnasio de Ciudad Verde. Sus Pokemon son Rhyhorn, Nidoking y Rhydon. Recomendado: nivel 88-90 y un Pokemon de tipo Agua, Planta o Hielo.",
 		reward = {exp = 0, money = 30000},
-		rewardText = "Medalla Tierra, las 8 medallas de Kanto, sin tope de nivel y +5% de dano y defensa a tus Pokemon de tipo Tierra",
+		rewardText = "Medalla Tierra, 1 piedra tierra, las 8 medallas de Kanto, sin tope de nivel y +5% de dano y defensa a tus Pokemon de tipo Tierra",
 		map = {{743, 1074, 6, "Giovanni, Gimnasio de Ciudad Verde"}},
 	},
 	-- ===== Liga Pokemon (quest indigoLeague: Alto Mando + campeon) =====
