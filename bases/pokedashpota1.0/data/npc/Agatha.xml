@@ -3,7 +3,7 @@
 	<health now="100" max="100" />
 	<look type="2640" addons="0" />
 	<parameters>
-		<parameter key="message_greet" value="Eu sou Agatha da Elite Four! Ao contrario do que Oak diz, Pokemons sao para batalhar, |PLAYERNAME|. Quer me desafiar?" />
-		<parameter key="message_decline" value="Tome o tempo que precisar." />
+		<parameter key="message_greet" value="Soy Agatha, del Alto Mando. Oak dice que los Pokemon son para luchar con carino... yo creo que son para ganar, |PLAYERNAME|. Estas preparado? {si} / {no}" />
+		<parameter key="message_decline" value="Tomate el tiempo que necesites." />
 	</parameters>
 </npc>

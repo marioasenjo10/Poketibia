@@ -89,6 +89,8 @@ progressionGyms = {
 	{badge = "soulBadge", npc = "Koga", leader = "Koga", city = "Ciudad Fucsia", medal = "Medalla Alma", type = "Veneno"},
 	{badge = "volcanoBadge", npc = "Blaine", leader = "Blaine", city = "Isla Canela", medal = "Medalla Volcan", type = "Fuego"},
 	{badge = "earthBadge", npc = "Giovanni", leader = "Giovanni", city = "Ciudad Verde", medal = "Medalla Tierra", type = "Tierra"},
+	-- con las 8 medallas, la marca del mapa senala la entrada de la Liga
+	{badge = "indigoLeague", npc = "League Doorman", leader = "Liga Pokemon", city = "Meseta Anil", medal = "Alto Mando y campeon", type = ""},
 }
 
 -- Tareas de historia, en orden. kind: talk | reach | catch | defeat | badge
@@ -352,6 +354,23 @@ progressionTasks = {
 		reward = {exp = 0, money = 30000},
 		rewardText = "Medalla Tierra, las 8 medallas de Kanto, sin tope de nivel y +5% de dano y defensa a tus Pokemon de tipo Tierra",
 		map = {{743, 1074, 6, "Giovanni, Gimnasio de Ciudad Verde"}},
+	},
+	-- ===== Liga Pokemon (quest indigoLeague: Alto Mando + campeon) =====
+	{
+		id = "victory_road", kind = "defeat", species = {"Graveler", "Machoke", "Golbat", "Onix", "Rhyhorn", "Arbok"}, count = 25,
+		giver = "Profesor Oak",
+		title = "La Calle Victoria",
+		text = "Tienes las 8 medallas! Para entrar en la Liga Pokemon necesitas nivel 100. Entre Ciudad Verde y la Meseta Anil, al oeste, esta la Calle Victoria: derrota 25 de sus Pokemon (Graveler, Machoke, Golbat, Onix, Rhyhorn, Arbok).",
+		reward = {exp = 1082000, money = 10000, items = {{id = 27642, count = 30}}},
+		map = {{478, 1087, 8, "Calle Victoria (subterraneo -1)"}, {430, 1117, 9, "Calle Victoria (subterraneo -2)"}},
+	},
+	{
+		id = "league", kind = "badge", badge = "indigoLeague", giver = "Profesor Oak",
+		title = "La Liga Pokemon",
+		text = "Habla con el portero de la Meseta Anil y desafia al Alto Mando: Lorelei (Hielo), Bruno (Lucha), Agatha (Fantasma), Lance (Dragon) y, por ultimo, el campeon. Solo tendras 25 pociones y 5 revivir para todos los combates.",
+		reward = {exp = 0, money = 50000},
+		rewardText = "Trofeo de la Liga Indigo, 50 crystal coins y tu nombre en el Salon de la Fama",
+		map = {{260, 1074, 7, "Portero de la Liga Pokemon"}},
 	},
 }
 

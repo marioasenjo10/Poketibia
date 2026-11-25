@@ -252,7 +252,7 @@ indigoLeague = {
 				}
 			}
 		},
-		level = 125, 
+		level = 100, -- nivel para entrar en la Liga (antes 125; la historia llega a 90 con Giovanni)
 		teleportCP = 0
 	},
 

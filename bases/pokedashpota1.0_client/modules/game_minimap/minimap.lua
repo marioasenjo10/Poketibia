@@ -389,9 +389,11 @@ function onNextGymOpcode(protocol, opcode, buffer)
   gymMarker = g_ui.createWidget('UIWidget')
   gymMarker:setSize({ width = 26, height = 26 })
   gymMarker:setImageSource('/images/map/gym_next')
-  gymMarker:setTooltip('Siguiente gimnasio: ' .. leader .. ' (' .. city .. ')
+  -- la Liga llega sin tipo: "Siguiente reto: Liga Pokemon (Meseta Anil)"
+  local isGym = kind ~= ''
+  gymMarker:setTooltip((isGym and 'Siguiente gimnasio: ' or 'Siguiente reto: ') .. leader .. ' (' .. city .. ')
 ' ..
-    medal .. ' - Pokmon de tipo ' .. kind)
+    medal .. (isGym and (' - Pokmon de tipo ' .. kind) or ''))
   gymMarker:setFocusable(false)
   gymMarker.pos = { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
   minimapWidget:addChild(gymMarker)

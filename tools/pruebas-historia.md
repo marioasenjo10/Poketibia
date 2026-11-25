@@ -19,6 +19,7 @@ Comandos de prueba (el tester puede usarlos aunque no sea GM):
 | `/progreso ir misty` | Salta a esa tarea: las anteriores quedan hechas y se ponen las medallas previas |
 | `/progreso saltar` | Completa la tarea activa (con recompensa) |
 | `/progreso nivel 40` | Sube al nivel indicado (no baja) |
+| `/progreso liga` | Quita la espera de 20 horas para repetir la Liga |
 
 Para probar un gimnasio suelto: `/progreso ir <id del gimnasio>` + `/progreso nivel <recomendado>`.
 
@@ -44,6 +45,37 @@ Para probar un gimnasio suelto: `/progreso ir <id del gimnasio>` + `/progreso ni
 | Koga | Fucsia | Psíquico/Tierra, llegar, 15 de tipo Veneno | Venomoth 66, Muk 68, Weezing 70 | 70 | El camino a Fucsia |
 | Blaine | Canela | Pokémon con Surf, llegar surfeando desde Paleta, 15 de tipo Fuego | Ninetales 76, Rapidash 78, Arcanine 80 | 80 | Surfear hasta la isla funciona |
 | Giovanni | Verde | 15 de tipo Tierra | Rhyhorn 86, Nidoking 88, Rhydon 90 | 90 | Tras ganar, sin tope de nivel |
+
+## Liga Pokémon
+
+Tras Giovanni: derrotar 25 Pokémon de la Calle Victoria (oeste de Ciudad Verde, subterráneos -1 y -2)
+y llegar a nivel 100. El portero de la Meseta Añil pide las 8 medallas y nivel 100. Dentro, uno tras
+otro, con 25 pociones y 5 revivir en total:
+
+| Combate | Equipo |
+|---|---|
+| Lorelei (Hielo) | Dewgong 92, Cloyster 92, Slowbro 93, Jynx 93, Lapras 94 |
+| Bruno (Lucha) | Onix 93, Hitmonchan 94, Hitmonlee 94, Onix 95, Machamp 96 |
+| Agatha (Fantasma) | Gengar 95, Golbat 95, Arbok 96, Gengar 97 |
+| Lance (Dragón) | Gyarados 97, Dragonair 97, Dragonair 98, Aerodactyl 98, Dragonite 100 |
+| Blue (campeón) | Pidgeot 98, Alakazam 99, Rhydon 99, Exeggutor 100, Gyarados 100, Arcanine 102 |
+
+- [ ] Al ganar a cada uno se pasa a la sala del siguiente (la de Agatha la he calculado; mírala).
+- [ ] Al perder o al decir {rendirme}, fuera de la Liga y 20 horas de espera (`/progreso liga` la quita).
+- [ ] Al ganar a Blue: premio de la quest, mensaje a todo el servidor y tarea completada.
+- [ ] Antes, Bruno era un pescadero de Tibia y la Liga se cortaba en el segundo combate.
+
+## Experiencia
+
+Objetivo: unos 30 minutos entre gimnasios. Para ver el reparto por tramo:
+
+```powershell
+python tools/combatsim/expcurve.py 2     # 2 derrotas por minuto
+```
+
+- [ ] Apunta el nivel y el tiempo de juego al llegar a cada gimnasio.
+- [ ] Si subes demasiado rápido, sube `expKillsPerLevel` en `lib/core/progression.lua`; si vas lento, bájalo.
+- [ ] La primera captura de cada especie da un 10 % del nivel × su tier (`catchExpLevelFraction`).
 
 Los valores de cada gimnasio (nivel, vida ×, daño ×) están al principio de su script en
 `bases/pokedashpota1.0/data/npc/scripts/<lider>.lua`. Las tareas y recompensas, en

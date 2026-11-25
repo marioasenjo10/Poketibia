@@ -3,7 +3,7 @@
 	<health now="100" max="100" />
 	<look type="2644" addons="0" />
 	<parameters>
-		<parameter key="message_greet" value=" Eu ouvi sobre voce, |PLAYERNAME|! Eu lidero a Elite Four! Voce pode me chamar de Lance, o treinador de dragoes!  Bem, voce esta pronto para perder?" />
-		<parameter key="message_decline" value="Tome o tempo que precisar." />
+		<parameter key="message_greet" value="Te esperaba, |PLAYERNAME|. Soy Lance, el lider del Alto Mando. Los dragones son Pokemon legendarios, casi imposibles de vencer. Estas preparado? {si} / {no}" />
+		<parameter key="message_decline" value="Tomate el tiempo que necesites." />
 	</parameters>
 </npc>

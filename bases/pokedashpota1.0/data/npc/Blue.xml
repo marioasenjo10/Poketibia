@@ -3,7 +3,7 @@
 	<health now="100" max="100" />
 	<look type="2599" addons="0" />
 	<parameters>
-		<parameter key="message_greet" value="Eu estava ansioso para ver voce, |PLAYERNAME|! Eu sou o campeao da Liga Pokemon! Voce sabe o que isso significa? Significa que eu sou o treinador mais poderoso do mundo!" />
-		<parameter key="message_decline" value="Ande logo! Vamos acabar com isso de uma vez!" />
+		<parameter key="message_greet" value="Por fin llegas, |PLAYERNAME|. Soy Blue, el campeon de la Liga Pokemon, el entrenador mas fuerte del mundo. Vamos a acabar con esto de una vez? {si} / {no}" />
+		<parameter key="message_decline" value="Tomate el tiempo que necesites." />
 	</parameters>
 </npc>

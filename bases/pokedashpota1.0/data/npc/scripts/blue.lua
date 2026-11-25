@@ -1,43 +1,17 @@
-local storage = quests.indigoLeague.prizes[1].uid
-local exitPosition = Position(264, 1074, 7)
-local pokemons = 
+-- Blue, campeon de la Liga de la Liga Pokemon (combate 5 de 5). Script generado con la misma plantilla
+-- para todo el Alto Mando y el campeon: solo cambian el equipo, los textos y a donde se pasa al ganar.
+-- level: nivel de fuerza | hp: multiplicador de vida | damage: multiplicador de dano.
+local exitPosition = Position(264, 1074, 7)   -- fuera de la Liga, junto al portero
+local nextPosition = nil
+local isChampion = true
+local pokemons =
 {
-	[1] = 
-		{
-			name = "Shiny Pidgeot",
-			level = 200
-		},
-	[2] = 
-		{
-			name = "Shiny Alakazam",
-			level = 200
-		},
-
-	[3] = 
-		{
-			name = "Shiny Rhydon",
-			level = 200
-		},
-
-	[4] = 
-		{
-			name = "Shiny Gyarados",
-			level = 200
-		},
-
-	[5] = 
-		{
-			name = "Shiny Exeggutor",
-			level = 200
-		},
-
-	[6] = 
-		{
-			name = "Shiny Arcanine",
-			level = 200
-		}
-
-
+	[1] = {name = "Pidgeot", level = 98, hp = 3, damage = 1.7},
+	[2] = {name = "Alakazam", level = 99, hp = 3, damage = 1.7},
+	[3] = {name = "Rhydon", level = 99, hp = 3, damage = 1.7},
+	[4] = {name = "Exeggutor", level = 100, hp = 3, damage = 1.8},
+	[5] = {name = "Gyarados", level = 100, hp = 3.5, damage = 1.8},
+	[6] = {name = "Arcanine", level = 102, hp = 4, damage = 1.9},
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -49,12 +23,35 @@ function onCreatureDisappear(cid)           npcHandler:onCreatureDisappear(cid) 
 function onCreatureSay(cid, type, msg)      npcHandler:onCreatureSay(cid, type, msg)    end
 function onThink()                          npcHandler:onThink()                        end
 
+-- teletransporte a la sala siguiente (si la casilla exacta esta ocupada, prueba las de al lado)
+local function teleportNear(player, position)
+	for offset = 0, 4 do
+		for _, dx in ipairs(offset == 0 and {0} or {-offset, offset}) do
+			local pos = Position(position.x + dx, position.y, position.z)
+			local tile = Tile(pos)
+			if tile and tile:getGround() and tile:queryAdd(player) == RETURNVALUE_NOERROR then
+				player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+				player:teleportTo(pos)
+				pos:sendMagicEffect(CONST_ME_TELEPORT)
+				return true
+			end
+		end
+	end
+	player:teleportTo(position, true)
+	return false
+end
+
+local function leaveLeague(player)
+	player:setOutLeague()
+	teleportNear(player, exitPosition)
+end
+
 local function creatureGreetCallback(cid, message)
 	if message == nil then
 		return true
 	end
 	if npcHandler:hasFocus() then
-		selfSay("Espere sua vez, " .. Player(cid):getName() .. "!")
+		selfSay("Espera tu turno, " .. Player(cid):getName() .. "!")
 		return false
 	end
 	return true
@@ -62,41 +59,40 @@ end
 
 local function sendToExit(cid)
 	local player = Player(cid)
-	selfSay("Mais sorte na proxima tentativa, " .. player:getName() .. "!", cid)
+	selfSay("Mas suerte la proxima vez, " .. player:getName() .. ". Tendras que empezar la Liga desde el principio.", cid)
 	npcHandler:releaseFocus(cid)
-	player:setOutLeague()
-	player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-	player:teleportTo(exitPosition)
-	player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+	leaveLeague(player)
 	return true
 end
 
 local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
-	end	
-	if msgcontains(msg, 'bye') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') then
-		selfSay('Estou aguardando... Lembre-se que voce sempre pode {desistir}', cid)
+	end
+	local player = Player(cid)
+	if not player then
+		return false
+	end
+	if msgcontains(msg, 'rendir') or msgcontains(msg, 'desistir') or msgcontains(msg, 'salir') or msgcontains(msg, 'leave') then
+		selfSay('Vuelve cuando estes preparado.', cid)
 		npcHandler:releaseFocus(cid)
-	elseif msgcontains(msg, 'sair') or msgcontains(msg, 'desistir') or msgcontains(msg, 'leave') then
-		local player = Player(cid)
-		if player then
-			selfSay('Volte quando estiver preparado!', cid)
-			player:teleportTo(exitPosition)
-		end
+		leaveLeague(player)
+	elseif msgcontains(msg, 'bye') or msgcontains(msg, 'adios') or msgcontains(msg, 'no') then
+		selfSay('Te espero. Recuerda que siempre puedes {rendirte} y salir de la Liga.', cid)
 		npcHandler:releaseFocus(cid)
-	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'sim') then
-		local player = Player(cid)
-		if player then
-			if player:getStorageValue(storage) > 0 then
-				selfSay('O que esta fazendo aqui? Ja pegou seu premio!', cid)
-				sendToExit(cid)
-			else
-				selfSay('Ambos sabemos o resultado... Mas como realmente quer tentar....', cid)
-				npcHandler.topic[cid] = 1
-				npcHandler:setMaxIdleTime(600)
-				player:setDuelWithNpc()
-			end
+	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'si') then
+		if not player:isOnLeague() then
+			selfSay('No estas participando en la Liga. Habla con el portero de la entrada.', cid)
+			npcHandler:releaseFocus(cid)
+		elseif isChampion and player:getStorageValue(quests.indigoLeague.prizes[1].uid) > 0 then
+			selfSay('Ya eres el campeon. No hay nada que demostrar.', cid)
+			npcHandler:releaseFocus(cid)
+			leaveLeague(player)
+		else
+			selfSay('Los dos sabemos como va a acabar esto... pero si de verdad quieres intentarlo...', cid)
+			npcHandler.topic[cid] = 1
+			npcHandler:setMaxIdleTime(600)
+			player:setDuelWithNpc()
 		end
 	end
 	return true
@@ -107,6 +103,9 @@ local function creatureOnReleaseFocusCallback(cid)
 	if hasSummons(npc) then
 		local monster = npc:getSummons()[1]
 		monster:getPosition():sendMagicEffect(balls.pokeball.effectRelease)
+		if gymSummonDamage then
+			gymSummonDamage[monster:getId()] = nil
+		end
 		monster:remove()
 	end
 	local player = Player(cid)
@@ -131,6 +130,22 @@ local function creatureOnDisapearCallback(cid)
 	return true
 end
 
+local function onVictory(player, cid)
+	if isChampion then
+		selfSay('NO! IMPOSIBLE! Has derrotado a mi mejor equipo... Aunque me cueste admitirlo, eres el nuevo Campeon de la Liga. Enhorabuena.', cid)
+		player:giveQuestPrize(quests.indigoLeague.prizes[1].uid)
+		if progressionOnBadge then
+			progressionOnBadge(player, "indigoLeague")
+		end
+		Game.broadcastMessage(player:getName() .. " ha derrotado al Alto Mando y es el nuevo Campeon de la Liga Pokemon!", MESSAGE_EVENT_ADVANCE)
+		leaveLeague(player)
+	else
+		selfSay('NO! IMPOSIBLE! Has derrotado a mi mejor equipo... Aunque me cueste admitirlo, eres el nuevo Campeon de la Liga. Enhorabuena.', cid)
+		teleportNear(player, nextPosition)
+	end
+	npcHandler:releaseFocus(cid)
+end
+
 local function creatureOnThinkCallback()
 	if npcHandler:hasFocus() then
 		local npc = Npc()
@@ -144,23 +159,22 @@ local function creatureOnThinkCallback()
 				local monster = npc:getSummons()[1]
 				if not monster then
 					if pokemons[duelStatus] then
-						selfSay(pokemons[duelStatus].name .. ", eu escolho voce!")
+						selfSay(pokemons[duelStatus].name .. ", te elijo a ti!")
 						npcPosition:getNextPosition(npc:getDirection())
 						monster = Game.createMonster(pokemons[duelStatus].name, npcPosition, false, true, pokemons[duelStatus].level, 0)
 						npcPosition:sendMagicEffect(balls.pokeball.effectRelease)
 						monster:setMaster(npc)
-						local health = monster:getTotalHealth() * 10
+						local health = math.floor(monster:getTotalHealth() * (pokemons[duelStatus].hp or 3))
 						monster:setMaxHealth(health)
 						monster:setHealth(health)
+						if gymSummonDamage then
+							gymSummonDamage[monster:getId()] = pokemons[duelStatus].damage or 1.0
+						end
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()
 					else
-						selfSay('NAO! IMPOSSIVEL! Voce derrotou meu melhor time. ' .. player:getName() .. ", embora eu nao goste de admitir, voce e o novo campeao da Liga. Meus parabens!", cid)
-						player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-						player:teleportTo(exitPosition)
-						player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-						player:giveQuestPrize(storage)
-						npcHandler:releaseFocus(cid)
+						onVictory(player, cid)
+						return true
 					end
 				end
 				if hasSummons(player) and hasSummons(npc) then
@@ -168,18 +182,17 @@ local function creatureOnThinkCallback()
 				end
 				local pokeballs = player:getPokeballs()
 				local pokemonsAlive = 0
-				for i=1, #pokeballs do
-					local ball = pokeballs[i]					
+				for i = 1, #pokeballs do
+					local ball = pokeballs[i]
 					if ball:getSpecialAttribute("pokeHealth") > 0 then
 						pokemonsAlive = pokemonsAlive + 1
 					end
 				end
 				if pokemonsAlive == 0 then
-					sendToExit(cid)					
+					sendToExit(cid)
 				end
 			end
 		end
-
 	end
 	return true
 end
