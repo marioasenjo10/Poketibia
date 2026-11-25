@@ -85,9 +85,8 @@ local function updateTracker()
   if not tracker then return end
   local active
   for _, task in ipairs(tasks) do
-    if task.state == 1 then
+    if task.state == 1 and (not active or (active.optional and not task.optional)) then
       active = task
-      break
     end
   end
   if not active or not trackerEnabled() or not g_game.isOnline() then
@@ -123,7 +122,10 @@ local function render()
   -- activas primero, despues las hechas (la ultima hecha arriba)
   local ordered = {}
   for _, task in ipairs(tasks) do
-    if task.state == 1 then ordered[#ordered + 1] = task end
+    if task.state == 1 and not task.optional then ordered[#ordered + 1] = task end
+  end
+  for _, task in ipairs(tasks) do
+    if task.state == 1 and task.optional then ordered[#ordered + 1] = task end
   end
   for i = #tasks, 1, -1 do
     if tasks[i].state == 2 then ordered[#ordered + 1] = tasks[i] end
@@ -136,8 +138,8 @@ local function render()
     setChip(card:getChildById('kind'), kind.text, done and '#3a3f47' or kind.color)
     card:getChildById('giver'):setText(task.giver)
     local status = card:getChildById('status')
-    status:setText(done and 'Completada' or 'En curso')
-    status:setColor(done and '#43a047' or '#f2c14e')
+    status:setText(done and 'Completada' or (task.optional and 'Opcional' or 'En curso'))
+    status:setColor(done and '#43a047' or (task.optional and '#8fa7ff' or '#f2c14e'))
     card:getChildById('title'):setText(task.title)
     card:getChildById('title'):setColor(done and '#8b95a5' or '#ffffff')
     card:getChildById('text'):setText(task.text)
@@ -177,7 +179,7 @@ function onTasksOpcode(protocol, opcode, buffer)
       tasks[#tasks + 1] = {
         index = tonumber(f[1]) or 0, state = tonumber(f[2]) or 1, kind = f[3], giver = f[4],
         title = f[5], text = f[6], progress = tonumber(f[7]) or 0, total = tonumber(f[8]) or 1, reward = f[9],
-        mapPoints = parseMapPoints(f[10]), mapIcon = f[11] or '',
+        mapPoints = parseMapPoints(f[10]), mapIcon = f[11] or '', optional = f[12] == '1',
       }
     end
   end
@@ -225,10 +227,13 @@ local function fadeIn(widget)
 end
 
 local function activeTask()
+  local found
   for _, task in ipairs(tasks) do
-    if task.state == 1 then return task end
+    if task.state == 1 and (not found or (found.optional and not task.optional)) then
+      found = task
+    end
   end
-  return nil
+  return found
 end
 
 local function createDoneWindow()
@@ -262,6 +267,7 @@ function showNextDone()
   w:getChildById('doneTitle'):setText(d.title)
   w:getChildById('doneReward'):setText(d.reward ~= '' and ('Recompensa: ' .. d.reward) or '')
   local hasNext = d.nextTitle ~= ''
+  w:getChildById('nextOptional'):hide()
   for _, id in ipairs({'separator', 'nextHeader', 'giver', 'nextKind', 'nextGiver', 'nextTitle', 'nextText'}) do
     w:getChildById(id):setVisible(hasNext)
   end
@@ -273,6 +279,9 @@ function showNextDone()
     w:getChildById('nextGiver'):setText(d.giver)
     w:getChildById('nextTitle'):setText(d.nextTitle)
     w:getChildById('nextText'):setText(d.nextText)
+    local optionalLabel = w:getChildById('nextOptional')
+    optionalLabel:setText(d.optional ~= '' and ('Opcional - ' .. d.optional) or '')
+    optionalLabel:setVisible(d.optional ~= '')
     local giver = w:getChildById('giver')
     if d.look ~= '' then
       local look = split(d.look, ',')
@@ -292,7 +301,7 @@ end
 function onTaskDoneOpcode(protocol, opcode, buffer)
   local f = split(buffer or '', '|')
   table.insert(doneQueue, { title = f[1] or '', reward = f[2] or '', kind = f[3] or '', giver = f[4] or '',
-    nextTitle = f[5] or '', nextText = f[6] or '', look = f[7] or '', hasMap = f[8] == '1' })
+    nextTitle = f[5] or '', nextText = f[6] or '', look = f[7] or '', hasMap = f[8] == '1', optional = f[9] or '' })
   if not doneWindow or not doneWindow:isVisible() then
     showNextDone()
   end

@@ -120,6 +120,8 @@ progressionGyms = {
 -- reward: exp, money (banco) e items {id, count}
 -- map (opcional): puntos para el boton "Ver en el mapa" del panel de Tareas, {{x, y, z, texto}}.
 --   Sin map: catch/defeat con species usan los spawns de la Pokedex y reach la ciudad.
+-- optional = true: se activa junto con la siguiente principal (el gimnasio); da su recompensa si se hace,
+--   y si se gana al lider antes, se cierra sin recompensa. Los entrenamientos de antes de cada gimnasio.
 -- IMPORTANTE: las tareas nuevas van siempre al FINAL (el indice es la clave guardada en storage).
 progressionTasks = {
 	{
@@ -181,7 +183,7 @@ progressionTasks = {
 		reward = {exp = 8000, money = 1000},
 	},
 	{
-		id = "pewter_geodude", kind = "defeat", species = {"Geodude"}, count = 15, giver = "Brock, Lider de Gimnasio",
+		id = "pewter_geodude", optional = true, kind = "defeat", species = {"Geodude"}, count = 15, giver = "Brock, Lider de Gimnasio",
 		title = "Entrenamiento de roca",
 		text = "Antes de retarme, demuestra que sabes luchar contra el tipo Roca: derrota 15 Geodude en los alrededores de Ciudad Plateada. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Brock directamente.)",
 		reward = {exp = 14000, money = 1000},
@@ -208,7 +210,7 @@ progressionTasks = {
 		reward = {exp = 20000, money = 1500, items = {{id = 27642, count = 15}}},
 	},
 	{
-		id = "cerulean_psyduck", kind = "defeat", species = {"Psyduck"}, count = 15, giver = "Misty, Lider de Gimnasio",
+		id = "cerulean_psyduck", optional = true, kind = "defeat", species = {"Psyduck"}, count = 15, giver = "Misty, Lider de Gimnasio",
 		title = "Entrenamiento de agua",
 		text = "Antes de retarme, demuestra que sabes plantar cara al tipo Agua: derrota 15 Psyduck en los alrededores de Ciudad Celeste. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Misty directamente.)",
 		reward = {exp = 30000, money = 2000},
@@ -235,7 +237,7 @@ progressionTasks = {
 		reward = {exp = 41000, money = 2000, items = {{id = 27642, count = 15}}},
 	},
 	{
-		id = "vermilion_electric", kind = "defeat", species = {"Voltorb", "Magnemite"}, count = 15, giver = "Teniente Surge, Lider de Gimnasio",
+		id = "vermilion_electric", optional = true, kind = "defeat", species = {"Voltorb", "Magnemite"}, count = 15, giver = "Teniente Surge, Lider de Gimnasio",
 		title = "Entrenamiento electrico",
 		text = "Antes de retarme, demuestra que no te asusta la electricidad: derrota 15 Voltorb o Magnemite, entre Ciudad Celeste y Ciudad Azafran. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar al Teniente Surge directamente.)",
 		reward = {exp = 55000, money = 3000},
@@ -263,7 +265,7 @@ progressionTasks = {
 		reward = {exp = 72000, money = 3000, items = {{id = 27642, count = 20}}},
 	},
 	{
-		id = "celadon_grass", kind = "defeat", types = {"grass"}, species = {"Tangela", "Oddish", "Bellsprout"}, count = 15,
+		id = "celadon_grass", optional = true, kind = "defeat", types = {"grass"}, species = {"Tangela", "Oddish", "Bellsprout"}, count = 15,
 		giver = "Erika, Lider de Gimnasio",
 		title = "Entrenamiento de planta",
 		text = "Antes de retarme, demuestra que sabes tratar con el tipo Planta: derrota 15 Pokemon de tipo Planta (Tangela, Oddish, Bellsprout...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Erika directamente.)",
@@ -285,7 +287,7 @@ progressionTasks = {
 		reward = {exp = 160000, money = 4000, items = {{id = 26688, count = 20}}},
 	},
 	{
-		id = "saffron_psychic", kind = "defeat", types = {"psychic"}, species = {"Exeggcute", "Slowpoke"}, count = 15,
+		id = "saffron_psychic", optional = true, kind = "defeat", types = {"psychic"}, species = {"Exeggcute", "Slowpoke"}, count = 15,
 		giver = "Sabrina, Lider de Gimnasio",
 		title = "Entrenamiento psiquico",
 		text = "Ya sabia que vendrias. Antes de retarme, derrota 15 Pokemon de tipo Psiquico (Exeggcute, Slowpoke, Abra...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Sabrina directamente.)",
@@ -314,7 +316,7 @@ progressionTasks = {
 		reward = {exp = 157000, money = 5000, items = {{id = 27642, count = 25}}},
 	},
 	{
-		id = "fuchsia_poison", kind = "defeat", types = {"poison"}, species = {"Koffing", "Grimer", "Ekans", "Venonat"}, count = 15,
+		id = "fuchsia_poison", optional = true, kind = "defeat", types = {"poison"}, species = {"Koffing", "Grimer", "Ekans", "Venonat"}, count = 15,
 		giver = "Koga, Lider de Gimnasio",
 		title = "Entrenamiento venenoso",
 		text = "Fu fu fu. Antes de retarme, demuestra que resistes el veneno: derrota 15 Pokemon de tipo Veneno (Koffing, Grimer, Ekans...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Koga directamente.)",
@@ -343,7 +345,7 @@ progressionTasks = {
 		reward = {exp = 212000, money = 6000, items = {{id = 27642, count = 25}}},
 	},
 	{
-		id = "cinnabar_fire", kind = "defeat", types = {"fire"}, species = {"Growlithe", "Vulpix", "Ponyta"}, count = 15,
+		id = "cinnabar_fire", optional = true, kind = "defeat", types = {"fire"}, species = {"Growlithe", "Vulpix", "Ponyta"}, count = 15,
 		giver = "Blaine, Lider de Gimnasio",
 		title = "Entrenamiento de fuego",
 		text = "Ja! Antes de retarme, a ver si aguantas el calor: derrota 15 Pokemon de tipo Fuego en Isla Canela (Growlithe, Vulpix, Ponyta...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Blaine directamente.)",
@@ -359,7 +361,7 @@ progressionTasks = {
 	},
 	-- ===== Ciudad Verde (Giovanni) =====
 	{
-		id = "viridian_ground", kind = "defeat", types = {"ground"}, species = {"Diglett", "Sandshrew", "Cubone", "Geodude"}, count = 15,
+		id = "viridian_ground", optional = true, kind = "defeat", types = {"ground"}, species = {"Diglett", "Sandshrew", "Cubone", "Geodude"}, count = 15,
 		giver = "Profesor Oak",
 		title = "El ultimo gimnasio",
 		text = "El gimnasio de Ciudad Verde por fin ha abierto. Su Lider, Giovanni, usa Pokemon de tipo Tierra. Preparate derrotando 15 Pokemon de tipo Tierra (al este de Ciudad Celeste hay muchos). Los de Agua, Planta y Hielo les hacen mucho dano. (Si te ves fuerte, puedes retar a Giovanni directamente.)",
@@ -518,13 +520,49 @@ local function taskProgress(player, index)
 	return math.max(0, player:getStorageValue(PROGRESSION_TASK_PROGRESS + index))
 end
 
+-- la tarea activa principal (si solo hay opcionales activas, la primera de ellas)
 function progressionGetActiveTask(player)
+	local firstOptional, firstOptionalTask
 	for index, task in ipairs(progressionTasks) do
 		if taskState(player, index) == 1 then
-			return index, task
+			if not task.optional then
+				return index, task
+			end
+			if not firstOptional then
+				firstOptional, firstOptionalTask = index, task
+			end
 		end
 	end
-	return nil
+	return firstOptional, firstOptionalTask
+end
+
+-- todas las tareas activas (la principal y las opcionales): {{index, task}, ...}
+function progressionGetActiveTasks(player)
+	local list = {}
+	for index, task in ipairs(progressionTasks) do
+		if taskState(player, index) == 1 and not task.disabled then
+			list[#list + 1] = {index = index, task = task}
+		end
+	end
+	return list
+end
+
+-- siguiente tarea principal despues de index (saltando desactivadas) y la primera opcional que haya antes
+local function nextMainTask(index)
+	local optionalTask
+	local nextIndex = index + 1
+	while progressionTasks[nextIndex] do
+		local task = progressionTasks[nextIndex]
+		if not task.disabled then
+			if task.optional then
+				optionalTask = optionalTask or task
+			else
+				return nextIndex, task, optionalTask
+			end
+		end
+		nextIndex = nextIndex + 1
+	end
+	return nil, nil, optionalTask
 end
 
 local function rewardText(task)
@@ -612,7 +650,7 @@ end
 
 -- ===================== Envio al cliente =====================
 -- Formato: primera linea "cap|nivel|texto" (nivel 0 = sin tope), despues una tarea por linea:
--- indice|estado(1 activa, 2 hecha)|tipo|quien|titulo|texto|progreso|total|recompensa
+-- indice|estado(1 activa, 2 hecha)|tipo|quien|titulo|texto|progreso|total|recompensa|mapa|icono|opcional
 function Player.sendTasks(self)
 	if not self:isOnProgression() then
 		return
@@ -638,6 +676,14 @@ function Player.sendTasks(self)
 				progressionCompleteThroughBadge(self, index)
 				return
 			end
+		end
+	end
+	-- tarea opcional activa sin su principal (personajes de antes de existir las opcionales)
+	if activeIndex and activeTask.optional then
+		local mainIndex = nextMainTask(activeIndex)
+		if mainIndex and taskState(self, mainIndex) ~= 1 and taskState(self, mainIndex) ~= 2 then
+			progressionActivateNext(self, activeIndex)
+			return
 		end
 	end
 	-- sin tarea activa pero con tareas nuevas despues de la ultima hecha (se anaden al final)
@@ -670,7 +716,7 @@ function Player.sendTasks(self)
 				mapPoints, mapIcon = taskMapPoints(task, self)
 			end
 			lines[#lines + 1] = table.concat({index, state, task.kind, clean(task.giver), clean(task.title),
-				clean(task.text), progress, total, clean(rewardText(task)), mapPoints, mapIcon}, "|")
+				clean(task.text), progress, total, clean(rewardText(task)), mapPoints, mapIcon, task.optional and 1 or 0}, "|")
 		end
 	end
 	self:sendExtendedOpcode(OPCODE_TASKS, table.concat(lines, "\n"))
@@ -688,13 +734,17 @@ local function giverLook(giver)
 end
 
 function progressionSendTaskDone(player, task, index)
-	local nextIndex = index + 1
-	while progressionTasks[nextIndex] and progressionTasks[nextIndex].disabled do
-		nextIndex = nextIndex + 1
-	end
-	local nextTask = progressionTasks[nextIndex]
-	if not nextTask then
-		nextIndex = nil
+	local nextIndex, nextTask, optionalTask
+	if task.optional then
+		-- al acabar una opcional, la siguiente es la principal que ya estaba activa
+		for _, entry in ipairs(progressionGetActiveTasks(player)) do
+			if not entry.task.optional and entry.index ~= index then
+				nextIndex, nextTask = entry.index, entry.task
+				break
+			end
+		end
+	else
+		nextIndex, nextTask, optionalTask = nextMainTask(index)
 	end
 	local fields = {clean(task.title), clean(rewardText(task))}
 	if nextIndex then
@@ -708,6 +758,8 @@ function progressionSendTaskDone(player, task, index)
 	else
 		for _ = 1, 6 do fields[#fields + 1] = "" end
 	end
+	-- campo 9: tarea opcional que se abre a la vez (p. ej. el entrenamiento antes del gimnasio)
+	fields[#fields + 1] = optionalTask and clean(optionalTask.title .. ": " .. optionalTask.text) or ""
 	player:sendExtendedOpcode(OPCODE_TASK_DONE, table.concat(fields, "|"))
 end
 
@@ -720,6 +772,12 @@ local function activateTask(player, index)
 	end
 	player:setStorageValue(PROGRESSION_TASK_STATE + index, 1)
 	player:setStorageValue(PROGRESSION_TASK_PROGRESS + index, 0)
+	if task.optional then
+		-- la opcional se queda abierta y se activa tambien la siguiente principal
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Tarea opcional: " .. task.title)
+		progressionActivateNext(player, index)
+		return
+	end
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Nueva tarea: " .. task.title)
 	if not checkTaskDone(player, index) then
 		player:sendTasks()
@@ -749,6 +807,11 @@ local function completeTask(player, index)
 	player:getPosition():sendMagicEffect(CONST_ME_FIREWORK_YELLOW)
 	-- el aviso va antes de activar la siguiente: si esa se completa sola, su aviso llega despues (en orden)
 	progressionSendTaskDone(player, task, index)
+	if task.optional then
+		-- la principal ya estaba activa
+		player:sendTasks()
+		return
+	end
 	progressionActivateNext(player, index)
 end
 
@@ -856,14 +919,7 @@ function progressionStart(player)
 end
 
 -- ===================== Eventos del juego =====================
-function progressionOnCatch(player, name)
-	if not player:isOnProgression() then
-		return
-	end
-	local index, task = progressionGetActiveTask(player)
-	if not index or task.kind ~= "catch" then
-		return
-	end
+local function catchTaskProgress(player, index, task, name)
 	local species = speciesName(name)
 	local matches = false
 	if task.species then
@@ -900,6 +956,17 @@ function progressionOnCatch(player, name)
 	end
 end
 
+function progressionOnCatch(player, name)
+	if not player:isOnProgression() then
+		return
+	end
+	for _, entry in ipairs(progressionGetActiveTasks(player)) do
+		if entry.task.kind == "catch" and taskState(player, entry.index) == 1 then
+			catchTaskProgress(player, entry.index, entry.task, name)
+		end
+	end
+end
+
 function progressionOnCatchById(playerId, name)
 	local player = Player(playerId)
 	if player then
@@ -908,14 +975,7 @@ function progressionOnCatchById(playerId, name)
 end
 
 -- un salvaje derrotado por el jugador o por su Pokemon (creaturescripts/scripts/corpselevel.lua)
-function progressionOnDefeat(player, name)
-	if not player:isOnProgression() then
-		return
-	end
-	local index, task = progressionGetActiveTask(player)
-	if not index or task.kind ~= "defeat" then
-		return
-	end
+local function defeatTaskProgress(player, index, task, name)
 	if task.species or task.types then
 		local species = speciesName(name)
 		local matches = false
@@ -951,6 +1011,17 @@ function progressionOnDefeat(player, name)
 		player:sendTasks()
 	else
 		checkTaskDone(player, index)
+	end
+end
+
+function progressionOnDefeat(player, name)
+	if not player:isOnProgression() then
+		return
+	end
+	for _, entry in ipairs(progressionGetActiveTasks(player)) do
+		if entry.task.kind == "defeat" and taskState(player, entry.index) == 1 then
+			defeatTaskProgress(player, entry.index, entry.task, name)
+		end
 	end
 end
 
@@ -1026,9 +1097,17 @@ end
 
 -- completa (con recompensa) las tareas pendientes hasta la del gimnasio badgeIndex incluida
 function progressionCompleteThroughBadge(player, badgeIndex)
+	-- las opcionales que sigan abiertas antes del gimnasio se cierran sin recompensa
+	for index = 1, badgeIndex - 1 do
+		local task = progressionTasks[index]
+		if task.optional and taskState(player, index) == 1 then
+			player:setStorageValue(PROGRESSION_TASK_STATE + index, 2)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Tarea opcional sin hacer: " .. task.title)
+		end
+	end
 	for _ = 1, #progressionTasks do
 		local index, task = progressionGetActiveTask(player)
-		if not index or index > badgeIndex then
+		if not index or index > badgeIndex or task.optional then
 			break
 		end
 		if index < badgeIndex then

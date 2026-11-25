@@ -44,7 +44,7 @@ TaskDoneButton < UIButton
     image-color: #2e7d32
 
 TaskDoneWindow < UIWidget
-  size: 460 330
+  size: 460 360
   anchors.centerIn: parent
   image-source: /game_pokedex/images/panel
   image-border: 16
@@ -154,12 +154,28 @@ TaskDoneWindow < UIWidget
     anchors.top: nextTitle.bottom
     anchors.left: nextKind.left
     anchors.right: parent.right
-    anchors.bottom: continueButton.top
+    anchors.bottom: nextOptional.top
     margin-top: 4
     margin-right: 20
-    margin-bottom: 10
+    margin-bottom: 4
     font: poppins-12px
     color: #c9d1dc
+    text-wrap: true
+    text-align: topLeft
+    phantom: true
+
+  // tarea opcional que se abre a la vez (entrenamiento antes del gimnasio)
+  Label
+    id: nextOptional
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: continueButton.top
+    margin-left: 22
+    margin-right: 20
+    margin-bottom: 10
+    height: 30
+    font: poppins-12px
+    color: #8fa7ff
     text-wrap: true
     text-align: topLeft
     phantom: true

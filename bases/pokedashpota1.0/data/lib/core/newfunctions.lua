@@ -51,7 +51,7 @@ pokemonRequiredLevels = {
 	-- etapas intermedias comunes
 	pidgeotto = 20, staravia = 20, skiploom = 20,
 	-- salen al principio pero son fuertes: no se pueden usar hasta el nivel 20
-	gloom = 20, onix = 20, graveler = 20,
+	gloom = 20, onix = 20, graveler = 20, tangela = 20,
 	flaaffy = 25, weepinbell = 25, nidorina = 25, nidorino = 25,
 	golbat = 30, poliwhirl = 30, kirlia = 30, roselia = 30, lombre = 30, nuzleaf = 30,
 	loudred = 30, luxio = 30, wormadam = 30,
@@ -60,7 +60,7 @@ pokemonRequiredLevels = {
 	slowbro = 45, dusclops = 45,
 	rhydon = 50, porygon2 = 50,
 	-- iniciales
-	ivysaur = 35, charmeleon = 35, wartortle = 25, bayleef = 35, quilava = 35, croconaw = 35,
+	ivysaur = 30, charmeleon = 30, wartortle = 30, bayleef = 35, quilava = 35, croconaw = 35,
 	grovyle = 35, combusken = 35, marshtomp = 35, grotle = 35, monferno = 35, prinplup = 35,
 	-- finales de linea de 2 etapas (por defecto twoStageFinal)
 	raticate = 20, furret = 20,
