@@ -12,6 +12,18 @@ shinyEvoTierChance = {
 	[1] = 0.001,
 	[2] = 0.5,
 	[3] = 7,
+	-- probabilidad (en %) del orbe segun el tier del propio shiny que muere (no el de su forma final)
+	mythic = 0.005,
+	legendary = 0.02,
+	ultra = 0.05,
+	super = 0.1,
+	t1 = 0.2,
+	t2 = 1,
+	t3 = 4,
+	t4 = 7,
+	t5 = 12,
+	t6 = 20,
+	t7 = 30,
 }
 
 -- [id del objeto] = { target = shiny que suelta el objeto (y en el que se evoluciona), item = id del item base (dibujo), tier }
@@ -295,6 +307,19 @@ function shinyOrbKey(target)
 	return ORB_KEY_BY_TIER[catchTiers[full] or catchTiers[base] or ""] or "bronze"
 end
 
+local DROP_KEY_BY_TIER = {mythic = "mythic", legendary = "legendary", ["ultra rare"] = "ultra", ["super rare"] = "super",
+	t1 = "t1", t2 = "t2", t3 = "t3", t4 = "t4", t5 = "t5", t6 = "t6", t7 = "t7"}
+
+-- clave de shinyEvoTierChance para un shiny: su propio tier en la tabla (si no hay fila, T4)
+function shinyDropTierKey(target)
+	if not catchTiers then
+		loadCatchTiers()
+	end
+	local full = tostring(target):lower()
+	local base = full:gsub("^shiny ", "")
+	return DROP_KEY_BY_TIER[catchTiers[full] or catchTiers[base] or ""] or "t4"
+end
+
 local function loadShinyEvoTargets()
 	local targets, hasShinyEvo = {}, {}
 	local index = io.open("data/monster/monsters.xml", "rb")
@@ -328,11 +353,7 @@ do
 	local count = 0
 	for target in pairs(targets) do
 		local key = shinyOrbKey(target)
-		local tier = legacyTier[target]
-		if not tier then
-			-- fase intermedia: la mas facil; final: segun la rareza
-			tier = hasShinyEvo[target] and 3 or ((key == "bronze" or key == "t2") and 2 or 1)
-		end
+		local tier = shinyDropTierKey(target)
 		shinyEvoByTarget[target] = {id = SHINY_ORB_IDS[key], tier = tier, target = target, orb = key}
 		count = count + 1
 	end
