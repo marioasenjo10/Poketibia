@@ -15,6 +15,7 @@ Con [clonar-personaje.ps1](clonar-personaje.ps1) se copian encima del tester (co
 | Plantilla | Estado |
 |---|---|
 | Plantilla Brock | Copia de Claude Tester Dos (nivel 17) con la Medalla Roca. Al entrar se cierra la tarea de Brock y empieza la ruta a Misty. |
+| Plantilla Misty | Claude Tester Dos (nivel 31) recién ganada la Medalla Cascada, en Ciudad Celeste. Sigue la ruta al Teniente Surge. |
 
 ```powershell
 # dejar a Claude Tester Dos como en la plantilla
