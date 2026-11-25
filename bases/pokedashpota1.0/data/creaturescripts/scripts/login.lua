@@ -68,6 +68,8 @@ function onLogin(player)
 	player:sendTownList()
 	-- Centros Pokemon y tiendas en el mapa
 	player:sendMapPois()
+	-- siguiente gimnasio en el mapa (lib/core/progression.lua)
+	player:sendNextGym()
 
 	-- Check fly
 --	if player:getStorageValue(storageFly) > 0 or player:getStorageValue(storageSurf) > 0 or player:getStorageValue(storageDive) > 0 then

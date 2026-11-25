@@ -38,6 +38,20 @@ progressionStarterItems = {
 progressionLevelCaps = {
 	{badge = "boulderBadge", maxLevel = 20, medal = "Medalla Roca", leader = "Brock", city = "Ciudad Plateada"},
 	{badge = "cascadeBadge", maxLevel = 30, medal = "Medalla Cascada", leader = "Misty", city = "Ciudad Celeste"},
+	{badge = "thunderBadge", maxLevel = 40, medal = "Medalla Trueno", leader = "el Teniente Surge", city = "Ciudad Carmin"},
+}
+
+-- Gimnasios de Kanto en orden: el primero sin medalla sale en el mapa como "siguiente gimnasio"
+-- (opcode 75, cliente game_minimap). npc = nombre del lider en map-spawn.xml.
+progressionGyms = {
+	{badge = "boulderBadge", npc = "Brock", leader = "Brock", city = "Ciudad Plateada", medal = "Medalla Roca", type = "Roca"},
+	{badge = "cascadeBadge", npc = "Misty", leader = "Misty", city = "Ciudad Celeste", medal = "Medalla Cascada", type = "Agua"},
+	{badge = "thunderBadge", npc = "Lt. Surge", leader = "Teniente Surge", city = "Ciudad Carmin", medal = "Medalla Trueno", type = "Electrico"},
+	{badge = "rainbowBadge", npc = "Erika", leader = "Erika", city = "Ciudad Azulona", medal = "Medalla Arcoiris", type = "Planta"},
+	{badge = "soulBadge", npc = "Koga", leader = "Koga", city = "Ciudad Fucsia", medal = "Medalla Alma", type = "Veneno"},
+	{badge = "marshBadge", npc = "Sabrina", leader = "Sabrina", city = "Ciudad Azafran", medal = "Medalla Pantano", type = "Psiquico"},
+	{badge = "volcanoBadge", npc = "Blaine", leader = "Blaine", city = "Isla Canela", medal = "Medalla Volcan", type = "Fuego"},
+	{badge = "earthBadge", npc = "Giovanni", leader = "Giovanni", city = "Ciudad Verde", medal = "Medalla Tierra", type = "Tierra"},
 }
 
 -- Tareas de historia, en orden. kind: talk | reach | catch | defeat | badge
@@ -148,6 +162,33 @@ progressionTasks = {
 		reward = {exp = 0, money = 5000},
 		rewardText = "Medalla Cascada, sin tope de nivel 30 y +5% de dano y defensa a tus Pokemon de tipo Agua",
 		map = {{1095, 896, 7, "Misty, Gimnasio de Ciudad Celeste"}},
+	},
+	-- ===== Ruta a Ciudad Carmin (Teniente Surge) =====
+	{
+		id = "cerulean_ground", kind = "catch", species = {"Diglett", "Sandshrew"}, count = 1, giver = "Profesor Oak",
+		title = "Tierra contra el rayo",
+		text = "El siguiente Lider, el Teniente Surge, usa Pokemon de tipo Electrico, y a los de tipo Tierra la electricidad no les hace nada. Al este de Ciudad Celeste hay muchos Diglett y Sandshrew: captura uno. Pulsa Ver en el mapa para saber donde estan.",
+		reward = {exp = 30000, money = 2000, items = {{id = 26688, count = 20}}},
+	},
+	{
+		id = "go_vermilion", kind = "reach", town = "vermilion", giver = "Profesor Oak",
+		title = "Rumbo a Ciudad Carmin",
+		text = "Ve hacia el sur, pasando por Ciudad Azafran, hasta Ciudad Carmin, el gran puerto de Kanto. Alli esta el gimnasio del Teniente Surge.",
+		reward = {exp = 30000, money = 2000, items = {{id = 27642, count = 15}}},
+	},
+	{
+		id = "vermilion_electric", kind = "defeat", species = {"Voltorb", "Magnemite"}, count = 15, giver = "Teniente Surge, Lider de Gimnasio",
+		title = "Entrenamiento electrico",
+		text = "Antes de retarme, demuestra que no te asusta la electricidad: derrota 15 Voltorb o Magnemite, entre Ciudad Celeste y Ciudad Azafran. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar al Teniente Surge directamente.)",
+		reward = {exp = 40000, money = 3000},
+	},
+	{
+		id = "surge", kind = "badge", badge = "thunderBadge", giver = "Teniente Surge, Lider de Gimnasio",
+		title = "La Medalla Trueno",
+		text = "Desafia al Teniente Surge en el Gimnasio de Ciudad Carmin. Sus Pokemon son Voltorb, Magnemite y Raichu. Recomendado: nivel 38-40 y un Pokemon de tipo Tierra.",
+		reward = {exp = 0, money = 8000},
+		rewardText = "Medalla Trueno, sin tope de nivel 40 y +5% de dano y defensa a tus Pokemon de tipo Electrico",
+		map = {{1017, 1272, 5, "Teniente Surge, Gimnasio de Ciudad Carmin"}},
 	},
 }
 
@@ -642,6 +683,9 @@ end
 
 function progressionOnBadge(player, badgeKey)
 	announceBadgeBonus(player, badgeKey)
+	if player.sendNextGym then
+		player:sendNextGym()
+	end
 	if not player:isOnProgression() then
 		return
 	end
@@ -917,3 +961,56 @@ function progressionOnModalWindow(player, modalWindowId, buttonId, choiceId)
 	end
 	return true
 end
+
+-- ===================== Siguiente gimnasio en el mapa =====================
+-- Opcode 75: "x:y:z:lider:ciudad:medalla:tipo" del primer gimnasio sin medalla ("" si no queda ninguno).
+OPCODE_NEXT_GYM = 75
+local gymPositions
+
+local function loadGymPositions()
+	gymPositions = {}
+	local file = io.open("data/world/map-spawn.xml", "r")
+	if not file then
+		return
+	end
+	local wanted = {}
+	for _, gym in ipairs(progressionGyms) do
+		wanted[gym.npc:lower()] = true
+	end
+	local cx, cy, cz = 0, 0, 7
+	for line in file:lines() do
+		local sx, sy, sz = line:match('<spawn%s+centerx="(%d+)"%s+centery="(%d+)"%s+centerz="(%d+)"')
+		if sx then
+			cx, cy, cz = tonumber(sx), tonumber(sy), tonumber(sz)
+		end
+		local name, x, y = line:match('<npc%s+name="([^"]+)"%s+x="(%-?%d+)"%s+y="(%-?%d+)"')
+		if name and wanted[name:lower()] and not gymPositions[name:lower()] then
+			gymPositions[name:lower()] = Position(cx + tonumber(x), cy + tonumber(y), cz)
+		end
+	end
+	file:close()
+end
+
+function progressionGetNextGym(player)
+	for _, gym in ipairs(progressionGyms) do
+		if not hasBadge(player, gym.badge) then
+			return gym
+		end
+	end
+	return nil
+end
+
+function Player.sendNextGym(self)
+	if not gymPositions then
+		loadGymPositions()
+	end
+	local gym = progressionGetNextGym(self)
+	local pos = gym and gymPositions[gym.npc:lower()]
+	if not pos then
+		self:sendExtendedOpcode(OPCODE_NEXT_GYM, "")
+		return
+	end
+	self:sendExtendedOpcode(OPCODE_NEXT_GYM, table.concat({pos.x, pos.y, pos.z, mapText(gym.leader),
+		mapText(gym.city), mapText(gym.medal), mapText(gym.type)}, ":"))
+end
+

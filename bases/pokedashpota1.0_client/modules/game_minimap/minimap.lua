@@ -15,6 +15,8 @@ townLabels = {}
 pokedexFlags = {}
 OPCODE_MAP_POIS = 74 -- Centros Pokemon y tiendas (servidor: lib/core/mappois.lua)
 mapPois = {}
+OPCODE_NEXT_GYM = 75 -- siguiente gimnasio del jugador (servidor: lib/core/progression.lua)
+gymMarker = nil
 POI_MIN_SCALE = 1    -- con el mapa mas alejado no se ven (serian puntitos encima de todo)
 worldChunks = {}
 worldChunkCount = 0
@@ -46,6 +48,8 @@ function init()
   ProtocolGame.registerExtendedOpcode(OPCODE_TOWNS, onTownsOpcode)
   pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_MAP_POIS)
   ProtocolGame.registerExtendedOpcode(OPCODE_MAP_POIS, onMapPoisOpcode)
+  pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_NEXT_GYM)
+  ProtocolGame.registerExtendedOpcode(OPCODE_NEXT_GYM, onNextGymOpcode)
 
   minimapWindow:setup()
 
@@ -98,7 +102,9 @@ function terminate()
   g_keyboard.unbindKeyDown('Escape', gameRootPanel)
   ProtocolGame.unregisterExtendedOpcode(OPCODE_TOWNS)
   pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_MAP_POIS)
+  pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_NEXT_GYM)
   clearMapPois()
+  clearGymMarker()
   clearPokedexFlags()
   clearTownLabels()
   clearWorldChunks()
@@ -134,6 +140,7 @@ end
 
 function offline()
   clearMapPois()
+  clearGymMarker()
   if fullmapView then
     toggleFullMap()
   end
@@ -365,6 +372,33 @@ function onMapPoisOpcode(protocol, opcode, buffer)
   updateOverlayFloors()
 end
 
+-- ===== Siguiente gimnasio: icono dorado con estrella, se ve con cualquier zoom =====
+-- Se ve en el piso del lider y tambien en la superficie (piso 7): los gimnasios suelen estar en un piso alto.
+
+function clearGymMarker()
+  if gymMarker and not gymMarker:isDestroyed() then
+    gymMarker:destroy()
+  end
+  gymMarker = nil
+end
+
+function onNextGymOpcode(protocol, opcode, buffer)
+  clearGymMarker()
+  local x, y, z, leader, city, medal, kind = (buffer or ''):match('^(%d+):(%d+):(%d+):([^:]*):([^:]*):([^:]*):([^:]*)$')
+  if not x or not minimapWidget then return end
+  gymMarker = g_ui.createWidget('UIWidget')
+  gymMarker:setSize({ width = 26, height = 26 })
+  gymMarker:setImageSource('/images/map/gym_next')
+  gymMarker:setTooltip('Siguiente gimnasio: ' .. leader .. ' (' .. city .. ')
+' ..
+    medal .. ' - Pokmon de tipo ' .. kind)
+  gymMarker:setFocusable(false)
+  gymMarker.pos = { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
+  minimapWidget:addChild(gymMarker)
+  minimapWidget:centerInPosition(gymMarker, gymMarker.pos)
+  updateOverlayFloors()
+end
+
 -- muestra cada marca/ciudad solo en su piso (el mapa no las oculta solo)
 function updateOverlayFloors()
   if not minimapWidget then return end
@@ -379,6 +413,9 @@ function updateOverlayFloors()
   local poiScale = minimapWidget:getScale() >= POI_MIN_SCALE
   for _, poi in ipairs(mapPois) do
     poi:setVisible(poiScale and poi.pos.z == z)
+  end
+  if gymMarker and not gymMarker:isDestroyed() then
+    gymMarker:setVisible(gymMarker.pos.z == z or z == 7)
   end
   for _, marker in ipairs(pokedexFlags) do
     if not marker:isDestroyed() and marker.pos then
