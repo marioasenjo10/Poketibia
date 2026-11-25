@@ -41,6 +41,9 @@ progressionLevelCaps = {
 	{badge = "thunderBadge", maxLevel = 40, medal = "Medalla Trueno", leader = "el Teniente Surge", city = "Ciudad Carmin"},
 	{badge = "rainbowBadge", maxLevel = 50, medal = "Medalla Arcoiris", leader = "Erika", city = "Ciudad Azulona"},
 	{badge = "marshBadge", maxLevel = 60, medal = "Medalla Pantano", leader = "Sabrina", city = "Ciudad Azafran"},
+	{badge = "soulBadge", maxLevel = 70, medal = "Medalla Alma", leader = "Koga", city = "Ciudad Fucsia"},
+	{badge = "volcanoBadge", maxLevel = 80, medal = "Medalla Volcan", leader = "Blaine", city = "Isla Canela"},
+	{badge = "earthBadge", maxLevel = 90, medal = "Medalla Tierra", leader = "Giovanni", city = "Ciudad Verde"},
 }
 
 -- Gimnasios de Kanto en orden: el primero sin medalla sale en el mapa como "siguiente gimnasio".
@@ -244,6 +247,80 @@ progressionTasks = {
 		reward = {exp = 0, money = 15000},
 		rewardText = "Medalla Pantano, sin tope de nivel 60 y +5% de dano y defensa a tus Pokemon de tipo Psiquico",
 		map = {{1093, 1054, 7, "Sabrina, Gimnasio de Ciudad Azafran"}},
+	},
+	-- ===== Ciudad Fucsia (Koga) =====
+	{
+		id = "fuchsia_counter", kind = "catch", types = {"psychic", "ground"},
+		species = {"Exeggcute", "Slowpoke", "Diglett", "Sandshrew"}, count = 1, giver = "Profesor Oak",
+		title = "Contra el veneno",
+		text = "El siguiente Lider, Koga, es un maestro ninja del tipo Veneno. Los Pokemon de tipo Psiquico y Tierra son los que mejor le plantan cara. Captura uno nuevo (Exeggcute, Slowpoke, Diglett, Sandshrew...).",
+		reward = {exp = 60000, money = 5000, items = {{id = 26688, count = 25}}},
+	},
+	{
+		id = "go_fuchsia", kind = "reach", town = "fuchsia", giver = "Profesor Oak",
+		title = "Rumbo a Ciudad Fucsia",
+		text = "Ciudad Fucsia esta en el sureste de Kanto, junto a la Zona Safari. El camino es largo: llevate pociones. Pulsa Ver en el mapa para ver donde esta.",
+		reward = {exp = 60000, money = 5000, items = {{id = 27642, count = 25}}},
+	},
+	{
+		id = "fuchsia_poison", kind = "defeat", types = {"poison"}, species = {"Koffing", "Grimer", "Ekans", "Venonat"}, count = 15,
+		giver = "Koga, Lider de Gimnasio",
+		title = "Entrenamiento venenoso",
+		text = "Fu fu fu. Antes de retarme, demuestra que resistes el veneno: derrota 15 Pokemon de tipo Veneno (Koffing, Grimer, Ekans...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Koga directamente.)",
+		reward = {exp = 70000, money = 6000},
+	},
+	{
+		id = "koga", kind = "badge", badge = "soulBadge", giver = "Koga, Lider de Gimnasio",
+		title = "La Medalla Alma",
+		text = "Desafia a Koga en el Gimnasio de Ciudad Fucsia. Sus Pokemon son Venomoth, Muk y Weezing. Recomendado: nivel 68-70 y un Pokemon de tipo Psiquico o Tierra.",
+		reward = {exp = 0, money = 18000},
+		rewardText = "Medalla Alma, sin tope de nivel 70 y +5% de dano y defensa a tus Pokemon de tipo Veneno",
+		map = {{1195, 1374, 7, "Koga, Gimnasio de Ciudad Fucsia"}},
+	},
+	-- ===== Isla Canela (Blaine) =====
+	{
+		id = "cinnabar_surfer", kind = "catch", species = {"Staryu", "Tentacool", "Poliwag", "Goldeen"}, count = 1,
+		giver = "Profesor Oak",
+		title = "Aprende a surfear",
+		text = "Blaine, el Lider de Isla Canela, usa Pokemon de Fuego, y su isla solo se alcanza por mar. Captura un Pokemon de Agua que sepa surfear: Staryu, Tentacool, Poliwag o Goldeen. Puedes ver en la Pokedex que Pokemon tienen Surf.",
+		reward = {exp = 70000, money = 6000, items = {{id = 26688, count = 25}}},
+	},
+	{
+		id = "go_cinnabar", kind = "reach", town = "cinnabar", giver = "Profesor Oak",
+		title = "Rumbo a Isla Canela",
+		text = "Saca tu Pokemon que sabe surfear y camina hacia el agua: te subiras a el. Desde Pueblo Paleta, navega hacia el sur hasta Isla Canela.",
+		reward = {exp = 70000, money = 6000, items = {{id = 27642, count = 25}}},
+	},
+	{
+		id = "cinnabar_fire", kind = "defeat", types = {"fire"}, species = {"Growlithe", "Vulpix", "Ponyta"}, count = 15,
+		giver = "Blaine, Lider de Gimnasio",
+		title = "Entrenamiento de fuego",
+		text = "Ja! Antes de retarme, a ver si aguantas el calor: derrota 15 Pokemon de tipo Fuego en Isla Canela (Growlithe, Vulpix, Ponyta...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Blaine directamente.)",
+		reward = {exp = 80000, money = 7000},
+	},
+	{
+		id = "blaine", kind = "badge", badge = "volcanoBadge", giver = "Blaine, Lider de Gimnasio",
+		title = "La Medalla Volcan",
+		text = "Desafia a Blaine en el Gimnasio de Isla Canela. Sus Pokemon son Ninetales, Rapidash y Arcanine. Recomendado: nivel 78-80 y un Pokemon de tipo Agua, Tierra o Roca.",
+		reward = {exp = 0, money = 22000},
+		rewardText = "Medalla Volcan, sin tope de nivel 80 y +5% de dano y defensa a tus Pokemon de tipo Fuego",
+		map = {{790, 1371, 4, "Blaine, Gimnasio de Isla Canela"}},
+	},
+	-- ===== Ciudad Verde (Giovanni) =====
+	{
+		id = "viridian_ground", kind = "defeat", types = {"ground"}, species = {"Diglett", "Sandshrew", "Cubone", "Geodude"}, count = 15,
+		giver = "Profesor Oak",
+		title = "El ultimo gimnasio",
+		text = "El gimnasio de Ciudad Verde por fin ha abierto. Su Lider, Giovanni, usa Pokemon de tipo Tierra. Preparate derrotando 15 Pokemon de tipo Tierra (al este de Ciudad Celeste hay muchos). Los de Agua, Planta y Hielo les hacen mucho dano. (Si te ves fuerte, puedes retar a Giovanni directamente.)",
+		reward = {exp = 90000, money = 8000},
+	},
+	{
+		id = "giovanni", kind = "badge", badge = "earthBadge", giver = "Giovanni, Lider de Gimnasio",
+		title = "La Medalla Tierra",
+		text = "Desafia a Giovanni en el Gimnasio de Ciudad Verde. Sus Pokemon son Rhyhorn, Nidoking y Rhydon. Recomendado: nivel 88-90 y un Pokemon de tipo Agua, Planta o Hielo.",
+		reward = {exp = 0, money = 30000},
+		rewardText = "Medalla Tierra, las 8 medallas de Kanto, sin tope de nivel y +5% de dano y defensa a tus Pokemon de tipo Tierra",
+		map = {{743, 1074, 6, "Giovanni, Gimnasio de Ciudad Verde"}},
 	},
 }
 

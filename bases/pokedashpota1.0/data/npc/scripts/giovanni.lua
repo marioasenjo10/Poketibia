@@ -1,42 +1,13 @@
 local storage = quests.earthBadge.prizes[1].uid
-local pokemons = 
+-- Octavo y ultimo gimnasio de Kanto (medalla Tierra). Pensado para un entrenador de nivel ~90:
+-- con un Pokemon de tipo Agua, Planta o Hielo se gana justo.
+-- level: nivel de fuerza (misma curva que el entrenador) | hp: multiplicador de vida
+-- damage: multiplicador de dano. Valores calculados con el simulador de combate.
+local pokemons =
 {
-	[1] = 
-		{
-			name = "Shiny Dugtrio",
-			level = 150
-		},
-	[2] = 
-		{
-			name = "Shiny Persian",
-			level = 150
-		},
-
-	[3] = 
-		{
-			name = "Shiny Rhydon",
-			level = 150
-		},
-
-	[4] = 
-		{
-			name = "Shiny Kangaskhan",
-			level = 150
-		},
-
-	[5] = 
-		{
-			name = "Shiny Nidoqueen",
-			level = 150
-		},
-
-	[6] = 
-		{
-			name = "Shiny Nidoking",
-			level = 200
-		}
-
-
+	[1] = {name = "Rhyhorn", level = 86, hp = 3.5, damage = 1.6},
+	[2] = {name = "Nidoking", level = 88, hp = 3.5, damage = 1.7},
+	[3] = {name = "Rhydon", level = 90, hp = 4.5, damage = 1.9},
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -53,7 +24,7 @@ local function creatureGreetCallback(cid, message)
 		return true
 	end
 	if npcHandler:hasFocus() then
-		selfSay("Espere sua vez, " .. Player(cid):getName() .. "!")
+		selfSay("Espera tu turno, " .. Player(cid):getName() .. "!")
 		return false
 	end
 	return true
@@ -63,19 +34,20 @@ local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
 	end	
-	if msgcontains(msg, 'bye') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') then
-		selfSay('Desapareca da minha vista, ser insignificante!', cid)
+	if msgcontains(msg, 'bye') or msgcontains(msg, 'adios') or msgcontains(msg, 'no') or msgcontains(msg, 'nao') then
+		selfSay('Vuelve cuando estes preparado.', cid)
 		npcHandler:releaseFocus(cid)
-	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'sim') then
+	elseif msgcontains(msg, 'yes') or msgcontains(msg, 'si') or msgcontains(msg, 'sim') then
 		local player = Player(cid)
 		if player then
+			-- se puede retar sin la tarea previa: al ganar se completa sola (progressionOnBadge)
 			if player:getStorageValue(storage) <= 0 then
-				selfSay('Que assim seja! Desta vez, nao estou me segurando!', cid)
+				selfSay('Que asi sea. Esta vez no me voy a contener!', cid)
 				npcHandler.topic[cid] = 1
 				npcHandler:setMaxIdleTime(600)
 				player:setDuelWithNpc()
 			else
-				selfSay('Humpf!!! Voce ja me derrotou... Agora desapareca!', cid)
+				selfSay('Hmpf. Ya me derrotaste... Ahora desaparece de mi vista.', cid)
 				npcHandler:releaseFocus(cid)
 			end
 		end
@@ -88,6 +60,9 @@ local function creatureOnReleaseFocusCallback(cid)
 	if hasSummons(npc) then
 		local monster = npc:getSummons()[1]
 		monster:getPosition():sendMagicEffect(balls.pokeball.effectRelease)
+		if gymSummonDamage then
+			gymSummonDamage[monster:getId()] = nil
+		end
 		monster:remove()
 	end
 	local player = Player(cid)
@@ -107,7 +82,7 @@ local function creatureOnDisapearCallback(cid)
 		if getDistanceTo(cid) >= 0 and getDistanceTo(cid) <= 8 then
 			return false
 		end
-		selfSay("Mais sorte na proxima tentativa, " .. player:getName() .. "!", cid)
+		selfSay("Mas suerte la proxima vez, " .. player:getName() .. "!", cid)
 		npcHandler:releaseFocus(cid)
 	end
 	return true
@@ -126,19 +101,25 @@ local function creatureOnThinkCallback()
 				local monster = npc:getSummons()[1]
 				if not monster then
 					if pokemons[duelStatus] then
-						selfSay(pokemons[duelStatus].name .. ", eu escolho voce!")
+						selfSay(pokemons[duelStatus].name .. ", te elijo a ti!")
 						npcPosition:getNextPosition(npc:getDirection())
 						monster = Game.createMonster(pokemons[duelStatus].name, npcPosition, false, true, pokemons[duelStatus].level, 0)
 						npcPosition:sendMagicEffect(balls.pokeball.effectRelease)
 						monster:setMaster(npc)
-						local health = monster:getTotalHealth() * 10
+						local health = math.floor(monster:getTotalHealth() * (pokemons[duelStatus].hp or 10))
 						monster:setMaxHealth(health)
 						monster:setHealth(health)
+						if gymSummonDamage then
+							gymSummonDamage[monster:getId()] = pokemons[duelStatus].damage or 1.0
+						end
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()
 					else
-						selfSay('Ha! Essa foi uma luta verdadeiramente intensa, ' .. player:getName() .. "! Voce venceu! Como prova, aqui esta a Insignia da Terra", cid)
+						selfSay('Ha! Un combate de verdad, ' .. player:getName() .. ". Has ganado. Como prueba, aqui tienes la Medalla Tierra.", cid)
 						player:giveQuestPrize(storage)
+						if progressionOnBadge then
+							progressionOnBadge(player, "earthBadge")
+						end
 						npcHandler:releaseFocus(cid)
 					end
 				end
@@ -154,7 +135,7 @@ local function creatureOnThinkCallback()
 					end
 				end
 				if pokemonsAlive == 0 then
-					selfSay("Mais sorte na proxima tentativa, " .. player:getName() .. "!", cid)
+					selfSay("Mas suerte la proxima vez, " .. player:getName() .. "! Prueba con un Pokemon de tipo Agua, Planta o Hielo.", cid)
 					npcHandler:releaseFocus(cid)				
 				end
 			end

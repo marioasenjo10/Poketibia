@@ -3,7 +3,7 @@
 	<health now="100" max="100" />
 	<look type="2600" addons="0" />
 	<parameters>
-		<parameter key="message_greet" value="Nos encontramos de novo, |PLAYERNAME|. Sou o lider do Ginasio de Viridian e este e meu esconderijo! Eu planejei ressuscitar a Equipe Rocket aqui, mas parece que voce veio estragar tudo novamente! Esta pronto para seu duelo mais dificil?." />
-		<parameter key="message_decline" value="Desapareca daqui de uma vez..." />
+		<parameter key="message_greet" value="Asi que tu eres |PLAYERNAME|, el entrenador del que todos hablan. Soy Giovanni, Lider del Gimnasio de Ciudad Verde. Mis Pokemon de tipo Tierra no conocen la derrota. Quieres desafiarme? {si} / {no}" />
+		<parameter key="message_decline" value="Desaparece de mi vista hasta que seas digno." />
 	</parameters>
 </npc>
