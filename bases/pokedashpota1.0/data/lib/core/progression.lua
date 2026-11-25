@@ -592,6 +592,18 @@ function Player.sendTasks(self)
 	if activeIndex and (activeTask.kind == "badge" or activeTask.kind == "reach") and checkTaskDone(self, activeIndex) then
 		return
 	end
+	-- medalla de un gimnasio posterior ya conseguida (se gano al lider antes de hacer las tareas previas,
+	-- p. ej. antes de existir la regla de progressionOnBadge): se cierran las tareas hasta ese gimnasio
+	if activeIndex then
+		for index = activeIndex + 1, #progressionTasks do
+			local task = progressionTasks[index]
+			local quest = task.kind == "badge" and not task.disabled and quests[task.badge]
+			if quest and self:getStorageValue(quest.prizes[1].uid) > 0 then
+				progressionCompleteThroughBadge(self, index)
+				return
+			end
+		end
+	end
 	-- sin tarea activa pero con tareas nuevas despues de la ultima hecha (se anaden al final)
 	if not activeIndex then
 		local lastDone = 0
@@ -936,6 +948,11 @@ function progressionOnBadge(player, badgeKey)
 		player:sendTasks() -- el tope de nivel ha cambiado
 		return
 	end
+	progressionCompleteThroughBadge(player, badgeIndex)
+end
+
+-- completa (con recompensa) las tareas pendientes hasta la del gimnasio badgeIndex incluida
+function progressionCompleteThroughBadge(player, badgeIndex)
 	for _ = 1, #progressionTasks do
 		local index, task = progressionGetActiveTask(player)
 		if not index or index > badgeIndex then
