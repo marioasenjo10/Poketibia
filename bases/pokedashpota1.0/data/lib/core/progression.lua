@@ -39,24 +39,28 @@ progressionLevelCaps = {
 	{badge = "boulderBadge", maxLevel = 20, medal = "Medalla Roca", leader = "Brock", city = "Ciudad Plateada"},
 	{badge = "cascadeBadge", maxLevel = 30, medal = "Medalla Cascada", leader = "Misty", city = "Ciudad Celeste"},
 	{badge = "thunderBadge", maxLevel = 40, medal = "Medalla Trueno", leader = "el Teniente Surge", city = "Ciudad Carmin"},
+	{badge = "rainbowBadge", maxLevel = 50, medal = "Medalla Arcoiris", leader = "Erika", city = "Ciudad Azulona"},
+	{badge = "marshBadge", maxLevel = 60, medal = "Medalla Pantano", leader = "Sabrina", city = "Ciudad Azafran"},
 }
 
--- Gimnasios de Kanto en orden: el primero sin medalla sale en el mapa como "siguiente gimnasio"
+-- Gimnasios de Kanto en orden: el primero sin medalla sale en el mapa como "siguiente gimnasio".
+-- No es el orden oficial: Sabrina va antes que Koga porque Ciudad Fucsia queda muy lejos.
 -- (opcode 75, cliente game_minimap). npc = nombre del lider en map-spawn.xml.
 progressionGyms = {
 	{badge = "boulderBadge", npc = "Brock", leader = "Brock", city = "Ciudad Plateada", medal = "Medalla Roca", type = "Roca"},
 	{badge = "cascadeBadge", npc = "Misty", leader = "Misty", city = "Ciudad Celeste", medal = "Medalla Cascada", type = "Agua"},
 	{badge = "thunderBadge", npc = "Lt. Surge", leader = "Teniente Surge", city = "Ciudad Carmin", medal = "Medalla Trueno", type = "Electrico"},
 	{badge = "rainbowBadge", npc = "Erika", leader = "Erika", city = "Ciudad Azulona", medal = "Medalla Arcoiris", type = "Planta"},
-	{badge = "soulBadge", npc = "Koga", leader = "Koga", city = "Ciudad Fucsia", medal = "Medalla Alma", type = "Veneno"},
 	{badge = "marshBadge", npc = "Sabrina", leader = "Sabrina", city = "Ciudad Azafran", medal = "Medalla Pantano", type = "Psiquico"},
+	{badge = "soulBadge", npc = "Koga", leader = "Koga", city = "Ciudad Fucsia", medal = "Medalla Alma", type = "Veneno"},
 	{badge = "volcanoBadge", npc = "Blaine", leader = "Blaine", city = "Isla Canela", medal = "Medalla Volcan", type = "Fuego"},
 	{badge = "earthBadge", npc = "Giovanni", leader = "Giovanni", city = "Ciudad Verde", medal = "Medalla Tierra", type = "Tierra"},
 }
 
 -- Tareas de historia, en orden. kind: talk | reach | catch | defeat | badge
 --   catch: species = {nombres} o types = {tipos}; count = cuantas capturas
---   defeat: species = {nombres} (sin species vale cualquier salvaje); count = cuantas derrotas
+--   defeat: species = {nombres} y/o types = {tipos} (sin ninguno vale cualquier salvaje); count = cuantas derrotas
+--   (en catch y defeat con types, species sirve tambien para los puntos de "Ver en el mapa")
 --   reach: town = parte del nombre de la ciudad (minusculas)
 --   badge: badge = clave en quests (newfunctions.lua)
 -- reward: exp, money (banco) e items {id, count}
@@ -189,6 +193,57 @@ progressionTasks = {
 		reward = {exp = 0, money = 8000},
 		rewardText = "Medalla Trueno, sin tope de nivel 40 y +5% de dano y defensa a tus Pokemon de tipo Electrico",
 		map = {{1017, 1272, 5, "Teniente Surge, Gimnasio de Ciudad Carmin"}},
+	},
+	-- ===== Ciudad Azulona (Erika) =====
+	{
+		id = "celadon_counter", kind = "catch", types = {"fire", "flying", "poison", "bug"},
+		species = {"Koffing", "Ekans", "Grimer"}, count = 1, giver = "Profesor Oak",
+		title = "Contra las plantas",
+		text = "La siguiente Lider, Erika, usa Pokemon de tipo Planta. Los de tipo Fuego, Volador, Veneno o Bicho les hacen mucho dano. Captura uno: al sureste de Ciudad Azulona hay Koffing, Ekans y Grimer, y por todo Kanto hay Pidgey y Spearow.",
+		reward = {exp = 40000, money = 3000, items = {{id = 26688, count = 20}}},
+	},
+	{
+		id = "go_celadon", kind = "reach", town = "celadon", giver = "Profesor Oak",
+		title = "Rumbo a Ciudad Azulona",
+		text = "Ve hacia el oeste desde Ciudad Azafran hasta Ciudad Azulona, la ciudad de los grandes almacenes. Alli esta el gimnasio de Erika.",
+		reward = {exp = 40000, money = 3000, items = {{id = 27642, count = 20}}},
+	},
+	{
+		id = "celadon_grass", kind = "defeat", types = {"grass"}, species = {"Tangela", "Oddish", "Bellsprout"}, count = 15,
+		giver = "Erika, Lider de Gimnasio",
+		title = "Entrenamiento de planta",
+		text = "Antes de retarme, demuestra que sabes tratar con el tipo Planta: derrota 15 Pokemon de tipo Planta (Tangela, Oddish, Bellsprout...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Erika directamente.)",
+		reward = {exp = 50000, money = 4000},
+	},
+	{
+		id = "erika", kind = "badge", badge = "rainbowBadge", giver = "Erika, Lider de Gimnasio",
+		title = "La Medalla Arcoiris",
+		text = "Desafia a Erika en el Gimnasio de Ciudad Azulona. Sus Pokemon son Tangela, Weepinbell y Vileplume. Recomendado: nivel 48-50 y un Pokemon de tipo Fuego, Volador, Veneno o Bicho.",
+		reward = {exp = 0, money = 12000},
+		rewardText = "Medalla Arcoiris, sin tope de nivel 50 y +5% de dano y defensa a tus Pokemon de tipo Planta",
+		map = {{843, 1114, 5, "Erika, Gimnasio de Ciudad Azulona"}},
+	},
+	-- ===== Ciudad Azafran (Sabrina) =====
+	{
+		id = "lavender_gastly", kind = "catch", species = {"Gastly"}, count = 1, giver = "Profesor Oak",
+		title = "La Torre Pokemon",
+		text = "Sabrina, la Lider de Ciudad Azafran, usa Pokemon Psiquicos y es muy fuerte. Los Pokemon de tipo Fantasma y Bicho son los que mejor le plantan cara. Ve a la Torre Pokemon de Pueblo Lavanda y captura un Gastly. Ojo: como tambien es de tipo Veneno, los ataques psiquicos le hacen mucho dano, asi que no lo dejes solo. Cuidado con los Gengar de los pisos altos!",
+		reward = {exp = 50000, money = 4000, items = {{id = 26688, count = 20}}},
+	},
+	{
+		id = "saffron_psychic", kind = "defeat", types = {"psychic"}, species = {"Exeggcute", "Slowpoke"}, count = 15,
+		giver = "Sabrina, Lider de Gimnasio",
+		title = "Entrenamiento psiquico",
+		text = "Ya sabia que vendrias. Antes de retarme, derrota 15 Pokemon de tipo Psiquico (Exeggcute, Slowpoke, Abra...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Sabrina directamente.)",
+		reward = {exp = 60000, money = 5000},
+	},
+	{
+		id = "sabrina", kind = "badge", badge = "marshBadge", giver = "Sabrina, Lider de Gimnasio",
+		title = "La Medalla Pantano",
+		text = "Desafia a Sabrina en el Gimnasio de Ciudad Azafran. Sus Pokemon son Kadabra, Mr. Mime y Alakazam. Recomendado: nivel 58-60 y un Pokemon de tipo Fantasma o Bicho.",
+		reward = {exp = 0, money = 15000},
+		rewardText = "Medalla Pantano, sin tope de nivel 60 y +5% de dano y defensa a tus Pokemon de tipo Psiquico",
+		map = {{1093, 1054, 7, "Sabrina, Gimnasio de Ciudad Azafran"}},
 	},
 }
 
@@ -609,13 +664,25 @@ function progressionOnDefeat(player, name)
 	if not index or task.kind ~= "defeat" then
 		return
 	end
-	if task.species then
+	if task.species or task.types then
 		local species = speciesName(name)
 		local matches = false
-		for _, wanted in ipairs(task.species) do
+		for _, wanted in ipairs(task.species or {}) do
 			if wanted:lower() == species then
 				matches = true
 				break
+			end
+		end
+		if not matches and task.types then
+			local monsterType = MonsterType(name)
+			if monsterType then
+				local race1, race2 = monsterType:getRaceName(), monsterType:getRace2Name()
+				for _, wanted in ipairs(task.types) do
+					if race1 == wanted or race2 == wanted then
+						matches = true
+						break
+					end
+				end
 			end
 		end
 		if not matches then
