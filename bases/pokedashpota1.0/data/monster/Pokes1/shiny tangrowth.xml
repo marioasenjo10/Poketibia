@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Shiny Tangrowth" nameDescription="a shiny tangrowth" race="grass" race2="none" experience="80" speed="150" manacost="0">
+<monster name="Shiny Tangrowth" nameDescription="a shiny tangrowth" race="grass" race2="none" experience="80" speed="160" manacost="0">
 	<health now="2550" max="2550" />
 	<look type="3343" head="113" body="57" legs="95" feet="113" corpse="38867" />
 	<targetchange interval="5000" chance="0" />

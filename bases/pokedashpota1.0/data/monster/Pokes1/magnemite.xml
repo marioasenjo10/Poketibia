@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Magnemite" nameDescription="a magnemite" race="electric" race2="steel" experience="33" speed="130" manacost="0">
+<monster name="Magnemite" nameDescription="a magnemite" race="electric" race2="steel" experience="33" speed="160" manacost="0">
 	<health now="527" max="527" />
 	<look type="3200" head="113" body="57" legs="95" feet="113" corpse="26942" />
 	<targetchange interval="5000" chance="0" />

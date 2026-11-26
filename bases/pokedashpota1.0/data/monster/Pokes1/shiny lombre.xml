@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Shiny Lombre" nameDescription="a shiny lombre" race="water" race2="grass" experience="53" speed="150" manacost="0">
+<monster name="Shiny Lombre" nameDescription="a shiny lombre" race="water" race2="grass" experience="53" speed="160" manacost="0">
 	<health now="1921" max="1921" />
 	<look type="1762" head="113" body="57" legs="95" feet="113" corpse="28328" />
 	<targetchange interval="5000" chance="0" />
