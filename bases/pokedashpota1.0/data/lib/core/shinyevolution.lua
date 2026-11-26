@@ -262,7 +262,7 @@ shinyEvoItems = {
 -- La lista de destinos sale de los archivos de los shiny (sus <evolution name="Shiny ...">).
 -- Dibujos: tools/pokeassets/ShinyOrbs.ps1. Los objetos 46008+ (los antiguos) siguen funcionando.
 SHINY_ORB_IDS = {mythic = 46001, legendary = 46002, ultra = 46003, super = 46004, t1 = 46005, t2 = 46006, bronze = 46007}
-SHINY_ORB_NAMES = {mythic = "mitico", legendary = "legendario", ultra = "ultra raro", super = "super raro",
+SHINY_ORB_NAMES = {mythic = "Champion", legendary = "Master", ultra = "Elite", super = "Veteran",
 	t1 = "de plata", t2 = "verde", bronze = "de bronce"}
 shinyOrbByItemId = {}
 for key, id in pairs(SHINY_ORB_IDS) do

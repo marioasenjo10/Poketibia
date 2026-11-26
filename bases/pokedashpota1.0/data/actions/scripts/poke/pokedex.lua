@@ -152,7 +152,7 @@ local function useOnItem(player, target)
 	end
 	local storage = baseStorageDex + monsterNumber
 	if player:getStorageValue(storage) == -1 then
-		local givenExp = monsterType:experience() * configManager.getNumber(configKeys.RATE_EXPERIENCE) * multiplier
+		local givenExp = monsterType:getExperience() * configManager.getNumber(configKeys.RATE_EXPERIENCE) * multiplier
 		player:setStorageValue(storage, 0)
 		player:getPosition():sendMagicEffect(329)
 		player:addExperience(givenExp, true)

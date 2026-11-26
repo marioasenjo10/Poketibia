@@ -39,8 +39,8 @@ Para probar un gimnasio suelto: `/progreso ir <id del gimnasio>` + `/progreso ni
 |---|---|---|---|---|---|
 | Brock | Plateada | 15 Geodude | Geodude 20, Onix 22 | 20 | Onix más fuerte que antes |
 | Misty | Celeste | Clefairy (al este de Plateada), llegar, 15 Psyduck (opcional) | Shiny Staryu 28, Golduck 29, Quagsire 29, Starmie 32 (vida x4,5) | 30 | Clefairy se encuentra y se captura |
-| Lt. Surge | Carmín | Diglett/Sandshrew (este de Celeste), llegar + 15 eléctricos en la Central de Energía (opcional, a la vez) | Magneton 38, Electrode 39, Shiny Electrode 41, Shiny Raichu 44 (vida x4,5-6) | 40 | Con Tierra no basta un solo Pokémon; cambio de Spearow por Farfetch'd (Ramon, Centro Pokémon de Carmín) |
-| Erika | Azulona | 25 voladores al norte de Carmín (Noctowl), llegar, 15 de tipo Planta | Tangela 46, Weepinbell 48, Vileplume 50 | 50 | |
+| Lt. Surge | Carmín | Diglett/Sandshrew (este de Celeste), llegar + 15 eléctricos en la Central de Energía (opcional, a la vez) | Magneton 38, Electrode 39, Shiny Electrode 41, Raichu 44 (vida x4,5-6) | 40 | Con Tierra no basta un solo Pokémon; cambio de Spearow por Farfetch'd (Ramon, Centro Pokémon de Carmín) |
+| Erika | Azulona | 25 voladores al norte de Carmín (Noctowl), llegar, 15 de tipo Planta | Tangela 46, Victreebel 48, Vileplume 49, Bellossom 50 | 50 | |
 | Sabrina | Azafrán | Gastly (Torre de Lavanda), 15 de tipo Psíquico | Kadabra 56, Mr. Mime 58, Alakazam 60 | 60 | Los Gengar de la torre no son demasiado |
 | Koga | Fucsia | Psíquico/Tierra, llegar, 15 de tipo Veneno | Venomoth 66, Muk 68, Weezing 70 | 70 | El camino a Fucsia |
 | Blaine | Canela | Pokémon con Surf, llegar surfeando desde Paleta, 15 de tipo Fuego | Ninetales 76, Rapidash 78, Arcanine 80 | 80 | Surfear hasta la isla funciona |

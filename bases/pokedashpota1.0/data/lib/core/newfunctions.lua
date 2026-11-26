@@ -58,6 +58,8 @@ pokemonRequiredLevels = {
 	golbat = 30, poliwhirl = 30, kirlia = 30, roselia = 30, lombre = 30, nuzleaf = 30,
 	loudred = 30, luxio = 30, wormadam = 30,
 	machoke = 35, kadabra = 35, haunter = 35, seadra = 35, vigoroth = 35, sealeo = 35,
+	-- el del intercambio de Ciudad Carmin (el salvaje sigue con fuerza 80, ver wildPowerLevels)
+	["farfetch'd"] = 40,
 	magneton = 40, chansey = 40, piloswine = 40, lairon = 40, vibrava = 40,
 	slowbro = 45, dusclops = 45,
 	rhydon = 50, porygon2 = 50,
@@ -87,6 +89,9 @@ pokemonRequiredLevels = {
 	dragonair = 55, pupitar = 55, shelgon = 55, metang = 55, gabite = 55,
 }
 shinyExtraLevel = 20
+-- minimo para USAR segun el tier (data/pokemon-tiers-review.csv). Solo sube: quien ya pide mas se queda.
+-- No cambia la fuerza de los salvajes.
+tierMinimumLevels = {t2 = 80, t3 = 50}
 -- Pokemon salvajes: nivel de fuerza = nivel requerido de su especie (por wildPowerFactor).
 -- Las formas base (nivel 0) se quedan con sus stats de especie; un Golem salvaje (70)
 -- tiene la vida y el dano del Golem de un entrenador de nivel 70.
@@ -95,7 +100,7 @@ wildPowerFactor = 1.0
 -- fuerza del salvaje distinta del nivel para usarlo (si no esta, se usa el nivel requerido).
 -- Ejemplo: wildPowerLevels = {graveler = 15}
 -- (subidos para usarlos, pero el salvaje se queda como estaba)
-wildPowerLevels = {onix = 20, steelix = 50, electabuzz = 40, dugtrio = 30, sandslash = 30, wigglytuff = 30, pidgeot = 50}
+wildPowerLevels = {onix = 20, steelix = 50, electabuzz = 40, dugtrio = 30, sandslash = 30, wigglytuff = 30, pidgeot = 50, ["farfetch'd"] = 80}
 wildBaseHealthFactor = 0.75 -- vida de las formas base salvajes (nivel 0)
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
@@ -2349,7 +2354,7 @@ function Monster.getPowerLevel(self)
 		return override
 	end
 	if wildPowerFromSpecies and getPokemonRequiredLevel then
-		return math.floor(getPokemonRequiredLevel(self:getName()) * wildPowerFactor)
+		return math.floor(getPokemonRequiredLevel(self:getName(), true) * wildPowerFactor)
 	end
 	return 0
 end

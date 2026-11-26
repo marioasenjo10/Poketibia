@@ -383,6 +383,10 @@ function Player:onGainExperience(source, exp, rawExp)
 		return exp
 	end
 
+	if gymNoExpSummons and source:isMonster() and gymNoExpSummons[source:getId()] then
+		return 0
+	end
+
 	-- Soul regeneration
 	local vocation = self:getVocation()
 	if self:getSoul() < vocation:getMaxSoul() and exp >= self:getLevel() then

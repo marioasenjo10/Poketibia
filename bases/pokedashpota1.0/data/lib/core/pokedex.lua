@@ -454,11 +454,17 @@ end
 
 -- nivel de entrenador para usar el pokemon: el de pokemonRequiredLevels si esta;
 -- si no, por etapa: base 0, etapa media 40, final de linea de 2 etapas 50, final 80 (shiny +20)
-function getPokemonRequiredLevel(name)
+local function tierMinimum(name)
+	local tier = getPokemonTierLabel and getPokemonTierLabel(name) or ""
+	return tierMinimumLevels and tierMinimumLevels[tier:lower()] or 0
+end
+
+-- withoutTierMinimum: sin el minimo por tier (lo usa la fuerza de los salvajes)
+function getPokemonRequiredLevel(name, withoutTierMinimum)
 	if not name or name == "" then
 		return 0
 	end
-	local key = name:lower()
+	local key = name:lower() .. (withoutTierMinimum and "|wild" or "")
 	if requiredLevelCache[key] then
 		return requiredLevelCache[key]
 	end
@@ -495,8 +501,15 @@ function getPokemonRequiredLevel(name)
 			level = pokemonStageLevels.twoStageFinal
 		end
 	end
+	if not withoutTierMinimum then
+		level = math.max(level, tierMinimum(species))
+	end
 	if shiny then
 		level = level + shinyExtraLevel
+	end
+	if not withoutTierMinimum then
+		-- el shiny puede tener un tier propio mas alto que el de su forma normal
+		level = math.max(level, tierMinimum(name))
 	end
 	requiredLevelCache[key] = level
 	return level

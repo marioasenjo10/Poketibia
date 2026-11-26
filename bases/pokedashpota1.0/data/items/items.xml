@@ -40549,16 +40549,16 @@
 	<item id="30035" name="tea" />
 	<item id="30043" name="mead" />
 	<!-- Objetos de evolucion shiny (ver data/lib/core/shinyevolution.lua) -->
-	<item id="46001" article="an" name="orbe de evolucion mitico">
+	<item id="46001" article="an" name="orbe de evolucion Champion">
 		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46002" article="an" name="orbe de evolucion legendario">
+	<item id="46002" article="an" name="orbe de evolucion Master">
 		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46003" article="an" name="orbe de evolucion ultra raro">
+	<item id="46003" article="an" name="orbe de evolucion Elite">
 		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
-	<item id="46004" article="an" name="orbe de evolucion super raro">
+	<item id="46004" article="an" name="orbe de evolucion Veteran">
 		<attribute key="description" value="Lo suelta a veces un shiny salvaje. Usalo con tu Pokemon fuera para evolucionarlo al shiny que muestra el orbe." />
 	</item>
 	<item id="46005" article="an" name="orbe de evolucion de plata">

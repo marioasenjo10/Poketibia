@@ -12,8 +12,8 @@ local pokemons =
 	-- Los golpes normales (placaje, golpe, ataque rapido) tienen que doler tambien a los de Tierra.
 	[1] = {name = "Magneton", level = 38, hp = 4.5, damage = 1.9},
 	[2] = {name = "Electrode", level = 39, hp = 4.5, damage = 2.0},
-	[3] = {name = "Shiny Electrode", level = 41, hp = 5, damage = 2.2},
-	[4] = {name = "Shiny Raichu", level = 44, hp = 6, damage = 2.4},
+	[3] = {name = "Shiny Electrode", level = 41, hp = 4, damage = 2.2},
+	[4] = {name = "Raichu", level = 44, hp = 6, damage = 2.4},
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -128,6 +128,9 @@ local function creatureOnThinkCallback()
 						monster:setHealth(health)
 						if gymSummonDamage then
 							gymSummonDamage[monster:getId()] = pokemons[duelStatus].damage or 1.0
+						end
+						if gymNoExpSummons then
+							gymNoExpSummons[monster:getId()] = rematch[cid] -- la revancha no da experiencia
 						end
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()

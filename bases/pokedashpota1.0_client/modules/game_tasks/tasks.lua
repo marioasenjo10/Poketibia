@@ -123,6 +123,21 @@ createTracker = function()
 end
 
 -- ===================== Ventana =====================
+-- La tarjeta crece con el texto (antes tenia altura fija y las descripciones largas se cortaban
+-- y se montaban con la recompensa). Los alto se miden cuando el ancho ya se conoce.
+local function fitCard(card, task)
+  if card:isDestroyed() then return end
+  local text, reward = card:getChildById('text'), card:getChildById('reward')
+  text:setText(task.text)
+  reward:setText(task.reward ~= '' and ('Recompensa: ' .. task.reward) or '')
+  local textHeight = math.max(18, text:getTextSize().height + 4)
+  local rewardHeight = math.max(18, reward:getTextSize().height + 2)
+  text:setHeight(textHeight)
+  reward:setHeight(rewardHeight)
+  -- 66 de cabecera y titulo, 8 de separacion, recompensa (o boton del mapa) y 28 de la barra
+  card:setHeight(66 + textHeight + 8 + math.max(rewardHeight + 6, 24) + 28)
+end
+
 local function render()
   local list = child('taskList')
   list:destroyChildren()
@@ -162,6 +177,8 @@ local function render()
     local bar = card:getChildById('progress')
     local current, total = task.progress, task.total
     scheduleEvent(function() if not bar:isDestroyed() then setProgress(bar, current, total) end end, 1)
+    fitCard(card, task)
+    scheduleEvent(function() fitCard(card, task) end, 10)
   end
 
   child('emptyLabel'):setVisible(#ordered == 0)
@@ -274,6 +291,18 @@ local function createDoneWindow()
   end
 end
 
+local DONE_HEIGHT = 360
+
+local function fitDoneWindow()
+  if not doneWindow or doneWindow:isDestroyed() then return end
+  local text = doneWindow:getChildById('nextText')
+  if not text:isVisible() then return end
+  local missing = text:getTextSize().height + 6 - text:getHeight()
+  if missing > 0 then
+    doneWindow:setHeight(doneWindow:getHeight() + missing)
+  end
+end
+
 function showNextDone()
   local d = table.remove(doneQueue, 1)
   if not d then
@@ -311,10 +340,12 @@ function showNextDone()
     end
   end
   w:getChildById('continueButton'):setText(#doneQueue > 0 and 'Siguiente' or 'Continuar')
+  w:setHeight(DONE_HEIGHT)
   w:show()
   w:raise()
   w:focus()
   fadeIn(w)
+  scheduleEvent(fitDoneWindow, 10)
 end
 
 function onTaskDoneOpcode(protocol, opcode, buffer)

@@ -18,6 +18,7 @@ OPCODE_MAP_POIS = 74 -- Centros Pokemon y tiendas (servidor: lib/core/mappois.lu
 mapPois = {}
 OPCODE_NEXT_GYM = 75 -- siguiente gimnasio del jugador (servidor: lib/core/progression.lua)
 gymMarker = nil
+floorLabel = nil     -- cartel con el piso que se esta viendo en el mapa grande
 POI_MIN_SCALE = 1    -- con el mapa mas alejado no se ven (serian puntitos encima de todo)
 worldChunks = {}
 worldChunkCount = 0
@@ -109,6 +110,7 @@ function terminate()
   clearPokedexFlags()
   clearTownLabels()
   clearWorldChunks()
+  floorLabel = nil -- se destruye con el minimapa
 
   minimapWindow:destroy()
   minimapButton:destroy()
@@ -305,7 +307,13 @@ function onTownsOpcode(protocol, opcode, buffer)
     local name, x, y, z, flag = entry:match('^(.-):(%d+):(%d+):(%d+):?(%d*)$')
     if name and name ~= '' then
       local discovered = flag ~= '0'
-      local label = createTownLabel(name, discovered)
+      -- las ciudades cuyo centro no esta en el piso 0 llevan el piso junto al nombre
+      local level = 7 - tonumber(z)
+      local shownName = name
+      if level ~= 0 then
+        shownName = name .. ' (piso ' .. (level > 0 and '+' or '') .. level .. ')'
+      end
+      local label = createTownLabel(shownName, discovered)
       -- ayuda y clic en la pastilla (el contenedor deja pasar el raton)
       if discovered then
         label.pill:setTooltip(name .. '\nClic: teletransportarse (necesitas un pokemon con Teleport, como Abra o Alakazam)')
@@ -393,8 +401,17 @@ function onNextGymOpcode(protocol, opcode, buffer)
   gymMarker:setImageSource('/images/map/gym_next')
   -- la Liga llega sin tipo: "Siguiente reto: Liga Pokemon (Meseta Anil)"
   local isGym = kind ~= ''
-  gymMarker:setTooltip((isGym and 'Siguiente gimnasio: ' or 'Siguiente reto: ') .. leader .. ' (' .. city .. ')\n' ..
-    medal .. (isGym and (' - Pok\233mon de tipo ' .. kind) or ''))
+  gymMarker.baseTooltip = (isGym and 'Siguiente gimnasio: ' or 'Siguiente reto: ') .. leader .. ' (' .. city .. ')\n' ..
+    medal .. (isGym and (' - Pok\233mon de tipo ' .. kind) or '')
+  gymMarker:setTooltip(gymMarker.baseTooltip)
+  local arrow = g_ui.createWidget('UIWidget', gymMarker)
+  arrow:setSize({ width = 14, height = 14 })
+  arrow:addAnchor(AnchorTop, 'parent', AnchorTop)
+  arrow:addAnchor(AnchorRight, 'parent', AnchorRight)
+  arrow:setBackgroundColor('#14161bdd')
+  arrow:setPhantom(true)
+  arrow:hide()
+  gymMarker.arrow = arrow
   gymMarker:setFocusable(false)
   gymMarker.pos = { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
   minimapWidget:addChild(gymMarker)
@@ -405,12 +422,19 @@ end
 -- muestra cada marca/ciudad solo en su piso (el mapa no las oculta solo)
 function updateOverlayFloors()
   if not minimapWidget then return end
-  local z = minimapWidget:getCameraPosition().z
+  local camera = minimapWidget:getCameraPosition()
+  if not camera then return end
+  local z = camera.z
   local zoom = minimapWidget:getZoom()
   for _, label in ipairs(townLabels) do
     if label.pos then
       local zoomOk = (not label.minZoom or label.minZoom >= zoom) and (label.maxZoom or 0) <= zoom
-      label:setVisible(zoomOk and label.pos.z == z)
+      -- en el piso 0 salen todas, aunque esten en otro piso: asi se sabe donde queda cada una
+      local show = zoomOk and (label.pos.z == z or z == 7)
+      label:setVisible(show)
+      if show and label:getParent() == minimapWidget then
+        minimapWidget:centerInPosition(label, { x = label.pos.x, y = label.pos.y, z = z })
+      end
     end
   end
   local poiScale = minimapWidget:getScale() >= POI_MIN_SCALE
@@ -418,7 +442,20 @@ function updateOverlayFloors()
     poi:setVisible(poiScale and poi.pos.z == z)
   end
   if gymMarker and not gymMarker:isDestroyed() then
-    gymMarker:setVisible(gymMarker.pos.z == z or z == 7)
+    gymMarker:setVisible(true)
+    local floors = z - gymMarker.pos.z -- positivo: el gimnasio esta mas arriba
+    if floors == 0 then
+      gymMarker.arrow:hide()
+      gymMarker:setTooltip(gymMarker.baseTooltip)
+    else
+      gymMarker.arrow:setImageSource(floors > 0 and '/images/map/up' or '/images/map/down')
+      gymMarker.arrow:show()
+      local level = 7 - gymMarker.pos.z
+      gymMarker:setTooltip(gymMarker.baseTooltip .. '\nEsta en el piso ' .. (level > 0 and '+' or '') .. level ..
+        (floors > 0 and ' (sube)' or ' (baja)'))
+    end
+    -- el minimapa solo coloca bien lo que esta en el piso que se mira
+    minimapWidget:centerInPosition(gymMarker, { x = gymMarker.pos.x, y = gymMarker.pos.y, z = z })
   end
   for _, list in ipairs({ pokedexFlags, taskMarkers }) do
     for _, marker in ipairs(list) do
@@ -428,6 +465,7 @@ function updateOverlayFloors()
     end
   end
   updateWorldChunks()
+  if updateFloorLabelHook then updateFloorLabelHook(z) end
 end
 
 -- ===== Mapa grande suavizado (estilo PKA): imagenes encima del minimapa de cuadraditos =====
@@ -560,25 +598,82 @@ local function createPokeMarker(p, title, icon, onSurface)
 end
 
 local function floorName(z)
-  if z < 7 then return 'piso ' .. (7 - z) end
-  return 'subsuelo ' .. (z - 7)
+  if z < 7 then return 'piso +' .. (7 - z) end
+  if z > 7 then return 'piso -' .. (z - 7) end
+  return 'piso 0'
+end
+
+-- cartel del mapa grande: en que piso se esta mirando y en cuales sale el Pokemon buscado
+local function updateFloorLabel(z)
+  if floorLabel and floorLabel:isDestroyed() then floorLabel = nil end
+  if not fullmapView then
+    if floorLabel then floorLabel:hide() end
+    return
+  end
+  if not floorLabel then
+    floorLabel = g_ui.createWidget('UIWidget', minimapWidget)
+    floorLabel:setFont('poppins-semibold-11px')
+    floorLabel:setColor('#ffffff')
+    floorLabel:setBackgroundColor('#14161bdd')
+    floorLabel:setTextAlign(AlignCenter)
+    floorLabel:setPhantom(true)
+    floorLabel:setFocusable(false)
+    floorLabel:addAnchor(AnchorTop, 'parent', AnchorTop)
+    floorLabel:addAnchor(AnchorHorizontalCenter, 'parent', AnchorHorizontalCenter)
+    floorLabel:setMarginTop(10)
+  end
+  local lines = { 'Viendo: ' .. floorName(z) .. (z == 7 and ' (superficie)' or '') .. '   |   Ctrl + rueda: cambiar de piso' }
+  local floors, seen, title = {}, {}, nil
+  for _, marker in ipairs(pokedexFlags) do
+    if not marker:isDestroyed() and marker.pos then
+      title = marker.title
+      if not seen[marker.pos.z] then
+        seen[marker.pos.z] = true
+        table.insert(floors, marker.pos.z)
+      end
+    end
+  end
+  if title then
+    -- primero el piso 0, despues los mas cercanos a el
+    table.sort(floors, function(a, b)
+      local da, db = math.abs(a - 7), math.abs(b - 7)
+      if da ~= db then return da < db end
+      return a < b
+    end)
+    local names = {}
+    for _, floor in ipairs(floors) do
+      table.insert(names, floorName(floor))
+    end
+    table.insert(lines, title .. ' sale en: ' .. table.concat(names, ', '))
+  end
+  floorLabel:setText(table.concat(lines, '\n'))
+  local size = floorLabel:getTextSize()
+  floorLabel:setSize({ width = size.width + 20, height = size.height + 10 })
+  floorLabel:show()
+  floorLabel:raise()
 end
 
 function updateMarkerFloor(marker, z)
+  -- se coloca en el piso que se mira (si no, el minimapa no sabe donde ponerla)
+  minimapWidget:centerInPosition(marker, { x = marker.pos.x, y = marker.pos.y, z = z })
+  -- un objetivo en un piso alto se ve desde la superficie y desde cualquier otro piso alto
+  local fromAbove = marker.pos.z < SURFACE_FLOOR and z < SURFACE_FLOOR
   if marker.pos.z == z then
     marker:setVisible(true)
     marker.arrow:hide()
     marker:setTooltip(marker.baseTooltip)
-  elseif marker.onSurface and z == SURFACE_FLOOR then
+  elseif marker.onSurface and (z == SURFACE_FLOOR or fromAbove) then
     marker:setVisible(true)
-    local up = marker.pos.z < SURFACE_FLOOR
-    marker.arrow:setImageSource(up and '/images/game/minimap/floor_up' or '/images/game/minimap/floor_down')
+    local up = marker.pos.z < z
+    marker.arrow:setImageSource(up and '/images/map/up' or '/images/map/down')
     marker.arrow:show()
     marker:setTooltip(marker.baseTooltip .. '\n(' .. (up and 'sube' or 'baja') .. ' al ' .. floorName(marker.pos.z) .. ')')
   else
     marker:setVisible(false)
   end
 end
+
+updateFloorLabelHook = updateFloorLabel
 
 function clearTaskMarkers()
   for _, marker in ipairs(taskMarkers) do
@@ -601,7 +696,8 @@ function setTaskMarkers(list)
   updateOverlayFloors()
 end
 
-function showPositions(positions, title, icon)
+-- preferSurface (pokedex): si sale en el piso 0, el mapa se abre ahi aunque haya otra zona mas cerca
+function showPositions(positions, title, icon, preferSurface)
   if #positions == 0 then return end
   if not fullmapView then
     toggleFullMap()
@@ -609,11 +705,20 @@ function showPositions(positions, title, icon)
   clearPokedexFlags()
   for _, p in ipairs(positions) do
     -- solo los pisos altos salen en la superficie (los subterraneos se ven en su piso)
-    table.insert(pokedexFlags, createPokeMarker(p, title, icon, p.z < SURFACE_FLOOR))
+    local marker = createPokeMarker(p, title, icon, p.z < SURFACE_FLOOR)
+    if preferSurface then marker.title = title end
+    table.insert(pokedexFlags, marker)
   end
   -- se centra en la zona mas cercana al jugador; cada piso de diferencia cuenta como 15 casillas
   -- (antes se preferia siempre la superficie y la zona de Mt. Moon, en un piso alto, nunca salia)
   local candidates = positions
+  if preferSurface then
+    local surface = {}
+    for _, p in ipairs(positions) do
+      if p.z == SURFACE_FLOOR then table.insert(surface, p) end
+    end
+    if #surface > 0 then candidates = surface end
+  end
   local best = candidates[1]
   local player = g_game.getLocalPlayer()
   local me = player and player:getPosition()

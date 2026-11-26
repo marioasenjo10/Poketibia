@@ -125,6 +125,9 @@ local function creatureOnThinkCallback()
 						if gymSummonDamage then
 							gymSummonDamage[monster:getId()] = pokemons[duelStatus].damage or 1.0
 						end
+						if gymNoExpSummons then
+							gymNoExpSummons[monster:getId()] = rematch[cid] -- la revancha no da experiencia
+						end
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()
 					else

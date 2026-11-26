@@ -114,7 +114,7 @@ function getWildExpLevel(monster)
 		return power
 	end
 	local mType = monster:getType()
-	local base = mType and mType:experience() or 0
+	local base = mType and mType:getExperience() or 0
 	return math.max(0, (base - 20) * 2)
 end
 
@@ -284,7 +284,7 @@ progressionTasks = {
 	{
 		id = "surge", kind = "badge", badge = "thunderBadge", giver = "Teniente Surge, Lider de Gimnasio",
 		title = "La Medalla Trueno",
-		text = "Desafia al Teniente Surge en el Gimnasio de Ciudad Carmin, en el piso de arriba (sube las escaleras). Sus Pokemon son Magneton, Electrode, Shiny Electrode y Shiny Raichu. Recomendado: nivel 40 y varios Pokemon de tipo Tierra: aunque la electricidad no les hace nada, sus golpes normales duelen.",
+		text = "Desafia al Teniente Surge en el Gimnasio de Ciudad Carmin, en el piso de arriba (sube las escaleras). Sus Pokemon son Magneton, Electrode, Shiny Electrode y Raichu. Recomendado: nivel 40 y varios Pokemon de tipo Tierra: aunque la electricidad no les hace nada, sus golpes normales duelen.",
 		reward = {exp = 0, money = 8000},
 		rewardText = "Medalla Trueno, 1 piedra trueno, sin tope de nivel 40 y +5% de dano y defensa a tus Pokemon de tipo Electrico",
 		map = {{1017, 1272, 5, "Teniente Surge, Gimnasio de Ciudad Carmin"}},
@@ -314,7 +314,7 @@ progressionTasks = {
 	{
 		id = "erika", kind = "badge", badge = "rainbowBadge", giver = "Erika, Lider de Gimnasio",
 		title = "La Medalla Arcoiris",
-		text = "Desafia a Erika en el Gimnasio de Ciudad Azulona. Sus Pokemon son Tangela, Weepinbell y Vileplume. Recomendado: nivel 48-50 y un Pokemon de tipo Fuego, Volador, Veneno o Bicho.",
+		text = "Desafia a Erika en el Gimnasio de Ciudad Azulona. Sus Pokemon son Tangela, Victreebel, Vileplume y Bellossom. Recomendado: nivel 48-50 y un Pokemon de tipo Fuego, Volador, Veneno o Bicho.",
 		reward = {exp = 0, money = 12000},
 		rewardText = "Medalla Arcoiris, 1 piedra hoja, sin tope de nivel 50 y +5% de dano y defensa a tus Pokemon de tipo Planta",
 		map = {{843, 1114, 5, "Erika, Gimnasio de Ciudad Azulona"}},
@@ -529,6 +529,8 @@ end
 
 -- dano extra de los Pokemon de gimnasio (id de la criatura -> multiplicador)
 gymSummonDamage = gymSummonDamage or {}
+-- Pokemon de Lider en una revancha amistosa: no dan experiencia (events/scripts/player.lua)
+gymNoExpSummons = gymNoExpSummons or {}
 
 local function clean(text)
 	return (tostring(text or ""):gsub("[|\n\r]", " "))

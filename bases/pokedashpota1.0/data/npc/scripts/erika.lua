@@ -7,9 +7,10 @@ local rematch = {}
 -- damage: multiplicador de dano. Valores calculados con el simulador de combate.
 local pokemons =
 {
-	[1] = {name = "Tangela", level = 46, hp = 3, damage = 1.5},
-	[2] = {name = "Weepinbell", level = 48, hp = 3, damage = 1.5},
-	[3] = {name = "Vileplume", level = 50, hp = 4, damage = 1.75},
+	[1] = {name = "Tangela", level = 46, hp = 3, damage = 1.8},
+	[2] = {name = "Victreebel", level = 48, hp = 4.5, damage = 1.9},
+	[3] = {name = "Vileplume", level = 49, hp = 5, damage = 2.0},
+	[4] = {name = "Bellossom", level = 50, hp = 5.5, damage = 2.1},
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -124,6 +125,9 @@ local function creatureOnThinkCallback()
 						monster:setHealth(health)
 						if gymSummonDamage then
 							gymSummonDamage[monster:getId()] = pokemons[duelStatus].damage or 1.0
+						end
+						if gymNoExpSummons then
+							gymNoExpSummons[monster:getId()] = rematch[cid] -- la revancha no da experiencia
 						end
 						monster:changeSpeed(-monster:getSpeed() + monster:getTotalSpeed())
 						player:increaseDuelWithNpcStatus()

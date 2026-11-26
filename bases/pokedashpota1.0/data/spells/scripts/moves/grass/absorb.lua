@@ -14,7 +14,7 @@ function onCastSpell(creature, variant)
 
 	doSendDistanceShoot(targetPosition, creaturePosition, missileEffect)
 	doTargetCombatHealth(creature.uid, target, combat, -damage, -damage, effect)
-	doTargetCombatHealth(0, creature, COMBAT_HEALING, damage, damage, healingEffect)
+	doTargetCombatHealth(0, creature, COMBAT_HEALING, damage * 0.5, damage * 0.5, healingEffect) -- cura la mitad (antes anulaba casi un Ember)
 
 	return true
 end

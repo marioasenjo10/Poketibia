@@ -81,9 +81,30 @@ local function dexLabel(number)
 end
 
 local function floorText(z)
-  if z == 7 then return 'superficie' end
+  if z == 7 then return 'piso 0' end
   if z < 7 then return 'piso +' .. (7 - z) end
-  return 'subterraneo -' .. (z - 7)
+  return 'piso -' .. (z - 7)
+end
+
+-- "0, -1, +1": pisos en los que sale, el 0 primero
+local function floorSummary(locations)
+  local floors, seen = {}, {}
+  for _, loc in ipairs(locations) do
+    if not seen[loc.z] then
+      seen[loc.z] = true
+      table.insert(floors, loc.z)
+    end
+  end
+  table.sort(floors, function(a, b)
+    local da, db = math.abs(a - 7), math.abs(b - 7)
+    if da ~= db then return da < db end
+    return a < b
+  end)
+  local names = {}
+  for _, z in ipairs(floors) do
+    table.insert(names, (floorText(z):gsub('^piso ', '')))
+  end
+  return table.concat(names, ', ')
 end
 
 local function contains(list, value)
@@ -428,6 +449,11 @@ function loadInfo(buffer)
   end
 end
 
+TIER_NAMES = {
+  t7 = 'Newbie (G)', t6 = 'Basic (F)', t5 = 'Rookie (E)', t4 = 'Junior (D)', t3 = 'Regular (C)',
+  t2 = 'Pro (B)', t1 = 'Ace (A)', ['super rare'] = 'Veteran (S)', ['ultra rare'] = 'Elite (S+)',
+  legendary = 'Master (SS)', mythic = 'Champion (SSS)',
+}
 TIER_COLORS = {
   mythic = '#c0392b', legendary = '#b8860b', ['ultra rare'] = '#2f6fd6', ['super rare'] = '#8e44ad',
   t1 = '#8a96a3', t2 = '#2e9e57',
@@ -451,8 +477,11 @@ function buildHeader(info)
   child('levelChip'):setTooltip('Nivel de entrenador necesario para usarlo')
   -- tier (rareza) del Pokemon: los mismos colores que los orbes de evolucion shiny
   local tierColor = TIER_COLORS[info.tier:lower()] or '#8c5a2b'
-  setChip(child('tierChip'), info.tier ~= '' and info.tier:upper() or nil, tierColor)
-  child('tierChip'):setTooltip('Tier: lo bueno y raro que es (T7 el mas comun ... Mythic el mejor)')
+  -- nombres propios: por dentro (servidor y tabla de tiers) siguen siendo T1-T7, Super Rare, etc.
+  local tierName = TIER_NAMES[info.tier:lower()] or info.tier
+  setChip(child('tierChip'), info.tier ~= '' and ('Tier ' .. tierName) or nil, tierColor)
+  child('tierChip'):setTooltip('Tier: lo bueno y raro que es. De menor a mayor: Newbie (G), Basic (F), Rookie (E), ' ..
+    'Junior (D),\nRegular (C), Pro (B), Ace (A), Veteran (S), Elite (S+), Master (SS), Champion (SSS)')
   if info.legendary then
     setChip(child('specialChip'), 'LEGENDARIO', '#b8860b')
   elseif info.isShiny then
@@ -473,6 +502,9 @@ function buildHeader(info)
     end
   elseif info.worldCount <= 0 then
     world = world .. '   |   No aparece salvaje'
+  end
+  if not info.isShiny and #info.locations > 0 then
+    world = world .. '   |   Pisos: ' .. floorSummary(info.locations)
   end
   child('worldLabel'):setText(world)
 
@@ -783,7 +815,7 @@ function showOnMap(positions)
   local minimap = modules.game_minimap
   if not minimap or not minimap.showPositions or not current or #positions == 0 then return end
   hide()
-  minimap.showPositions(positions, current.name, iconFor(current.name) or portraitFor(current.look))
+  minimap.showPositions(positions, current.name, iconFor(current.name) or portraitFor(current.look), true)
 end
 
 function showAllOnMap()

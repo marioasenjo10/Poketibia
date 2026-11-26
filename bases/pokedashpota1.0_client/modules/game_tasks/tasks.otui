@@ -304,8 +304,11 @@ TaskCard < UIWidget
     margin-left: 12
     margin-right: 8
     margin-bottom: 6
+    height: 18
     font: poppins-12px
     color: #f2c14e
+    text-wrap: true
+    text-align: topLeft
     phantom: true
 
   // solo en la tarea activa si el servidor manda puntos: abre el mapa grande con las marcas
