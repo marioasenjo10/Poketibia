@@ -1,5 +1,5 @@
 local delay = 0.1
-local bonusSpeed = 1.2
+local bonusSpeed = 1.0 -- +100%: x2, igual que volar y montar (poke/order.lua)
 local outfitMale = 1315
 local outfitFemale = 1316
 local condition = Condition(CONDITION_OUTFIT)
