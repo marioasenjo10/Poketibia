@@ -165,6 +165,7 @@ function onGameStart()
 end
 
 function onGameEnd()
+  stopAirWalk()
   setupViewMode(2)
   hide()
 end
@@ -342,6 +343,7 @@ end
 
 function smartWalk(dir)
   if g_keyboard.getModifiers() == KeyboardNoModifier then
+    stopAirWalk()
     local func = walkFunction
     if not func then
       if modules.client_options.getOption('dashWalk') then
@@ -704,6 +706,70 @@ function talkToNpc(npc)
   tryTalk()
 end
 
+-- Andar por el aire volando: en el piso 6 o mas arriba no hay suelo (el servidor solo pone una
+-- casilla invisible bajo tus pies, objeto 470), asi que el autoWalk no encuentra camino. Si estas
+-- volando y no hay camino, se dan pasos rectos hacia el punto (sin diagonales: cuestan el triple),
+-- como al andar con las flechas. Se para al llegar, al hacer otro clic, con las flechas o si
+-- un paso no avanza (montana, edificio...).
+local FLY_FLOOR_CLIENT_ID = 470
+local AIR_STEP_TIMEOUT = 1500 -- ms esperando a que un paso se complete
+local airWalkEvent = nil
+
+local function isFlying(player)
+  local tile = g_map.getTile(player:getPosition())
+  if not tile then return false end
+  for _, item in ipairs(tile:getItems()) do
+    if item:getId() == FLY_FLOOR_CLIENT_ID then return true end
+  end
+  return false
+end
+
+function stopAirWalk()
+  if airWalkEvent then
+    removeEvent(airWalkEvent)
+    airWalkEvent = nil
+  end
+end
+
+local function airWalk(target)
+  stopAirWalk()
+  local player = g_game.getLocalPlayer()
+  if not player then return end
+  local lastPos, sentAt = nil, 0
+
+  local function step()
+    airWalkEvent = nil
+    if not g_game.isOnline() then return end
+    local pos = player:getPosition()
+    if pos.z ~= target.z or (pos.x == target.x and pos.y == target.y) then return end
+    if lastPos then
+      local moved = pos.x ~= lastPos.x or pos.y ~= lastPos.y
+      if not moved then
+        -- el paso aun no ha llegado o el servidor lo ha rechazado
+        if g_clock.millis() - sentAt > AIR_STEP_TIMEOUT then return end
+        airWalkEvent = scheduleEvent(step, 30)
+        return
+      end
+    end
+    if player:isWalking() then
+      airWalkEvent = scheduleEvent(step, 30)
+      return
+    end
+    local dx, dy = target.x - pos.x, target.y - pos.y
+    local dir
+    if math.abs(dx) >= math.abs(dy) then
+      dir = dx > 0 and East or West
+    else
+      dir = dy > 0 and South or North
+    end
+    lastPos, sentAt = { x = pos.x, y = pos.y, z = pos.z }, g_clock.millis()
+    g_game.walk(dir)
+    airWalkEvent = scheduleEvent(step, 30)
+  end
+
+  step()
+end
+
 function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, useThing, creatureThing, attackCreature)
   local keyboardModifiers = g_keyboard.getModifiers()
 
@@ -793,9 +859,18 @@ function processMouseAction(menuPosition, mouseButton, autoWalkPos, lookThing, u
 
   local player = g_game.getLocalPlayer()
   player:stopAutoWalk()
+  stopAirWalk()
 
   if autoWalkPos and keyboardModifiers == KeyboardNoModifier and mouseButton == MouseLeftButton then
-    player:autoWalk(autoWalkPos)
+    if isFlying(player) then
+      -- al aire (sin suelo) se va en linea recta; a un tejado o monte se intenta primero el camino normal
+      local tile = g_map.getTile(autoWalkPos)
+      if not tile or not tile:getGround() or not player:autoWalk(autoWalkPos) then
+        airWalk(autoWalkPos)
+      end
+    else
+      player:autoWalk(autoWalkPos)
+    end
     return true
   end
 
