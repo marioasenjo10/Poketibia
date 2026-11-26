@@ -656,13 +656,15 @@ end
 function updateMarkerFloor(marker, z)
   -- se coloca en el piso que se mira (si no, el minimapa no sabe donde ponerla)
   minimapWidget:centerInPosition(marker, { x = marker.pos.x, y = marker.pos.y, z = z })
-  -- un objetivo en un piso alto se ve desde la superficie y desde cualquier otro piso alto
-  local fromAbove = marker.pos.z < SURFACE_FLOOR and z < SURFACE_FLOOR
+  -- un objetivo en un piso alto (o subterraneo) se ve desde la superficie y desde cualquier
+  -- otro piso alto (o subterraneo), con la flecha de subir o bajar
+  local sameSide = (marker.pos.z < SURFACE_FLOOR and z < SURFACE_FLOOR) or
+    (marker.pos.z > SURFACE_FLOOR and z > SURFACE_FLOOR)
   if marker.pos.z == z then
     marker:setVisible(true)
     marker.arrow:hide()
     marker:setTooltip(marker.baseTooltip)
-  elseif marker.onSurface and (z == SURFACE_FLOOR or fromAbove) then
+  elseif marker.onSurface and (z == SURFACE_FLOOR or sameSide) then
     marker:setVisible(true)
     local up = marker.pos.z < z
     marker.arrow:setImageSource(up and '/images/map/up' or '/images/map/down')
@@ -704,8 +706,8 @@ function showPositions(positions, title, icon, preferSurface)
   end
   clearPokedexFlags()
   for _, p in ipairs(positions) do
-    -- solo los pisos altos salen en la superficie (los subterraneos se ven en su piso)
-    local marker = createPokeMarker(p, title, icon, p.z < SURFACE_FLOOR)
+    -- los pisos altos y los subterraneos salen tambien en la superficie, con flecha
+    local marker = createPokeMarker(p, title, icon, true)
     if preferSurface then marker.title = title end
     table.insert(pokedexFlags, marker)
   end
@@ -731,8 +733,8 @@ function showPositions(positions, title, icon, preferSurface)
       end
     end
   end
-  -- en un piso alto (el gimnasio de Surge): se ensena la superficie con la flecha de subir
-  local cameraZ = best.z < SURFACE_FLOOR and SURFACE_FLOOR or best.z
-  minimapWidget:setCameraPosition({ x = best.x, y = best.y, z = cameraZ })
+  -- en otro piso (el gimnasio de Surge, la cueva de Haunter): se ensena la superficie con la
+  -- flecha de subir o bajar
+  minimapWidget:setCameraPosition({ x = best.x, y = best.y, z = SURFACE_FLOOR })
   updateOverlayFloors()
 end

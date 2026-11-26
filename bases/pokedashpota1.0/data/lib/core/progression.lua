@@ -321,9 +321,11 @@ progressionTasks = {
 	},
 	-- ===== Ciudad Azafran (Sabrina) =====
 	{
-		id = "lavender_gastly", kind = "catch", species = {"Gastly"}, count = 1, giver = "Profesor Oak",
+		-- dos formas de cumplirla: derrotar 25 fantasmas o capturar un Haunter (orCatch)
+		id = "lavender_gastly", kind = "defeat", types = {"ghost"}, species = {"Gastly", "Haunter"}, count = 25,
+		orCatch = {"Haunter"}, giver = "Profesor Oak",
 		title = "La Torre Pokemon",
-		text = "Sabrina, la Lider de Ciudad Azafran, usa Pokemon Psiquicos y es muy fuerte. Los Pokemon de tipo Fantasma y Bicho son los que mejor le plantan cara. Ve a la Torre Pokemon de Pueblo Lavanda y captura un Gastly. Ojo: como tambien es de tipo Veneno, los ataques psiquicos le hacen mucho dano, asi que no lo dejes solo. Cuidado con los Gengar de los pisos altos!",
+		text = "Sabrina, la Lider de Ciudad Azafran, usa Pokemon Psiquicos y es muy fuerte. Los Pokemon de tipo Fantasma y Bicho son los que mejor le plantan cara. Ve a Pueblo Lavanda y elige: derrota 25 Pokemon Fantasma o captura un Haunter, que te servira contra ella. Ojo: los fantasmas de Kanto tambien son de tipo Veneno y los ataques psiquicos les hacen mucho dano. Cuidado con los Gengar!",
 		reward = {exp = 160000, money = 4000, items = {{id = 26688, count = 20}}},
 	},
 	{
@@ -1030,6 +1032,16 @@ function progressionOnCatch(player, name)
 	for _, entry in ipairs(progressionGetActiveTasks(player)) do
 		if entry.task.kind == "catch" and taskState(player, entry.index) == 1 then
 			catchTaskProgress(player, entry.index, entry.task, name)
+		elseif entry.task.orCatch and taskState(player, entry.index) == 1 then
+			-- otra forma de cumplirla: capturar uno de estos (la Torre Pokemon: un Haunter)
+			local species = speciesName(name)
+			for _, wanted in ipairs(entry.task.orCatch) do
+				if wanted:lower() == species then
+					player:setStorageValue(PROGRESSION_TASK_PROGRESS + entry.index, entry.task.count or 1)
+					checkTaskDone(player, entry.index)
+					break
+				end
+			end
 		end
 	end
 end
