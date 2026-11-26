@@ -735,36 +735,35 @@ local function airWalk(target)
   stopAirWalk()
   local player = g_game.getLocalPlayer()
   if not player then return end
-  local lastPos, sentAt = nil, 0
+  local lastPos, stuckSince, lastSent = nil, 0, 0
+
+  -- el cliente ignora el paso si llega mientras aun termina el anterior (con las flechas no se
+  -- nota porque la tecla se repite): se reenvia cada AIR_STEP_RETRY ms hasta que se avanza
+  local AIR_STEP_RETRY = 150
 
   local function step()
     airWalkEvent = nil
     if not g_game.isOnline() then return end
     local pos = player:getPosition()
     if pos.z ~= target.z or (pos.x == target.x and pos.y == target.y) then return end
-    if lastPos then
-      local moved = pos.x ~= lastPos.x or pos.y ~= lastPos.y
-      if not moved then
-        -- el paso aun no ha llegado o el servidor lo ha rechazado
-        if g_clock.millis() - sentAt > AIR_STEP_TIMEOUT then return end
-        airWalkEvent = scheduleEvent(step, 30)
-        return
+    local now = g_clock.millis()
+    if not lastPos or pos.x ~= lastPos.x or pos.y ~= lastPos.y then
+      lastPos, stuckSince = { x = pos.x, y = pos.y, z = pos.z }, now
+    elseif now - stuckSince > AIR_STEP_TIMEOUT then
+      return -- no avanza: edificio, monte...
+    end
+    if not player:isWalking() and now - lastSent >= AIR_STEP_RETRY then
+      local dx, dy = target.x - pos.x, target.y - pos.y
+      local dir
+      if math.abs(dx) >= math.abs(dy) then
+        dir = dx > 0 and East or West
+      else
+        dir = dy > 0 and South or North
       end
+      lastSent = now
+      g_game.walk(dir)
     end
-    if player:isWalking() then
-      airWalkEvent = scheduleEvent(step, 30)
-      return
-    end
-    local dx, dy = target.x - pos.x, target.y - pos.y
-    local dir
-    if math.abs(dx) >= math.abs(dy) then
-      dir = dx > 0 and East or West
-    else
-      dir = dy > 0 and South or North
-    end
-    lastPos, sentAt = { x = pos.x, y = pos.y, z = pos.z }, g_clock.millis()
-    g_game.walk(dir)
-    airWalkEvent = scheduleEvent(step, 30)
+    airWalkEvent = scheduleEvent(step, 20)
   end
 
   step()
