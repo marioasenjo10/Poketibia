@@ -2904,6 +2904,16 @@ function doEvolveSummon(cid, evolutionName, ancient)
 
 		addEvent(doRemoveSummon, 4000, master:getId(), false, nil, false)
 		addEvent(doReleaseSummon, 4001, master:getId(), summonPos, false, false)
+		-- al volver a salir, su vida maxima incluye runas, vitaminas y Blocker (la de arriba no):
+		-- sale con la vida llena
+		addEvent(function(masterId)
+			local player = Player(masterId)
+			local evolved = player and player:getSummons()[1]
+			if evolved then
+				evolved:setHealth(evolved:getMaxHealth())
+				player:refreshPokemonBar({}, {})
+			end
+		end, 4100, master:getId())
 		master:refreshPokemonBar({}, {})
 		return true
 	else
