@@ -336,7 +336,7 @@ progressionTasks = {
 	{
 		id = "sabrina", kind = "badge", badge = "marshBadge", giver = "Sabrina, Lider de Gimnasio",
 		title = "La Medalla Pantano",
-		text = "Desafia a Sabrina en el Gimnasio de Ciudad Azafran. Sus Pokemon son Kadabra, Mr. Mime y Alakazam. Recomendado: nivel 58-60 y un Pokemon de tipo Fantasma o Bicho.",
+		text = "Desafia a Sabrina en el Gimnasio de Ciudad Azafran. Sus Pokemon son Kadabra, Mr. Mime, Espeon y Alakazam. Recomendado: nivel 58-60 y un Pokemon de tipo Fantasma o Bicho.",
 		reward = {exp = 0, money = 15000},
 		rewardText = "Medalla Pantano, 1 piedra enigma, sin tope de nivel 60 y +5% de dano y defensa a tus Pokemon de tipo Psiquico",
 		map = {{1093, 1054, 7, "Sabrina, Gimnasio de Ciudad Azafran"}},

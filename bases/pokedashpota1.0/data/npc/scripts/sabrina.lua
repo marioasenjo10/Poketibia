@@ -7,9 +7,10 @@ local rematch = {}
 -- damage: multiplicador de dano. Valores calculados con el simulador de combate.
 local pokemons =
 {
-	[1] = {name = "Kadabra", level = 56, hp = 3, damage = 1.5},
-	[2] = {name = "Mr. Mime", level = 58, hp = 3, damage = 1.6},
-	[3] = {name = "Alakazam", level = 60, hp = 4, damage = 1.8},
+	[1] = {name = "Kadabra", level = 56, hp = 3.5, damage = 1.7},
+	[2] = {name = "Mr. Mime", level = 57, hp = 4, damage = 1.8},
+	[3] = {name = "Espeon", level = 58, hp = 4.5, damage = 1.9},
+	[4] = {name = "Alakazam", level = 60, hp = 5.5, damage = 2.1},
 }
 
 local keywordHandler = KeywordHandler:new()
