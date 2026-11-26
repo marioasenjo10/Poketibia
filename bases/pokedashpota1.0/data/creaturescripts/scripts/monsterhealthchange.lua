@@ -131,7 +131,25 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	local defenderRace = defenderMonsterType:getRaceName()
 	local defenderRace2 = defenderMonsterType:getRace2Name()
 
-	local effectiveness = getTypeEffectiveness(primaryTypeName, defenderRace, defenderRace2)
+	local effectiveness
+	if primaryTypeName == "physical" then
+		-- golpe basico (melee): no tiene tipo propio, asi que usa los del atacante y se queda
+		-- con el mejor (Noctowl volador/normal contra planta = x1.5 por volador)
+		effectiveness = 1.0
+		local attackerType = attacker:isMonster() and MonsterType(attacker:getName())
+		if attackerType then
+			local best
+			for _, race in ipairs({attackerType:getRaceName(), attackerType:getRace2Name()}) do
+				if race and race ~= "none" and racesStrength[race] then
+					local value = getTypeEffectiveness(race, defenderRace, defenderRace2)
+					if not best or value > best then best = value end
+				end
+			end
+			effectiveness = best or 1.0
+		end
+	else
+		effectiveness = getTypeEffectiveness(primaryTypeName, defenderRace, defenderRace2)
+	end
 	if effectiveness <= 0 then
 		Game.sendAnimatedText(creature:getPosition(), "INMUNE", TEXTCOLOR_LIGHTGREY)
 		return 0, primaryType, 0, secondaryType
