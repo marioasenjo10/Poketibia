@@ -26,8 +26,8 @@
 		<flag surfable="0" />
 		<flag canteleport="0" />
 		<flag catchchance="20" />
-		<flag moveMagicAttackBase="50" />
-		<flag moveMagicDefenseBase="50" />
+		<flag moveMagicAttackBase="70" />
+		<flag moveMagicDefenseBase="65" />
 	</flags>
 	<script>
         	<event name="MonsterHealthChange"/>
@@ -48,7 +48,7 @@
 
 	</evolutions>
 	<attacks>
-		<attack name="melee" interval="2000" min="-60" max="-60" />
+		<attack name="melee" interval="2000" min="-80" max="-80" />
 		<attack name="tackle" interval="3000" chance="40" range="1" target="1"/>
 		<attack name="sand attack" interval="10000" chance="40"/>
 		<attack name="gust" interval="8000" chance="40"/>
@@ -56,7 +56,7 @@
 		<attack name="wing attack" interval="9000" chance="40"/>
 
 	</attacks>
-	<defenses armor="0" defense="55" >
+	<defenses armor="0" defense="80" >
 
 	</defenses>
 	<elements>

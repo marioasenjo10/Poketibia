@@ -25,7 +25,7 @@
 		<flag surfable="1323" />
 		<flag canteleport="0" />
 		<flag catchchance="17" />
-		<flag moveMagicAttackBase="65" />
+		<flag moveMagicAttackBase="80" />
 		<flag moveMagicDefenseBase="80" />
 	</flags>
 	<script>
@@ -48,7 +48,7 @@
 
 	</evolutions>
 	<attacks>
-		<attack name="melee" interval="2000" min="-63" max="-63" />
+		<attack name="melee" interval="2000" min="-70" max="-70" />
 		<attack name="tackle" interval="3000" chance="40" range="1" target="1"/>
 		<attack name="bubble" interval="3000" chance="40" target="1"/>
 		<attack name="water gun" interval="8000" chance="40"/>

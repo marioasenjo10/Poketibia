@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Pidgeotto" nameDescription="a pidgeotto" race="flying" race2="normal" experience="36" speed="220" manacost="0">
+<monster name="Pidgeotto" nameDescription="a pidgeotto" race="flying" race2="normal" experience="36" speed="270" manacost="0">
 	<health now="1343" max="1343" />
 	<look type="3206" head="113" body="57" legs="95" feet="113" corpse="26878" />
 	<targetchange interval="5000" chance="0" />
@@ -25,8 +25,8 @@
 		<flag surfable="0" />
 		<flag canteleport="0" />
 		<flag catchchance="20" />
-		<flag moveMagicAttackBase="50" />
-		<flag moveMagicDefenseBase="50" />
+		<flag moveMagicAttackBase="70" />
+		<flag moveMagicDefenseBase="65" />
 	</flags>
 	<script>
         	<event name="MonsterHealthChange"/>
@@ -47,7 +47,7 @@
 
 	</evolutions>
 	<attacks>
-		<attack name="melee" interval="2000" min="-60" max="-60" />
+		<attack name="melee" interval="2000" min="-80" max="-80" />
 		<attack name="tackle" interval="3000" chance="40" range="1" target="1"/>
 		<attack name="sand attack" interval="10000" chance="40"/>
 		<attack name="gust" interval="8000" chance="40"/>
@@ -55,7 +55,7 @@
 		<attack name="wing attack" interval="9000" chance="40"/>
 
 	</attacks>
-	<defenses armor="0" defense="55" >
+	<defenses armor="0" defense="80" >
 
 	</defenses>
 	<elements>

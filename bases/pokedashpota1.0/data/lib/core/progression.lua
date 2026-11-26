@@ -269,30 +269,34 @@ progressionTasks = {
 	{
 		id = "go_vermilion", kind = "reach", town = "vermilion", giver = "Profesor Oak",
 		title = "Rumbo a Ciudad Carmin",
-		text = "Ve hacia el sur, pasando por Ciudad Azafran, hasta Ciudad Carmin, el gran puerto de Kanto. Alli esta el gimnasio del Teniente Surge.",
+		text = "Ve hacia el sur, pasando por Ciudad Azafran, hasta Ciudad Carmin, el gran puerto de Kanto. Alli esta el gimnasio del Teniente Surge. Lleva un Spearow: en el Centro Pokemon de Carmin, el pescador Ramon lo cambia por su Farfetch'd, que puede llevarte volando.",
 		reward = {exp = 41000, money = 2000, items = {{id = 27642, count = 15}}},
 	},
 	{
-		id = "vermilion_electric", optional = true, kind = "defeat", species = {"Voltorb", "Magnemite"}, count = 15, giver = "Teniente Surge, Lider de Gimnasio",
-		title = "Entrenamiento electrico",
-		text = "Antes de retarme, demuestra que no te asusta la electricidad: derrota 15 Voltorb o Magnemite, entre Ciudad Celeste y Ciudad Azafran. Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar al Teniente Surge directamente.)",
+		-- opensWith: se abre a la vez que "Rumbo a Ciudad Carmin" (la Central esta de camino), no con el gimnasio
+		id = "vermilion_electric", optional = true, opensWith = "go_vermilion", kind = "defeat", types = {"electric"},
+		species = {"Voltorb", "Magnemite", "Pikachu"}, count = 15, giver = "Teniente Surge, Lider de Gimnasio",
+		title = "La Central de Energia",
+		text = "De camino a Ciudad Carmin, al sureste de Ciudad Azafran, esta la Central de Energia, llena de Pokemon de tipo Electrico. Derrota 15 (Voltorb, Magnemite, Pikachu...) para ver como luchan los mios. En la planta baja estan los mas flojos; arriba hay Magneton, Electrode y Raichu. (Opcional: si te ves fuerte, ve directamente a Ciudad Carmin.)",
 		reward = {exp = 55000, money = 3000},
+		map = {{1135, 1110, 7, "Central de Energia (planta baja)"}},
 	},
 	{
 		id = "surge", kind = "badge", badge = "thunderBadge", giver = "Teniente Surge, Lider de Gimnasio",
 		title = "La Medalla Trueno",
-		text = "Desafia al Teniente Surge en el Gimnasio de Ciudad Carmin. Sus Pokemon son Voltorb, Magnemite y Raichu. Recomendado: nivel 38-40 y un Pokemon de tipo Tierra.",
+		text = "Desafia al Teniente Surge en el Gimnasio de Ciudad Carmin, en el piso de arriba (sube las escaleras). Sus Pokemon son Magneton, Electrode, Shiny Electrode y Shiny Raichu. Recomendado: nivel 40 y varios Pokemon de tipo Tierra: aunque la electricidad no les hace nada, sus golpes normales duelen.",
 		reward = {exp = 0, money = 8000},
 		rewardText = "Medalla Trueno, 1 piedra trueno, sin tope de nivel 40 y +5% de dano y defensa a tus Pokemon de tipo Electrico",
 		map = {{1017, 1272, 5, "Teniente Surge, Gimnasio de Ciudad Carmin"}},
 	},
 	-- ===== Ciudad Azulona (Erika) =====
 	{
-		id = "celadon_counter", kind = "catch", types = {"fire", "flying", "poison", "bug"},
-		species = {"Koffing", "Ekans", "Grimer"}, count = 1, giver = "Profesor Oak",
+		id = "celadon_counter", kind = "defeat", types = {"flying"},
+		species = {"Noctowl", "Hoothoot"}, count = 25, giver = "Profesor Oak",
 		title = "Contra las plantas",
-		text = "La siguiente Lider, Erika, usa Pokemon de tipo Planta. Los de tipo Fuego, Volador, Veneno o Bicho les hacen mucho dano. Captura uno: al sureste de Ciudad Azulona hay Koffing, Ekans y Grimer, y por todo Kanto hay Pidgey y Spearow.",
+		text = "La siguiente Lider, Erika, usa Pokemon de tipo Planta, y los de tipo Volador les hacen mucho dano. Para entender como luchan, derrota 25 Pokemon de tipo Volador: al norte de Ciudad Carmin, de camino a Azulona, hay Noctowl y Hoothoot. Usa un Pokemon de tipo Electrico, que es muy eficaz contra ellos.",
 		reward = {exp = 72000, money = 3000, items = {{id = 26688, count = 20}}},
+		map = {{1011, 1150, 7, "Noctowl y Hoothoot, al norte de Ciudad Carmin"}},
 	},
 	{
 		id = "go_celadon", kind = "reach", town = "celadon", giver = "Profesor Oak",
@@ -590,7 +594,9 @@ local function nextMainTask(index)
 	while progressionTasks[nextIndex] do
 		local task = progressionTasks[nextIndex]
 		if not task.disabled then
-			if task.optional then
+			if task.optional and task.opensWith then
+				-- se abre con la principal anterior: no se anuncia otra vez
+			elseif task.optional then
 				optionalTask = optionalTask or task
 			else
 				return nextIndex, task, optionalTask
@@ -781,6 +787,14 @@ function progressionSendTaskDone(player, task, index)
 		end
 	else
 		nextIndex, nextTask, optionalTask = nextMainTask(index)
+		if nextTask and not optionalTask then
+			for _, other in ipairs(progressionTasks) do
+				if other.opensWith == nextTask.id and not other.disabled then
+					optionalTask = other
+					break
+				end
+			end
+		end
 	end
 	local fields = {clean(task.title), clean(rewardText(task))}
 	if nextIndex then
@@ -815,6 +829,15 @@ local function activateTask(player, index)
 		return
 	end
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Nueva tarea: " .. task.title)
+	-- opcionales que se abren a la vez que esta principal (opensWith = su id)
+	for optionalIndex, optionalTask in ipairs(progressionTasks) do
+		if optionalTask.opensWith == task.id and not optionalTask.disabled
+			and taskState(player, optionalIndex) ~= 1 and taskState(player, optionalIndex) ~= 2 then
+			player:setStorageValue(PROGRESSION_TASK_STATE + optionalIndex, 1)
+			player:setStorageValue(PROGRESSION_TASK_PROGRESS + optionalIndex, 0)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Tarea opcional: " .. optionalTask.title)
+		end
+	end
 	if not checkTaskDone(player, index) then
 		player:sendTasks()
 	end
@@ -854,8 +877,14 @@ end
 -- activa la siguiente tarea que no este desactivada
 function progressionActivateNext(player, index)
 	local nextIndex = index + 1
-	while progressionTasks[nextIndex] and progressionTasks[nextIndex].disabled do
-		player:setStorageValue(PROGRESSION_TASK_STATE + nextIndex, 2)
+	while progressionTasks[nextIndex] do
+		local task = progressionTasks[nextIndex]
+		if task.disabled then
+			player:setStorageValue(PROGRESSION_TASK_STATE + nextIndex, 2)
+		elseif not (task.opensWith and (taskState(player, nextIndex) == 1 or taskState(player, nextIndex) == 2)) then
+			break
+		end
+		-- (una opcional que ya se abrio con la principal anterior se queda como esta)
 		nextIndex = nextIndex + 1
 	end
 	if progressionTasks[nextIndex] then
