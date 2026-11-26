@@ -9,7 +9,7 @@ using System.Text;
 // cantidades de un apilable, direcciones de un proyectil, fotogramas de un efecto).
 // Uso (PowerShell): Add-Type -Path Otb.cs,Things.cs,SpriteDump.cs -ReferencedAssemblies System.Drawing
 //                   [SpriteDump]::Run(dat, spr, otb, carpeta, "item:26662 missile:55 effect:734")
-//   item:<id de servidor>, citem:<id de cliente>, missile:<id>, effect:<id>
+//   item:<id de servidor>, citem:<id de cliente>, missile:<id>, effect:<id>, creature:<looktype>
 public static class SpriteDump
 {
 	public static string Run(string datPath, string sprPath, string otbPath, string outDir, string spec)
@@ -37,6 +37,7 @@ public static class SpriteDump
 			else if (kind == "citem") dat.Items.TryGetValue(id, out t);
 			else if (kind == "missile") dat.Missiles.TryGetValue(id, out t);
 			else if (kind == "effect") dat.Effects.TryGetValue(id, out t);
+			else if (kind == "creature") dat.Creatures.TryGetValue(id, out t);
 			if (t == null) { log.AppendLine(token + ": no encontrado"); continue; }
 			int frames = t.PatX * t.PatY * t.PatZ * t.Phases;
 			log.AppendLine(string.Format("{0}: {1}x{2} casillas, capas {3}, patrones {4}x{5}x{6}, fases {7} -> {8} dibujos",

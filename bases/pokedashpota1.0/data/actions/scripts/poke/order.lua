@@ -29,7 +29,12 @@ local function walkToPosition(cid, path, count, extra)
 					player:setStorageValue(extra.storage, 1)
 					doRemoveSummon(extra.playerId, false)
 					doChangeOutfit(extra.playerId, extra.outfit)
-					player:changeSpeed(extra.speed)
+					-- volar y montar suman la velocidad del Pokemon (x1.6 volando, x1.3 montando), y como
+					-- minimo +150% de la tuya volando y +120% montando (la bici da +120%)
+					local flying = extra.storage == storageFly
+					local delta = math.max(math.floor(extra.speed * (flying and 1.6 or 1.3)),
+						math.floor(player:getSpeed() * (flying and 1.5 or 1.2)))
+					player:changeSpeed(delta)
 				end
 			end
 		end

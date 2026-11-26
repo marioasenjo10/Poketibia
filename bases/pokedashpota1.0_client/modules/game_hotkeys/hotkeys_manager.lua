@@ -210,6 +210,20 @@ function addDefaultItemHotkey(settingsNode, keyCombo, clientId, plainUse)
   save()
 end
 
+-- lo mismo para un texto que se envia solo (p. ej. RePag = !up al volar)
+function addDefaultTextHotkey(settingsNode, keyCombo, value)
+  local key = ((G.host or '') .. '_' .. g_game.getCharacterName()):gsub('[^%w]', '_')
+  local done = g_settings.getNode(settingsNode) or {}
+  if done[key] then return end
+  done[key] = true
+  g_settings.setNode(settingsNode, done)
+  if currentHotkeys:getChildById(keyCombo) then return end
+  local settings = { autoSend = true, value = value }
+  addKeyCombo(keyCombo, settings)
+  hotkeyList[keyCombo] = settings
+  save()
+end
+
 function refreshInventoryKeys()
   if modules.game_inventory and modules.game_inventory.refreshBarKeys then
     modules.game_inventory.refreshBarKeys()
@@ -220,6 +234,9 @@ function addPokedexHotkey()
   if not g_game.isOnline() then return end
   addDefaultItemHotkey('pokedex_hotkey', 'E', POKEDEX_CLIENT_ID)
   addDefaultItemHotkey('order_hotkey', 'Q', ORDER_CLIENT_ID)
+  -- volar: RePag sube un piso y AvPag lo baja (se cambian en la ventana de atajos)
+  addDefaultTextHotkey('flyup_hotkey', 'PageUp', '!up')
+  addDefaultTextHotkey('flydown_hotkey', 'PageDown', '!down')
 end
 
 function unload()

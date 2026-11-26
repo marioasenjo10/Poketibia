@@ -37,6 +37,11 @@ local function buildActions()
   end
   sections[#sections + 1] = team
 
+  sections[#sections + 1] = { title = 'Volar', actions = {
+    { name = 'Subir un piso', value = '!up' },
+    { name = 'Bajar un piso', value = '!down' },
+  } }
+
   local items = { title = 'Objetos', actions = {
     { name = 'Pok' .. E .. 'dex', itemId = POKEDEX_CLIENT_ID, useType = HOTKEY_MANAGER_USEWITH },
     { name = 'Orden', itemId = ORDER_CLIENT_ID, useType = HOTKEY_MANAGER_USEWITH },
