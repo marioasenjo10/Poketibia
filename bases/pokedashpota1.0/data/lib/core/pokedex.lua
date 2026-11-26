@@ -581,6 +581,7 @@ local function buildPokedexInfo(player, number)
 	local baseNumber = (number > 2000 and number <= 3000 and monstersTable[number - 2000]) and (number - 2000) or 0
 	local extra = (monsterType:isLegendary() and 1 or 0) .. ":" .. (fromBase and 1 or 0) .. ":" .. shinyNumber .. ":" .. worldCount
 		.. ":" .. (player:hasDexEntry(number) and 1 or 0) .. ":" .. baseNumber .. ":" .. countOwners(dexNumber)
+		.. ":" .. clean(getPokemonTierLabel and getPokemonTierLabel(name) or "")
 
 	return table.concat({
 		"I", number, clean(name), monsterType:getOutfit().lookType, clean(race), clean(race2 ~= "none" and race2 or ""),

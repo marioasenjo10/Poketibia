@@ -110,7 +110,15 @@ createTracker = function()
   tracker:addAnchor(AnchorLeft, 'parent', AnchorLeft)
   tracker:setMarginTop(8)
   tracker:setMarginLeft(8)
-  tracker.onClick = function() show() end
+  -- el clic se queda en el recuadro: sin esto la pulsacion pasaba al mapa y el jugador andaba hasta ahi
+  tracker.onMousePress = function(self, mousePos, mouseButton) return true end
+  tracker.onMouseRelease = function(self, mousePos, mouseButton)
+    if mouseButton == MouseLeftButton and self:containsPoint(mousePos) then
+      show()
+    end
+    return true
+  end
+  tracker:setTooltip('Clic: abrir las tareas')
   tracker:hide()
 end
 
@@ -186,6 +194,17 @@ function onTasksOpcode(protocol, opcode, buffer)
   if tasksButton then tasksButton:show() end
   if window:isVisible() then render() end
   updateTracker()
+  -- las marcas de las tareas activas salen siempre en el mapa, sin tener que darle a "Ver en el mapa"
+  local minimap = modules.game_minimap
+  if minimap and minimap.setTaskMarkers then
+    local list = {}
+    for _, task in ipairs(tasks) do
+      if task.state == 1 and #task.mapPoints > 0 then
+        list[#list + 1] = { points = task.mapPoints, title = task.title, icon = mapIconFor(task.mapIcon) }
+      end
+    end
+    minimap.setTaskMarkers(list)
+  end
 end
 
 function show()

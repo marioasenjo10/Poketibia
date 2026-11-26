@@ -51,7 +51,9 @@ pokemonRequiredLevels = {
 	-- etapas intermedias comunes
 	pidgeotto = 20, staravia = 20, skiploom = 20,
 	-- salen al principio pero son fuertes: no se pueden usar hasta el nivel 20
-	gloom = 20, onix = 20, graveler = 20, tangela = 20,
+	gloom = 20, graveler = 20, tangela = 20,
+	-- onix a 25 para que no se use contra Brock (salvaje sigue con fuerza 20, ver wildPowerLevels)
+	onix = 25, steelix = 70, electabuzz = 50,
 	flaaffy = 25, weepinbell = 25, nidorina = 25, nidorino = 25,
 	golbat = 30, poliwhirl = 30, kirlia = 30, roselia = 30, lombre = 30, nuzleaf = 30,
 	loudred = 30, luxio = 30, wormadam = 30,
@@ -66,11 +68,11 @@ pokemonRequiredLevels = {
 	raticate = 20, furret = 20,
 	ledian = 25, kricketune = 25, sunflora = 25, bibarel = 25, seaking = 25, lumineon = 25, cherrim = 25,
 	raichu = 30, dodrio = 30, ariados = 30, persian = 30, fearow = 30, noctowl = 30, parasect = 30,
-	venomoth = 30, dugtrio = 30, sandslash = 30, arbok = 30, electrode = 30, kingler = 30,
-	wigglytuff = 30, clefable = 30, azumarill = 30, quagsire = 30,
+	venomoth = 30, dugtrio = 50, sandslash = 40, arbok = 30, electrode = 30, kingler = 30,
+	wigglytuff = 50, clefable = 30, azumarill = 30, quagsire = 30,
 	-- finales de linea de 3 etapas (por defecto final)
 	butterfree = 25, beedrill = 25, beautifly = 40, dustox = 40, mothim = 40, jumpluff = 40,
-	pidgeot = 50, bellossom = 50,
+	pidgeot = 70, bellossom = 50,
 	vileplume = 55, victreebel = 55, shiftry = 55,
 	staraptor = 60, ampharos = 60, luxray = 60, nidoking = 60, nidoqueen = 60, politoed = 60,
 	poliwrath = 60, crobat = 60, roserade = 60, ludicolo = 60, exploud = 60, slowking = 60,
@@ -92,7 +94,8 @@ wildPowerFromSpecies = true
 wildPowerFactor = 1.0
 -- fuerza del salvaje distinta del nivel para usarlo (si no esta, se usa el nivel requerido).
 -- Ejemplo: wildPowerLevels = {graveler = 15}
-wildPowerLevels = {}
+-- (subidos para usarlos, pero el salvaje se queda como estaba)
+wildPowerLevels = {onix = 20, steelix = 50, electabuzz = 40, dugtrio = 30, sandslash = 30, wigglytuff = 30, pidgeot = 50}
 wildBaseHealthFactor = 0.75 -- vida de las formas base salvajes (nivel 0)
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
@@ -2340,6 +2343,9 @@ function Monster.getPowerLevel(self)
 	-- salvajes: fuerza del nivel que pide su especie (ver wildPowerFromSpecies) o la de wildPowerLevels
 	local override = wildPowerLevels and wildPowerLevels[self:getName():lower():gsub("^shiny ", "")]
 	if override then
+		if self:getName():lower():find("^shiny ") then
+			override = override + (shinyExtraLevel or 0)
+		end
 		return override
 	end
 	if wildPowerFromSpecies and getPokemonRequiredLevel then

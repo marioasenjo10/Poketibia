@@ -63,6 +63,11 @@ end
 -- teclas de una accion, las mas cortas primero (F1 antes que Shift+F1)
 local function keysFor(action)
   local keys = {}
+  -- casilla de abajo (teclas 1-0): una sola tecla fija
+  if action.slotKey then
+    if getHotkey(action.slotKey) then keys[1] = action.slotKey end
+    return keys
+  end
   for _, label in ipairs(currentHotkeys:getChildren()) do
     if label.keyCombo and matches(label, action) then
       keys[#keys + 1] = label.keyCombo
@@ -146,6 +151,8 @@ local function onKeyCellClick(action, slot, mouseButton)
     end
     return
   end
+  -- las casillas 1-0 se rellenan arrastrando un objeto a la barra de abajo
+  if action.slotKey then return end
   captureAction, captureSlot = action, slot
   local capture = actionsWindow:getChildById('capture')
   capture:getChildById('captureText'):setText('Pulsa la tecla para "' .. action.name .. '"\n\n(Esc para cancelar)')
@@ -212,6 +219,17 @@ refreshActions = function()
   end
   if #others.actions > 0 then
     sections[#sections + 1] = others
+  end
+  -- casillas de la barra de abajo: se ven y se borran con clic derecho
+  local slots = { title = 'Casillas de abajo (1-0)', actions = {} }
+  for _, key in ipairs({ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }) do
+    local label = getHotkey(key)
+    if label and (label.itemId or (label.value and label.value ~= '')) then
+      slots.actions[#slots.actions + 1] = { name = 'Casilla ' .. key .. ': ' .. describe(label), slotKey = key }
+    end
+  end
+  if #slots.actions > 0 then
+    sections[#sections + 1] = slots
   end
   for _, section in ipairs(sections) do
     local header = g_ui.createWidget('ActionSection', list)

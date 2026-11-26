@@ -325,6 +325,10 @@ TaskTracker < UIWidget
   border-width: 1
   border-color: #2c3039
   focusable: false
+  // es un boton: se ilumina al pasar el raton y el clic no llega al mapa (no mueve al jugador)
+  $hover:
+    background-color: #1f2430ee
+    border-color: #f2c14e
 
   Label
     id: header
@@ -359,6 +363,7 @@ TaskTracker < UIWidget
     margin-right: 8
     margin-bottom: 10
     height: 6
+    phantom: true
 
   Label
     id: progressLabel

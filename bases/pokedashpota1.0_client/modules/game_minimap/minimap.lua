@@ -13,6 +13,7 @@ WORLD_CHUNKS_DIR = '/game_minimap/world/'    -- mapa grande suavizado en trozos 
 WORLD_CHUNKS_MIN_SCALE = 2                   -- con menos zoom no se notan los cuadraditos
 townLabels = {}
 pokedexFlags = {}
+taskMarkers = {}     -- marcas de las tareas activas, siempre en el mapa (game_tasks llama a setTaskMarkers)
 OPCODE_MAP_POIS = 74 -- Centros Pokemon y tiendas (servidor: lib/core/mappois.lua)
 mapPois = {}
 OPCODE_NEXT_GYM = 75 -- siguiente gimnasio del jugador (servidor: lib/core/progression.lua)
@@ -141,6 +142,7 @@ end
 function offline()
   clearMapPois()
   clearGymMarker()
+  clearTaskMarkers()
   if fullmapView then
     toggleFullMap()
   end
@@ -418,9 +420,11 @@ function updateOverlayFloors()
   if gymMarker and not gymMarker:isDestroyed() then
     gymMarker:setVisible(gymMarker.pos.z == z or z == 7)
   end
-  for _, marker in ipairs(pokedexFlags) do
-    if not marker:isDestroyed() and marker.pos then
-      marker:setVisible(marker.pos.z == z)
+  for _, list in ipairs({ pokedexFlags, taskMarkers }) do
+    for _, marker in ipairs(list) do
+      if not marker:isDestroyed() and marker.pos then
+        updateMarkerFloor(marker, z)
+      end
     end
   end
   updateWorldChunks()
@@ -527,6 +531,76 @@ end
 -- centra el mapa en la zona mas cercana al jugador, mejor en el piso 0 (superficie: se ven las ciudades)
 local SURFACE_FLOOR = 7
 
+-- marca redonda con la pokeball (o el pokemon). Si esta en un piso alto (un gimnasio con escaleras)
+-- se ve tambien en la superficie con una flecha: hay que subir (o bajar) ahi.
+local function createPokeMarker(p, title, icon, onSurface)
+  local marker = g_ui.createWidget('UIWidget')
+  marker:setSize({ width = 30, height = 30 })
+  marker:setImageSource('/game_pokedex/images/marker')
+  marker.baseTooltip = p.text or title
+  marker:setTooltip(marker.baseTooltip)
+  local image = g_ui.createWidget('UIWidget', marker)
+  image:setSize({ width = 24, height = 24 })
+  image:centerIn('parent')
+  image:setImageSource(icon or '/game_pokedex/images/pokeball_big')
+  image:setPhantom(true)
+  local arrow = g_ui.createWidget('UIWidget', marker)
+  arrow:setSize({ width = 14, height = 14 })
+  arrow:addAnchor(AnchorTop, 'parent', AnchorTop)
+  arrow:addAnchor(AnchorRight, 'parent', AnchorRight)
+  arrow:setBackgroundColor('#14161bdd')
+  arrow:setPhantom(true)
+  arrow:hide()
+  marker.arrow = arrow
+  marker.onSurface = onSurface
+  marker.pos = { x = p.x, y = p.y, z = p.z }
+  minimapWidget:addChild(marker)
+  minimapWidget:centerInPosition(marker, marker.pos)
+  return marker
+end
+
+local function floorName(z)
+  if z < 7 then return 'piso ' .. (7 - z) end
+  return 'subsuelo ' .. (z - 7)
+end
+
+function updateMarkerFloor(marker, z)
+  if marker.pos.z == z then
+    marker:setVisible(true)
+    marker.arrow:hide()
+    marker:setTooltip(marker.baseTooltip)
+  elseif marker.onSurface and z == SURFACE_FLOOR then
+    marker:setVisible(true)
+    local up = marker.pos.z < SURFACE_FLOOR
+    marker.arrow:setImageSource(up and '/images/game/minimap/floor_up' or '/images/game/minimap/floor_down')
+    marker.arrow:show()
+    marker:setTooltip(marker.baseTooltip .. '\n(' .. (up and 'sube' or 'baja') .. ' al ' .. floorName(marker.pos.z) .. ')')
+  else
+    marker:setVisible(false)
+  end
+end
+
+function clearTaskMarkers()
+  for _, marker in ipairs(taskMarkers) do
+    if not marker:isDestroyed() then
+      marker:destroy()
+    end
+  end
+  taskMarkers = {}
+end
+
+-- marcas de las tareas activas en el mapa normal (sin abrir la tarea): list = { {points, title, icon}, ... }
+function setTaskMarkers(list)
+  clearTaskMarkers()
+  if not minimapWidget then return end
+  for _, entry in ipairs(list or {}) do
+    for _, p in ipairs(entry.points or {}) do
+      table.insert(taskMarkers, createPokeMarker(p, entry.title, entry.icon, true))
+    end
+  end
+  updateOverlayFloors()
+end
+
 function showPositions(positions, title, icon)
   if #positions == 0 then return end
   if not fullmapView then
@@ -534,19 +608,8 @@ function showPositions(positions, title, icon)
   end
   clearPokedexFlags()
   for _, p in ipairs(positions) do
-    local marker = g_ui.createWidget('UIWidget')
-    marker:setSize({ width = 30, height = 30 })
-    marker:setImageSource('/game_pokedex/images/marker')
-    marker:setTooltip(p.text or title)
-    local image = g_ui.createWidget('UIWidget', marker)
-    image:setSize({ width = 24, height = 24 })
-    image:centerIn('parent')
-    image:setImageSource(icon or '/game_pokedex/images/pokeball_big')
-    image:setPhantom(true)
-    marker.pos = { x = p.x, y = p.y, z = p.z }
-    minimapWidget:addChild(marker)
-    minimapWidget:centerInPosition(marker, marker.pos)
-    table.insert(pokedexFlags, marker)
+    -- solo los pisos altos salen en la superficie (los subterraneos se ven en su piso)
+    table.insert(pokedexFlags, createPokeMarker(p, title, icon, p.z < SURFACE_FLOOR))
   end
   -- se centra en la zona mas cercana al jugador; cada piso de diferencia cuenta como 15 casillas
   -- (antes se preferia siempre la superficie y la zona de Mt. Moon, en un piso alto, nunca salia)
@@ -563,6 +626,8 @@ function showPositions(positions, title, icon)
       end
     end
   end
-  minimapWidget:setCameraPosition({ x = best.x, y = best.y, z = best.z })
+  -- en un piso alto (el gimnasio de Surge): se ensena la superficie con la flecha de subir
+  local cameraZ = best.z < SURFACE_FLOOR and SURFACE_FLOOR or best.z
+  minimapWidget:setCameraPosition({ x = best.x, y = best.y, z = cameraZ })
   updateOverlayFloors()
 end

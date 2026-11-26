@@ -420,6 +420,10 @@ function Player:onGainExperience(source, exp, rawExp)
 			local strength = trainerLevelCurve(power) / math.sqrt(wildBaseHealthFactor or 1)
 			exp = exp * strength ^ (wildExpStrengthExponent or 0.6)
 		end
+		-- salvaje muy flojo para tu nivel: da menos (lib/core/progression.lua, getLowLevelExpFactor)
+		if getLowLevelExpFactor and getWildExpLevel then
+			exp = exp * getLowLevelExpFactor(self:getLevel(), getWildExpLevel(source))
+		end
 	end
 
 	-- runa de experiencia del Pokemon que esta fuera (lib/core/runes.lua)

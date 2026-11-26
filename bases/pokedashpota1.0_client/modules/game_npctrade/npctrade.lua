@@ -587,8 +587,11 @@ function sellAll()
   for itemid,item in pairs(playerItems) do
     local item = Item.create(itemid)
     local amount = getSellQuantity(item)
-    if amount > 0 then
-      g_game.sellItem(item, amount, ignoreEquipped:isChecked())
+    -- el servidor vende como mucho 100 por peticion: se manda en tandas (antes 120 sandbags vendia solo 100)
+    while amount > 0 do
+      local batch = math.min(amount, 100)
+      g_game.sellItem(item, batch, ignoreEquipped:isChecked())
+      amount = amount - batch
     end
   end
 end

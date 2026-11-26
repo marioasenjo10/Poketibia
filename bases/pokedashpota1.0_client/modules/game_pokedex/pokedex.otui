@@ -685,8 +685,14 @@ UIWindow
       image-color: #3a3f47
 
     DexChip
-      id: specialChip
+      id: tierChip
       anchors.left: levelChip.right
+      anchors.top: type1.top
+      margin-left: 6
+
+    DexChip
+      id: specialChip
+      anchors.left: tierChip.right
       anchors.top: type1.top
       margin-left: 6
 

@@ -399,6 +399,7 @@ local function parseInfo(buffer)
   info.registered = extra[5] == '1'
   info.baseNumber = tonumber(extra[6]) or 0
   info.owners = tonumber(extra[7]) or 0
+  info.tier = extra[8] or ''
   info.isShiny = info.number > 2000 and info.number <= 3000
   return info
 end
@@ -427,6 +428,11 @@ function loadInfo(buffer)
   end
 end
 
+TIER_COLORS = {
+  mythic = '#c0392b', legendary = '#b8860b', ['ultra rare'] = '#2f6fd6', ['super rare'] = '#8e44ad',
+  t1 = '#8a96a3', t2 = '#2e9e57',
+}
+
 function buildHeader(info)
   local typeInfo = TYPES[info.race] or { titleCase(info.race), '#3d8fe0' }
   local color = typeInfo[2]
@@ -443,6 +449,10 @@ function buildHeader(info)
   local levelText = req > 0 and ('NIVEL ' .. req) or 'TODO NIVEL'
   setChip(child('levelChip'), levelText, '#3a3f47')
   child('levelChip'):setTooltip('Nivel de entrenador necesario para usarlo')
+  -- tier (rareza) del Pokemon: los mismos colores que los orbes de evolucion shiny
+  local tierColor = TIER_COLORS[info.tier:lower()] or '#8c5a2b'
+  setChip(child('tierChip'), info.tier ~= '' and info.tier:upper() or nil, tierColor)
+  child('tierChip'):setTooltip('Tier: lo bueno y raro que es (T7 el mas comun ... Mythic el mejor)')
   if info.legendary then
     setChip(child('specialChip'), 'LEGENDARIO', '#b8860b')
   elseif info.isShiny then

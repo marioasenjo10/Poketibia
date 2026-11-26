@@ -281,8 +281,11 @@ end
 local ORB_KEY_BY_TIER = {mythic = "mythic", legendary = "legendary", ["ultra rare"] = "ultra", ["super rare"] = "super", t1 = "t1", t2 = "t2"}
 local catchTiers
 
+local catchTierLabels = {}
+
 local function loadCatchTiers()
 	catchTiers = {}
+	catchTierLabels = {}
 	local file = io.open("data/pokemon-tiers-review.csv", "rb")
 	if not file then
 		return
@@ -291,6 +294,7 @@ local function loadCatchTiers()
 		local name, tier = line:match('^"?([^,"]+)"?,"?([^,"]+)"?,')
 		if name then
 			catchTiers[name:gsub("^\239\187\191", ""):lower()] = tier:lower()
+			catchTierLabels[name:gsub("^\239\187\191", ""):lower()] = tier
 		end
 	end
 	file:close()
@@ -305,6 +309,20 @@ function shinyOrbKey(target)
 	local full = tostring(target):lower()
 	local base = full:gsub("^shiny ", "")
 	return ORB_KEY_BY_TIER[catchTiers[full] or catchTiers[base] or ""] or "bronze"
+end
+
+-- tier tal como sale en la tabla ("T4", "Super Rare", "Mythic"...) para la Pokedex; "" si no tiene
+function getPokemonTierLabel(name)
+	if not catchTiers then
+		loadCatchTiers()
+	end
+	local full = tostring(name):lower()
+	local base = full:gsub("^shiny ", "")
+	local tier = catchTierLabels[full] or catchTierLabels[base] or ""
+	if tier == "?" then
+		return ""
+	end
+	return tier
 end
 
 local DROP_KEY_BY_TIER = {mythic = "mythic", legendary = "legendary", ["ultra rare"] = "ultra", ["super rare"] = "super",

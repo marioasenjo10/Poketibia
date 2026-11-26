@@ -73,7 +73,7 @@ local function updateCell(i)
     widget:setOpacity(1.0)
     countLabel:setText('')
     if label and label.value and label.value ~= '' then
-      widget:setTooltip('Tecla ' .. KEYS[i] .. ': ' .. label.value)
+      widget:setTooltip('Tecla ' .. KEYS[i] .. ': ' .. label.value .. '\nClic derecho: quitar')
     else
       widget:setTooltip('Arrastra aqu' .. '\237' .. ' un objeto')
     end
@@ -120,7 +120,14 @@ end
 
 local function openMenu(i)
   local label = hotkeyFor(i)
-  if not label or not label.itemId then return end
+  if not label then return end
+  if not label.itemId then
+    -- la tecla tiene un texto (no un objeto): solo se puede quitar
+    local menu = g_ui.createWidget('PopupMenu')
+    menu:addOption('Quitar', function() setSlot(i, nil) end)
+    menu:display()
+    return
+  end
   local hk = modules.game_hotkeys
   local itemId = label.itemId
   local menu = g_ui.createWidget('PopupMenu')

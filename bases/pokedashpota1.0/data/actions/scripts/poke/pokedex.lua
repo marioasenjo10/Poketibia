@@ -120,10 +120,61 @@ function Player.getPokedexStatus(self, firstStorage)
 	return output
 end
 
+-- nombre del Pokemon de un cadaver ("fainted pidgey" -> "pidgey"), como en catch.lua
+local function corpseMonsterName(corpse)
+	local name = corpse:getName()
+	name = string.gsub(name, "the ", "")
+	name = string.gsub(name, "remains of", "")
+	name = string.gsub(name, " a ", "")
+	name = string.gsub(name, " an ", "")
+	name = string.gsub(name, "slain ", "")
+	name = string.gsub(name, "fainted ", "")
+	name = string.gsub(name, "defeated ", "")
+	return name
+end
+
+-- Pokedex sobre un objeto: un cadaver de Pokemon o una Pokeball tuya (de la mochila o del cinturon).
+-- Registra la especie si es nueva y abre su ficha. Devuelve false si el objeto no es ninguno de los dos.
+local function useOnItem(player, target)
+	local name
+	if target.isPokeball and target:isPokeball() then
+		name = target:getSpecialAttribute("pokeName")
+	elseif ItemType(target:getId()):isCorpse() then
+		name = corpseMonsterName(target)
+	end
+	if not name or name == "" then
+		return false
+	end
+	local monsterType = MonsterType(name)
+	local monsterNumber = monsterType and monsterType:dexEntry() or 0
+	if monsterNumber == 0 then
+		return false
+	end
+	local storage = baseStorageDex + monsterNumber
+	if player:getStorageValue(storage) == -1 then
+		local givenExp = monsterType:experience() * configManager.getNumber(configKeys.RATE_EXPERIENCE) * multiplier
+		player:setStorageValue(storage, 0)
+		player:getPosition():sendMagicEffect(329)
+		player:addExperience(givenExp, true)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, monsterType:getName() .. " registered in your pokedex!")
+	else
+		player:getPosition():sendMagicEffect(300)
+	end
+	if player:isUsingOtClient() then
+		player:openPokedex(monsterNumber)
+	end
+	return true
+end
+
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if not target then return false end
 
 	if type(target) ~= "userdata" then
+		return true
+	end
+
+	-- sobre un cadaver o una Pokeball: la ficha de ese Pokemon
+	if target ~= item and target:isItem() and useOnItem(player, target) then
 		return true
 	end
 

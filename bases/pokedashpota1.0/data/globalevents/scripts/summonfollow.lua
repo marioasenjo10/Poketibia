@@ -13,9 +13,7 @@ local followDirections = {
 }
 
 local function isOutOfRange(masterPosition, summonPosition)
-	return masterPosition.z ~= summonPosition.z
-		or math.abs(masterPosition.x - summonPosition.x) > MAX_DISTANCE
-		or math.abs(masterPosition.y - summonPosition.y) > MAX_DISTANCE
+	return isSummonFar(masterPosition, summonPosition)
 end
 
 local function isInSameRestrictedArea(masterTile, summonTile)
@@ -100,18 +98,12 @@ function onThink(interval)
 					and isInSameRestrictedArea(masterTile, summonTile) then
 					walkSummonInsideProtectionZone(summon, masterPosition, masterTile)
 				elseif masterInProtectionZone and isOutOfRange(masterPosition, summonPosition) then
-					local destination = player:getClosestFreePosition(masterPosition, 1, false, true)
-					if (destination.x ~= 0 or destination.y ~= 0)
-						and summon:teleportTo(destination, false) then
-						destination:sendMagicEffect(CONST_ME_TELEPORT)
-					end
+					-- detras del jugador (lib/core/creature.lua)
+					bringSummonBehind(player, summon, masterPosition)
 				elseif isOutOfRange(masterPosition, summonPosition)
 					or summonTile and not isInSameRestrictedArea(masterTile, summonTile) then
-					local destination = player:getClosestFreePosition(masterPosition, 1, false, true)
-					if (destination.x ~= 0 or destination.y ~= 0)
-						and summon:teleportTo(destination, false) then
-						destination:sendMagicEffect(CONST_ME_TELEPORT)
-					end
+					-- detras del jugador (lib/core/creature.lua)
+					bringSummonBehind(player, summon, masterPosition)
 				end
 			end
 		end

@@ -82,12 +82,48 @@ local function experienceForLevel(level)
 	return getNeededExp(level + 1) - getNeededExp(level)
 end
 
+-- A partir del nivel expKillsGrowFrom hacen falta mas derrotas por nivel (+expKillsGrowPerLevel por
+-- nivel, hasta expKillsMax): a nivel 38 un Sandshrew da la mitad que antes (~2700 en vez de 5500).
+expKillsGrowFrom = 25
+expKillsGrowPerLevel = 0.8
+expKillsMax = 40
+
+function getExpKillsPerLevel(level)
+	local kills = expKillsPerLevel + expKillsGrowPerLevel * math.max(0, level - expKillsGrowFrom)
+	return math.min(kills, math.max(expKillsPerLevel, expKillsMax))
+end
+
 function getExperienceMultiplier(level)
 	local multiplier = Game.getExperienceStage(level)
 	if expKillsPerLevel and expKillsPerLevel > 0 then
-		multiplier = math.max(multiplier, experienceForLevel(level) / (expKillsPerLevel * expReferenceBase))
+		multiplier = math.max(multiplier, experienceForLevel(level) / (getExpKillsPerLevel(level) * expReferenceBase))
 	end
 	return multiplier
+end
+
+-- Salvajes muy por debajo de tu nivel dan menos (un Weedle a nivel 40 ~750 en vez de 3700).
+-- "Nivel" del salvaje: su nivel de fuerza si es evolucionado; si es basico, (exp. base - 20) x 2
+-- (Weedle 0, Pidgey 12, Sandshrew 22, Voltorb 28). Sin castigo hasta ese nivel + expLowLevelGrace;
+-- por encima, x (nivel salvaje + margen) / tu nivel, nunca menos de expLowLevelMin.
+expLowLevelGrace = 15
+expLowLevelMin = 0.2
+
+function getWildExpLevel(monster)
+	local power = monster.getPowerLevel and monster:getPowerLevel() or 0
+	if power and power > 0 then
+		return power
+	end
+	local mType = monster:getType()
+	local base = mType and mType:experience() or 0
+	return math.max(0, (base - 20) * 2)
+end
+
+function getLowLevelExpFactor(playerLevel, wildLevel)
+	local limit = wildLevel + expLowLevelGrace
+	if playerLevel <= limit then
+		return 1
+	end
+	return math.max(expLowLevelMin, limit / playerLevel)
 end
 
 -- experiencia de la primera captura de una especie (sin tier = x1)
