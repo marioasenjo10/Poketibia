@@ -42,6 +42,7 @@
 		<move name="slam" interval="5000" isTarget="1" range="1"/>
 		<move name="stone edge" interval="5000" isTarget="1"/>
 		<move name="bulldoze" interval="17000"/>
+		<move name="earthquake" interval="20000"/>
 
 	</moves>
 	<evolutions>
@@ -56,6 +57,7 @@
 		<attack name="slam" interval="5000" chance="40" range="1" target="1"/>
 		<attack name="stone edge" interval="5000" chance="40" target="1"/>
 		<attack name="bulldoze" interval="17000" chance="40"/>
+		<attack name="earthquake" interval="20000" chance="40"/>
 
 	</attacks>
 	<defenses armor="0" defense="115" >
