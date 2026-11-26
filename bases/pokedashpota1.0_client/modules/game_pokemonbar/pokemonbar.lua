@@ -151,7 +151,7 @@ local function tooltipFor(poke, isActive, health)
     end
   end
   lines[#lines + 1] = ''
-  lines[#lines + 1] = 'Clic: sacar  -  Clic derecho: opciones'
+  lines[#lines + 1] = (isActive and 'Clic: guardar' or 'Clic: sacar') .. '  -  Clic derecho: opciones'
   return table.concat(lines, '\n')
 end
 
@@ -189,7 +189,7 @@ local function openRowMenu(i)
   local poke = pokes[i]
   if not poke then return end
   local menu = g_ui.createWidget('PopupMenu')
-  menu:addOption('Sacar', function() g_game.talk('!p ' .. i) end)
+  menu:addOption(activeIndex() == i and 'Guardar' or 'Sacar', function() g_game.talk('!p ' .. i) end)
   if poke.dex > 0 and modules.game_pokedex then
     menu:addOption('Ver en la Pok' .. E .. 'dex', function()
       modules.game_pokedex.show()

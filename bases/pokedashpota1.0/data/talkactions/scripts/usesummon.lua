@@ -14,6 +14,17 @@ function onSay(player, words, param)
 		return false
 	end
 
+	-- pulsar el Pokemon que ya esta fuera lo guarda (como usar su Pokeball en el cinturon)
+	if hasSummons(player) then
+		local usingBall = player:getUsingBall()
+		if usingBall and usingBall == ball then
+			local usingBallKey = getBallKey(usingBall:getId())
+			doRemoveSummon(player:getId(), balls[usingBallKey].effectRelease, false, true, balls[usingBallKey].missile)
+			usingBall:transform(balls[usingBallKey].usedOn)
+			return false
+		end
+	end
+
 	if player:canReleaseSummon(ball:getSummonName(), ball:getSummonOwner()) then
 		if hasSummons(player) then
 			local usingBall = player:getUsingBall()
