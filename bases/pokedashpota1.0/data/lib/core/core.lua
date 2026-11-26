@@ -12,6 +12,7 @@ dofile('data/lib/core/tile.lua')
 
 dofile('data/lib/core/item_attributes.lua')
 dofile('data/lib/core/newfunctions.lua')
+dofile('data/lib/core/flyfloor.lua')
 dofile('data/lib/core/premierlooks.lua')
 dofile('data/lib/core/shinyevolution.lua')
 dofile('data/lib/core/pokedex.lua')

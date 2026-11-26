@@ -3,6 +3,10 @@ function onLogout(player)
 	if nextUseStaminaTime[playerId] ~= nil then
 		nextUseStaminaTime[playerId] = nil
 	end
+	-- suelo de aire de alrededor (el de debajo se queda: al entrar sigue volando ahi)
+	if clearFlyRing then
+		clearFlyRing(player)
+	end
 
 --	if player:isOnFly() then
 --		player:sendCancelMessage("Sorry, you can not logout while on fly.")
