@@ -52,22 +52,25 @@ local function split(text, sep)
   return parts
 end
 
-local function parseMapPoints(text)
-  local points = {}
-  for part in (text or ''):gmatch('[^;]+') do
-    local x, y, z, label = part:match('^(%-?%d+):(%-?%d+):(%-?%d+):(.*)$')
-    if x then
-      points[#points + 1] = {x = tonumber(x), y = tonumber(y), z = tonumber(z), text = label}
-    end
-  end
-  return points
-end
-
 local function mapIconFor(name)
   if not name or name == '' then return nil end
   local path = '/game_pokemonbar/bar_icon/' .. name:lower() .. '.png'
   if g_resources.fileExists(path) then return path end
   return nil
+end
+
+-- cada punto puede traer su propio Pokemon al final ("x:y:z:texto:Pokemon") para el icono del marcador
+local function parseMapPoints(text)
+  local points = {}
+  for part in (text or ''):gmatch('[^;]+') do
+    local x, y, z, label = part:match('^(%-?%d+):(%-?%d+):(%-?%d+):(.*)$')
+    if x then
+      local name, species = label:match('^([^:]*):(.*)$')
+      points[#points + 1] = {x = tonumber(x), y = tonumber(y), z = tonumber(z), text = name or label,
+        icon = mapIconFor(species)}
+    end
+  end
+  return points
 end
 
 function showTaskOnMap(task)

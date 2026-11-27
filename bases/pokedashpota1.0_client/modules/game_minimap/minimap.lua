@@ -800,7 +800,7 @@ function setTaskMarkers(list)
   if not minimapWidget then return end
   for _, entry in ipairs(list or {}) do
     for _, p in ipairs(entry.points or {}) do
-      table.insert(taskMarkers, createPokeMarker(p, entry.title, entry.icon, true))
+      table.insert(taskMarkers, createPokeMarker(p, entry.title, p.icon or entry.icon, true))
     end
   end
   updateOverlayFloors()
@@ -815,7 +815,7 @@ function showPositions(positions, title, icon, preferSurface)
   clearPokedexFlags()
   for _, p in ipairs(positions) do
     -- los pisos altos y los subterraneos salen tambien en la superficie, con flecha
-    local marker = createPokeMarker(p, title, icon, true)
+    local marker = createPokeMarker(p, title, p.icon or icon, true)
     if preferSurface then marker.title = title end
     table.insert(pokedexFlags, marker)
   end

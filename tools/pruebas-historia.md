@@ -42,9 +42,9 @@ Para probar un gimnasio suelto: `/progreso ir <id del gimnasio>` + `/progreso ni
 | Lt. Surge | Carmín | Diglett/Sandshrew (este de Celeste), llegar + 15 eléctricos en la Central de Energía (opcional, a la vez) | Magneton 38, Electrode 39, Shiny Electrode 41, Raichu 44 (vida x4,5-6) | 40 | Con Tierra no basta un solo Pokémon; cambio de Spearow por Farfetch'd (Ramon, Centro Pokémon de Carmín) |
 | Erika | Azulona | 25 voladores al norte de Carmín (Noctowl), llegar, 15 de tipo Planta | Tangela 46, Victreebel 48, Vileplume 49, Bellossom 50 | 50 | |
 | Sabrina | Azafrán | Gastly (Torre de Lavanda), 15 de tipo Psíquico | Kadabra 56, Mr. Mime 58, Alakazam 60 | 60 | Los Gengar de la torre no son demasiado |
-| Koga | Fucsia | Psíquico/Tierra, llegar, 15 de tipo Veneno | Venomoth 66, Muk 68, Weezing 70 | 70 | El camino a Fucsia |
-| Blaine | Canela | Pokémon con Surf, llegar surfeando desde Paleta, 15 de tipo Fuego | Ninetales 76, Rapidash 78, Arcanine 80 | 80 | Surfear hasta la isla funciona |
-| Giovanni | Verde | 15 de tipo Tierra | Rhyhorn 86, Nidoking 88, Rhydon 90 | 90 | Tras ganar, sin tope de nivel |
+| Koga | Fucsia | Psíquico/Tierra, llegar, 15 de tipo Veneno | Venomoth 66, Crobat 67, Muk 68, Weezing 70 | 70 | El camino a Fucsia |
+| Blaine | Canela | Llegar volando o surfeando; 50 en los alrededores de la isla (opcional) | Shiny Ninetales 76, Magmar 77, Shiny Rapidash 78, Arcanine 80 | 80 | Surfear hasta la isla funciona |
+| Giovanni | Verde | 15 de tipo Tierra | Dugtrio 86, Shiny Persian 86, Nidoqueen 87, Golem 88, Nidoking 89, Rhydon 90 | 90 | Tras ganar, sin tope de nivel |
 
 ## Liga Pokémon
 

@@ -7,9 +7,11 @@ local rematch = {}
 -- damage: multiplicador de dano. Valores calculados con el simulador de combate.
 local pokemons =
 {
-	[1] = {name = "Venomoth", level = 66, hp = 3, damage = 1.5},
-	[2] = {name = "Muk", level = 68, hp = 3.5, damage = 1.6},
-	[3] = {name = "Weezing", level = 70, hp = 4, damage = 1.8},
+	-- reforzado: con tres Pokemon y multiplicadores 3-4 salia mucho mas facil que Sabrina
+	[1] = {name = "Venomoth", level = 66, hp = 3.5, damage = 1.85},
+	[2] = {name = "Crobat", level = 67, hp = 3.75, damage = 1.95},
+	[3] = {name = "Muk", level = 68, hp = 4, damage = 2.0},
+	[4] = {name = "Weezing", level = 70, hp = 5, damage = 2.15},
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -60,7 +62,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:setMaxIdleTime(600)
 				player:setDuelWithNpc()
 			else
-				selfSay('Ya me derrotaste. Blaine te espera en Isla Canela, pero solo se llega por mar. Si quieres, una {revancha} amistosa, sin premio.', cid)
+				selfSay('Ya me derrotaste. Blaine te espera en Isla Canela, y puedes llegar por mar o volando. Si quieres, una {revancha} amistosa, sin premio.', cid)
 			end
 		end
 	end

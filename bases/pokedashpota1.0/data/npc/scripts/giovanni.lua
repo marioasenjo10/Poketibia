@@ -7,9 +7,13 @@ local rematch = {}
 -- damage: multiplicador de dano. Valores calculados con el simulador de combate.
 local pokemons =
 {
-	[1] = {name = "Rhyhorn", level = 86, hp = 3.5, damage = 1.6},
-	[2] = {name = "Nidoking", level = 88, hp = 3.5, damage = 1.7},
-	[3] = {name = "Rhydon", level = 90, hp = 4.5, damage = 1.9},
+	-- equipo completo de 6; al ser tantos, cada uno tiene multiplicadores mas bajos para no alargar
+	[1] = {name = "Dugtrio", level = 86, hp = 2.75, damage = 1.7},
+	[2] = {name = "Shiny Persian", level = 86, hp = 2.5, damage = 1.7},
+	[3] = {name = "Nidoqueen", level = 87, hp = 3, damage = 1.8},
+	[4] = {name = "Golem", level = 88, hp = 3, damage = 1.85},
+	[5] = {name = "Nidoking", level = 89, hp = 3.25, damage = 1.9},
+	[6] = {name = "Rhydon", level = 90, hp = 3.75, damage = 2.1},
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -45,7 +49,7 @@ local function creatureSayCallback(cid, type, msg)
 			selfSay('Revancha amistosa, sin premio. Veamos si sigues en forma!', cid)
 			rematch[cid] = true
 			npcHandler.topic[cid] = 1
-			npcHandler:setMaxIdleTime(600)
+			npcHandler:setMaxIdleTime(900) -- 6 Pokemon: el combate puede ser largo
 			player:setDuelWithNpc()
 		elseif player then
 			selfSay('Primero tienes que ganarme de verdad. Quieres desafiarme? {si}', cid)
@@ -57,7 +61,7 @@ local function creatureSayCallback(cid, type, msg)
 			if player:getStorageValue(storage) <= 0 then
 				selfSay('Que asi sea. Esta vez no me voy a contener!', cid)
 				npcHandler.topic[cid] = 1
-				npcHandler:setMaxIdleTime(600)
+				npcHandler:setMaxIdleTime(900) -- 6 Pokemon: el combate puede ser largo
 				player:setDuelWithNpc()
 			else
 				selfSay('Hmpf. Ya me derrotaste... Ahora desaparece de mi vista. Si quieres, una {revancha} amistosa, sin premio.', cid)

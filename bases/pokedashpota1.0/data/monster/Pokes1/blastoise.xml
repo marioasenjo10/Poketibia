@@ -25,7 +25,7 @@
 		<flag surfable="1388" />
 		<flag canteleport="0" />
 		<flag catchchance="9" />
-		<flag moveMagicAttackBase="95" />
+		<flag moveMagicAttackBase="115" />
 		<flag moveMagicDefenseBase="105" />
 	</flags>
 	<script>
@@ -42,6 +42,7 @@
 		<move name="hydro cannon" interval="17000"/>
 		<move name="skull bash" interval="9000"/>
 		<move name="hydro pump" interval="14000"/>
+		<move name="surf" interval="20000"/>
 
 	</moves>
 	<evolutions>
@@ -56,6 +57,7 @@
 		<attack name="hydro cannon" interval="17000" chance="40"/>
 		<attack name="skull bash" interval="9000" chance="40"/>
 		<attack name="hydro pump" interval="14000" chance="40"/>
+		<attack name="surf" interval="20000" chance="40"/>
 		<attack name="passive water" interval="40000" chance="40"/>
 
 	</attacks>

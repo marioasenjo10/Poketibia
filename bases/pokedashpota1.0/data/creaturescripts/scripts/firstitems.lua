@@ -57,6 +57,7 @@ function onLogin(player)
 	end
 	-- panel de tareas: al entrar y otra vez al segundo (por si el cliente aun no estaba listo)
 	if player:isOnProgression() then
+		progressionRepairChain(player)
 		player:sendTasks()
 		addEvent(function(playerId)
 			local p = Player(playerId)

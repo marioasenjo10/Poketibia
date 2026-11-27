@@ -87,6 +87,10 @@ pokemonRequiredLevels = {
 	dragonite = 80, tyranitar = 80, salamence = 80, metagross = 80, garchomp = 80,
 	-- pseudo-legendarios (etapa media)
 	dragonair = 55, pupitar = 55, shelgon = 55, metang = 55, gabite = 55,
+	-- no evolucionan (contarian como fase final, 80) pero son T4 (el salvaje sigue en 80, ver wildPowerLevels)
+	hitmonlee = 50, hitmonchan = 50, hitmontop = 50,
+	-- igual con estos T3, un escalon por encima (el salvaje sigue en 80)
+	pinsir = 70, heracross = 70, kangaskhan = 70, tauros = 70,
 }
 shinyExtraLevel = 20
 -- minimo para USAR segun el tier (data/pokemon-tiers-review.csv). Solo sube: quien ya pide mas se queda.
@@ -101,7 +105,7 @@ wildPowerFactor = 1.0
 -- Ejemplo: wildPowerLevels = {graveler = 15}
 -- (subidos para usarlos, pero el salvaje se queda como estaba)
 -- scyther y magmar: evolucionan, asi que contaban como formas basicas (sin fuerza) y caian de un golpe
-wildPowerLevels = {scyther = 40, magmar = 40, onix = 20, steelix = 50, electabuzz = 40, dugtrio = 30, sandslash = 30, wigglytuff = 30, pidgeot = 50, ["farfetch'd"] = 80}
+wildPowerLevels = {scyther = 40, magmar = 40, onix = 20, steelix = 50, electabuzz = 40, dugtrio = 30, sandslash = 30, wigglytuff = 30, pidgeot = 50, ["farfetch'd"] = 80, hitmonlee = 80, hitmonchan = 80, hitmontop = 80, pinsir = 80, heracross = 80, kangaskhan = 80, tauros = 80}
 wildBaseHealthFactor = 0.75 -- vida de las formas base salvajes (nivel 0)
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,

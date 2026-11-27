@@ -41,6 +41,7 @@
 		<move name="quick attack" interval="3000" isTarget="1"/>
 		<move name="wing attack" interval="9000"/>
 		<move name="fly" interval="7000" isTarget="1"/>
+		<move name="hurricane" interval="20000"/>
 
 	</moves>
 	<evolutions>
@@ -54,6 +55,7 @@
 		<attack name="quick attack" interval="3000" chance="40" target="1"/>
 		<attack name="wing attack" interval="9000" chance="40"/>
 		<attack name="fly" interval="7000" chance="40" target="1"/>
+		<attack name="hurricane" interval="20000" chance="40"/>
 		<attack name="passive flying" interval="40000" chance="40"/>
 
 	</attacks>

@@ -25,7 +25,7 @@
 		<flag surfable="1393" />
 		<flag canteleport="0" />
 		<flag catchchance="8" />
-		<flag moveMagicAttackBase="60" />
+		<flag moveMagicAttackBase="135" />
 		<flag moveMagicDefenseBase="100" />
 	</flags>
 	<script>
@@ -42,6 +42,7 @@
 		<move name="water pulse" interval="17000"/>
 		<move name="hydro pump" interval="14000"/>
 		<move name="hyper beam" interval="17000"/>
+		<move name="surf" interval="20000"/>
 
 	</moves>
 	<evolutions>
@@ -56,6 +57,7 @@
 		<attack name="water pulse" interval="17000" chance="40"/>
 		<attack name="hydro pump" interval="14000" chance="40"/>
 		<attack name="hyper beam" interval="17000" chance="40"/>
+		<attack name="surf" interval="20000" chance="40"/>
 		<attack name="passive water" interval="40000" chance="40"/>
 
 	</attacks>

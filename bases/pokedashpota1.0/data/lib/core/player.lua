@@ -101,8 +101,16 @@ function Player.isUsingOtClient(self)
 	return self:getClient().os >= CLIENTOS_OTCLIENT_LINUX
 end
 
+-- el motor no admite textos mas largos: no los mete en el paquete y el cliente, al fallar la lectura,
+-- descarta todo lo que viniera detras (al entrar: tareas, barra de pokemon, combo...)
+EXTENDED_OPCODE_MAX_LENGTH = 8192
+
 function Player.sendExtendedOpcode(self, opcode, buffer)
 	if not self:isUsingOtClient() then
+		return false
+	end
+	if #buffer > EXTENDED_OPCODE_MAX_LENGTH then
+		print("WARNING! Extended opcode " .. opcode .. " demasiado largo (" .. #buffer .. " caracteres): no se envia.")
 		return false
 	end
 

@@ -85,7 +85,7 @@ rateExp = 2
 rateSkill = 3
 rateLoot = 2
 rateMagic = 3
-rateSpawn = 1
+rateSpawn = 50 -- cuantos puede reponer cada grupo de apariciones por ciclo
 
 -- Monsters
 deSpawnRange = 2

@@ -7,9 +7,12 @@ local rematch = {}
 -- damage: multiplicador de dano. Valores calculados con el simulador de combate.
 local pokemons =
 {
-	[1] = {name = "Ninetales", level = 76, hp = 3, damage = 1.5},
-	[2] = {name = "Rapidash", level = 78, hp = 3.5, damage = 1.6},
-	[3] = {name = "Arcanine", level = 80, hp = 4, damage = 1.8},
+	-- reforzado: con tres Pokemon y multiplicadores 3-4 salia mucho mas facil que Sabrina y Koga
+	-- subido otra vez tras probarlo: a nivel 80 ya se usan Pokemon como Gyarados
+	[1] = {name = "Shiny Ninetales", level = 76, hp = 4.25, damage = 2.25},
+	[2] = {name = "Magmar", level = 77, hp = 4.75, damage = 2.4},
+	[3] = {name = "Shiny Rapidash", level = 78, hp = 4.75, damage = 2.45},
+	[4] = {name = "Arcanine", level = 80, hp = 5.5, damage = 2.6},
 }
 
 local keywordHandler = KeywordHandler:new()

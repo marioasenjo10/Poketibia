@@ -14,7 +14,7 @@ Guía paso a paso para quien quiera ayudar con el proyecto. Servidor: PokeDash P
 
 ## 1. Qué viene en git y qué no
 
-Con `git clone` te llegan los scripts Lua, los XML (monstruos, items, talkactions...), `schema.sql`, `config.lua`, el cliente (módulos), `Tibia.dat`, el mapa (`global_dash.otbm`, ~83 MB) y el ejecutable `pokedashpota_win64.exe` con sus `.dll`.
+Con `git clone` te llegan los scripts Lua, los XML (monstruos, items, talkactions...), `schema.sql`, `config.lua`, el cliente (módulos y programa, `pokedash_OpenGL.exe` y `pokedash_DX9.exe`, con sus `.dll`), `Tibia.dat`, el mapa (`global_dash.otbm`, ~83 MB) y el ejecutable del servidor `pokedashpota_win64.exe` con sus `.dll`.
 
 **No** vienen en git por su tamaño. Los baja `descargar.ps1` desde una Release de GitHub:
 
@@ -45,7 +45,7 @@ Tras cambiar archivos Lua o XML hay que **reiniciar el servidor** para que se ap
 
 ## 4. Cliente
 
-Abre el OTClient personalizado (carpeta `otclient/` y `bases/pokedashpota1.0_client/`) y conéctate a `127.0.0.1`. Necesita `Tibia.spr` y `Tibia.dat` en `data/things/1098/`.
+Abre `bases/pokedashpota1.0_client/pokedash_OpenGL.exe` (si da problemas gráficos, `pokedash_DX9.exe`) y conéctate a `127.0.0.1`. Necesita `Tibia.spr` y `Tibia.dat` en `data/things/1098/`.
 
 ## 5. Cuenta y personaje GOD
 

@@ -18,6 +18,9 @@ function Creature:onAreaCombat(tile, isAggressive)
 end
 
 function Creature:onTargetCombat(target)
+	if passiveWildBlocksCombat(self, target) then
+		return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE
+	end
 	if isCreatureSleeping(self) or isCreatureSleeping(target) then
 		return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE
 	end

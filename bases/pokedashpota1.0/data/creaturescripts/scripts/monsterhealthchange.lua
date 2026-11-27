@@ -56,6 +56,9 @@ function getTypeEffectiveness(attackerRace, defenderRace, defenderRace2)
 end
 
 function onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType)
+	if attacker then
+		wakePassiveWild(creature, attacker)
+	end
 
 	if not attacker then
 		-- dano de condiciones (veneno, leech seed, quemaduras...): llega sin atacante y se salta

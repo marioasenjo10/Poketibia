@@ -17,6 +17,9 @@ bases/**/*.dll
 # ...pero el ejecutable y las DLL del servidor SI van en git (son ~15 MB) para que nadie tenga que pedirlos aparte
 !bases/pokedashpota1.0/pokedashpota_win64.exe
 !bases/pokedashpota1.0/*.dll
+# ...y tambien el programa del cliente y sus DLL (~13 MB)
+!bases/pokedashpota1.0_client/pokedash_*.exe
+!bases/pokedashpota1.0_client/*.dll
 bases/**/*_linux64
 bases/**/*.log
 bases/**/*.bak

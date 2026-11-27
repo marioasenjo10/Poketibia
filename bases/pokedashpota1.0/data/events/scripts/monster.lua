@@ -296,35 +296,21 @@ local christmasPokes =
 		},
 }
 
--- Respawn: no aparece delante de un jugador que camina hacia alli (ni pegado a el); se reintenta mas
--- tarde. Detras o a los lados si. Distancias en casillas.
-spawnFrontBlockDistance = 7
-spawnCloseBlockDistance = 2
+-- Respawn: el ejecutable esta parcheado para reponer los salvajes aunque haya alguien mirando. No
+-- aparecen pegados a un jugador (se reintenta enseguida); los que salen a la vista son pacificos
+-- hasta que se les ataca (lib/core/passivewild.lua).
+spawnCloseBlockDistance = 1
 
-local function blockedByPlayerInFront(position)
-	for _, player in ipairs(Game.getSpectators(position, false, true, 8, 8, 6, 6)) do
-		local pos = player:getPosition()
-		if pos.z == position.z then
-			local dx, dy = position.x - pos.x, position.y - pos.y
-			local dist = math.max(math.abs(dx), math.abs(dy))
-			if dist <= spawnCloseBlockDistance then
-				return true
-			end
-			local dir = player:getDirection()
-			local ahead = (dir == DIRECTION_NORTH and -dy) or (dir == DIRECTION_SOUTH and dy) or
-				(dir == DIRECTION_EAST and dx) or (dir == DIRECTION_WEST and -dx) or 0
-			if ahead > 0 and dist <= spawnFrontBlockDistance then
-				return true
-			end
-		end
-	end
-	return false
+local function blockedByCloseCreature(position)
+	local d = spawnCloseBlockDistance
+	return #Game.getSpectators(position, false, true, d, d, d, d) > 0
 end
 
 function Monster:onSpawn(position, startup, artificial)
-	if not startup and not artificial and blockedByPlayerInFront(position) then
+	if not startup and not artificial and blockedByCloseCreature(position) then
 		return false
 	end
+	local seen = not startup and not artificial and isSeenByAnyPlayer(position)
 	if not artificial then
 		local name = self:getName()
 		local monsterType = MonsterType(name)
@@ -335,7 +321,10 @@ function Monster:onSpawn(position, startup, artificial)
 				if not shinyMonsterType then
 					print("WARNING! " .. shinyName .. " not found for respawn.")
 				else
-					Game.createMonster(shinyName, position, false, false, 0, 0)
+					local shiny = Game.createMonster(shinyName, position, false, false, 0, 0)
+					if shiny and seen then
+						makeWildPassive(shiny)
+					end
 					return false
 				end
 			end
@@ -383,6 +372,9 @@ function Monster:onSpawn(position, startup, artificial)
 		if totalSpeed > 0 and self:getSpeed() ~= totalSpeed then
 			self:changeSpeed(totalSpeed - self:getSpeed())
 		end
+	end
+	if seen then
+		makeWildPassiveOnSpawn(self:getName(), position)
 	end
 	return true
 end

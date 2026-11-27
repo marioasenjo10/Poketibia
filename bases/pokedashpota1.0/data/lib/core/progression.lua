@@ -372,27 +372,34 @@ progressionTasks = {
 	{
 		id = "koga", kind = "badge", badge = "soulBadge", giver = "Koga, Lider de Gimnasio",
 		title = "La Medalla Alma",
-		text = "Desafia a Koga en el Gimnasio de Ciudad Fucsia. Sus Pokemon son Venomoth, Muk y Weezing. Recomendado: nivel 68-70 y un Pokemon de tipo Psiquico o Tierra.",
+		text = "Desafia a Koga en el Gimnasio de Ciudad Fucsia. Sus Pokemon son Venomoth, Crobat, Muk y Weezing. Recomendado: nivel 68-70 y un Pokemon de tipo Psiquico o Tierra (ojo: Crobat vuela y la Tierra no le afecta).",
 		reward = {exp = 0, money = 18000},
 		rewardText = "Medalla Alma, 1 piedra veneno, sin tope de nivel 70 y +5% de dano y defensa a tus Pokemon de tipo Veneno",
 		map = {{1195, 1374, 7, "Koga, Gimnasio de Ciudad Fucsia"}},
 	},
 	-- ===== Isla Canela (Blaine) =====
 	{
-		id = "cinnabar_surfer", kind = "catch", species = {"Staryu", "Tentacool", "Poliwag", "Goldeen"}, count = 1,
-		giver = "Profesor Oak",
-		title = "Aprende a surfear",
-		text = "Blaine, el Lider de Isla Canela, usa Pokemon de Fuego, y su isla solo se alcanza por mar. Captura un Pokemon de Agua que sepa surfear: Staryu, Tentacool, Poliwag o Goldeen. Puedes ver en la Pokedex que Pokemon tienen Surf.",
+		-- opcional: se abre junto con "Rumbo a Isla Canela". Solo cuentan las derrotas dentro de area
+		id = "cinnabar_counter", optional = true, kind = "defeat", count = 50, giver = "Profesor Oak",
+		species = {"Rapidash", "Ninetales", "Arcanine", "Magcargo", "Houndoom", "Charizard"},
+		area = {fromX = 640, toX = 900, fromY = 1290, toY = 1600, fromZ = 1, toZ = 14},
+		title = "Preparacion contra Blaine",
+		text = "Blaine, el Lider de Isla Canela, usa Pokemon de Fuego, y a su isla se llega por mar o volando. Si quieres prepararte, derrota en los alrededores de la isla 50 Pokemon de Fuego entre Rapidash, Ninetales, Arcanine, Magcargo, Houndoom y Charizard. Pulsa Ver en el mapa para saber donde estan.",
 		reward = {exp = 212000, money = 6000, items = {{id = 26688, count = 25}}},
+		map = {{774, 1437, 6, "Rapidash y Houndoom", "Rapidash"},
+			{811, 1440, 4, "Arcanine y Ninetales", "Arcanine"},
+			{844, 1556, 6, "Charizard, Arcanine y Ninetales", "Charizard"},
+			{662, 1547, 7, "Charizard y Arcanine", "Charizard"}},
 	},
 	{
 		id = "go_cinnabar", kind = "reach", town = "cinnabar", giver = "Profesor Oak",
 		title = "Rumbo a Isla Canela",
-		text = "Saca tu Pokemon que sabe surfear y camina hacia el agua: te subiras a el. Desde Pueblo Paleta, navega hacia el sur hasta Isla Canela.",
+		text = "Puedes ir volando con un Pokemon que sepa volar, o surfeando: saca un Pokemon que sepa surfear, camina hacia el agua y navega desde Pueblo Paleta hacia el sur hasta Isla Canela.",
 		reward = {exp = 212000, money = 6000, items = {{id = 27641, count = 25}}},
 	},
 	{
-		id = "cinnabar_fire", optional = true, kind = "defeat", types = {"fire"}, species = {"Growlithe", "Vulpix", "Ponyta"}, count = 15,
+		-- desactivada: sobraba con "Preparacion contra Blaine" (se deja para no mover los indices)
+		id = "cinnabar_fire", disabled = true, optional = true, kind = "defeat", types = {"fire"}, species = {"Growlithe", "Vulpix", "Ponyta"}, count = 15,
 		giver = "Blaine, Lider de Gimnasio",
 		title = "Entrenamiento de fuego",
 		text = "Ja! Antes de retarme, a ver si aguantas el calor: derrota 15 Pokemon de tipo Fuego en Isla Canela (Growlithe, Vulpix, Ponyta...). Pulsa Ver en el mapa para saber donde estan. (Si te ves fuerte, puedes retar a Blaine directamente.)",
@@ -401,23 +408,27 @@ progressionTasks = {
 	{
 		id = "blaine", kind = "badge", badge = "volcanoBadge", giver = "Blaine, Lider de Gimnasio",
 		title = "La Medalla Volcan",
-		text = "Desafia a Blaine en el Gimnasio de Isla Canela. Sus Pokemon son Ninetales, Rapidash y Arcanine. Recomendado: nivel 78-80 y un Pokemon de tipo Agua, Tierra o Roca.",
+		text = "Desafia a Blaine en el Gimnasio de Isla Canela. Sus Pokemon son Shiny Ninetales, Magmar, Shiny Rapidash y Arcanine. Recomendado: nivel 78-80 y un Pokemon de tipo Agua, Tierra o Roca.",
 		reward = {exp = 0, money = 22000},
 		rewardText = "Medalla Volcan, 1 piedra fuego, sin tope de nivel 80 y +5% de dano y defensa a tus Pokemon de tipo Fuego",
 		map = {{790, 1371, 4, "Blaine, Gimnasio de Isla Canela"}},
 	},
 	-- ===== Ciudad Verde (Giovanni) =====
 	{
-		id = "viridian_ground", optional = true, kind = "defeat", types = {"ground"}, species = {"Diglett", "Sandshrew", "Cubone", "Geodude"}, count = 15,
-		giver = "Profesor Oak",
+		-- entrenamiento para subir de nivel (el id se conserva: las partidas guardan el indice)
+		id = "viridian_ground", optional = true, kind = "defeat", count = 50, giver = "Profesor Oak",
+		species = {"Electabuzz", "Electrode", "Magneton", "Venusaur", "Vileplume", "Victreebel"},
 		title = "El ultimo gimnasio",
-		text = "El gimnasio de Ciudad Verde por fin ha abierto. Su Lider, Giovanni, usa Pokemon de tipo Tierra. Preparate derrotando 15 Pokemon de tipo Tierra (al este de Ciudad Celeste hay muchos). Los de Agua, Planta y Hielo les hacen mucho dano. (Si te ves fuerte, puedes retar a Giovanni directamente.)",
+		text = "El gimnasio de Ciudad Verde por fin ha abierto: Giovanni usa Pokemon de Tierra, debiles contra Agua, Planta y Hielo. Para entrenar, derrota 50 Pokemon entre Electabuzz, Electrode y Magneton, o en la gran zona de Venusaur, Vileplume y Victreebel, un poco al norte. Ojo: no uses electricos contra Giovanni. Pulsa Ver en el mapa.",
 		reward = {exp = 862000, money = 8000},
+		map = {{838, 1214, 4, "Venusaur, Vileplume y Victreebel", "Venusaur"},
+			{890, 1216, 4, "Venusaur, Vileplume y Victreebel", "Victreebel"},
+			{848, 1312, 7, "Electabuzz, Electrode y Magneton", "Electabuzz"}},
 	},
 	{
 		id = "giovanni", kind = "badge", badge = "earthBadge", giver = "Giovanni, Lider de Gimnasio",
 		title = "La Medalla Tierra",
-		text = "Desafia a Giovanni en el Gimnasio de Ciudad Verde. Sus Pokemon son Rhyhorn, Nidoking y Rhydon. Recomendado: nivel 88-90 y un Pokemon de tipo Agua, Planta o Hielo.",
+		text = "Desafia a Giovanni en el Gimnasio de Ciudad Verde. Sus Pokemon son Dugtrio, Shiny Persian, Nidoqueen, Golem, Nidoking y Rhydon. Recomendado: nivel 88-90 y un Pokemon de tipo Agua, Planta o Hielo.",
 		reward = {exp = 0, money = 30000},
 		rewardText = "Medalla Tierra, 1 piedra tierra, las 8 medallas de Kanto, sin tope de nivel y +5% de dano y defensa a tus Pokemon de tipo Tierra",
 		map = {{743, 1074, 6, "Giovanni, Gimnasio de Ciudad Verde"}},
@@ -662,7 +673,9 @@ function taskMapPoints(task, player)
 	local icon = ""
 	if task.map then
 		for _, p in ipairs(task.map) do
+			-- p[5] (opcional): Pokemon cuyo retrato usa ese marcador
 			parts[#parts + 1] = p[1] .. ":" .. p[2] .. ":" .. p[3] .. ":" .. mapText(p[4] or task.title)
+				.. (p[5] and (":" .. mapText(p[5])) or "")
 		end
 	elseif (task.kind == "catch" or task.kind == "defeat") and task.species and pokedexGetLocationString then
 		local zones = {}
@@ -767,10 +780,23 @@ function Player.sendTasks(self)
 				mapPoints, mapIcon = taskMapPoints(task, self)
 			end
 			lines[#lines + 1] = table.concat({index, state, task.kind, clean(task.giver), clean(task.title),
-				clean(task.text), progress, total, clean(rewardText(task)), mapPoints, mapIcon, task.optional and 1 or 0}, "|")
+				-- las hechas van sin descripcion: con todas, el mensaje pasaba del tope y no llegaba
+				state == 1 and clean(task.text) or "", progress, total, clean(rewardText(task)), mapPoints, mapIcon,
+				task.optional and 1 or 0}, "|")
 		end
 	end
-	self:sendExtendedOpcode(OPCODE_TASKS, table.concat(lines, "\n"))
+	-- si aun asi no cabe, se quitan las hechas mas antiguas (la linea 1 es el tope de nivel)
+	local message = table.concat(lines, "\n")
+	local oldest = 2
+	while #message > EXTENDED_OPCODE_MAX_LENGTH and lines[oldest] do
+		if lines[oldest]:match("^%d+|2|") then
+			table.remove(lines, oldest)
+			message = table.concat(lines, "\n")
+		else
+			oldest = oldest + 1
+		end
+	end
+	self:sendExtendedOpcode(OPCODE_TASKS, message)
 end
 
 -- ventana de mision completada: "titulo|recompensa|tipo|quien|titulo|texto|aspecto|mapa" de la siguiente
@@ -900,6 +926,25 @@ function progressionActivateNext(player, index)
 		activateTask(player, nextIndex)
 	else
 		player:sendTasks()
+	end
+end
+
+-- Al entrar: si una principal paso a ser opcional y el jugador la tenia activa, se quedaria sin
+-- principal. En ese caso se abre la siguiente.
+function progressionRepairChain(player)
+	local optionalIndex
+	for _, entry in ipairs(progressionGetActiveTasks(player)) do
+		if not entry.task.optional then
+			return
+		end
+		optionalIndex = optionalIndex or entry.index
+	end
+	if not optionalIndex then
+		return
+	end
+	local nextIndex = nextMainTask(optionalIndex)
+	if nextIndex and taskState(player, nextIndex) ~= 1 and taskState(player, nextIndex) ~= 2 then
+		progressionActivateNext(player, optionalIndex)
 	end
 end
 
