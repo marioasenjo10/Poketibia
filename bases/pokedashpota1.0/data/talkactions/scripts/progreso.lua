@@ -56,7 +56,7 @@ function onSay(player, words, param)
 		else
 			local orb = player:addItem(entry.id, 1)
 			if orb then
-				orb:setSpecialAttribute("evoTarget", entry.target)
+				setShinyOrbTarget(orb, entry.target)
 				player:sendTextMessage(MESSAGE_INFO_DESCR, "Orbe " .. SHINY_ORB_NAMES[entry.orb] .. " para " .. entry.target .. ".")
 			end
 		end

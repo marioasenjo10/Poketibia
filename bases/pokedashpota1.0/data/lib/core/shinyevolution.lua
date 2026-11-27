@@ -378,6 +378,24 @@ do
 end
 
 -- a que shiny evoluciona un objeto (orbe o objeto antiguo)
+-- Cada orbe sirve para UN shiny: se guarda en "evoTarget" y el orbe se llama por el
+-- ("orbe de Shiny Ivysaur"), para que no parezca que cualquier orbe de bronce vale para cualquiera.
+function setShinyOrbTarget(orb, target)
+	orb:setSpecialAttribute("evoTarget", target)
+	if ITEM_ATTRIBUTE_NAME then
+		orb:setAttribute(ITEM_ATTRIBUTE_NAME, "orbe de " .. target)
+	end
+end
+
+-- los orbes de antes solo tenian "evoTarget": se les pone el nombre al verlos
+function ensureShinyOrbName(orb)
+	if not ITEM_ATTRIBUTE_NAME then return end
+	local target = orb:getSpecialAttribute("evoTarget")
+	if target and (orb:getAttribute(ITEM_ATTRIBUTE_NAME) or "") == "" then
+		orb:setAttribute(ITEM_ATTRIBUTE_NAME, "orbe de " .. target)
+	end
+end
+
 function getShinyEvoTarget(item)
 	local target = item:getSpecialAttribute("evoTarget")
 	if target then
@@ -399,7 +417,7 @@ function doShinyEvoDrop(creature, corpse)
 	end
 	local orb = corpse:addItem(entry.id, 1)
 	if orb then
-		orb:setSpecialAttribute("evoTarget", entry.target)
+		setShinyOrbTarget(orb, entry.target)
 	end
 	return orb
 end

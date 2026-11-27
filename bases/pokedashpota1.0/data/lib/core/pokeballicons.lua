@@ -81,6 +81,7 @@ function Player.sendPokeballIcons(player)
 					-- orbe de evolucion shiny: el cliente dibuja el holograma de su destino (ultimo campo = 2)
 					local evoTarget = item:getSpecialAttribute("evoTarget")
 					if evoTarget then
+						if ensureShinyOrbName then ensureShinyOrbName(item) end
 						parts[#parts + 1] = cid .. ":" .. slot .. ":" .. ItemType(item:getId()):getClientId() .. ":" .. evoTarget .. ":2"
 					end
 				end
