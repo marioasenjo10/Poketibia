@@ -692,7 +692,7 @@ function buildInfoPanel(info)
       if stage.depth > 0 then
         levelText = stage.level > 0 and ('Nv ' .. stage.level) or ''
         if stage.item ~= '' then
-          levelText = levelText ~= '' and (levelText .. ' o objeto') or titleCase(stage.item)
+          levelText = levelText ~= '' and (levelText .. ' o objeto') or shortItemName(titleCase(stage.item))
           table.insert(items, { stage = stage.name, item = titleCase(stage.item), count = math.max(1, stage.count),
             itemId = stage.itemId })
           if stage.itemId > 0 then
@@ -830,10 +830,16 @@ function buildLootPanel(info)
   local grid = g_ui.createWidget('DexLootGrid', panel)
   for _, loot in ipairs(info.loot) do
     local card = g_ui.createWidget('DexLootCard', grid)
+    -- el orbe que suelta un shiny es el suyo: su holograma y "Orbe de Shiny Venusaur"
+    local isOrb = loot.name:lower():find('^orbe de evoluci') ~= nil
     if loot.clientId > 0 then
-      card:getChildById('item'):setItemId(loot.clientId)
+      if isOrb then
+        setEvoItem(card:getChildById('item'), loot.clientId, info.name)
+      else
+        card:getChildById('item'):setItemId(loot.clientId)
+      end
     end
-    card:getChildById('name'):setText(titleCase(loot.name))
+    card:getChildById('name'):setText(isOrb and ('Orbe de ' .. info.name) or titleCase(loot.name))
     card:getChildById('count'):setText('Cantidad: ' .. loot.count)
     local text, color = rarity(loot.chance)
     local chance = card:getChildById('chance')
