@@ -5,6 +5,8 @@ bases/*
 
 # Dentro de PokeDash: lo pesado, binarios y archivos generados
 bases/pokedashpota1.0/data/world/*.otbm
+# ...menos el mapa que usa el servidor (~83 MB; el tope de GitHub son 100 MB por archivo)
+!bases/pokedashpota1.0/data/world/global_dash.otbm
 bases/pokedashpota1.0/data/logs/
 # sprites: el Tibia.spr pesa ~490 MB (GitHub no admite mas de 100 MB), se guarda aparte.
 # El Tibia.dat (3 MB) si va en git: guarda que sprite usa cada objeto.
@@ -12,6 +14,9 @@ bases/pokedashpota1.0_client/data/things/*/*
 !bases/pokedashpota1.0_client/data/things/*/Tibia.dat
 bases/**/*.exe
 bases/**/*.dll
+# ...pero el ejecutable y las DLL del servidor SI van en git (son ~15 MB) para que nadie tenga que pedirlos aparte
+!bases/pokedashpota1.0/pokedashpota_win64.exe
+!bases/pokedashpota1.0/*.dll
 bases/**/*_linux64
 bases/**/*.log
 bases/**/*.bak

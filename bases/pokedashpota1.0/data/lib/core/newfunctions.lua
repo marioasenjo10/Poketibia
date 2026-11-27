@@ -100,7 +100,8 @@ wildPowerFactor = 1.0
 -- fuerza del salvaje distinta del nivel para usarlo (si no esta, se usa el nivel requerido).
 -- Ejemplo: wildPowerLevels = {graveler = 15}
 -- (subidos para usarlos, pero el salvaje se queda como estaba)
-wildPowerLevels = {onix = 20, steelix = 50, electabuzz = 40, dugtrio = 30, sandslash = 30, wigglytuff = 30, pidgeot = 50, ["farfetch'd"] = 80}
+-- scyther y magmar: evolucionan, asi que contaban como formas basicas (sin fuerza) y caian de un golpe
+wildPowerLevels = {scyther = 40, magmar = 40, onix = 20, steelix = 50, electabuzz = 40, dugtrio = 30, sandslash = 30, wigglytuff = 30, pidgeot = 50, ["farfetch'd"] = 80}
 wildBaseHealthFactor = 0.75 -- vida de las formas base salvajes (nivel 0)
 -- bebes que no cuentan como etapa (Pikachu sigue siendo base aunque exista Pichu)
 babyPokemon = {pichu = true, cleffa = true, igglybuff = true, togepi = true, tyrogue = true,
@@ -2783,6 +2784,7 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 		end
 
 		sendSummonInfo(player, monster, ball)
+		startSummonQuickFollow(player, monster)
 
 		return monster:getId()
 	end

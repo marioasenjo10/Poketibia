@@ -150,6 +150,7 @@ progressionGyms = {
 -- Tareas de historia, en orden. kind: talk | reach | catch | defeat | badge
 --   catch: species = {nombres} o types = {tipos}; count = cuantas capturas
 --   defeat: species = {nombres} y/o types = {tipos} (sin ninguno vale cualquier salvaje); count = cuantas derrotas
+--     area = {fromX, toX, fromY, toY, fromZ, toZ}: solo cuentan los derrotados dentro
 --   (en catch y defeat con types, species sirve tambien para los puntos de "Ver en el mapa")
 --   reach: town = parte del nombre de la ciudad (minusculas)
 --   badge: badge = clave en quests (newfunctions.lua)
@@ -270,7 +271,7 @@ progressionTasks = {
 		id = "go_vermilion", kind = "reach", town = "vermilion", giver = "Profesor Oak",
 		title = "Rumbo a Ciudad Carmin",
 		text = "Ve hacia el sur, pasando por Ciudad Azafran, hasta Ciudad Carmin, el gran puerto de Kanto. Alli esta el gimnasio del Teniente Surge. Lleva un Spearow: en el Centro Pokemon de Carmin, el pescador Ramon lo cambia por su Farfetch'd, que puede llevarte volando.",
-		reward = {exp = 41000, money = 2000, items = {{id = 27642, count = 15}}},
+		reward = {exp = 41000, money = 2000, items = {{id = 27643, count = 15}}},
 	},
 	{
 		-- opensWith: se abre a la vez que "Rumbo a Ciudad Carmin" (la Central esta de camino), no con el gimnasio
@@ -302,7 +303,7 @@ progressionTasks = {
 		id = "go_celadon", kind = "reach", town = "celadon", giver = "Profesor Oak",
 		title = "Rumbo a Ciudad Azulona",
 		text = "Ve hacia el oeste desde Ciudad Azafran hasta Ciudad Azulona, la ciudad de los grandes almacenes. Alli esta el gimnasio de Erika.",
-		reward = {exp = 72000, money = 3000, items = {{id = 27642, count = 20}}},
+		reward = {exp = 72000, money = 3000, items = {{id = 27643, count = 20}}},
 	},
 	{
 		id = "celadon_grass", optional = true, kind = "defeat", types = {"grass"}, species = {"Tangela", "Oddish", "Bellsprout"}, count = 15,
@@ -345,17 +346,21 @@ progressionTasks = {
 	},
 	-- ===== Ciudad Fucsia (Koga) =====
 	{
-		id = "fuchsia_counter", kind = "catch", types = {"psychic", "ground"},
-		species = {"Exeggcute", "Slowpoke", "Diglett", "Sandshrew"}, count = 1, giver = "Profesor Oak",
-		title = "Contra el veneno",
-		text = "El siguiente Lider, Koga, es un maestro ninja del tipo Veneno. Los Pokemon de tipo Psiquico y Tierra son los que mejor le plantan cara. Captura uno nuevo (Exeggcute, Slowpoke, Diglett, Sandshrew...).",
+		-- solo cuentan estas especies derrotadas dentro de area: los alrededores de Fucsia, con la cueva
+		id = "fuchsia_counter", kind = "defeat", count = 50, giver = "Profesor Oak",
+		species = {"Doduo", "Dodrio", "Tauros", "Scyther", "Scizor", "Hitmonlee", "Hitmonchan", "Hitmontop", "Tyrogue"},
+		area = {fromX = 1090, toX = 1340, fromY = 1240, toY = 1500, fromZ = 6, toZ = 8},
+		title = "Entrenamiento en el Safari",
+		text = "El siguiente Lider, Koga, es un maestro ninja del tipo Veneno. Antes de retarle, entrena en los alrededores de Ciudad Fucsia: derrota 50 Pokemon entre Doduo, Dodrio, Tauros, Scyther, Scizor, Hitmonlee, Hitmonchan, Hitmontop y Tyrogue. Pulsa Ver en el mapa para saber donde estan.",
 		reward = {exp = 157000, money = 5000, items = {{id = 26688, count = 25}}},
+		map = {{1142, 1313, 7, "Zona Safari: Doduo, Dodrio y Tauros"}, {1130, 1430, 6, "Scyther y Scizor"},
+			{1195, 1450, 8, "Cueva: Hitmonlee, Hitmonchan, Hitmontop y Tyrogue"}},
 	},
 	{
 		id = "go_fuchsia", kind = "reach", town = "fuchsia", giver = "Profesor Oak",
 		title = "Rumbo a Ciudad Fucsia",
 		text = "Ciudad Fucsia esta en el sureste de Kanto, junto a la Zona Safari. El camino es largo: llevate pociones. Pulsa Ver en el mapa para ver donde esta.",
-		reward = {exp = 157000, money = 5000, items = {{id = 27642, count = 25}}},
+		reward = {exp = 157000, money = 5000, items = {{id = 27643, count = 25}}},
 	},
 	{
 		id = "fuchsia_poison", optional = true, kind = "defeat", types = {"poison"}, species = {"Koffing", "Grimer", "Ekans", "Venonat"}, count = 15,
@@ -384,7 +389,7 @@ progressionTasks = {
 		id = "go_cinnabar", kind = "reach", town = "cinnabar", giver = "Profesor Oak",
 		title = "Rumbo a Isla Canela",
 		text = "Saca tu Pokemon que sabe surfear y camina hacia el agua: te subiras a el. Desde Pueblo Paleta, navega hacia el sur hasta Isla Canela.",
-		reward = {exp = 212000, money = 6000, items = {{id = 27642, count = 25}}},
+		reward = {exp = 212000, money = 6000, items = {{id = 27641, count = 25}}},
 	},
 	{
 		id = "cinnabar_fire", optional = true, kind = "defeat", types = {"fire"}, species = {"Growlithe", "Vulpix", "Ponyta"}, count = 15,
@@ -423,7 +428,7 @@ progressionTasks = {
 		giver = "Profesor Oak",
 		title = "La Calle Victoria",
 		text = "Tienes las 8 medallas! Para entrar en la Liga Pokemon necesitas nivel 100. Al oeste de Ciudad Verde, Simon el guardia te dejara pasar a la Calle Victoria: derrota 25 de sus Pokemon (Graveler, Machoke, Golbat, Onix, Rhyhorn, Arbok).",
-		reward = {exp = 1082000, money = 10000, items = {{id = 27642, count = 30}}},
+		reward = {exp = 1082000, money = 10000, items = {{id = 27641, count = 30}}},
 		map = {{538, 1094, 7, "Simon, entrada de la Calle Victoria"}, {478, 1087, 8, "Calle Victoria (subterraneo -1)"}, {430, 1117, 9, "Calle Victoria (subterraneo -2)"}},
 	},
 	{
@@ -1093,12 +1098,19 @@ local function defeatTaskProgress(player, index, task, name)
 	end
 end
 
-function progressionOnDefeat(player, name)
+local function insideArea(area, position)
+	return position and position.z >= area.fromZ and position.z <= area.toZ and position.x >= area.fromX and position.x <= area.toX
+		and position.y >= area.fromY and position.y <= area.toY
+end
+
+-- position = donde ha caido el salvaje (para las tareas con area, como la Zona Safari)
+function progressionOnDefeat(player, name, position)
 	if not player:isOnProgression() then
 		return
 	end
 	for _, entry in ipairs(progressionGetActiveTasks(player)) do
-		if entry.task.kind == "defeat" and taskState(player, entry.index) == 1 then
+		if entry.task.kind == "defeat" and taskState(player, entry.index) == 1
+				and (not entry.task.area or insideArea(entry.task.area, position)) then
 			defeatTaskProgress(player, entry.index, entry.task, name)
 		end
 	end

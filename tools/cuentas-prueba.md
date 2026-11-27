@@ -18,6 +18,7 @@ Con [clonar-personaje.ps1](clonar-personaje.ps1) se copian encima del tester (co
 | Plantilla Misty | Claude Tester Dos (nivel 31) recién ganada la Medalla Cascada, en Ciudad Celeste. Sigue la ruta al Teniente Surge. |
 | Plantilla Surge | Claude Tester Dos (nivel 41) con 3 medallas (Roca, Cascada, Trueno), en el Centro Pokémon de Ciudad Carmín. Sigue «Contra las plantas» (25 voladores al norte de Carmín) y la ruta a Erika. |
 | Plantilla Erika | Claude Tester Dos (nivel 50) con 4 medallas (Roca, Cascada, Trueno, Arcoíris). En tierra en 864,1095,6 (Fearow guardado). Sigue «lavender_gastly» (capturar un Gastly) y la ruta a Sabrina. |
+| Plantilla Sabrina | Claude Tester Dos (nivel 59) con 5 medallas (Roca, Cascada, Trueno, Arcoíris, Pantano), en Ciudad Azafrán (1059,1048,7). Sigue «Entrenamiento en el Safari» (50 derrotas en la Zona Safari) y la ruta a Koga. |
 
 ```powershell
 # dejar a Claude Tester Dos como en la plantilla

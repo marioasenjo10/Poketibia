@@ -20,6 +20,13 @@ OPCODE_NEXT_GYM = 75 -- siguiente gimnasio del jugador (servidor: lib/core/progr
 gymMarker = nil
 floorLabel = nil     -- cartel con el piso que se esta viendo en el mapa grande
 POI_MIN_SCALE = 1    -- con el mapa mas alejado no se ven (serian puntitos encima de todo)
+STAIRS_FILE = '/game_minimap/stairs.txt' -- escaleras del mapa (tools/stairs.py)
+STAIRS_MIN_SCALE = 1      -- minimapa pequeno
+STAIRS_FULL_MIN_SCALE = 2 -- mapa grande: en la vista general no salen, hay que acercar
+STAIRS_SPACING = 14       -- pixeles: con varias del mismo tipo mas juntas que esto, sale una
+STAIRS_CELL = 64
+stairMarkers = {}    -- solo las que caben en lo que se esta viendo
+local stairIndex = nil
 worldChunks = {}
 worldChunkCount = 0
 local worldIndex = nil
@@ -106,6 +113,7 @@ function terminate()
   pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_MAP_POIS)
   pcall(ProtocolGame.unregisterExtendedOpcode, OPCODE_NEXT_GYM)
   clearMapPois()
+  clearStairMarkers()
   clearGymMarker()
   clearPokedexFlags()
   clearTownLabels()
@@ -143,6 +151,7 @@ end
 
 function offline()
   clearMapPois()
+  clearStairMarkers()
   clearGymMarker()
   clearTaskMarkers()
   if fullmapView then
@@ -465,6 +474,7 @@ function updateOverlayFloors()
     end
   end
   updateWorldChunks()
+  updateStairMarkers()
   if updateFloorLabelHook then updateFloorLabelHook(z) end
 end
 
@@ -551,6 +561,104 @@ function updateWorldChunks()
       minimapWidget:centerInPosition(chunk, chunk.pos)
     end
     chunk.centered = true
+  end
+end
+
+-- ===== Escaleras: flecha de subir o bajar en el piso que se esta viendo =====
+
+local function loadStairs()
+  stairIndex = {}
+  local ok, contents = pcall(g_resources.readFileContents, STAIRS_FILE)
+  if not ok or not contents then return end
+  for z, x, y, kind in contents:gmatch('(%d+) (%d+) (%d+) ([ud])') do
+    z, x, y = tonumber(z), tonumber(x), tonumber(y)
+    local key = z .. '_' .. math.floor(x / STAIRS_CELL) .. '_' .. math.floor(y / STAIRS_CELL)
+    stairIndex[key] = stairIndex[key] or {}
+    table.insert(stairIndex[key], { x = x, y = y, z = z, up = kind == 'u' })
+  end
+end
+
+function clearStairMarkers()
+  for _, marker in pairs(stairMarkers) do
+    if not marker:isDestroyed() then
+      marker:destroy()
+    end
+  end
+  stairMarkers = {}
+end
+
+-- mas pequenas cuanto mas alejado esta el mapa
+local function stairSize(scale)
+  if scale >= 4 then return 13 end
+  if scale >= 2 then return 11 end
+  return 9
+end
+
+-- una imagen por tamano (tools/stair_icons.py): reescalada, la flecha quedaba descentrada
+local function resizeStairMarker(marker, pixels)
+  if marker.pixels ~= pixels then
+    marker.pixels = pixels
+    marker:setSize({ width = pixels, height = pixels })
+    marker:setImageSource('/images/map/stair_' .. marker.kind .. '_' .. pixels)
+    minimapWidget:centerInPosition(marker, marker.pos)
+  end
+end
+
+local function createStairMarker(stair)
+  local marker = g_ui.createWidget('UIWidget')
+  marker.kind = stair.up and 'up' or 'down'
+  marker:setFocusable(false)
+  marker:setTooltip(stair.up and 'Escalera: sube de piso' or 'Escalera: baja de piso')
+  marker.pos = { x = stair.x, y = stair.y, z = stair.z }
+  -- encima del mapa suavizado y debajo de las demas marcas
+  minimapWidget:insertChild(worldChunkCount + 1, marker)
+  minimapWidget:centerInPosition(marker, marker.pos)
+  return marker
+end
+
+-- el mapa tiene miles de escaleras: solo se crean las que se ven
+function updateStairMarkers()
+  local scale = minimapWidget:getScale()
+  local cam = minimapWidget:getCameraPosition()
+  local minScale = fullmapView and STAIRS_FULL_MIN_SCALE or STAIRS_MIN_SCALE
+  if not cam or scale < minScale then
+    clearStairMarkers()
+    return
+  end
+  if not stairIndex then
+    loadStairs()
+  end
+  local size = minimapWidget:getSize()
+  local halfW, halfH = size.width / 2 / scale + 1, size.height / 2 / scale + 1
+  local wanted = {}
+  -- rejilla fija sobre el mapa (no sobre la pantalla): asi no parpadean al moverse
+  local spacing = math.max(1, math.ceil(STAIRS_SPACING / scale))
+  local taken = {}
+  for cx = math.floor((cam.x - halfW) / STAIRS_CELL), math.floor((cam.x + halfW) / STAIRS_CELL) do
+    for cy = math.floor((cam.y - halfH) / STAIRS_CELL), math.floor((cam.y + halfH) / STAIRS_CELL) do
+      for _, stair in ipairs(stairIndex[cam.z .. '_' .. cx .. '_' .. cy] or {}) do
+        local spot = math.floor(stair.x / spacing) .. '_' .. math.floor(stair.y / spacing) .. (stair.up and 'u' or 'd')
+        if not taken[spot] then
+          taken[spot] = true
+          if math.abs(stair.x - cam.x) <= halfW and math.abs(stair.y - cam.y) <= halfH then
+            wanted[stair] = true
+          end
+        end
+      end
+    end
+  end
+  for stair, marker in pairs(stairMarkers) do
+    if not wanted[stair] then
+      marker:destroy()
+      stairMarkers[stair] = nil
+    end
+  end
+  local pixels = stairSize(scale)
+  for stair in pairs(wanted) do
+    if not stairMarkers[stair] then
+      stairMarkers[stair] = createStairMarker(stair)
+    end
+    resizeStairMarker(stairMarkers[stair], pixels)
   end
 end
 

@@ -1,14 +1,20 @@
--- percent = % de la vida maxima del Pokemon que cura la pocion en total (repartido en los ticks)
+-- heal = vida que cura la pocion en total (repartida en los ticks). Es una cantidad fija: la vida del
+-- Pokemon crece con el nivel del entrenador, asi que cada pocion se va quedando corta. Orientativo:
+--   Small    ~40 % a nivel 10, ~16 % a nivel 50
+--   Great    ~35 % a nivel 30, ~30 % a nivel 50
+--   Ultra    ~50 % a nivel 70-80
+-- percent = % de la vida maxima (solo la Ultimate)
 local potions = {
-	[27642] = {name = "Small Potion", level = 0, percent = 40},
-	[27643] = {name = "Great Potion", level = 20, percent = 55},
-	[27641] = {name = "Ultra Potion", level = 50, percent = 70},
-	[27647] = {name = "Hyper Potion", level = 80, percent = 85},
+	[27642] = {name = "Small Potion", level = 0, heal = 700},
+	[27643] = {name = "Great Potion", level = 20, heal = 1400},
+	[27641] = {name = "Ultra Potion", level = 50, heal = 2700},
+	[27647] = {name = "Hyper Potion", level = 80, heal = 4200},
 	[27646] = {name = "Ultimate Potion", level = 100, percent = 100}
 }
 
 local function getHealPerTick(potion, maxHealth)
-	return math.max(1, math.ceil(maxHealth * potion.percent / 100 / healingTicksTotal))
+	local total = potion.heal or maxHealth * potion.percent / 100
+	return math.max(1, math.ceil(total / healingTicksTotal))
 end
 
 local healingTicks = 5

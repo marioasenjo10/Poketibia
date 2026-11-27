@@ -1,0 +1,2 @@
+# el mapa es binario: git no debe tocar sus bytes (finales de linea)
+*.otbm binary

@@ -6,7 +6,7 @@ function onDeath(creature, corpse, killer, mostDamage, unjustified, mostDamage_u
 	if progressionOnDefeat and creature and killer and not isSummon(creature) then
 		local trainer = killer:isPlayer() and killer or killer:getMaster()
 		if trainer and trainer:isPlayer() then
-			progressionOnDefeat(Player(trainer:getId()), creature:getName())
+			progressionOnDefeat(Player(trainer:getId()), creature:getName(), creature:getPosition())
 		end
 	end
 	if corpse and creature and MonsterType(creature:getName()):getCorpseId() ~= 0 and not isSummon(creature) then

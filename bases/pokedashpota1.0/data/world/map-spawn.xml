@@ -7,19 +7,19 @@
 		<monster name="Shiny Mew" x="0" y="0" z="1" spawntime="60" />
 	</spawn>
 	<spawn centerx="1193" centery="1033" centerz="1" radius="30">
-		<monster name="Absol" x="-3" y="-6" z="1" spawntime="60" />
-		<monster name="Absol" x="8" y="-5" z="1" spawntime="60" />
-		<monster name="Absol" x="1" y="-4" z="1" spawntime="60" />
-		<monster name="Absol" x="5" y="-4" z="1" spawntime="60" />
-		<monster name="Absol" x="-2" y="-3" z="1" spawntime="60" />
+		<monster name="Haunter" x="-3" y="-6" z="1" spawntime="60" />
+		<monster name="Haunter" x="8" y="-5" z="1" spawntime="60" />
+		<monster name="Haunter" x="1" y="-4" z="1" spawntime="60" />
+		<monster name="Haunter" x="5" y="-4" z="1" spawntime="60" />
+		<monster name="Haunter" x="-2" y="-3" z="1" spawntime="60" />
 		<monster name="Umbreon" x="-5" y="-1" z="1" spawntime="60" />
-		<monster name="Absol" x="0" y="-1" z="1" spawntime="60" />
-		<monster name="Absol" x="4" y="-1" z="1" spawntime="60" />
+		<monster name="Haunter" x="0" y="-1" z="1" spawntime="60" />
+		<monster name="Haunter" x="4" y="-1" z="1" spawntime="60" />
 		<monster name="Darkrai" x="-6" y="0" z="1" spawntime="60" />
-		<monster name="Absol" x="2" y="1" z="1" spawntime="60" />
-		<monster name="Absol" x="2" y="3" z="1" spawntime="60" />
-		<monster name="Absol" x="3" y="3" z="1" spawntime="60" />
-		<monster name="Absol" x="6" y="3" z="1" spawntime="60" />
+		<monster name="Haunter" x="2" y="1" z="1" spawntime="60" />
+		<monster name="Haunter" x="2" y="3" z="1" spawntime="60" />
+		<monster name="Haunter" x="3" y="3" z="1" spawntime="60" />
+		<monster name="Haunter" x="6" y="3" z="1" spawntime="60" />
 	</spawn>
 	<spawn centerx="1136" centery="1108" centerz="1" radius="20">
 		<monster name="Raichu" x="-10" y="-1" z="1" spawntime="60" />
@@ -98,7 +98,7 @@
 		<monster name="Igglybuff" x="2" y="-1" z="2" spawntime="60" />
 	</spawn>
 	<spawn centerx="1194" centery="1029" centerz="2" radius="1">
-		<monster name="Absol" x="0" y="0" z="2" spawntime="60" />
+		<monster name="Haunter" x="0" y="0" z="2" spawntime="60" />
 	</spawn>
 	<spawn centerx="1188" centery="1031" centerz="2" radius="1">
 		<monster name="Umbreon" x="0" y="0" z="2" spawntime="60" />
@@ -106,16 +106,16 @@
 		<monster name="Gengar" x="1" y="1" z="2" spawntime="180" />
 	</spawn>
 	<spawn centerx="1195" centery="1031" centerz="2" radius="1">
-		<monster name="Absol" x="0" y="0" z="2" spawntime="180" />
+		<monster name="Haunter" x="0" y="0" z="2" spawntime="180" />
 	</spawn>
 	<spawn centerx="1197" centery="1032" centerz="2" radius="1">
 		<monster name="Gengar" x="0" y="0" z="2" spawntime="60" />
 	</spawn>
 	<spawn centerx="1189" centery="1033" centerz="2" radius="1">
-		<monster name="Banette" x="0" y="0" z="2" spawntime="60" />
+		<monster name="Haunter" x="0" y="0" z="2" spawntime="60" />
 	</spawn>
 	<spawn centerx="1195" centery="1033" centerz="2" radius="1">
-		<monster name="Absol" x="0" y="0" z="2" spawntime="60" />
+		<monster name="Haunter" x="0" y="0" z="2" spawntime="60" />
 		<monster name="Umbreon" x="0" y="1" z="2" spawntime="60" />
 	</spawn>
 	<spawn centerx="1191" centery="1034" centerz="2" radius="1">
@@ -5075,18 +5075,18 @@
 		<monster name="Blaziken" x="0" y="0" z="6" spawntime="60" />
 	</spawn>
 	<spawn centerx="1274" centery="1402" centerz="6" radius="5">
-		<monster name="Bellsprout" x="5" y="2" z="6" spawntime="60" />
+		<monster name="Pinsir" x="5" y="2" z="6" spawntime="60" />
 	</spawn>
 	<spawn centerx="526" centery="1405" centerz="6" radius="1">
 		<monster name="Blaziken" x="0" y="0" z="6" spawntime="60" />
 	</spawn>
 	<spawn centerx="1263" centery="1405" centerz="6" radius="5">
-		<monster name="Bellsprout" x="4" y="-5" z="6" spawntime="60" />
+		<monster name="Pinsir" x="4" y="-5" z="6" spawntime="60" />
 		<monster name="Pinsir" x="0" y="-1" z="6" spawntime="60" />
 	</spawn>
 	<spawn centerx="1291" centery="1406" centerz="6" radius="5">
 		<monster name="Pinsir" x="2" y="0" z="6" spawntime="60" />
-		<monster name="Bellsprout" x="1" y="5" z="6" spawntime="60" />
+		<monster name="Pinsir" x="1" y="5" z="6" spawntime="60" />
 	</spawn>
 	<spawn centerx="1424" centery="1408" centerz="6" radius="10">
 		<monster name="Drowzee" x="4" y="-5" z="6" spawntime="60" />
@@ -19074,12 +19074,12 @@
 		<monster name="Caterpie" x="0" y="0" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="1226" centery="1422" centerz="7" radius="4">
-		<monster name="Machamp" x="-1" y="-3" z="7" spawntime="60" />
-		<monster name="Machamp" x="1" y="-2" z="7" spawntime="60" />
-		<monster name="Machamp" x="-2" y="0" z="7" spawntime="60" />
-		<monster name="Machamp" x="2" y="2" z="7" spawntime="60" />
-		<monster name="Machamp" x="-2" y="4" z="7" spawntime="60" />
-		<monster name="Machamp" x="2" y="4" z="7" spawntime="60" />
+		<monster name="Machoke" x="-1" y="-3" z="7" spawntime="60" />
+		<monster name="Tyrogue" x="1" y="-2" z="7" spawntime="60" />
+		<monster name="Machoke" x="-2" y="0" z="7" spawntime="60" />
+		<monster name="Tyrogue" x="2" y="2" z="7" spawntime="60" />
+		<monster name="Machoke" x="-2" y="4" z="7" spawntime="60" />
+		<monster name="Tyrogue" x="2" y="4" z="7" spawntime="60" />
 	</spawn>
 	<spawn centerx="710" centery="1423" centerz="7" radius="10">
 		<monster name="Slugma" x="-4" y="-1" z="7" spawntime="60" />
@@ -32717,11 +32717,11 @@
 	</spawn>
 	<spawn centerx="1217" centery="1040" centerz="8" radius="10">
 		<monster name="Gastly" x="2" y="-4" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="0" y="4" z="8" spawntime="60" />
+		<monster name="Gengar" x="0" y="4" z="8" spawntime="60" />
 		<monster name="Gastly" x="2" y="4" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="0" y="5" z="8" spawntime="180" />
+		<monster name="Gengar" x="0" y="5" z="8" spawntime="180" />
 		<monster name="Gastly" x="1" y="7" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="1" y="9" z="8" spawntime="60" />
+		<monster name="Gengar" x="1" y="9" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="1363" centery="1040" centerz="8" radius="1">
 		<monster name="Ancient Mr. Mime" x="0" y="0" z="8" spawntime="60" />
@@ -33162,11 +33162,11 @@
 	</spawn>
 	<spawn centerx="1207" centery="1054" centerz="8" radius="10">
 		<monster name="Gastly" x="-5" y="1" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-5" y="3" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="9" y="3" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="0" y="4" z="8" spawntime="180" />
-		<monster name="Spiritomb" x="1" y="5" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="8" y="5" z="8" spawntime="60" />
+		<monster name="Gengar" x="-5" y="3" z="8" spawntime="60" />
+		<monster name="Gengar" x="9" y="3" z="8" spawntime="60" />
+		<monster name="Gengar" x="0" y="4" z="8" spawntime="180" />
+		<monster name="Gengar" x="1" y="5" z="8" spawntime="60" />
+		<monster name="Gengar" x="8" y="5" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="1373" centery="1054" centerz="8" radius="1">
 		<monster name="Ancient Blastoise" x="0" y="0" z="8" spawntime="60" />
@@ -33603,13 +33603,13 @@
 	</spawn>
 	<spawn centerx="1219" centery="1061" centerz="8" radius="10">
 		<monster name="Gastly" x="-1" y="-7" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="3" y="-2" z="8" spawntime="60" />
+		<monster name="Gengar" x="3" y="-2" z="8" spawntime="60" />
 		<monster name="Gastly" x="5" y="-2" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="4" y="-1" z="8" spawntime="180" />
-		<monster name="Spiritomb" x="8" y="-1" z="8" spawntime="60" />
+		<monster name="Gengar" x="4" y="-1" z="8" spawntime="180" />
+		<monster name="Gengar" x="8" y="-1" z="8" spawntime="60" />
 		<monster name="Gastly" x="9" y="4" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-6" y="5" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-6" y="7" z="8" spawntime="60" />
+		<monster name="Gengar" x="-6" y="5" z="8" spawntime="60" />
+		<monster name="Gengar" x="-6" y="7" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="1396" centery="1061" centerz="8" radius="1">
 		<monster name="Ancient Lapras" x="0" y="0" z="8" spawntime="60" />
@@ -34075,9 +34075,9 @@
 	</spawn>
 	<spawn centerx="1240" centery="1066" centerz="8" radius="10">
 		<monster name="Gastly" x="7" y="-1" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-3" y="0" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="5" y="0" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-8" y="1" z="8" spawntime="60" />
+		<monster name="Gengar" x="-3" y="0" z="8" spawntime="60" />
+		<monster name="Gengar" x="5" y="0" z="8" spawntime="60" />
+		<monster name="Gengar" x="-8" y="1" z="8" spawntime="60" />
 		<monster name="Gastly" x="-4" y="1" z="8" spawntime="60" />
 		<monster name="Gastly" x="7" y="1" z="8" spawntime="60" />
 	</spawn>
@@ -34873,18 +34873,18 @@
 		<monster name="Golbat" x="0" y="0" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="1259" centery="1076" centerz="8" radius="10">
-		<monster name="Spiritomb" x="-4" y="-8" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-4" y="-7" z="8" spawntime="180" />
+		<monster name="Gengar" x="-4" y="-8" z="8" spawntime="60" />
+		<monster name="Gengar" x="-4" y="-7" z="8" spawntime="180" />
 		<monster name="Gastly" x="7" y="-7" z="8" spawntime="60" />
 		<monster name="Gastly" x="-5" y="-6" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-3" y="-4" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="1" y="-4" z="8" spawntime="180" />
+		<monster name="Gengar" x="-3" y="-4" z="8" spawntime="60" />
+		<monster name="Gengar" x="1" y="-4" z="8" spawntime="180" />
 		<monster name="Gastly" x="-3" y="1" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-4" y="2" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-3" y="3" z="8" spawntime="180" />
+		<monster name="Gengar" x="-4" y="2" z="8" spawntime="60" />
+		<monster name="Gengar" x="-3" y="3" z="8" spawntime="180" />
 		<monster name="Gastly" x="5" y="3" z="8" spawntime="60" />
 		<monster name="Haunter" x="-4" y="6" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="-3" y="6" z="8" spawntime="60" />
+		<monster name="Gengar" x="-3" y="6" z="8" spawntime="60" />
 		<monster name="Gastly" x="-4" y="10" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="1356" centery="1076" centerz="8" radius="1">
@@ -35316,7 +35316,7 @@
 		<monster name="Gastly" x="-5" y="3" z="8" spawntime="60" />
 		<monster name="Gastly" x="5" y="4" z="8" spawntime="60" />
 		<monster name="Haunter" x="-7" y="6" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="6" y="8" z="8" spawntime="60" />
+		<monster name="Gengar" x="6" y="8" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="1357" centery="1081" centerz="8" radius="1">
 		<monster name="Shiny Kyogre" x="0" y="0" z="8" spawntime="60" />
@@ -36261,7 +36261,7 @@
 	</spawn>
 	<spawn centerx="1232" centery="1093" centerz="8" radius="10">
 		<monster name="Haunter" x="-4" y="-1" z="8" spawntime="60" />
-		<monster name="Spiritomb" x="1" y="-1" z="8" spawntime="60" />
+		<monster name="Gengar" x="1" y="-1" z="8" spawntime="60" />
 		<monster name="Gastly" x="0" y="0" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="1395" centery="1093" centerz="8" radius="1">
@@ -52079,13 +52079,13 @@
 		<monster name="Golbat" x="0" y="0" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="1248" centery="1124" centerz="9" radius="10">
-		<monster name="Spiritomb" x="-3" y="-3" z="9" spawntime="60" />
+		<monster name="Gengar" x="-3" y="-3" z="9" spawntime="60" />
 		<monster name="Gengar" x="-1" y="-3" z="9" spawntime="60" />
 		<monster name="Haunter" x="2" y="-3" z="9" spawntime="60" />
 		<monster name="Haunter" x="-3" y="-2" z="9" spawntime="60" />
 		<monster name="Gengar" x="-1" y="2" z="9" spawntime="60" />
 		<monster name="Gengar" x="1" y="2" z="9" spawntime="60" />
-		<monster name="Spiritomb" x="-1" y="4" z="9" spawntime="60" />
+		<monster name="Gengar" x="-1" y="4" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="324" centery="1125" centerz="9" radius="1">
 		<monster name="Graveler" x="0" y="0" z="9" spawntime="60" />
@@ -53039,10 +53039,10 @@
 		<monster name="Roserade" x="0" y="0" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="1198" centery="1247" centerz="9" radius="12">
-		<monster name="Absol" x="-5" y="-1" z="9" spawntime="60" />
-		<monster name="Absol" x="2" y="-1" z="9" spawntime="60" />
+		<monster name="Haunter" x="-5" y="-1" z="9" spawntime="60" />
+		<monster name="Haunter" x="2" y="-1" z="9" spawntime="60" />
 		<monster name="Shuppet" x="8" y="-1" z="9" spawntime="60" />
-		<monster name="Absol" x="11" y="1" z="9" spawntime="180" />
+		<monster name="Haunter" x="11" y="1" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="2238" centery="1248" centerz="9" radius="1">
 		<monster name="Ancient Muk" x="0" y="0" z="9" spawntime="180" />
@@ -53066,16 +53066,16 @@
 		<monster name="Ancient Muk" x="0" y="0" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="1149" centery="1250" centerz="9" radius="12">
-		<monster name="Absol" x="12" y="-6" z="9" spawntime="60" />
+		<monster name="Haunter" x="12" y="-6" z="9" spawntime="60" />
 		<monster name="Banette" x="-5" y="1" z="9" spawntime="60" />
 		<monster name="Banette" x="4" y="1" z="9" spawntime="60" />
 		<monster name="Shuppet" x="6" y="1" z="9" spawntime="60" />
 		<monster name="Banette" x="-12" y="2" z="9" spawntime="60" />
-		<monster name="Absol" x="12" y="2" z="9" spawntime="60" />
+		<monster name="Haunter" x="12" y="2" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="1216" centery="1250" centerz="9" radius="12">
-		<monster name="Absol" x="1" y="-1" z="9" spawntime="180" />
-		<monster name="Absol" x="6" y="0" z="9" spawntime="60" />
+		<monster name="Haunter" x="1" y="-1" z="9" spawntime="180" />
+		<monster name="Haunter" x="6" y="0" z="9" spawntime="60" />
 		<monster name="Banette" x="9" y="2" z="9" spawntime="60" />
 		<monster name="Banette" x="12" y="8" z="9" spawntime="60" />
 	</spawn>
@@ -53122,18 +53122,18 @@
 		<monster name="Ancient Muk" x="1" y="0" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="1125" centery="1253" centerz="9" radius="12">
-		<monster name="Absol" x="4" y="-6" z="9" spawntime="180" />
-		<monster name="Absol" x="-4" y="-4" z="9" spawntime="60" />
+		<monster name="Haunter" x="4" y="-6" z="9" spawntime="180" />
+		<monster name="Haunter" x="-4" y="-4" z="9" spawntime="60" />
 		<monster name="Dusclops" x="2" y="-4" z="9" spawntime="180" />
 		<monster name="Shuppet" x="-3" y="-2" z="9" spawntime="60" />
-		<monster name="Absol" x="6" y="-2" z="9" spawntime="180" />
+		<monster name="Haunter" x="6" y="-2" z="9" spawntime="180" />
 		<monster name="Shuppet" x="-3" y="-1" z="9" spawntime="180" />
 		<monster name="Dusclops" x="-6" y="0" z="9" spawntime="60" />
-		<monster name="Absol" x="5" y="0" z="9" spawntime="60" />
+		<monster name="Haunter" x="5" y="0" z="9" spawntime="60" />
 		<monster name="Dusclops" x="6" y="2" z="9" spawntime="60" />
 		<monster name="Shuppet" x="-2" y="3" z="9" spawntime="60" />
 		<monster name="Dusclops" x="0" y="4" z="9" spawntime="60" />
-		<monster name="Absol" x="-6" y="6" z="9" spawntime="60" />
+		<monster name="Haunter" x="-6" y="6" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="2231" centery="1253" centerz="9" radius="1">
 		<monster name="Ancient Mr. Mime" x="0" y="0" z="9" spawntime="180" />
@@ -53143,12 +53143,12 @@
 	<spawn centerx="1170" centery="1254" centerz="9" radius="12">
 		<monster name="Shuppet" x="-4" y="-10" z="9" spawntime="60" />
 		<monster name="Shuppet" x="-3" y="-10" z="9" spawntime="180" />
-		<monster name="Absol" x="1" y="-10" z="9" spawntime="60" />
-		<monster name="Absol" x="12" y="-10" z="9" spawntime="60" />
+		<monster name="Haunter" x="1" y="-10" z="9" spawntime="60" />
+		<monster name="Haunter" x="12" y="-10" z="9" spawntime="60" />
 		<monster name="Shuppet" x="6" y="-9" z="9" spawntime="60" />
-		<monster name="Absol" x="12" y="-3" z="9" spawntime="180" />
+		<monster name="Haunter" x="12" y="-3" z="9" spawntime="180" />
 		<monster name="Shuppet" x="9" y="2" z="9" spawntime="60" />
-		<monster name="Absol" x="4" y="3" z="9" spawntime="60" />
+		<monster name="Haunter" x="4" y="3" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="2233" centery="1254" centerz="9" radius="1">
 		<monster name="Ancient Mr. Mime" x="0" y="0" z="9" spawntime="180" />
@@ -53255,7 +53255,7 @@
 		<monster name="Ancient Vileplume" x="0" y="0" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="1123" centery="1262" centerz="9" radius="12">
-		<monster name="Absol" x="0" y="7" z="9" spawntime="60" />
+		<monster name="Haunter" x="0" y="7" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="2269" centery="1262" centerz="9" radius="1">
 		<monster name="Ancient Vileplume" x="0" y="0" z="9" spawntime="180" />
@@ -53412,8 +53412,8 @@
 	</spawn>
 	<spawn centerx="1176" centery="1271" centerz="9" radius="12">
 		<monster name="Shuppet" x="11" y="-3" z="9" spawntime="60" />
-		<monster name="Absol" x="8" y="-2" z="9" spawntime="180" />
-		<monster name="Absol" x="-5" y="8" z="9" spawntime="60" />
+		<monster name="Haunter" x="8" y="-2" z="9" spawntime="180" />
+		<monster name="Haunter" x="-5" y="8" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="2264" centery="1271" centerz="9" radius="1">
 		<monster name="Ancient Vileplume" x="0" y="0" z="9" spawntime="180" />
@@ -53426,7 +53426,7 @@
 		<monster name="Shiny Mewtwo" x="0" y="0" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="1201" centery="1274" centerz="9" radius="12">
-		<monster name="Absol" x="-7" y="-6" z="9" spawntime="180" />
+		<monster name="Haunter" x="-7" y="-6" z="9" spawntime="180" />
 		<monster name="Shuppet" x="-6" y="-6" z="9" spawntime="60" />
 		<monster name="Dusclops" x="-2" y="-6" z="9" spawntime="60" />
 		<monster name="Dusclops" x="6" y="-6" z="9" spawntime="60" />
@@ -53440,10 +53440,10 @@
 		<monster name="Ancient Vileplume" x="0" y="0" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="1124" centery="1275" centerz="9" radius="12">
-		<monster name="Absol" x="1" y="4" z="9" spawntime="60" />
-		<monster name="Absol" x="5" y="6" z="9" spawntime="180" />
+		<monster name="Haunter" x="1" y="4" z="9" spawntime="60" />
+		<monster name="Haunter" x="5" y="6" z="9" spawntime="180" />
 		<monster name="Shuppet" x="7" y="7" z="9" spawntime="60" />
-		<monster name="Absol" x="10" y="8" z="9" spawntime="180" />
+		<monster name="Haunter" x="10" y="8" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="1229" centery="1276" centerz="9" radius="12">
 		<monster name="Banette" x="0" y="-2" z="9" spawntime="60" />
@@ -53557,7 +53557,7 @@
 		<monster name="Dusknoir" x="-1" y="4" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="1128" centery="1281" centerz="9" radius="12">
-		<monster name="Absol" x="10" y="4" z="9" spawntime="180" />
+		<monster name="Haunter" x="10" y="4" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="3185" centery="1281" centerz="9" radius="5" />
 	<spawn centerx="2314" centery="1282" centerz="9" radius="1">
@@ -53579,7 +53579,7 @@
 	</spawn>
 	<spawn centerx="1142" centery="1286" centerz="9" radius="12">
 		<monster name="Shuppet" x="4" y="1" z="9" spawntime="60" />
-		<monster name="Absol" x="7" y="2" z="9" spawntime="180" />
+		<monster name="Haunter" x="7" y="2" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="1220" centery="1286" centerz="9" radius="12">
 		<monster name="Banette" x="-6" y="1" z="9" spawntime="60" />
@@ -53594,7 +53594,7 @@
 		<monster name="Ancient Slowking" x="0" y="0" z="9" spawntime="180" />
 	</spawn>
 	<spawn centerx="1160" centery="1287" centerz="9" radius="12">
-		<monster name="Absol" x="6" y="-3" z="9" spawntime="60" />
+		<monster name="Haunter" x="6" y="-3" z="9" spawntime="60" />
 		<monster name="Shuppet" x="-4" y="1" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="2317" centery="1287" centerz="9" radius="1">
@@ -53611,10 +53611,10 @@
 		<monster name="Banette" x="-2" y="-3" z="9" spawntime="60" />
 		<monster name="Banette" x="4" y="-2" z="9" spawntime="60" />
 		<monster name="Sableye" x="-2" y="-1" z="9" spawntime="60" />
-		<monster name="Absol" x="1" y="-1" z="9" spawntime="180" />
+		<monster name="Haunter" x="1" y="-1" z="9" spawntime="180" />
 		<monster name="Sableye" x="-5" y="0" z="9" spawntime="60" />
 		<monster name="Sableye" x="4" y="0" z="9" spawntime="60" />
-		<monster name="Absol" x="7" y="0" z="9" spawntime="180" />
+		<monster name="Haunter" x="7" y="0" z="9" spawntime="180" />
 		<monster name="Sableye" x="10" y="1" z="9" spawntime="60" />
 		<monster name="Banette" x="-2" y="2" z="9" spawntime="60" />
 		<monster name="Sableye" x="2" y="3" z="9" spawntime="60" />
@@ -53622,14 +53622,14 @@
 		<monster name="Banette" x="10" y="3" z="9" spawntime="60" />
 		<monster name="Sableye" x="-7" y="5" z="9" spawntime="60" />
 		<monster name="Sableye" x="-1" y="5" z="9" spawntime="60" />
-		<monster name="Absol" x="8" y="5" z="9" spawntime="180" />
+		<monster name="Haunter" x="8" y="5" z="9" spawntime="180" />
 		<monster name="Banette" x="5" y="6" z="9" spawntime="180" />
 		<monster name="Sableye" x="12" y="6" z="9" spawntime="60" />
 		<monster name="Sableye" x="-4" y="7" z="9" spawntime="60" />
 		<monster name="Banette" x="-1" y="7" z="9" spawntime="180" />
 		<monster name="Sableye" x="1" y="7" z="9" spawntime="60" />
 		<monster name="Banette" x="9" y="7" z="9" spawntime="60" />
-		<monster name="Absol" x="4" y="8" z="9" spawntime="180" />
+		<monster name="Haunter" x="4" y="8" z="9" spawntime="180" />
 		<monster name="Sableye" x="7" y="8" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="2315" centery="1289" centerz="9" radius="1">
@@ -75994,5 +75994,145 @@
 	</spawn>
 	<spawn centerx="1069" centery="1236" centerz="7" radius="1">
 		<npc name="Pescador Ramon" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<!-- Scyther de la meseta y la montana al sur de Fucsia -->
+	<spawn centerx="1115" centery="1446" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1110" centery="1440" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1105" centery="1429" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1151" centery="1429" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1112" centery="1434" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1133" centery="1410" centerz="6" radius="3">
+		<monster name="Scizor" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1147" centery="1438" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1119" centery="1417" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1111" centery="1416" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1104" centery="1436" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1124" centery="1415" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1130" centery="1415" centerz="6" radius="3">
+		<monster name="Scizor" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1126" centery="1451" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1142" centery="1418" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1115" centery="1439" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1110" centery="1429" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1137" centery="1450" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1154" centery="1440" centerz="6" radius="3">
+		<monster name="Scizor" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1121" centery="1411" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1125" centery="1447" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1119" centery="1443" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1115" centery="1416" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1108" centery="1433" centerz="6" radius="3">
+		<monster name="Scyther" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1135" centery="1414" centerz="6" radius="3">
+		<monster name="Scizor" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1140" centery="1404" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1149" centery="1411" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1115" centery="1406" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1099" centery="1439" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1102" centery="1409" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1103" centery="1415" centerz="7" radius="3">
+		<monster name="Scizor" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1105" centery="1445" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1131" centery="1457" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1122" centery="1456" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1134" centery="1401" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1107" centery="1456" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1100" centery="1434" centerz="7" radius="3">
+		<monster name="Scizor" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1111" centery="1455" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1111" centery="1405" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1136" centery="1457" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="1141" centery="1453" centerz="7" radius="3">
+		<monster name="Scyther" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<!-- Pinsir de la meseta al este de Fucsia -->
+	<spawn centerx="1271" centery="1407" centerz="6" radius="3">
+		<monster name="Pinsir" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1286" centery="1405" centerz="6" radius="3">
+		<monster name="Pinsir" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1287" centery="1409" centerz="6" radius="3">
+		<monster name="Pinsir" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1288" centery="1427" centerz="6" radius="3">
+		<monster name="Pinsir" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1268" centery="1422" centerz="6" radius="3">
+		<monster name="Pinsir" x="0" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="1275" centery="1406" centerz="6" radius="3">
+		<monster name="Pinsir" x="0" y="0" z="6" spawntime="60" />
 	</spawn>
 </spawns>

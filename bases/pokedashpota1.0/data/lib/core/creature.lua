@@ -167,11 +167,99 @@ function getSummonBehindPosition(player, masterPos, fromPos)
 	return Creature.getClosestFreePosition(player, masterPos, 2, false, true)
 end
 
+-- ===== Arranque rapido =====
+-- El motor no calcula el camino de un Pokemon recien sacado o teletransportado hasta su siguiente
+-- ciclo de pensamiento (cada ~1 s): al echar a andar se quedaba parado ese segundo. Mientras tanto
+-- los pasos se dan desde aqui; en cuanto el motor lo mueve por su cuenta, se deja de intervenir.
+local QUICK_FOLLOW_TICK = 50
+local QUICK_FOLLOW_TIME = 2000
+local QUICK_FOLLOW_MAX_STEPS = 8 -- tamanio de la busqueda de camino
+
+local quickFollowDirections = {
+	DIRECTION_NORTH, DIRECTION_EAST, DIRECTION_SOUTH, DIRECTION_WEST,
+	DIRECTION_NORTHWEST, DIRECTION_NORTHEAST, DIRECTION_SOUTHWEST, DIRECTION_SOUTHEAST,
+}
+local quickFollowRun = {} -- por Pokemon: solo vale el ultimo arranque
+
+local function distanceBetween(a, b)
+	return math.max(math.abs(a.x - b.x), math.abs(a.y - b.y))
+end
+
+-- primera direccion del camino mas corto para quedar al lado del duenio, o nil
+function getSummonStepTowards(startPosition, masterPosition, masterTile)
+	local queue = {{position = startPosition, steps = 0}}
+	local visited = {[startPosition.x .. ":" .. startPosition.y] = true}
+	local head = 1
+	while head <= #queue do
+		local current = queue[head]
+		head = head + 1
+		if current.steps < QUICK_FOLLOW_MAX_STEPS then
+			for _, direction in ipairs(quickFollowDirections) do
+				local offset = summonDirectionOffsets[direction]
+				local nextPosition = Position(current.position.x + offset[1], current.position.y + offset[2], startPosition.z)
+				local key = nextPosition.x .. ":" .. nextPosition.y
+				if not visited[key] then
+					visited[key] = true
+					if isFreeForSummon(nextPosition, masterTile) then
+						local firstDirection = current.firstDirection or direction
+						if distanceBetween(nextPosition, masterPosition) <= 1 then
+							return firstDirection
+						end
+						queue[#queue + 1] = {position = nextPosition, firstDirection = firstDirection, steps = current.steps + 1}
+					end
+				end
+			end
+		end
+	end
+	return nil
+end
+
+-- lo que tarda un paso a esa velocidad (formula del motor, sobre suelo normal)
+local function summonStepTime(speed)
+	local step = math.max(1, math.floor(857.36 * math.log(speed / 2 + 261.29) - 4795.01 + 0.5))
+	return math.ceil(1000 * 150 / step / QUICK_FOLLOW_TICK) * QUICK_FOLLOW_TICK
+end
+
+local function quickFollowTick(playerId, summonId, run, elapsed, wait, expected)
+	local player, summon = Player(playerId), Monster(summonId)
+	if not player or not summon or quickFollowRun[summonId] ~= run then
+		return
+	end
+	local position, masterPosition = summon:getPosition(), player:getPosition()
+	-- ya lo ha movido el motor (u otra cosa), esta peleando o se ha quedado lejos: fin
+	if position.x ~= expected.x or position.y ~= expected.y or position.z ~= expected.z
+		or summon:getTarget() or isSummonFar(masterPosition, position) or elapsed >= QUICK_FOLLOW_TIME then
+		quickFollowRun[summonId] = nil
+		return
+	end
+	if wait <= 0 and distanceBetween(position, masterPosition) > 1 then
+		local direction = getSummonStepTowards(position, masterPosition, Tile(masterPosition))
+		if direction then
+			summon:move(direction)
+			expected = summon:getPosition()
+			wait = summonStepTime(summon:getSpeed())
+		end
+	end
+	addEvent(quickFollowTick, QUICK_FOLLOW_TICK, playerId, summonId, run, elapsed + QUICK_FOLLOW_TICK,
+		wait - QUICK_FOLLOW_TICK, expected)
+end
+
+function startSummonQuickFollow(player, summon)
+	local summonId = summon:getId()
+	local run = (quickFollowRun[summonId] or 0) + 1
+	quickFollowRun[summonId] = run
+	if not summon:getTarget() then
+		summon:setFollowCreature(player) -- que el motor lo siga ya en su siguiente ciclo
+	end
+	addEvent(quickFollowTick, QUICK_FOLLOW_TICK, player:getId(), summonId, run, 0, 0, summon:getPosition())
+end
+
 -- teletransporta el Pokemon detras del jugador; devuelve true si lo ha movido
 function bringSummonBehind(player, summon, masterPos, fromPos)
 	local destination = getSummonBehindPosition(player, masterPos, fromPos)
 	if destination and (destination.x ~= 0 or destination.y ~= 0) and summon:teleportTo(destination, false) then
 		destination:sendMagicEffect(CONST_ME_TELEPORT)
+		startSummonQuickFollow(player, summon)
 		return true
 	end
 	return false
