@@ -615,6 +615,56 @@ local function addNote(parent, text)
   return label
 end
 
+-- Orbes de evolucion shiny: en vez del orbe solo, el holograma del shiny al que evoluciona
+-- (game_containers/holograms, como en la mochila) con el orbe pequeno en la esquina.
+local function hologramPath(name)
+  local path = '/game_containers/holograms/' .. name:lower() .. '.png'
+  if g_resources.fileExists(path) then return path end
+  return nil
+end
+
+local function setEvoItem(itemWidget, itemId, target)
+  local old = itemWidget:getChildById('holo')
+  if old then old:destroy() end
+  local path = target and hologramPath(target)
+  if not path then
+    itemWidget:setItemId(itemId)
+    return
+  end
+  itemWidget:setItem(nil)
+  -- la esquina de la tarjeta (24px) se queda pequena para el holograma
+  local size = itemWidget:getWidth()
+  if size < 32 then
+    itemWidget:setSize({ width = 32, height = 32 })
+    size = 32
+  end
+  local holo = g_ui.createWidget('UIWidget', itemWidget)
+  holo:setId('holo')
+  holo:fill('parent')
+  holo:setPhantom(true)
+  local image = g_ui.createWidget('UIWidget', holo)
+  image:fill('parent')
+  image:setImageSource(path)
+  image:setImageSmooth(true)
+  image:setPhantom(true)
+  -- el orbe, de una tercera parte del tamano, abajo a la derecha
+  local orb = g_ui.createWidget('UIItem', holo)
+  local orbSize = math.max(12, math.floor(size * 0.55))
+  orb:setSize({ width = orbSize, height = orbSize })
+  orb:addAnchor(AnchorRight, 'parent', AnchorRight)
+  orb:addAnchor(AnchorBottom, 'parent', AnchorBottom)
+  orb:setMarginRight(-math.floor(orbSize / 6))
+  orb:setMarginBottom(-math.floor(orbSize / 6))
+  orb:setVirtual(true)
+  orb:setPhantom(true)
+  orb:setItemId(itemId)
+end
+
+-- "Orbe De Evolucion De Bronce" -> "Orbe de Bronce" (el largo no cabia)
+local function shortItemName(name)
+  return (name:gsub('^[Oo]rbe [Dd]e [Ee]voluci[o\243]n [Dd]e ', 'Orbe de '))
+end
+
 function buildInfoPanel(info)
   local panel = child('infoPanel')
   panel:destroyChildren()
@@ -647,7 +697,7 @@ function buildInfoPanel(info)
             itemId = stage.itemId })
           if stage.itemId > 0 then
             local icon = card:getChildById('itemIcon')
-            icon:setItemId(stage.itemId)
+            setEvoItem(icon, stage.itemId, stage.name)
             icon:show()
           end
         end
@@ -669,8 +719,8 @@ function buildInfoPanel(info)
   else
     for _, it in ipairs(items) do
       local itemRow = g_ui.createWidget('DexEvoItemRow', itemBox)
-      if it.itemId > 0 then itemRow:getChildById('item'):setItemId(it.itemId) end
-      itemRow:getChildById('name'):setText(it.item)
+      if it.itemId > 0 then setEvoItem(itemRow:getChildById('item'), it.itemId, it.stage) end
+      itemRow:getChildById('name'):setText(shortItemName(it.item))
       itemRow:getChildById('count'):setText('x' .. it.count)
       itemRow:getChildById('stage'):setText('Para ' .. it.stage)
       itemRow:setTooltip(it.count .. 'x ' .. it.item .. '\nEvoluciona a ' .. it.stage)

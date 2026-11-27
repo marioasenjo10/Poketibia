@@ -22,12 +22,14 @@ Write-Host "Orbes: $($pngs.Count) en $orbDir"
 
 $holoDir = "$client\modules\game_containers\holograms"
 New-Item -ItemType Directory -Force $holoDir | Out-Null
-$names = & python -I "$root\tools\shinyorbs.py" --names
+# cada holograma del color de su orbe (bronce, plata, oro...), no en cian
+$lines = & python -I "$root\tools\shinyorbs.py" --keys
 $n = 0
-foreach ($name in $names) {
+foreach ($line in $lines) {
+	$name, $key = $line.Split('|')
 	$src = "$client\modules\game_pokedex\artwork\$($name.ToLower()).png"
 	if (Test-Path $src) {
-		[OrbDesign]::Hologram($src, "$holoDir\$($name.ToLower()).png", 48)
+		[OrbDesign]::HologramTinted($src, "$holoDir\$($name.ToLower()).png", 48, $key)
 		$n++
 	}
 }

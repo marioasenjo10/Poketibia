@@ -35,6 +35,12 @@ if '--names' in sys.argv:
         print(t)
     sys.exit(0)
 
+# "nombre|orbe" por linea: el holograma se tine del color de su orbe
+if '--keys' in sys.argv:
+    for t in targets:
+        print(t + '|' + color(t))
+    sys.exit(0)
+
 art = os.path.join(CLIENT, 'game_pokedex', 'artwork')
 missing = [t for t in targets if not os.path.exists(os.path.join(art, t.lower() + '.png'))]
 by_color = collections.Counter(color(t) for t in targets)
