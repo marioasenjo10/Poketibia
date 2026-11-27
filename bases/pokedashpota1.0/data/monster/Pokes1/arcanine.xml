@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Arcanine" nameDescription="an arcanine" race="fire" race2="none" experience="57" speed="230" manacost="0">
+<monster name="Arcanine" nameDescription="an arcanine" race="fire" race2="none" experience="57" speed="270" manacost="0">
 	<health now="1921" max="1921" />
 	<look type="962" head="113" body="57" legs="95" feet="113" corpse="26920" />
 	<targetchange interval="5000" chance="0" />
