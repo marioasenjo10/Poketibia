@@ -4,9 +4,9 @@ Guía paso a paso para quien quiera ayudar con el proyecto. Servidor: PokeDash P
 
 ## Resumen: paso a paso
 
-1. Instala **Git**, **XAMPP** y el **Visual C++ Redistributable 2022 x64**. Opcional: **GitHub CLI** (`gh`), imprescindible si el repositorio es privado.
+1. Instala **Git**, **XAMPP** y el **Visual C++ Redistributable 2022 x64**.
 2. `git clone` del repositorio.
-3. Ejecuta `descargar.ps1` (baja los sprites). Antes, quien tenga el proyecto debe haber editado `$Repo` y `$Tag` dentro del script y haber subido `Tibia.spr` a la Release.
+3. En la raíz del proyecto ejecuta `powershell -ExecutionPolicy Bypass -File .\descargar.ps1` (baja los sprites desde la Release `datos-v1`).
 4. Abre XAMPP y arranca solo **MySQL**. En phpMyAdmin crea la base `pokedashpota` e importa `bases/pokedashpota1.0/schema.sql`.
 5. En `bases/pokedashpota1.0/config.lua` pon tu usuario y contraseña de MySQL (en XAMPP suele ser `root` y contraseña vacía).
 6. Arranca `bases/pokedashpota1.0/pokedashpota_win64.exe`.
@@ -28,7 +28,7 @@ Usa el ejecutable original de Poketibia. **No** uses el `tfs.exe` que se compila
 
 1. En GitHub: Releases → *Draft a new release*, con la etiqueta que pongas en `$Tag` de `descargar.ps1` (por ejemplo `datos-v1`).
 2. Adjunta `Tibia.spr` (puede pesar hasta 2 GB).
-3. Si cambian los sprites, crea otra release (`datos-v2`...) y actualiza `$Tag`.
+3. Si cambian los sprites, crea otra release (`datos-v2`...) y actualiza en `descargar.ps1` tanto `$Tag` como `$Sha256` (se obtiene con `(Get-FileHash .\bases\pokedashpota1.0_client\data\things\1098\Tibia.spr).Hash`).
 
 ## 2. Base de datos
 
