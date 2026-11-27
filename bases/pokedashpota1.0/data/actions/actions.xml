@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
+	<!-- PC: abre la ventana de Pokemon y objetos (lib/core/pokepc.lua) en vez del depot -->
+	<action itemid="26699" script="poke/pc.lua" />
+	<action itemid="47000" script="poke/pc.lua" />
+	<action fromid="2589" toid="2592" script="poke/pc.lua" />
 	<!-- Quests -->
 	<action itemid="1740" script="quests/quests.lua" />
 	<!-- runas de Pokemon (lib/core/runes.lua): se usan sobre una Pokeball -->

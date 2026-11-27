@@ -198,7 +198,7 @@ local function sellableItems(player)
 				else
 					local itemType = ItemType(item:getId())
 					local inUse = item:getSpecialAttribute("isBeingUsed") == 1 or pokemonOutBallIds[item:getId()]
-					if itemType:isMovable() and itemType:isPickupable() and not isBadge(item:getId()) and not inUse
+					if itemType:isMovable() and not isBadge(item:getId()) and not inUse
 						and not COIN_VALUES[item:getId()] then
 						local name, category, icon = describeItem(item)
 						list[#list + 1] = {itemid = item:getId(), count = math.max(1, item:getCount()), special = specialOf(item),

@@ -1,0 +1,10 @@
+Module
+  name: game_pc
+  description: PC de Pokemon y objetos (sustituye a la vista de depot)
+  author: Poketibia
+  autoload: true
+  autoload-priority: 1000
+  scripts: [ pc ]
+  sandboxed: true
+  @onLoad: init()
+  @onUnload: terminate()

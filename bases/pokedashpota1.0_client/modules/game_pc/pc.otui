@@ -1,0 +1,641 @@
+// PC de Pokemon y objetos. Las casillas se crean desde pc.lua.
+
+PcTab < UIButton
+  size: 130 28
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  image-color: #2c3039
+  font: poppins-semibold-13px
+  color: #c9d1dc
+  text-align: center
+  focusable: false
+
+  $hover:
+    image-color: #3a3f47
+
+  $on:
+    image-color: #b3262e
+    color: #ffffff
+
+PcChip < UIButton
+  height: 22
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  image-color: #262a33
+  font: poppins-semibold-11px
+  color: #c9d1dc
+  text-align: center
+  focusable: false
+
+  $hover:
+    image-color: #3a3f47
+
+  $on:
+    image-color: #1e6f99
+    color: #ffffff
+
+PcButton < UIButton
+  height: 28
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  image-color: #2c3039
+  font: poppins-semibold-13px
+  color: #ffffff
+  text-align: center
+  focusable: false
+
+  $hover:
+    image-color: #3a3f47
+
+  $disabled:
+    color: #5c6470
+
+PcEdit < TextEdit
+  height: 26
+  font: poppins-12px
+  color: #ffffff
+  background-color: #14161b
+  border-width: 1
+  border-color: #2c3039
+  text-offset: 6 5
+
+PcTitle < Label
+  font: poppins-semibold-11px
+  color: #7fd8ff
+  height: 16
+  phantom: true
+
+PcBox < UIWidget
+  background-color: #181920
+  border-width: 1
+  border-color: #30323c
+
+PcTeamSlot < UIWidget
+  height: 66
+  background-color: #22242d
+  border-width: 1
+  border-color: #3a3d4a
+  focusable: false
+
+  $hover:
+    border-color: #7fd8ff
+
+  UICreature
+    id: art
+    size: 56 56
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 4
+    phantom: true
+
+  Label
+    id: name
+    anchors.top: parent.top
+    anchors.left: art.right
+    anchors.right: parent.right
+    margin-top: 10
+    margin-left: 4
+    height: 16
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
+
+  UIWidget
+    id: barBack
+    anchors.top: name.bottom
+    anchors.left: name.left
+    margin-top: 3
+    size: 130 6
+    background-color: #0e0f13
+    phantom: true
+
+  UIWidget
+    id: bar
+    anchors.top: barBack.top
+    anchors.left: barBack.left
+    size: 130 6
+    background-color: #43c463
+    phantom: true
+
+  Label
+    id: sub
+    anchors.top: barBack.bottom
+    anchors.left: name.left
+    anchors.right: parent.right
+    margin-top: 3
+    height: 14
+    font: poppins-semibold-11px
+    color: #a9a5ad
+    phantom: true
+
+PcMonCell < UIWidget
+  background-color: #22242d
+  border-width: 1
+  border-color: #3a3d4a
+  focusable: false
+
+  $hover:
+    border-color: #7fd8ff
+    background-color: #2b3346
+
+  UICreature
+    id: art
+    size: 68 68
+    anchors.top: parent.top
+    anchors.horizontalCenter: parent.horizontalCenter
+    margin-top: 5
+    phantom: true
+
+  Label
+    id: name
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-bottom: 4
+    height: 14
+    text-align: center
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
+
+  Label
+    id: boost
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 3
+    margin-right: 5
+    size: 30 14
+    text-align: right
+    font: poppins-semibold-11px
+    color: #ffd866
+    phantom: true
+
+PcItemCell < UIWidget
+  background-color: #22242d
+  border-width: 1
+  border-color: #3a3d4a
+  focusable: false
+
+  $hover:
+    border-color: #7fd8ff
+
+  UIItem
+    id: item
+    size: 32 32
+    anchors.centerIn: parent
+    virtual: true
+    phantom: true
+
+  Label
+    id: count
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    margin-right: 3
+    margin-bottom: 1
+    size: 42 12
+    text-align: right
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
+
+// fila de la ficha: nombre a la izquierda y valor a la derecha
+PcInfoRow < UIWidget
+  height: 17
+  phantom: true
+
+  Label
+    id: key
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    size: 80 16
+    font: poppins-12px
+    color: #c4c0c8
+    phantom: true
+
+  Label
+    id: value
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    size: 60 16
+    text-align: right
+    font: poppins-semibold-11px
+    color: #ffffff
+    phantom: true
+
+PcTypeChip < Label
+  size: 66 18
+  image-source: /game_pokedex/images/chip
+  image-border: 8
+  font: poppins-semibold-11px
+  color: #ffffff
+  text-align: center
+  phantom: true
+
+PcMove < Label
+  height: 17
+  background-color: #22232b
+  border-width: 1
+  border-color: #2e303a
+  font: poppins-semibold-11px
+  color: #ffffff
+  text-offset: 8 1
+  text-align: left
+  phantom: true
+
+UIWindow
+  id: pcWindow
+  size: 912 584
+  anchors.centerIn: parent
+  image-source: /game_pokedex/images/panel
+  image-border: 16
+  @onEscape: modules.game_pc.close()
+
+  Label
+    id: windowTitle
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-top: 16
+    margin-left: 18
+    size: 40 22
+    font: poppins-bold-16px
+    color: #ffffff
+    text: PC
+    phantom: true
+
+  PcTab
+    id: tabMons
+    anchors.verticalCenter: windowTitle.verticalCenter
+    anchors.left: windowTitle.right
+    margin-left: 8
+    @onClick: modules.game_pc.selectTab('mons')
+
+  PcTab
+    id: tabItems
+    anchors.verticalCenter: windowTitle.verticalCenter
+    anchors.left: tabMons.right
+    margin-left: 6
+    @onClick: modules.game_pc.selectTab('items')
+
+  UIButton
+    id: closeButton
+    size: 16 16
+    anchors.top: parent.top
+    anchors.right: parent.right
+    margin-top: 18
+    margin-right: 16
+    image-source: /game_pokemonmoves/images/close
+    focusable: false
+    @onClick: modules.game_pc.close()
+
+    $hover:
+      image-source: /game_pokemonmoves/images/close_hover
+
+  PcButton
+    id: searchButton
+    anchors.verticalCenter: windowTitle.verticalCenter
+    anchors.right: parent.right
+    margin-right: 48
+    width: 70
+    height: 26
+    text: Buscar
+    @onClick: modules.game_pc.doSearch()
+
+  PcEdit
+    id: searchEdit
+    anchors.verticalCenter: windowTitle.verticalCenter
+    anchors.right: searchButton.left
+    margin-right: 6
+    width: 210
+
+  Label
+    id: statusLabel
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-bottom: 12
+    margin-left: 18
+    margin-right: 18
+    height: 18
+    font: poppins-12px
+    color: #ffd866
+    phantom: true
+
+  // ---------------- pestana Pokemon ----------------
+  UIWidget
+    id: monsPage
+    anchors.fill: parent
+    margin-top: 54
+    margin-bottom: 36
+    margin-left: 14
+    margin-right: 14
+
+    PcTitle
+      id: teamTitle
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 4
+      width: 210
+      color: #ff8a8f
+
+    UIWidget
+      id: teamList
+      anchors.top: teamTitle.bottom
+      anchors.left: parent.left
+      anchors.bottom: parent.bottom
+      margin-top: 8
+      width: 210
+      layout:
+        type: verticalBox
+        spacing: 6
+
+    PcTitle
+      id: boxTitle
+      anchors.top: parent.top
+      anchors.left: teamList.right
+      margin-top: 4
+      margin-left: 12
+      width: 120
+
+    UIWidget
+      id: sortBar
+      anchors.top: parent.top
+      anchors.left: boxTitle.right
+      width: 332
+      height: 24
+      layout:
+        type: horizontalBox
+        spacing: 4
+
+    PcBox
+      id: monGrid
+      anchors.top: sortBar.bottom
+      anchors.left: boxTitle.left
+      margin-top: 6
+      size: 472 410
+      padding: 8
+      layout:
+        type: grid
+        cell-size: 87 94
+        cell-spacing: 5
+        num-columns: 5
+        flow: true
+
+    // sitio fijo para soltar un Pokemon del equipo y guardarlo, este como este la pagina
+    Label
+      id: storeZone
+      anchors.top: monGrid.bottom
+      anchors.left: monGrid.left
+      margin-top: 8
+      size: 132 28
+      background-color: #14303d
+      border-width: 1
+      border-color: #7fd8ff
+      font: poppins-semibold-11px
+      color: #7fd8ff
+      text-align: center
+      focusable: false
+
+    PcButton
+      id: monPrev
+      anchors.top: monGrid.bottom
+      anchors.left: monGrid.left
+      margin-top: 8
+      margin-left: 140
+      width: 40
+      text: <
+      @onClick: modules.game_pc.gotoPage(-1)
+
+    Label
+      id: monPageLabel
+      anchors.verticalCenter: monPrev.verticalCenter
+      anchors.left: monPrev.right
+      size: 110 18
+      text-align: center
+      font: poppins-semibold-13px
+      color: #ffffff
+
+    PcButton
+      id: monNext
+      anchors.verticalCenter: monPrev.verticalCenter
+      anchors.left: monPageLabel.right
+      width: 40
+      text: >
+      @onClick: modules.game_pc.gotoPage(1)
+
+    PcBox
+      id: detail
+      anchors.top: monGrid.top
+      anchors.left: monGrid.right
+      anchors.right: parent.right
+      anchors.bottom: parent.bottom
+      margin-left: 10
+
+      UIWidget
+        id: art
+        size: 104 104
+        image-smooth: true
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 6
+
+      Label
+        id: name
+        anchors.top: art.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 2
+        height: 20
+        text-align: center
+        font: poppins-bold-16px
+        color: #ffffff
+
+      UIWidget
+        id: types
+        anchors.top: name.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 4
+        size: 138 18
+        layout:
+          type: horizontalBox
+          spacing: 6
+
+      UIWidget
+        id: rows
+        anchors.top: types.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 6
+        margin-left: 10
+        margin-right: 10
+        height: 53
+        layout:
+          type: verticalBox
+          spacing: 1
+
+      Label
+        id: movesTitle
+        anchors.top: rows.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 4
+        margin-left: 10
+        height: 16
+        font: poppins-semibold-11px
+        color: #ff8a8f
+        text: ATAQUES
+
+      UIWidget
+        id: moves
+        anchors.top: movesTitle.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        margin-top: 2
+        margin-left: 8
+        margin-right: 8
+        margin-bottom: 4
+        clipping: true
+        layout:
+          type: verticalBox
+          spacing: 1
+
+  // ---------------- pestana Objetos ----------------
+  UIWidget
+    id: itemsPage
+    anchors.fill: parent
+    margin-top: 54
+    margin-bottom: 36
+    margin-left: 14
+    margin-right: 14
+    visible: false
+
+    PcTitle
+      id: bagTitle
+      anchors.top: parent.top
+      anchors.left: parent.left
+      margin-top: 4
+      width: 300
+      color: #ff8a8f
+
+    PcBox
+      id: bagGrid
+      anchors.top: bagTitle.bottom
+      anchors.left: parent.left
+      margin-top: 10
+      size: 304 410
+      padding: 8
+      layout:
+        type: grid
+        cell-size: 44 44
+        cell-spacing: 4
+        num-columns: 6
+        flow: true
+
+    UIWidget
+      id: categoryBar
+      anchors.top: parent.top
+      anchors.left: bagGrid.right
+      anchors.right: parent.right
+      margin-left: 12
+      height: 24
+      layout:
+        type: horizontalBox
+        spacing: 4
+
+    PcBox
+      id: itemGrid
+      anchors.top: bagGrid.top
+      anchors.left: bagGrid.right
+      anchors.right: parent.right
+      anchors.bottom: bagGrid.bottom
+      margin-left: 12
+      padding: 8
+      layout:
+        type: grid
+        // 64 de ancho para que quepan las 8 columnas (48 casillas = 6 filas justas)
+        cell-size: 64 60
+        cell-spacing: 4
+        num-columns: 8
+        flow: true
+
+    PcButton
+      id: itemPrev
+      anchors.top: itemGrid.bottom
+      anchors.left: itemGrid.left
+      margin-top: 8
+      margin-left: 180
+      width: 40
+      text: <
+      @onClick: modules.game_pc.gotoPage(-1)
+
+    Label
+      id: itemPageLabel
+      anchors.verticalCenter: itemPrev.verticalCenter
+      anchors.left: itemPrev.right
+      size: 110 18
+      text-align: center
+      font: poppins-semibold-13px
+      color: #ffffff
+
+    PcButton
+      id: itemNext
+      anchors.verticalCenter: itemPrev.verticalCenter
+      anchors.left: itemPageLabel.right
+      width: 40
+      text: >
+      @onClick: modules.game_pc.gotoPage(1)
+
+  // ---------------- cuantos mover ----------------
+  UIWidget
+    id: askPanel
+    anchors.fill: parent
+    background-color: #06070acc
+    visible: false
+
+    PcBox
+      id: askBox
+      anchors.centerIn: parent
+      size: 300 150
+      background-color: #1d1e25
+
+      Label
+        id: askText
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        margin-top: 14
+        margin-left: 10
+        margin-right: 10
+        height: 36
+        text-align: center
+        text-wrap: true
+        font: poppins-semibold-13px
+        color: #ffffff
+
+      PcEdit
+        id: askEdit
+        anchors.top: askText.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        margin-top: 10
+        width: 90
+
+      PcButton
+        id: askCancel
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        margin-bottom: 14
+        margin-left: 20
+        width: 120
+        text: Cancelar
+        @onClick: modules.game_pc.cancelAsk()
+
+      PcButton
+        id: askOk
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        margin-bottom: 14
+        margin-right: 20
+        width: 120
+        image-color: #2e7d46
+        text: Mover
+        @onClick: modules.game_pc.confirmAsk()

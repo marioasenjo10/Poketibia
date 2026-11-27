@@ -24,3 +24,6 @@ bases/**/*_linux64
 bases/**/*.log
 bases/**/*.bak
 bases/**/.DS_Store
+
+# copias locales de la base de datos
+backups/

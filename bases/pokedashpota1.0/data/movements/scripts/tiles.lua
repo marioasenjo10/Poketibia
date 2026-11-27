@@ -22,17 +22,6 @@ function onStepIn(creature, item, position, fromPosition)
 		return true
 	end
 
-	if Tile(position):hasFlag(TILESTATE_PROTECTIONZONE) then
-		local lookPosition = player:getPosition()
-		lookPosition:getNextPosition(player:getDirection())
-		local depotItem = Tile(lookPosition):getItemByType(ITEM_TYPE_DEPOT)
-		if depotItem ~= nil then
-			local depotItems = player:getDepotChest(getDepotId(depotItem:getUniqueId()), true):getItemHoldingCount()
-			player:sendTextMessage(MESSAGE_STATUS_DEFAULT, "Your depot contains " .. depotItems .. " item" .. (depotItems > 1 and "s." or "."))
-			return true
-		end
-	end
-
 	if item.actionid ~= 0 and player:getStorageValue(item.actionid) <= 0 then
 		player:teleportTo(fromPosition, false)
 		position:sendMagicEffect(CONST_ME_MAGIC_BLUE)
