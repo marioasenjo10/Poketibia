@@ -21,6 +21,7 @@ Con [clonar-personaje.ps1](clonar-personaje.ps1) se copian encima del tester (co
 | Plantilla Sabrina | Claude Tester Dos (nivel 59) con 5 medallas (Roca, Cascada, Trueno, Arcoíris, Pantano), en Ciudad Azafrán (1059,1048,7). Sigue «Entrenamiento en el Safari» (50 derrotas en la Zona Safari) y la ruta a Koga. |
 | Plantilla Koga | Claude Tester Dos (nivel 70) con 6 medallas (hasta la Alma), en el piso 1 de la tienda de Ciudad Fucsia (1226,1365,6). Al entrar siguen «Preparacion contra Blaine» (opcional) y «Rumbo a Isla Canela». |
 | Plantilla Blaine | Claude Tester Dos (nivel 80) con 7 medallas (hasta la Volcan), en Isla Canela (846,1397,7). Siguen el entrenamiento de tipo Tierra (opcional) y «La Medalla Tierra» contra Giovanni. |
+| Plantilla Giovanni | Claude Tester Dos (nivel 91) con las 8 medallas, en Ciudad Verde (704,1089,7). Sigue la Calle Victoria (25 derrotas) de camino a la Liga. |
 
 ```powershell
 # dejar a Claude Tester Dos como en la plantilla

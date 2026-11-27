@@ -25,7 +25,7 @@
 		<flag surfable="0" />
 		<flag canteleport="0" />
 		<flag catchchance="9" />
-		<flag moveMagicAttackBase="100" />
+		<flag moveMagicAttackBase="135" />
 		<flag moveMagicDefenseBase="100" />
 	</flags>
 	<script>
@@ -42,6 +42,7 @@
 		<move name="poison powder" interval="10000"/>
 		<move name="sleep powder" interval="20000"/>
 		<move name="solar beam" interval="17000"/>
+		<move name="petal dance" interval="20000"/>
 
 	</moves>
 	<evolutions>
@@ -56,6 +57,7 @@
 		<attack name="poison powder" interval="10000" chance="40"/>
 		<attack name="sleep powder" interval="20000" chance="40"/>
 		<attack name="solar beam" interval="17000" chance="40"/>
+		<attack name="petal dance" interval="20000" chance="40"/>
 		<attack name="passive grass" interval="40000" chance="40"/>
 
 	</attacks>

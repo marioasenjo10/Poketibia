@@ -8,12 +8,12 @@ local rematch = {}
 local pokemons =
 {
 	-- equipo completo de 6; al ser tantos, cada uno tiene multiplicadores mas bajos para no alargar
-	[1] = {name = "Dugtrio", level = 86, hp = 2.75, damage = 1.7},
-	[2] = {name = "Shiny Persian", level = 86, hp = 2.5, damage = 1.7},
-	[3] = {name = "Nidoqueen", level = 87, hp = 3, damage = 1.8},
-	[4] = {name = "Golem", level = 88, hp = 3, damage = 1.85},
-	[5] = {name = "Nidoking", level = 89, hp = 3.25, damage = 1.9},
-	[6] = {name = "Rhydon", level = 90, hp = 3.75, damage = 2.1},
+	[1] = {name = "Shiny Dugtrio", level = 86, hp = 4.6, damage = 1.8},
+	[2] = {name = "Shiny Persian", level = 86, hp = 2.75, damage = 1.8},
+	[3] = {name = "Nidoqueen", level = 87, hp = 3.25, damage = 1.9},
+	[4] = {name = "Golem", level = 88, hp = 3.25, damage = 1.95},
+	[5] = {name = "Nidoking", level = 89, hp = 3.5, damage = 2.0},
+	[6] = {name = "Shiny Rhydon", level = 90, hp = 4, damage = 2.2},
 }
 
 local keywordHandler = KeywordHandler:new()

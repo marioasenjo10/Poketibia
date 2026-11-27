@@ -25,7 +25,7 @@
 		<flag surfable="0" />
 		<flag canteleport="0" />
 		<flag catchchance="9" />
-		<flag moveMagicAttackBase="109" />
+		<flag moveMagicAttackBase="120" />
 		<flag moveMagicDefenseBase="85" />
 	</flags>
 	<script>
@@ -42,6 +42,7 @@
 		<move name="fireball" interval="14000" isTarget="1"/>
 		<move name="fire blast" interval="17000"/>
 		<move name="wing attack" interval="9000"/>
+		<move name="overheat" interval="20000"/>
 
 	</moves>
 	<evolutions>
@@ -56,6 +57,7 @@
 		<attack name="fireball" interval="14000" chance="40" target="1"/>
 		<attack name="fire blast" interval="17000" chance="40"/>
 		<attack name="wing attack" interval="9000" chance="40"/>
+		<attack name="overheat" interval="20000" chance="40"/>
 		<attack name="passive fire" interval="40000" chance="40"/>
 
 	</attacks>

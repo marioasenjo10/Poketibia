@@ -85,6 +85,17 @@ local function activeIndex()
   return nil
 end
 
+-- guardado recarga mas despacio: igual que storedCooldownFactor del servidor
+local STORED_COOLDOWN_FACTOR = 3
+
+-- ms de recarga que le quedan al ataque n (guardado bajan a un tercio de la velocidad)
+local function cooldownLeft(poke, n, now)
+  if poke.cdStored[n] then
+    return math.max(0, poke.cdStored[n] - (now - poke.receivedAt) / STORED_COOLDOWN_FACTOR)
+  end
+  return math.max(0, (poke.cdEnd[n] or 0) - now)
+end
+
 -- ataques listos de un pokemon de la Pokebar: el que esta fuera se mira en la barra de ataques
 local function movesReady(poke, isActive)
   if isActive and active and modules.game_pokemonmoves and modules.game_pokemonmoves.getMovesReady then
@@ -96,7 +107,7 @@ local function movesReady(poke, isActive)
   local now = g_clock.millis()
   local ready = 0
   for i = 1, poke.total do
-    if (poke.cdEnd[i] or 0) <= now then
+    if cooldownLeft(poke, i, now) <= 0 then
       ready = ready + 1
     end
   end
@@ -140,7 +151,7 @@ local function tooltipFor(poke, isActive, health)
   end
   if #moves == 0 then
     for m, name in ipairs(poke.moves) do
-      moves[#moves + 1] = { name = name, remaining = math.max(0, (poke.cdEnd[m] or 0) - now) }
+      moves[#moves + 1] = { name = name, remaining = cooldownLeft(poke, m, now) }
     end
   end
   if #moves > 0 then
@@ -269,6 +280,8 @@ function onPokebar(protocol, opcode, buffer)
       used = fields[i + 2] == '1',
       total = tonumber(fields[i + 3]) or 0,
       cdEnd = {},
+      cdStored = {}, -- guardado: recarga que le queda al recibir los datos
+      receivedAt = now,
       boost = tonumber(fields[i + 5]) or 0,
       hp = tonumber(fields[i + 6]) or 0,
       maxHp = tonumber(fields[i + 7]) or 0,
@@ -282,7 +295,11 @@ function onPokebar(protocol, opcode, buffer)
         n = n + 1
         local seconds = tonumber(cd) or 0
         if seconds > 0 then
-          poke.cdEnd[n] = now + seconds * 1000
+          if poke.used then
+            poke.cdEnd[n] = now + seconds * 1000
+          else
+            poke.cdStored[n] = seconds * 1000
+          end
         end
       end
     end

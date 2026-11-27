@@ -25,7 +25,7 @@
 		<flag surfable="0" />
 		<flag canteleport="0" />
 		<flag catchchance="3" />
-		<flag moveMagicAttackBase="164" />
+		<flag moveMagicAttackBase="180" />
 		<flag moveMagicDefenseBase="128" />
 	</flags>
 	<script>

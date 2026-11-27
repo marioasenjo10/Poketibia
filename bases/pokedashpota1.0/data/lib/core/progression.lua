@@ -428,7 +428,7 @@ progressionTasks = {
 	{
 		id = "giovanni", kind = "badge", badge = "earthBadge", giver = "Giovanni, Lider de Gimnasio",
 		title = "La Medalla Tierra",
-		text = "Desafia a Giovanni en el Gimnasio de Ciudad Verde. Sus Pokemon son Dugtrio, Shiny Persian, Nidoqueen, Golem, Nidoking y Rhydon. Recomendado: nivel 88-90 y un Pokemon de tipo Agua, Planta o Hielo.",
+		text = "Desafia a Giovanni en el Gimnasio de Ciudad Verde. Sus Pokemon son Shiny Dugtrio, Shiny Persian, Nidoqueen, Golem, Nidoking y Shiny Rhydon. Recomendado: nivel 88-90 y un Pokemon de tipo Agua, Planta o Hielo.",
 		reward = {exp = 0, money = 30000},
 		rewardText = "Medalla Tierra, 1 piedra tierra, las 8 medallas de Kanto, sin tope de nivel y +5% de dano y defensa a tus Pokemon de tipo Tierra",
 		map = {{743, 1074, 6, "Giovanni, Gimnasio de Ciudad Verde"}},

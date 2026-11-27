@@ -2681,6 +2681,31 @@ function Monster.setPremierLook(self)
 	return true
 end
 
+-- Con el Pokemon guardado los ataques recargan mas despacio (si no, se tiraba el combo, se guardaba
+-- y se volvia con todo listo). Con 3, a un ataque de 20 s guardado le hacen falta 60 s.
+-- "cdPausedAt" es la hora a la que se guardo; al sacarlo se retrasan los "cdN" la parte no recargada.
+storedCooldownFactor = 3
+
+function pauseMoveCooldowns(ball)
+	ball:setSpecialAttribute("cdPausedAt", os.time())
+end
+
+function resumeMoveCooldowns(ball)
+	local pausedAt = tonumber(ball:getSpecialAttribute("cdPausedAt")) or 0
+	if pausedAt <= 0 then
+		return
+	end
+	local stored = os.time() - pausedAt
+	local delay = stored - math.floor(stored / storedCooldownFactor)
+	for i = 1, #moveWords do
+		local cdEnd = tonumber(ball:getSpecialAttribute("cd" .. i)) or 0
+		if cdEnd > pausedAt then
+			ball:setSpecialAttribute("cd" .. i, cdEnd + delay)
+		end
+	end
+	ball:setSpecialAttribute("cdPausedAt", 0)
+end
+
 function doReleaseSummon(cid, pos, effect, message, missile)
 	local player = Player(cid)
 	if not player then return false end
@@ -2787,6 +2812,7 @@ function doReleaseSummon(cid, pos, effect, message, missile)
 			end
 		end
 
+		resumeMoveCooldowns(ball)
 		sendSummonInfo(player, monster, ball)
 		startSummonQuickFollow(player, monster)
 
@@ -2852,6 +2878,8 @@ function doRemoveSummon(cid, effect, uid, message, missile)
 	if not (player:isOnFly() or player:isOnRide() or player:isOnSurf() or summon:isEvolving()) then
 		if ball then
 			ball:setSpecialAttribute("isBeingUsed", 0)
+			-- montado, volando o surfeando no entra aqui: ahi la recarga sigue corriendo
+			pauseMoveCooldowns(ball)
 		else
 			print("WARNING! Player " .. player:getName() .. " had problems on remove summon: ball does not exist.")
 		end
@@ -3598,9 +3626,15 @@ function Player:refreshPokemonBar(add, remove)
 				if monsterType then
 					local moveList = monsterType:getMoveList()
 					total = math.min(#moveWords, #moveList)
+					-- guardado: el reloj de la recarga solo avanza 1 de cada storedCooldownFactor segundos
+					local pausedAt = used == 0 and tonumber(ball:getSpecialAttribute("cdPausedAt")) or 0
+					local now = os.time()
+					if pausedAt and pausedAt > 0 then
+						now = pausedAt + math.floor((now - pausedAt) / storedCooldownFactor)
+					end
 					for m = 1, total do
 						local cdEnd = tonumber(ball:getSpecialAttribute("cd" .. m)) or 0
-						cooldowns[m] = math.max(0, cdEnd - os.time())
+						cooldowns[m] = math.max(0, cdEnd - now)
 						moveNames[m] = (moveList[m].name or "?"):gsub("[,;|]", " ")
 					end
 					dex = tonumber(monsterType:dexEntry()) or 0

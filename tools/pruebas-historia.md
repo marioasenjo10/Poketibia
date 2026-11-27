@@ -44,7 +44,7 @@ Para probar un gimnasio suelto: `/progreso ir <id del gimnasio>` + `/progreso ni
 | Sabrina | Azafrán | Gastly (Torre de Lavanda), 15 de tipo Psíquico | Kadabra 56, Mr. Mime 58, Alakazam 60 | 60 | Los Gengar de la torre no son demasiado |
 | Koga | Fucsia | Psíquico/Tierra, llegar, 15 de tipo Veneno | Venomoth 66, Crobat 67, Muk 68, Weezing 70 | 70 | El camino a Fucsia |
 | Blaine | Canela | Llegar volando o surfeando; 50 en los alrededores de la isla (opcional) | Shiny Ninetales 76, Magmar 77, Shiny Rapidash 78, Arcanine 80 | 80 | Surfear hasta la isla funciona |
-| Giovanni | Verde | 15 de tipo Tierra | Dugtrio 86, Shiny Persian 86, Nidoqueen 87, Golem 88, Nidoking 89, Rhydon 90 | 90 | Tras ganar, sin tope de nivel |
+| Giovanni | Verde | 15 de tipo Tierra | Shiny Dugtrio 86, Shiny Persian 86, Nidoqueen 87, Golem 88, Nidoking 89, Shiny Rhydon 90 | 90 | Tras ganar, sin tope de nivel |
 
 ## Liga Pokémon
 
