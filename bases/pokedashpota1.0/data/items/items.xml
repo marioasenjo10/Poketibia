@@ -300,6 +300,12 @@
 		<attribute key="containerSize" value="3" />
 	</item>
 
+	<!-- PC con diseno nuevo (en prueba en el Centro Pokemon de Ciudad Verde): igual que el 26699 -->
+	<item id="47000" article="a" name="locker">
+		<attribute key="type" value="depot" />
+		<attribute key="containerSize" value="3" />
+	</item>
+
 	<item id="6216" name="grass" >
 		<attribute key="decayTo" value="2767" />
 		<attribute key="duration" value="600" />

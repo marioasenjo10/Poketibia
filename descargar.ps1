@@ -7,9 +7,9 @@
 # el resultado de:  (Get-FileHash .\bases\pokedashpota1.0_client\data\things\1098\Tibia.spr).Hash
 
 $Repo   = "marioasenjo10/Poketibia"
-$Tag    = "datos-v1"
+$Tag    = "datos-v2"
 $Nombre = "Tibia.spr"
-$Sha256 = "23FEB4497B7692866FF0B11DED63B58FD80E8DF0DB3327FAEBBA11B31DF8AC03"
+$Sha256 = "A3B24A0E10D01F57EBA2A586C0C7AF3384CD5B29B4218908E4E7F2F0B1C7A490"
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"   # con la barra, PowerShell 5.1 descarga muchisimo mas lento
